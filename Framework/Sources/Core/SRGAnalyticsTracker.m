@@ -80,25 +80,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         SRGAnalyticsEnableRequestInterceptor();
     }
     
-    [self startTagCommanderTrackerWithConfiguration:configuration];
-    [self startComscoreTrackerWithConfiguration:configuration];
-    [self startNetmetrixTrackerWithConfiguration:configuration];
-    
-    [self sendApplicationList];
-}
-
-- (void)startTagCommanderTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
-    [self.tagCommander enableRunningInBackground];
-    [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
-    [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.comScoreVirtualSite];
-    [self.tagCommander addPermanentData:@"navigation_environment" withValue:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod"];
-    [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
-}
-
-- (void)startComscoreTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
     SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
         builder.publisherId = @"6036016";
         builder.publisherSecret = @"fee16147939462a9b6faa0944ad832d1";
@@ -120,11 +101,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }];
     [[SCORAnalytics configuration] addClientWithConfiguration:publisherConfiguration];
     [SCORAnalytics start];
-}
-
-- (void)startNetmetrixTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    self.netmetrixTracker = [[SRGAnalyticsNetMetrixTracker alloc] initWithConfiguration:configuration];
+    
+    [self sendApplicationList];
 }
 
 #pragma mark Labels
@@ -174,6 +152,16 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
+    if ( ! self.tagCommander) {
+        SRGAnalyticsConfiguration *configuration = self.configuration;
+        self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
+        [self.tagCommander enableRunningInBackground];
+        [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
+        [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.comScoreVirtualSite];
+        [self.tagCommander addPermanentData:@"navigation_environment" withValue:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod"];
+        [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
+    }
+    
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.labelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
     [fullLabels addEntriesFromDictionary:labels];
     [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
@@ -201,6 +189,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
+    
+    if (! self.netmetrixTracker) {
+        self.netmetrixTracker = [[SRGAnalyticsNetMetrixTracker alloc] initWithConfiguration:self.configuration];
+    }
     
     [self.netmetrixTracker trackView];
 }
