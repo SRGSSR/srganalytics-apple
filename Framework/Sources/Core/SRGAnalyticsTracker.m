@@ -154,6 +154,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     if ( ! self.tagCommander) {
         SRGAnalyticsConfiguration *configuration = self.configuration;
+        NSAssert(configuration != nil, @"The tracker must be started");
+        
         self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
         [self.tagCommander enableRunningInBackground];
         [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
@@ -182,6 +184,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
+    if (! self.configuration) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+        return;
+    }
+    
     if (title.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing title. No event will be sent");
         return;
@@ -293,6 +300,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 - (void)trackHiddenEventWithName:(NSString *)name
                           labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
+    if (! self.configuration) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+        return;
+    }
+    
     if (name.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing name. No event will be sent");
         return;
@@ -305,6 +317,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 - (void)trackComScoreHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
     NSAssert(name.length != 0, @"A name is required");
+    NSAssert(self.configuration != nil, @"The tracker must be started");
     
     NSMutableDictionary *fullLabelsDictionary = [NSMutableDictionary dictionary];
     [fullLabelsDictionary srg_safelySetString:name forKey:@"srg_title"];
@@ -326,6 +339,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
     NSAssert(name.length != 0, @"A name is required");
+    NSAssert(self.configuration != nil, @"The tracker must be started");
     
     NSMutableDictionary<NSString *, NSString *> *fullLabelsDictionary = [NSMutableDictionary dictionary];
     [fullLabelsDictionary srg_safelySetString:@"hidden_event" forKey:@"event_id"];
