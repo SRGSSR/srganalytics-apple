@@ -131,6 +131,75 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
+- (void)testReplay
+{
+    // The session identifier must change when the same media is replayed
+    __block NSString *sessionUid1 = nil;
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
+        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
+        
+        XCTAssertNotNil(labels[@"ns_st_id"]);
+        sessionUid1 = labels[@"ns_st_id"];
+        return YES;
+    }];
+    
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        // All intermediate events must have the same session identifier
+        XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid1);
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
+        
+        if (! [event isEqualToString:@"end"]) {
+            return NO;
+        }
+        
+        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 1800);
+        return YES;
+    }];
+    
+    SRGPosition *position = [SRGPosition positionAtTime:CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    [self.mediaPlayerController seekToPosition:position withCompletionHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    __block NSString *sessionUid2 = nil;
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
+        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
+        
+        XCTAssertNotNil(labels[@"ns_st_id"]);
+        sessionUid2 = labels[@"ns_st_id"];
+        XCTAssertNotEqualObjects(sessionUid1, sessionUid2);
+        return YES;
+    }];
+    
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
+        XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid2);
+        return YES;
+    }];
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
 - (void)testPlayStop
 {
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -295,28 +364,48 @@ static NSURL *DVRTestURL(void)
     }];
 }
 
-- (void)testConsecutiveMedia
+- (void)testConsecutiveMedias
 {
+    // The session identifier must change when a different media is played
+    __block NSString *sessionUid1 = nil;
+    
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full1");
+        XCTAssertNotNil(labels[@"ns_st_id"]);
+        sessionUid1 = labels[@"ns_st_id"];
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels1 = [[SRGAnalyticsStreamLabels alloc] init];
+    labels1.comScoreCustomInfo = @{ @"stream_name" : @"full1" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels1 userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full1");
+        XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid1);
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:LiveTestURL()];
+    SRGAnalyticsStreamLabels *labels2 = [[SRGAnalyticsStreamLabels alloc] init];
+    labels2.comScoreCustomInfo = @{ @"stream_name" : @"full2" };
+    
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels2 userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block NSString *sessionUid2 = nil;
+    
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full2");
+        XCTAssertNotNil(labels[@"ns_st_id"]);
+        sessionUid2 = labels[@"ns_st_id"];
+        XCTAssertNotEqualObjects(sessionUid1, sessionUid2);
         return YES;
     }];
     
@@ -324,6 +413,8 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full2");
+        XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid2);
         return YES;
     }];
     
