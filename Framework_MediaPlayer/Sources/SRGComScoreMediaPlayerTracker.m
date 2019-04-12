@@ -123,8 +123,8 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     }
     
     // Provide the analytics library version (most useful information) as player information.
-    [self.streamingAnalytics setLabelWithName:@"ns_st_mp" value:@"SRGAnalytics"];
-    [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:SRGAnalyticsMarketingVersion()];
+    [self.streamingAnalytics setLabelWithName:@"ns_st_mp" value:self.mediaPlayerController.analyticsPlayerName];
+    [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:self.mediaPlayerController.analyticsPlayerVersion];
     
     [self.streamingAnalytics createPlaybackSession];
     
