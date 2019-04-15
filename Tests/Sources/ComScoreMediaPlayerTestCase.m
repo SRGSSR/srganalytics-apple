@@ -445,8 +445,8 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         
-        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGAnalytics");
-        XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGAnalyticsMarketingVersion());
+        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
+        XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGMediaPlayerMarketingVersion());
         XCTAssertEqualObjects(labels[@"ns_st_it"], @"c");
         return YES;
     }];
