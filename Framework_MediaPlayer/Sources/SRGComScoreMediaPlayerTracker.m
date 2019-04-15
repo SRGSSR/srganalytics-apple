@@ -67,23 +67,9 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 {
     if (self = [super init]) {
         self.mediaPlayerController = mediaPlayerController;
-        
         self.streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
         
-        if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-            [self.streamingAnalytics setLabelWithName:@"srg_test_id" value:SRGAnalyticsUnitTestingIdentifier()];
-        }
-        
-        // Provide the analytics library version (most useful information) as player information.
-        [self.streamingAnalytics setLabelWithName:@"ns_st_mp" value:@"SRGAnalytics"];
-        [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:SRGAnalyticsMarketingVersion()];
-        
-        [self.streamingAnalytics createPlaybackSession];
-        
-        SRGAnalyticsStreamLabels *labels = mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-        if (labels.comScoreLabelsDictionary) {
-            [self.streamingAnalytics.playbackSession setAssetWithLabels:labels.comScoreLabelsDictionary];
-        }
+        [self createPlaybackSession];
         
         // No need to send explicit 'buffer stop' events. Sending a play or pause at the end of the buffering phase
         // (which our player does) suffices to implicitly finish the buffering phase. Buffer events are not required
@@ -129,6 +115,24 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 #pragma clang diagnostic pop
 
 #pragma mark Tracking
+
+- (void)createPlaybackSession
+{
+    if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
+        [self.streamingAnalytics setLabelWithName:@"srg_test_id" value:SRGAnalyticsUnitTestingIdentifier()];
+    }
+    
+    // Provide the analytics library version (most useful information) as player information.
+    [self.streamingAnalytics setLabelWithName:@"ns_st_mp" value:self.mediaPlayerController.analyticsPlayerName];
+    [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:self.mediaPlayerController.analyticsPlayerVersion];
+    
+    [self.streamingAnalytics createPlaybackSession];
+    
+    SRGAnalyticsStreamLabels *labels = self.mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
+    if (labels.comScoreLabelsDictionary) {
+        [self.streamingAnalytics.playbackSession setAssetWithLabels:labels.comScoreLabelsDictionary];
+    }
+}
 
 - (void)recordEventForPlaybackState:(SRGMediaPlayerPlaybackState)playbackState
                      withStreamType:(SRGMediaPlayerStreamType)streamType
@@ -191,6 +195,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
                 
             case ComScoreMediaPlayerTrackerEventEnd: {
                 [streamingAnalytics notifyEnd];
+                [self createPlaybackSession];
                 break;
             }
                 
@@ -224,6 +229,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
                 
             case ComScoreMediaPlayerTrackerEventEnd: {
                 [streamingAnalytics notifyEndWithPosition:position];
+                [self createPlaybackSession];
                 break;
             }
                 
