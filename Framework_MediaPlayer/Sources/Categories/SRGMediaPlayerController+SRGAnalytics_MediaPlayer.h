@@ -74,18 +74,18 @@ NS_ASSUME_NONNULL_BEGIN
        completionHandler:(nullable void (^)(void))completionHandler;
 
 /**
- *  Same as `-[SRGMediaPlayerController prepareToPlayItem:atPosition:withSegments:userInfo:completionHandler:]`,
+ *  Same as `-[SRGMediaPlayerController prepareToPlayURLAsset:atPosition:withSegments:userInfo:completionHandler:]`,
  *  but with optional analytics labels.
  *
  *  @param analyticsLabels The analytics labels to send in stream events. Labels are copied to prevent further
  *                         changes. Use the `analyticsLabels` property to update them if needed.
  */
-- (void)prepareToPlayItem:(AVPlayerItem *)item
-               atPosition:(nullable SRGPosition *)position
-             withSegments:(nullable NSArray<id<SRGSegment>> *)segments
-          analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
-                 userInfo:(nullable NSDictionary *)userInfo
-        completionHandler:(nullable void (^)(void))completionHandler;
+- (void)prepareToPlayURLAsset:(AVURLAsset *)URLAsset
+                   atPosition:(nullable SRGPosition *)position
+                 withSegments:(nullable NSArray<id<SRGSegment>> *)segments
+              analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
+                     userInfo:(nullable NSDictionary *)userInfo
+            completionHandler:(nullable void (^)(void))completionHandler;
 
 /**
  *  Same as `-[SRGMediaPlayerController playURL:atPosition:withSegments:userInfo:]`, but with optional analytics
@@ -101,17 +101,17 @@ analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
        userInfo:(nullable NSDictionary *)userInfo;
 
 /**
- *  Same as `-[SRGMediaPlayerController playItem:atPosition:withSegments:userInfo:]`, but with optional analytics
+ *  Same as `-[SRGMediaPlayerController playURLAsset:atPosition:withSegments:userInfo:]`, but with optional analytics
  *  labels.
  *
  *  @param analyticsLabels The analytics labels to send in stream events. Labels are copied to prevent further
  *                         changes. Use the `analyticsLabels` property to update them if needed.
  */
-- (void)playItem:(AVPlayerItem *)item
-      atPosition:(nullable SRGPosition *)position
-    withSegments:(nullable NSArray<id<SRGSegment>> *)segments
- analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
-        userInfo:(nullable NSDictionary *)userInfo;
+- (void)playURLAsset:(AVURLAsset *)URLAsset
+          atPosition:(nullable SRGPosition *)position
+        withSegments:(nullable NSArray<id<SRGSegment>> *)segments
+     analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
+            userInfo:(nullable NSDictionary *)userInfo;
 
 /**
  *  Same as `-[SRGMediaPlayerController prepareToPlayURL:atIndex:position:inSegments:withUserInfo:completionHandler:]`,
@@ -129,19 +129,19 @@ analyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
        completionHandler:(nullable void (^)(void))completionHandler;
 
 /**
- *  Same as `-[SRGMediaPlayerController prepareToPlayItem:atIndex:position:inSegments:withUserInfo:completionHandler:]`,
+ *  Same as `-[SRGMediaPlayerController prepareToPlayURLAsset:atIndex:position:inSegments:withUserInfo:completionHandler:]`,
  *  but with optional analytics labels.
  *
  *  @param analyticsLabels The analytics labels to send in stream events. Labels are copied to prevent further
  *                         changes. Use the `analyticsLabels` property to update them if needed.
  */
-- (void)prepareToPlayItem:(AVPlayerItem *)item
-                  atIndex:(NSInteger)index
-                 position:(nullable SRGPosition *)position
-               inSegments:(NSArray<id<SRGSegment>> *)segments
-      withAnalyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
-                 userInfo:(nullable NSDictionary *)userInfo
-        completionHandler:(nullable void (^)(void))completionHandler;
+- (void)prepareToPlayURLAsset:(AVURLAsset *)URLAsset
+                      atIndex:(NSInteger)index
+                     position:(nullable SRGPosition *)position
+                   inSegments:(NSArray<id<SRGSegment>> *)segments
+          withAnalyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
+                     userInfo:(nullable NSDictionary *)userInfo
+            completionHandler:(nullable void (^)(void))completionHandler;
 
 /**
  *  Same as `-[SRGMediaPlayerController playURL:atIndex:position:inSegments:withUserInfo:]`, but with optional
@@ -158,18 +158,18 @@ withAnalyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
        userInfo:(nullable NSDictionary *)userInfo;
 
 /**
- *  Same as `-[SRGMediaPlayerController playItem:atIndex:position:inSegments:withUserInfo:]`, but with optional
+ *  Same as `-[SRGMediaPlayerController playURLAsset:atIndex:position:inSegments:withUserInfo:]`, but with optional
  *  analytics labels.
  *
  *  @param analyticsLabels The analytics labels to send in stream events. Labels are copied to prevent further
  *                         changes. Use the `analyticsLabels` property to update them if needed.
  */
-- (void)playItem:(AVPlayerItem *)item
-         atIndex:(NSInteger)index
-        position:(nullable SRGPosition *)position
-      inSegments:(NSArray<id<SRGSegment>> *)segments
-withAnalyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
-        userInfo:(nullable NSDictionary *)userInfo;
+- (void)playURLAsset:(AVURLAsset *)URLAsset
+             atIndex:(NSInteger)index
+            position:(nullable SRGPosition *)position
+          inSegments:(NSArray<id<SRGSegment>> *)segments
+ withAnalyticsLabels:(nullable SRGAnalyticsStreamLabels *)analyticsLabels
+            userInfo:(nullable NSDictionary *)userInfo;
 
 /**
  *  Set to `NO` to disable automatic player controller tracking. The default value is `YES`.

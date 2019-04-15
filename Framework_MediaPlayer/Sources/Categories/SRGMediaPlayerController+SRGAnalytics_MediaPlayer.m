@@ -43,15 +43,15 @@ static void *s_analyticsPlayerVersionKey = &s_analyticsPlayerVersionKey;
     [self prepareToPlayURL:URL atPosition:position withSegments:segments userInfo:fullUserInfo completionHandler:completionHandler];
 }
 
-- (void)prepareToPlayItem:(AVPlayerItem *)item
-               atPosition:(SRGPosition *)position
-             withSegments:(NSArray<id<SRGSegment>> *)segments
-          analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
-                 userInfo:(NSDictionary *)userInfo
-        completionHandler:(void (^)(void))completionHandler
+- (void)prepareToPlayURLAsset:(AVURLAsset *)URLAsset
+                   atPosition:(SRGPosition *)position
+                 withSegments:(NSArray<id<SRGSegment>> *)segments
+              analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
+                     userInfo:(NSDictionary *)userInfo
+            completionHandler:(void (^)(void))completionHandler
 {
     NSDictionary *fullUserInfo = [SRGMediaPlayerController fullInfoWithAnalyticsLabels:analyticsLabels userInfo:userInfo];
-    [self prepareToPlayItem:item atPosition:position withSegments:segments userInfo:fullUserInfo completionHandler:completionHandler];
+    [self prepareToPlayURLAsset:URLAsset atPosition:position withSegments:segments userInfo:fullUserInfo completionHandler:completionHandler];
 }
 
 - (void)playURL:(NSURL *)URL
@@ -64,14 +64,14 @@ analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
     [self playURL:URL atPosition:position withSegments:segments userInfo:fullUserInfo];
 }
 
-- (void)playItem:(AVPlayerItem *)item
-      atPosition:(SRGPosition *)position
-    withSegments:(NSArray<id<SRGSegment>> *)segments
- analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
-        userInfo:(NSDictionary *)userInfo
+- (void)playURLAsset:(AVURLAsset *)URLAsset
+          atPosition:(SRGPosition *)position
+        withSegments:(NSArray<id<SRGSegment>> *)segments
+     analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
+            userInfo:(NSDictionary *)userInfo
 {
     NSDictionary *fullUserInfo = [SRGMediaPlayerController fullInfoWithAnalyticsLabels:analyticsLabels userInfo:userInfo];
-    [self playItem:item atPosition:position withSegments:segments userInfo:fullUserInfo];
+    [self playURLAsset:URLAsset atPosition:position withSegments:segments userInfo:fullUserInfo];
 }
 
 - (void)prepareToPlayURL:(NSURL *)URL
@@ -86,16 +86,16 @@ analyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
     [self prepareToPlayURL:URL atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo completionHandler:completionHandler];
 }
 
-- (void)prepareToPlayItem:(AVPlayerItem *)item
-                  atIndex:(NSInteger)index
-                 position:(SRGPosition *)position
-               inSegments:(NSArray<id<SRGSegment>> *)segments
-      withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
-                 userInfo:(NSDictionary *)userInfo
-        completionHandler:(void (^)(void))completionHandler
+- (void)prepareToPlayURLAsset:(AVURLAsset *)URLAsset
+                      atIndex:(NSInteger)index
+                     position:(SRGPosition *)position
+                   inSegments:(NSArray<id<SRGSegment>> *)segments
+          withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
+                     userInfo:(NSDictionary *)userInfo
+            completionHandler:(void (^)(void))completionHandler
 {
     NSDictionary *fullUserInfo = [SRGMediaPlayerController fullInfoWithAnalyticsLabels:analyticsLabels userInfo:userInfo];
-    [self prepareToPlayItem:item atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo completionHandler:completionHandler];
+    [self prepareToPlayURLAsset:URLAsset atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo completionHandler:completionHandler];
 }
 
 - (void)playURL:(NSURL *)URL
@@ -109,15 +109,15 @@ withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
     [self playURL:URL atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo];
 }
 
-- (void)playItem:(AVPlayerItem *)item
-         atIndex:(NSInteger)index
-        position:(SRGPosition *)position
-      inSegments:(NSArray<id<SRGSegment>> *)segments
-withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
-        userInfo:(NSDictionary *)userInfo
+- (void)playURLAsset:(AVURLAsset *)URLAsset
+             atIndex:(NSInteger)index
+            position:(SRGPosition *)position
+          inSegments:(NSArray<id<SRGSegment>> *)segments
+ withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
+            userInfo:(NSDictionary *)userInfo
 {
     NSDictionary *fullUserInfo = [SRGMediaPlayerController fullInfoWithAnalyticsLabels:analyticsLabels userInfo:userInfo];
-    [self playItem:item atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo];
+    [self playURLAsset:URLAsset atIndex:index position:position inSegments:segments withUserInfo:fullUserInfo];
 }
 
 #pragma mark Getters and setters
