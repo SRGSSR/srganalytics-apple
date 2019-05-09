@@ -20,18 +20,21 @@
     
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
     
-    NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
-    if (self.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:self.analyticsLabels];
+    NSDictionary<NSString *, NSString *> *mainChapterLabels = self.mainChapter.analyticsLabels;
+    if (mainChapterLabels) {
+        NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
+        if (self.analyticsLabels) {
+            [customInfo addEntriesFromDictionary:self.analyticsLabels];
+        }
+        if (self.mainChapter.analyticsLabels) {
+            [customInfo addEntriesFromDictionary:self.mainChapter.analyticsLabels];
+        }
+        if (resource.analyticsLabels) {
+            [customInfo addEntriesFromDictionary:resource.analyticsLabels];
+        }
+        customInfo[@"source_id"] = sourceUid;
+        labels.customInfo = [customInfo copy];
     }
-    if (self.mainChapter.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:self.mainChapter.analyticsLabels];
-    }
-    if (resource.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:resource.analyticsLabels];
-    }
-    customInfo[@"source_id"] = sourceUid;
-    labels.customInfo = [customInfo copy];
     
     NSDictionary<NSString *, NSString *> *mainChapterComScoreLabels = self.mainChapter.comScoreAnalyticsLabels;
     if (mainChapterComScoreLabels) {
