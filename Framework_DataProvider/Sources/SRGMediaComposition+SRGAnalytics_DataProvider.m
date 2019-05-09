@@ -33,17 +33,18 @@
     customInfo[@"source_id"] = sourceUid;
     labels.customInfo = [customInfo copy];
     
-    NSMutableDictionary<NSString *, NSString *> *comScoreCustomInfo = [NSMutableDictionary dictionary];
-    if (self.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:self.comScoreAnalyticsLabels];
+    NSDictionary<NSString *, NSString *> *mainChapterComScoreLabels = self.mainChapter.comScoreAnalyticsLabels;
+    if (mainChapterComScoreLabels) {
+        NSMutableDictionary<NSString *, NSString *> *comScoreCustomInfo = [NSMutableDictionary dictionary];
+        if (self.comScoreAnalyticsLabels) {
+            [comScoreCustomInfo addEntriesFromDictionary:self.comScoreAnalyticsLabels];
+        }
+        [comScoreCustomInfo addEntriesFromDictionary:mainChapterComScoreLabels];
+        if (resource.comScoreAnalyticsLabels) {
+            [comScoreCustomInfo addEntriesFromDictionary:resource.comScoreAnalyticsLabels];
+        }
+        labels.comScoreCustomInfo = [comScoreCustomInfo copy];
     }
-    if (self.mainChapter.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:self.mainChapter.comScoreAnalyticsLabels];
-    }
-    if (resource.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:resource.comScoreAnalyticsLabels];
-    }
-    labels.comScoreCustomInfo = [comScoreCustomInfo copy];
     
     return labels;
 }
