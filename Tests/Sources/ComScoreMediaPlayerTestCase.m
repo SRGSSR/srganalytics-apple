@@ -63,7 +63,10 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForElapsedTimeInterval:3. withHandler:nil];
     
-    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() withCompletionHandler:nil];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil completionHandler:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
@@ -96,7 +99,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -208,7 +214,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -241,7 +250,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -272,7 +284,10 @@ static NSURL *DVRTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -330,7 +345,10 @@ static NSURL *DVRTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -433,7 +451,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:[NSURL URLWithString:@"http://httpbin.org/status/403"]];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:[NSURL URLWithString:@"http://httpbin.org/status/403"] atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -451,7 +472,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
@@ -465,7 +489,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -500,7 +527,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -533,7 +563,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:DVRTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -574,7 +607,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1379,8 +1415,11 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForElapsedTimeInterval:5. withHandler:nil];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -1394,7 +1433,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1419,7 +1461,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1478,7 +1523,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1509,7 +1557,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1594,8 +1645,11 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1653,8 +1707,11 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -1719,8 +1776,11 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -1748,8 +1808,11 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver1];
@@ -1798,7 +1861,10 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1834,8 +1900,11 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full" };
+    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     

@@ -337,7 +337,10 @@ static NSURL *OnDemandTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.customInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }

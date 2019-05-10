@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Streaming measurement additions to SRGAnalytics. The SRGAnalytics_MediaPlayer framework is an optional SRGAnalytics
  *  companion framework which can be used to easily measure audio and video consumption in applications powered by
- *  the SRG Media Player library. If you need to implement streaming measurements for other players, use an instance of
- *  `SRGAnalyticsStreamTracker`, available from the main SRGAnalytics framework.
+ *  the SRG Media Player library.
  *
  *  When playing a media, two levels of analytics information (labels) are consolidated:
  *    - Labels associated with the content being played.
