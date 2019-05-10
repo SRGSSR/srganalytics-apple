@@ -21,14 +21,12 @@
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
     
     NSDictionary<NSString *, NSString *> *mainChapterLabels = self.mainChapter.analyticsLabels;
-    if (mainChapterLabels) {
+    if (mainChapterLabels.count != 0) {
         NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
         if (self.analyticsLabels) {
             [customInfo addEntriesFromDictionary:self.analyticsLabels];
         }
-        if (self.mainChapter.analyticsLabels) {
-            [customInfo addEntriesFromDictionary:self.mainChapter.analyticsLabels];
-        }
+        [customInfo addEntriesFromDictionary:mainChapterLabels];
         if (resource.analyticsLabels) {
             [customInfo addEntriesFromDictionary:resource.analyticsLabels];
         }
@@ -37,7 +35,7 @@
     }
     
     NSDictionary<NSString *, NSString *> *mainChapterComScoreLabels = self.mainChapter.comScoreAnalyticsLabels;
-    if (mainChapterComScoreLabels) {
+    if (mainChapterComScoreLabels.count != 0) {
         NSMutableDictionary<NSString *, NSString *> *comScoreCustomInfo = [NSMutableDictionary dictionary];
         if (self.comScoreAnalyticsLabels) {
             [comScoreCustomInfo addEntriesFromDictionary:self.comScoreAnalyticsLabels];

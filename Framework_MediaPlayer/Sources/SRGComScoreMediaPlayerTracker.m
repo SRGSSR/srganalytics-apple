@@ -122,7 +122,8 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 - (BOOL)createPlaybackSession
 {
     SRGAnalyticsStreamLabels *labels = self.mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-    if (! labels.comScoreLabelsDictionary) {
+    NSDictionary<NSString *, NSString *> *labelsDictionary = labels.comScoreLabelsDictionary;
+    if (labelsDictionary.count == 0) {
         return NO;
     }
     
@@ -135,7 +136,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:self.mediaPlayerController.analyticsPlayerVersion];
     
     [self.streamingAnalytics createPlaybackSession];
-    [self.streamingAnalytics.playbackSession setAssetWithLabels:labels.comScoreLabelsDictionary];
+    [self.streamingAnalytics.playbackSession setAssetWithLabels:labelsDictionary];
     
     return YES;
 }

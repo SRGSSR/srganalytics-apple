@@ -54,7 +54,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
 {
     if (self = [super init]) {
         SRGAnalyticsStreamLabels *mainLabels = mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-        if (! mainLabels.labelsDictionary) {
+        if (mainLabels.labelsDictionary.count == 0) {
             return nil;
         }
         
@@ -226,15 +226,11 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     }
     
     SRGAnalyticsStreamLabels *mainLabels = userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-    if (mainLabels.labelsDictionary) {
-        [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
-    }
+    [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
     
     if ([segment conformsToProtocol:@protocol(SRGAnalyticsSegment)]) {
         SRGAnalyticsStreamLabels *segmentLabels = [(id<SRGAnalyticsSegment>)segment srg_analyticsLabels];
-        if (segmentLabels.labelsDictionary) {
-            [labels addEntriesFromDictionary:segmentLabels.labelsDictionary];
-        }
+        [labels addEntriesFromDictionary:segmentLabels.labelsDictionary];
     }
     
     if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
