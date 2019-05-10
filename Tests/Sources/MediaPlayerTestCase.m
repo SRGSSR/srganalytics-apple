@@ -516,6 +516,21 @@ static NSURL *DVRTestURL(void)
     }];
 }
 
+- (void)testNoLabels
+{
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+        XCTFail(@"No event must be received");
+    }];
+    
+    [self expectationForElapsedTimeInterval:10. withHandler:nil];
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL()];
+    
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
+}
+
 - (void)testCommonLabels
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
