@@ -1845,7 +1845,7 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     __block BOOL pauseReceived = NO;
     
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             XCTAssertFalse(pauseReceived);
