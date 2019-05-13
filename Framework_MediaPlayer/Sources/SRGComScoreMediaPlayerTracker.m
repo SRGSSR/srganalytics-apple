@@ -69,8 +69,8 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         self.mediaPlayerController = mediaPlayerController;
         self.streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
         
-        BOOL trackable = [self createPlaybackSession];
-        if (! trackable) {
+        BOOL created = [self createPlaybackSession];
+        if (! created) {
             return nil;
         }
         

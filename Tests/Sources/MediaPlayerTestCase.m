@@ -516,7 +516,7 @@ static NSURL *DVRTestURL(void)
     }];
 }
 
-- (void)testNoLabels
+- (void)testWithoutLabels
 {
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         XCTFail(@"No event must be received");
