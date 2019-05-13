@@ -16,6 +16,7 @@
 #import "SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h"
 
 #import <libextobjc/libextobjc.h>
+#import <math.h>
 #import <MAKVONotificationCenter/MAKVONotificationCenter.h>
 
 typedef NSString * MediaPlayerTrackerEvent NS_TYPED_ENUM;
@@ -53,6 +54,11 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
 - (instancetype)initWithMediaPlayerController:(SRGMediaPlayerController *)mediaPlayerController
 {
     if (self = [super init]) {
+        SRGAnalyticsStreamLabels *mainLabels = mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
+        if (mainLabels.labelsDictionary.count == 0) {
+            return nil;
+        }
+        
         self.mediaPlayerController = mediaPlayerController;
         self.lastEvent = MediaPlayerTrackerEventStop;
         self.unitTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
@@ -221,15 +227,11 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     }
     
     SRGAnalyticsStreamLabels *mainLabels = userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-    if (mainLabels.labelsDictionary) {
-        [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
-    }
+    [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
     
     if ([segment conformsToProtocol:@protocol(SRGAnalyticsSegment)]) {
         SRGAnalyticsStreamLabels *segmentLabels = [(id<SRGAnalyticsSegment>)segment srg_analyticsLabels];
-        if (segmentLabels.labelsDictionary) {
-            [labels addEntriesFromDictionary:segmentLabels.labelsDictionary];
-        }
+        [labels addEntriesFromDictionary:segmentLabels.labelsDictionary];
     }
     
     if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
@@ -278,6 +280,10 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     }
     
     double observedBitrate = events.lastObject.observedBitrate;
+    if (isnan(observedBitrate) || observedBitrate < 0.) {
+        return nil;
+    }
+    
     return @(observedBitrate);
 }
 
@@ -376,9 +382,11 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     // be unable to attach to initially untracked controller later).
     if (playbackState == SRGMediaPlayerPlaybackStatePreparing) {
         SRGMediaPlayerTracker *tracker = [[SRGMediaPlayerTracker alloc] initWithMediaPlayerController:mediaPlayerController];
-        s_trackers[key] = tracker;
+        if (tracker) {
+            s_trackers[key] = tracker;
         
-        SRGAnalyticsMediaPlayerLogInfo(@"tracker", @"Started tracking for %@", key);
+            SRGAnalyticsMediaPlayerLogInfo(@"tracker", @"Started tracking for %@", key);
+        }
     }
     else if (playbackState == SRGMediaPlayerPlaybackStateIdle) {
         SRGMediaPlayerTracker *tracker = s_trackers[key];

@@ -69,7 +69,10 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         self.mediaPlayerController = mediaPlayerController;
         self.streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
         
-        [self createPlaybackSession];
+        BOOL created = [self createPlaybackSession];
+        if (! created) {
+            return nil;
+        }
         
         // No need to send explicit 'buffer stop' events. Sending a play or pause at the end of the buffering phase
         // (which our player does) suffices to implicitly finish the buffering phase. Buffer events are not required
@@ -116,8 +119,14 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 
 #pragma mark Tracking
 
-- (void)createPlaybackSession
+- (BOOL)createPlaybackSession
 {
+    SRGAnalyticsStreamLabels *labels = self.mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
+    NSDictionary<NSString *, NSString *> *labelsDictionary = labels.comScoreLabelsDictionary;
+    if (labelsDictionary.count == 0) {
+        return NO;
+    }
+    
     if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
         [self.streamingAnalytics setLabelWithName:@"srg_test_id" value:SRGAnalyticsUnitTestingIdentifier()];
     }
@@ -127,11 +136,9 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:self.mediaPlayerController.analyticsPlayerVersion];
     
     [self.streamingAnalytics createPlaybackSession];
+    [self.streamingAnalytics.playbackSession setAssetWithLabels:labelsDictionary];
     
-    SRGAnalyticsStreamLabels *labels = self.mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-    if (labels.comScoreLabelsDictionary) {
-        [self.streamingAnalytics.playbackSession setAssetWithLabels:labels.comScoreLabelsDictionary];
-    }
+    return YES;
 }
 
 - (void)recordEventForPlaybackState:(SRGMediaPlayerPlaybackState)playbackState
@@ -268,14 +275,16 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     // be unable to attach to initially untracked controller later).
     if (playbackState == SRGMediaPlayerPlaybackStatePreparing) {
         SRGComScoreMediaPlayerTracker *tracker = [[SRGComScoreMediaPlayerTracker alloc] initWithMediaPlayerController:mediaPlayerController];
-        s_trackers[key] = tracker;
+        if (tracker) {
+            s_trackers[key] = tracker;
         
-        [tracker recordEvent:ComScoreMediaPlayerTrackerEventBuffer
-              withStreamType:mediaPlayerController.streamType
-                        time:mediaPlayerController.currentTime
-                   timeRange:mediaPlayerController.timeRange];
-        
-        SRGAnalyticsMediaPlayerLogInfo(@"comScoreTracker", @"Started tracking for %@", key);
+            [tracker recordEvent:ComScoreMediaPlayerTrackerEventBuffer
+                  withStreamType:mediaPlayerController.streamType
+                            time:mediaPlayerController.currentTime
+                       timeRange:mediaPlayerController.timeRange];
+            
+            SRGAnalyticsMediaPlayerLogInfo(@"comScoreTracker", @"Started tracking for %@", key);
+        }
     }
     else if (playbackState == SRGMediaPlayerPlaybackStateIdle) {
         SRGComScoreMediaPlayerTracker *tracker = s_trackers[key];
