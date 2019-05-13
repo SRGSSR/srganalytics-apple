@@ -16,6 +16,7 @@
 #import "SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h"
 
 #import <libextobjc/libextobjc.h>
+#import <math.h>
 #import <MAKVONotificationCenter/MAKVONotificationCenter.h>
 
 typedef NSString * MediaPlayerTrackerEvent NS_TYPED_ENUM;
@@ -279,6 +280,10 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     }
     
     double observedBitrate = events.lastObject.observedBitrate;
+    if (isnan(observedBitrate) || observedBitrate < 0.) {
+        return nil;
+    }
+    
     return @(observedBitrate);
 }
 
