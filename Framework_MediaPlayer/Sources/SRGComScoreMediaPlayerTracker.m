@@ -187,7 +187,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     
     if (streamType == SRGMediaPlayerStreamTypeDVR) {
         [streamingAnalytics setDVRWindowLength:SRGMediaAnalyticsCMTimeToMilliseconds(self.mediaPlayerController.timeRange.duration)];
-        [streamingAnalytics setDVRWindowOffset:SRGMediaAnalyticsTimeshiftInMilliseconds(streamType, timeRange, time, self.mediaPlayerController.liveTolerance).integerValue];
+        [streamingAnalytics setDVRWindowOffset:SRGMediaAnalyticsTimeshiftInMilliseconds(streamType, timeRange, time, 0. /* offsets must be exact */).integerValue];
         
         switch (event) {
             case ComScoreMediaPlayerTrackerEventPlay: {
