@@ -501,6 +501,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -515,6 +516,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -526,6 +528,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -539,6 +542,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -552,6 +556,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -562,6 +567,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -575,6 +581,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
         return YES;
     }];
     
@@ -588,6 +595,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
         return YES;
     }];
     
@@ -599,6 +607,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
         return YES;
     }];
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -606,6 +615,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"44000");             // Not 45000 because of chunks
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
         return YES;
     }];
     
@@ -619,6 +629,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -642,6 +653,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -652,6 +664,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
@@ -672,6 +685,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"0");
         return YES;
     }];
     
