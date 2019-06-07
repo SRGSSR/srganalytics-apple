@@ -32,16 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, nullable) NSDictionary<NSString *, NSString *> *comScoreCustomInfo;
 
-/**
- *  Dictionary containing the raw values which will be sent to TagCommander.
- */
-@property (nonatomic, readonly) NSDictionary<NSString *, NSString *> *labelsDictionary;
-
-/**
- *  Dictionary containing the raw values which will be sent to comScore.
- */
-@property (nonatomic, readonly) NSDictionary<NSString *, NSString *> *comScoreLabelsDictionary;
-
 @end
 
 NS_ASSUME_NONNULL_END

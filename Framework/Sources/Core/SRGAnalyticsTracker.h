@@ -59,9 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
  *     subframework to your project as well (@see `SRGMediaPlayerController+SRGAnalytics_DataProvider.h` for more 
  *     information). In this case, all mandatory stream measurement metadata will be automatically provided when
  *     playing the content through one of the playback methods provided in this subframework.
- *
- *  You can also perform manual stream playback tracking when your player implementation does not rely on SRG MediaPlayer,
- *  @see `SRGAnalyticsStreamTracker` for more information.
  */
 @interface SRGAnalyticsTracker : NSObject
 

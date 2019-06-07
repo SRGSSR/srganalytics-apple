@@ -20,30 +20,32 @@
     
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
     
-    NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
-    if (self.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:self.analyticsLabels];
+    NSDictionary<NSString *, NSString *> *mainChapterLabels = self.mainChapter.analyticsLabels;
+    if (mainChapterLabels.count != 0) {
+        NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
+        if (self.analyticsLabels) {
+            [customInfo addEntriesFromDictionary:self.analyticsLabels];
+        }
+        [customInfo addEntriesFromDictionary:mainChapterLabels];
+        if (resource.analyticsLabels) {
+            [customInfo addEntriesFromDictionary:resource.analyticsLabels];
+        }
+        customInfo[@"source_id"] = sourceUid;
+        labels.customInfo = [customInfo copy];
     }
-    if (self.mainChapter.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:self.mainChapter.analyticsLabels];
-    }
-    if (resource.analyticsLabels) {
-        [customInfo addEntriesFromDictionary:resource.analyticsLabels];
-    }
-    customInfo[@"source_id"] = sourceUid;
-    labels.customInfo = [customInfo copy];
     
-    NSMutableDictionary<NSString *, NSString *> *comScoreCustomInfo = [NSMutableDictionary dictionary];
-    if (self.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:self.comScoreAnalyticsLabels];
+    NSDictionary<NSString *, NSString *> *mainChapterComScoreLabels = self.mainChapter.comScoreAnalyticsLabels;
+    if (mainChapterComScoreLabels.count != 0) {
+        NSMutableDictionary<NSString *, NSString *> *comScoreCustomInfo = [NSMutableDictionary dictionary];
+        if (self.comScoreAnalyticsLabels) {
+            [comScoreCustomInfo addEntriesFromDictionary:self.comScoreAnalyticsLabels];
+        }
+        [comScoreCustomInfo addEntriesFromDictionary:mainChapterComScoreLabels];
+        if (resource.comScoreAnalyticsLabels) {
+            [comScoreCustomInfo addEntriesFromDictionary:resource.comScoreAnalyticsLabels];
+        }
+        labels.comScoreCustomInfo = [comScoreCustomInfo copy];
     }
-    if (self.mainChapter.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:self.mainChapter.comScoreAnalyticsLabels];
-    }
-    if (resource.comScoreAnalyticsLabels) {
-        [comScoreCustomInfo addEntriesFromDictionary:resource.comScoreAnalyticsLabels];
-    }
-    labels.comScoreCustomInfo = [comScoreCustomInfo copy];
     
     return labels;
 }

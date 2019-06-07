@@ -95,7 +95,7 @@ Note that the labels might differ depending on the service they are sent to. Be 
 
 ## Measuring application functionalities
 
-To measure any kind of application functionality, you can use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
+To measure any kind of application functionality, you typically use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
 
 ```objective-c
 [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"full-screen"];
@@ -112,7 +112,7 @@ You can disable tracking by setting the `SRGMediaPlayerController` `tracked` pro
 Two levels of measurement information (labels) can be provided:
 
 * Labels associated with the content being played, and which can be supplied when playing the media. Dedicated methods are available from `SRGMediaPlayerController+SRGAnalytics.h`.
-* Labels associated with a segment being played, and which are supplied by having segments implement the `SRGAnalyticsSegment` protocol.
+* Labels associated with a segment being played, and which are supplied by having segments implement the `SRGAnalyticsSegment` protocol. Note that comScore tracking ignores segments altogether.
 
 When playing a segment, segment labels are superimposed to content labels. You can therefore decide to selectively override content labels by having segments return labels with matching names, if needed. 
 
@@ -177,7 +177,7 @@ MYAPP_MEDIA_ID = Subject
 MYAPP_PRODUCER = RTS
 ```
 
-The mechanism is the same for information sent to comScore.
+There is no such overloading mechanism for comScore measurements, which ignore segments altogether.
 
 ## Automatic media consumption measurement labels using the SRG Data Provider library
 
@@ -195,36 +195,6 @@ This framework adds a category `SRGMediaPlayerController (SRGAnalytics_DataProvi
 on an `SRGMediaPlayerController` instance.
 
 Nothing more is required for correct media consumption measurements. During playback, all analytics labels for the content and its segments will be transparently managed for you.
-
-## Measurements of other media players
-
-If your application cannot use [SRG Media Player](https://github.com/SRGSSR/SRGMediaPlayer-iOS) for media playback, you must implement media streaming measurements manually. To track playback for a media, instantiate an `SRGAnalyticsStreamTracker` object and retain it somewhere during media playback. 
-
-```objective-c
-self.streamTracker = [[SRGAnalyticsStreamTracker alloc] initWithLivestream:NO];
-```
-
-The initializer requires a livestream parameter, specifying whether the stream is a livestream or not. This distinction is important, as measurements are performed slightly differently for livestreams. The tracker must therefore only be instantiated once this information is known.
-
-When the state of the playback changes, call the update method available from the stream tracker public interface, specifying information about the new state of the stream. When transitions occur on the basis of this state information, the tracker automatically generates streaming measurements transparently. You should therefore update the state of your player when it changes, so that the tracker can keep an accurate picture of the stream state.
-
-For example, you can declare that the stream is being played at the 6th second by calling:
-
-```objective-c
-[self.streamTracker updateWithStreamState:SRGAnalyticsPlayerStatePlaying
-                                 position:6000
-                                   labels:nil];
-```
-
-When using this lower-level API, you are responsible of following SRG SSR guidelines for playback measurements. For example, you need to supply correct segment labels if the user has chosen to play a specific part of your media (none in the example above). Read [our internal documentation](https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/195595938/Implementation+Concept+-+draft) for more information.
-
-Correctly conforming to all SRG SSR guidelines is not a trivial task, though. Please contact us if you need help in implementing correct stream statistics for a custom player.
-
-## Manual resource retrieval
-
-Using the `SRGAnalytics_DataProvider.framework` companion framework is all you need to play a media with complete analytics information, right within an SRG Media Player controller instance.
-
-In the case you need to play a resource without an SRG Media Player controller instance (e.g. with Google Cast default receiver), the companion framework provides the `-[SRGMediaComposition playbackContextWithPreferredSettings:contextBlock:]` method, with which you can find the proper resource to play.
 
 ## Automatic identity measurement labels using the SRG Identity library
 
@@ -244,6 +214,12 @@ This framework adds a category `SRGAnalyticsTracker (SRGAnalytics_Identity)`, wh
     // ...
 }
 ```
+
+## Manual resource retrieval
+
+Using the `SRGAnalytics_DataProvider.framework` companion framework is all you need to play a media with complete analytics information, right within an SRG Media Player controller instance.
+
+In the case you need to play a resource without an SRG Media Player controller instance (e.g. with Google Cast default receiver), the companion framework provides the `-[SRGMediaComposition playbackContextWithPreferredSettings:contextBlock:]` method, with which you can find the proper resource to play.
 
 ## Thread-safety
 

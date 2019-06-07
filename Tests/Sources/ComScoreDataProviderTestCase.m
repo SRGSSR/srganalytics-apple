@@ -4,7 +4,7 @@
 //  License information is available from the LICENSE file.
 //
 
-#import "AnalyticsTestCase.h"
+#import "XCTestCase+Tests.h"
 
 #import <SRGAnalytics_DataProvider/SRGAnalytics_DataProvider.h>
 
@@ -13,7 +13,7 @@ static NSURL *ServiceTestURL(void)
     return SRGIntegrationLayerProductionServiceURL();
 }
 
-@interface ComScoreDataProviderTestCase : AnalyticsTestCase
+@interface ComScoreDataProviderTestCase : XCTestCase
 
 @property (nonatomic) SRGMediaPlayerController *mediaPlayerController;
 
@@ -25,6 +25,7 @@ static NSURL *ServiceTestURL(void)
 
 - (void)setUp
 {
+    SRGAnalyticsRenewUnitTestingIdentifier();
     self.mediaPlayerController = [[SRGMediaPlayerController alloc] init];
     self.mediaPlayerController.liveTolerance = 10.;
 }
@@ -39,7 +40,7 @@ static NSURL *ServiceTestURL(void)
 
 - (void)testPrepareToPlayMediaComposition
 {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Ready to play"];
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Ready to play"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
     [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
@@ -98,8 +99,8 @@ static NSURL *ServiceTestURL(void)
     // Use a segment id as video id, expect segment labels
     [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
-        XCTAssertEqualObjects(labels[@"ns_st_ep"], @"Der Neue ist der Alte");
-        XCTAssertEqualObjects(labels[@"srg_mqual"], @"HD");
+        XCTAssertEqualObjects(labels[@"ns_st_ep"], @"10vor10 vom 06.09.2018");
+        XCTAssertEqualObjects(labels[@"srg_mqual"], @"SD");
         return YES;
     }];
     
@@ -111,7 +112,7 @@ static NSURL *ServiceTestURL(void)
         fetchedMediaComposition = mediaComposition;
         
         SRGPlaybackSettings *settings = [[SRGPlaybackSettings alloc] init];
-        settings.quality = SRGQualityHD;
+        settings.quality = SRGQualitySD;
         
         [self.mediaPlayerController playMediaComposition:mediaComposition atPosition:nil withPreferredSettings:nil userInfo:nil];
     }] resume];

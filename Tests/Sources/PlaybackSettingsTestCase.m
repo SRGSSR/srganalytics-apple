@@ -4,11 +4,11 @@
 //  License information is available from the LICENSE file.
 //
 
-#import "AnalyticsTestCase.h"
+#import "XCTestCase+Tests.h"
 
 #import <SRGAnalytics_DataProvider/SRGAnalytics_DataProvider.h>
 
-@interface PlaybackSettingsTestCase : AnalyticsTestCase
+@interface PlaybackSettingsTestCase : XCTestCase
 
 @end
 

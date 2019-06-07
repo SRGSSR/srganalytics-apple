@@ -43,13 +43,6 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     [self reloadData];
 }
 
-#pragma mark SRGAnalyticsViewTracking protocol
-
-- (NSString *)srg_pageViewTitle
-{
-    return @"Demo list";
-}
-
 #pragma mark UITableViewDelegate protocol
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,7 +127,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
                 }
                     
                 case 1: {
-                    URL = [NSURL URLWithString:@"http://stream-i.rts.ch/i/tp/1993/tp_10071993-,450,k.mp4.csmil/master.m3u8"];
+                    URL = [NSURL URLWithString:@"http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4"];
                     break;
                 }
                     
@@ -149,8 +142,12 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
                 }
             }
             
+            SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+            labels.customInfo = @{ @"media_id" : @(indexPath.row).stringValue };
+            labels.comScoreCustomInfo = @{ @"media_id" : @(indexPath.row).stringValue };
+            
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
-            [playerViewController.controller playURL:URL];
+            [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
             [self presentViewController:playerViewController animated:YES completion:nil];
             break;
         }

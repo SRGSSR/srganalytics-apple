@@ -4,16 +4,13 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <ComScore/ComScore.h>
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  Internal category on a comScore class, used for swizzling purposes.
+ *  Start intercepting analytics requests, emitting associated notifications, @see `SRGAnalyticsNotifications.h`.
  */
-@interface CSMeasurementDispatcher (SRGAnalytics)
-
-@end
+OBJC_EXPORT void SRGAnalyticsEnableRequestInterceptor(void);
 
 NS_ASSUME_NONNULL_END

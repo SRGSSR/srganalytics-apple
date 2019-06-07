@@ -4,11 +4,11 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DemosViewController : UITableViewController <UITableViewDelegate>
+@interface SRGComScoreMediaPlayerTracker : NSObject
 
 @end
 

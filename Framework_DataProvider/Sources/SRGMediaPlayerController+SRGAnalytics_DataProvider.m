@@ -49,21 +49,20 @@ static NSString * const SRGAnalyticsMediaPlayerSourceUidKey = @"SRGAnalyticsMedi
         NSDictionary<SRGResourceLoaderOption, id> *options = @{ SRGResourceLoaderOptionDiagnosticServiceNameKey : @"SRGPlaybackMetrics",
                                                                 SRGResourceLoaderOptionDiagnosticReportNameKey : URN };
         
-        AVURLAsset *asset = nil;
+        AVURLAsset *URLAsset = nil;
         
         SRGDRM *fairPlayDRM = [resource DRMWithType:SRGDRMTypeFairPlay];
         if (fairPlayDRM) {
-            asset = [AVURLAsset srg_fairPlayProtectedAssetWithURL:streamURL certificateURL:fairPlayDRM.certificateURL options:options];
+            URLAsset = [AVURLAsset srg_fairPlayProtectedAssetWithURL:streamURL certificateURL:fairPlayDRM.certificateURL options:options];
         }
         else if (resource.tokenType == SRGTokenTypeAkamai) {
-            asset = [AVURLAsset srg_akamaiTokenProtectedAssetWithURL:streamURL options:options];
+            URLAsset = [AVURLAsset srg_akamaiTokenProtectedAssetWithURL:streamURL options:options];
         }
         else {
-            asset = [AVURLAsset assetWithURL:streamURL];
+            URLAsset = [AVURLAsset assetWithURL:streamURL];
         }
         
-        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
-        [self prepareToPlayItem:playerItem atIndex:index position:position inSegments:segments withAnalyticsLabels:analyticsLabels userInfo:[fullUserInfo copy] completionHandler:^{
+        [self prepareToPlayURLAsset:URLAsset atIndex:index position:position inSegments:segments withAnalyticsLabels:analyticsLabels userInfo:[fullUserInfo copy] completionHandler:^{
             completionHandler ? completionHandler() : nil;
         }];
     }];

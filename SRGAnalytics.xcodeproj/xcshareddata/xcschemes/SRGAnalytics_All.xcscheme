@@ -96,17 +96,18 @@
                BlueprintName = "SRGAnalytics-tests"
                ReferencedContainer = "container:SRGAnalytics.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "ComScoreDataProviderTestCase">
-               </Test>
-               <Test
-                  Identifier = "ComScoreMediaPlayerTestCase">
-               </Test>
-               <Test
-                  Identifier = "ComScoreTrackerTestCase">
-               </Test>
-            </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E66F8A651D62DC250004EB58"
+               BuildableName = "SRGAnalytics-demo-tests.xctest"
+               BlueprintName = "SRGAnalytics-demo-tests"
+               ReferencedContainer = "container:SRGAnalytics.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>

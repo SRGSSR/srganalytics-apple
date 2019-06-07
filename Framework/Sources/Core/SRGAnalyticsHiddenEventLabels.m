@@ -7,6 +7,7 @@
 #import "SRGAnalyticsHiddenEventLabels.h"
 
 #import "NSMutableDictionary+SRGAnalytics.h"
+#import "SRGAnalyticsLabels+Private.h"
 
 @implementation SRGAnalyticsHiddenEventLabels
 

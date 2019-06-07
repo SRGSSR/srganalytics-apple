@@ -46,14 +46,9 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
 @property (nonatomic, getter=isCentralized) BOOL centralized;
 
 /**
- *  Set to `YES` to unit test measurements.
+ *  When set to `YES`, notifications will be emitted when analytics measurements are sent (@see `SRGAnalyticsNotifications.h`).
  *
  *  Default value is `NO`.
- *
- *  @discussion When unit testing is enabled, notifications are emitted so that unit tests can verify what information is
- *              being sent and when. In addition:
- *                - TagCommander service calls will be disabled, and the heartbeat will be reduced to 3 seconds.
- *                - NetMetrix and comScore service calls will be disabled.
  */
 @property (nonatomic, getter=isUnitTesting) BOOL unitTesting;
 

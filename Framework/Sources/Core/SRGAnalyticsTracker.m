@@ -10,19 +10,33 @@
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "NSString+SRGAnalytics.h"
 #import "SRGAnalytics.h"
+#import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsLogger.h"
 #import "SRGAnalyticsNetMetrixTracker.h"
-#import "SRGAnalyticsNotifications.h"
+#import "SRGAnalyticsNotifications+Private.h"
 #import "UIViewController+SRGAnalytics.h"
 
 #import <ComScore/ComScore.h>
-#import <ComScore/CSTaskExecutor.h>
 #import <TCCore/TCCore.h>
 #import <TCSDK/TCSDK.h>
+
+static NSString * s_unitTestingIdentifier = nil;
 
 __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 {
     [TCDebug setDebugLevel:TCLogLevel_None];
+    
+    SRGAnalyticsRenewUnitTestingIdentifier();
+}
+
+NSString *SRGAnalyticsUnitTestingIdentifier(void)
+{
+    return s_unitTestingIdentifier;
+}
+
+void SRGAnalyticsRenewUnitTestingIdentifier(void)
+{
+    s_unitTestingIdentifier = NSUUID.UUID.UUIDString;
 }
 
 @interface SRGAnalyticsTracker ()
@@ -31,9 +45,9 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 
 @property (nonatomic) TagCommander *tagCommander;
 @property (nonatomic) SRGAnalyticsNetMetrixTracker *netmetrixTracker;
-@property (nonatomic) CSStreamSense *streamSense;
+@property (nonatomic) SCORStreamingAnalytics *streamSense;
 
-@property (nonatomic) NSDictionary<NSString *, NSString *> *globalLabels;
+@property (nonatomic) SRGAnalyticsLabels *globalLabels;
 
 @end
 
@@ -55,87 +69,43 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 
 - (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
 {
+    if (self.configuration) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker is already started");
+        return;
+    }
+    
     self.configuration = configuration;
     
-    [self startTagCommanderTrackerWithConfiguration:configuration];
-    [self startComscoreTrackerWithConfiguration:configuration];
-    [self startNetmetrixTrackerWithConfiguration:configuration];
+    if (configuration.unitTesting) {
+        SRGAnalyticsEnableRequestInterceptor();
+    }
+    
+    SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
+        builder.publisherId = @"6036016";
+        builder.publisherSecret = @"fee16147939462a9b6faa0944ad832d1";
+        
+        builder.applicationName = [[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"] stringByAppendingString:@" iOS"];
+        builder.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        
+        builder.vce = NO;
+        builder.secureTransmission = YES;
+        builder.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+        
+        if (configuration.unitTesting) {
+            builder.startLabels = @{ @"srg_test_id" : SRGAnalyticsUnitTestingIdentifier() };
+        }
+        
+        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
+        // Coding Document for Video Players, page 16
+        builder.httpRedirectCaching = NO;
+    }];
+    [[SCORAnalytics configuration] addClientWithConfiguration:publisherConfiguration];
+    [SCORAnalytics start];
     
     [self sendApplicationList];
 }
 
-- (void)startTagCommanderTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    if (! configuration.unitTesting) {
-        self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
-        [self.tagCommander enableRunningInBackground];
-        [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
-        [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.comScoreVirtualSite];
-        [self.tagCommander addPermanentData:@"navigation_environment" withValue:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod"];
-        [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
-    }
-}
-
-- (void)startComscoreTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    if (self.configuration.unitTesting) {
-        return;
-    }
-    
-    [CSComScore setAppContext];
-    [CSComScore setSecure:YES];
-    [CSComScore setCustomerC2:@"6036016"];
-    [CSComScore setPublisherSecret:@"b19346c7cb5e521845fb032be24b0154"];
-    [CSComScore enableAutoUpdate:60 foregroundOnly:NO];     //60 is the Comscore default interval value
-    
-    NSString *applicationName = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleDisplayName"] ?: [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleName"];
-    if (applicationName) {
-        [CSComScore setAutoStartLabels:@{ @"name": applicationName }];
-    }
-    
-    [CSComScore setLabels:[self comscoreGlobalLabelsWithConfiguration:configuration]];
-    
-    // The default keep-alive time interval of 20 minutes is too big. Set it to 9 minutes
-    self.streamSense = [[CSStreamSense alloc] init];
-    [self.streamSense setKeepAliveInterval:9 * 60];
-}
-
-- (void)startNetmetrixTrackerWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    self.netmetrixTracker = [[SRGAnalyticsNetMetrixTracker alloc] initWithConfiguration:configuration];
-}
-
 #pragma mark Labels
-
-- (NSDictionary<NSString *, NSString *> *)comscoreGlobalLabelsWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-{
-    NSBundle *mainBundle = NSBundle.mainBundle;
-    
-    NSString *appName = [[mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"] stringByAppendingString:@" iOS"];
-    NSString *appLanguage = mainBundle.preferredLocalizations.firstObject ?: @"fr";
-    NSString *appVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
-    NSMutableDictionary<NSString *, NSString *> *globalLabels = [@{ @"ns_ap_an" : appName,
-                                                                    @"ns_ap_lang" : [NSLocale canonicalLanguageIdentifierFromString:appLanguage],
-                                                                    @"ns_ap_ver" : appVersion,
-                                                                    @"srg_unit" : configuration.businessUnitIdentifier.uppercaseString,
-                                                                    @"srg_ap_push" : @"0",
-                                                                    @"ns_site" : @"mainsite",                                          // The 'mainsite' is a constant value. If wrong, everything is screwed.
-                                                                    @"ns_vsite" : configuration.comScoreVirtualSite,                   // The virtual site 'vsite' is associated with the app. It is created by comScore
-                                                                    @"ns_st_pu" : SRGAnalyticsMarketingVersion() } mutableCopy];
-    
-    if (configuration.unitTesting) {
-        static NSString *s_debugTimestamp;
-        static dispatch_once_t s_onceToken;
-        dispatch_once(&s_onceToken, ^{
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"yyyy-MM-dd'@'HH:mm:ss";
-            s_debugTimestamp = [dateFormatter stringFromDate:NSDate.date];
-        });
-        globalLabels[@"srg_test"] = s_debugTimestamp;
-    }
-    return [globalLabels copy];
-}
 
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
 {
@@ -175,33 +145,31 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 
 - (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    if (self.configuration.unitTesting) {
-        return;
-    }
-    
-    [CSComScore hiddenWithLabels:labels];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.comScoreLabelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    [fullLabels addEntriesFromDictionary:labels];
+    [SCORAnalytics notifyHiddenEventWithLabels:[fullLabels copy]];
 }
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    NSMutableDictionary<NSString *, NSString *> *allLabels = [self.globalLabels mutableCopy] ?: [NSMutableDictionary dictionary];
-    [allLabels addEntriesFromDictionary:labels];
+    if ( ! self.tagCommander) {
+        SRGAnalyticsConfiguration *configuration = self.configuration;
+        NSAssert(configuration != nil, @"The tracker must be started");
+        
+        self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
+        [self.tagCommander enableRunningInBackground];
+        [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
+        [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.comScoreVirtualSite];
+        [self.tagCommander addPermanentData:@"navigation_environment" withValue:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod"];
+        [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
+    }
     
-    // TagCommander might not be initialized (for the test business unit)
-    if (self.tagCommander) {
-        [allLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
-            [self.tagCommander addData:key withValue:object];
-        }];
-        [self.tagCommander sendData];
-    }
-    else {
-        // Only custom labels are sent in the notification userInfo. Internal predefined TagCommander variables are not sent,
-        // as they are not needed for tests (they are part of what is guaranteed by the TagCommander SDK). For a complete list of
-        // predefined variables, see https://github.com/TagCommander/pods/blob/master/TCSDK/PredefinedVariables.md
-        [NSNotificationCenter.defaultCenter postNotificationName:SRGAnalyticsRequestNotification
-                                                          object:self
-                                                        userInfo:@{ SRGAnalyticsLabelsKey : [allLabels copy] }];
-    }
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.labelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    [fullLabels addEntriesFromDictionary:labels];
+    [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
+        [self.tagCommander addData:key withValue:object];
+    }];
+    [self.tagCommander sendData];
 }
 
 #pragma mark Page view tracking
@@ -216,6 +184,11 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
+    if (! self.configuration) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+        return;
+    }
+    
     if (title.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing title. No event will be sent");
         return;
@@ -223,6 +196,10 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
     
     [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
+    
+    if (! self.netmetrixTracker) {
+        self.netmetrixTracker = [[SRGAnalyticsNetMetrixTracker alloc] initWithConfiguration:self.configuration];
+    }
     
     [self.netmetrixTracker trackView];
 }
@@ -232,20 +209,16 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
                                 labels:(SRGAnalyticsPageViewLabels *)labels
                   fromPushNotification:(BOOL)fromPushNotification
 {
-    if (self.configuration.unitTesting) {
-        return;
-    }
-    
     NSAssert(title.length != 0, @"A title is required");
     
-    NSMutableDictionary *pageViewLabelsDictionary = [NSMutableDictionary dictionary];
-    [pageViewLabelsDictionary srg_safelySetString:title forKey:@"srg_title"];
-    [pageViewLabelsDictionary srg_safelySetString:@(fromPushNotification).stringValue forKey:@"srg_ap_push"];
+    NSMutableDictionary *fullLabelsDictionary = [NSMutableDictionary dictionary];
+    [fullLabelsDictionary srg_safelySetString:title forKey:@"srg_title"];
+    [fullLabelsDictionary srg_safelySetString:@(fromPushNotification).stringValue forKey:@"srg_ap_push"];
     
     NSString *category = @"app";
     
     if (! levels) {
-        [pageViewLabelsDictionary srg_safelySetString:category forKey:@"srg_n1"];
+        [fullLabelsDictionary srg_safelySetString:category forKey:@"srg_n1"];
     }
     else if (levels.count > 0) {
         __block NSMutableString *levelsComScoreFormattedString = [NSMutableString new];
@@ -254,7 +227,7 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
             NSString *levelValue = [object description];
             
             if (idx < 10) {
-                [pageViewLabelsDictionary srg_safelySetString:levelValue forKey:levelKey];
+                [fullLabelsDictionary srg_safelySetString:levelValue forKey:levelKey];
             }
             
             if (levelsComScoreFormattedString.length > 0) {
@@ -266,15 +239,19 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
         category = [levelsComScoreFormattedString copy];
     }
     
-    [pageViewLabelsDictionary srg_safelySetString:category forKey:@"category"];
-    [pageViewLabelsDictionary srg_safelySetString:[self pageIdWithTitle:title levels:levels] forKey:@"name"];
+    [fullLabelsDictionary srg_safelySetString:category forKey:@"ns_category"];
+    [fullLabelsDictionary srg_safelySetString:[self pageIdWithTitle:title levels:levels] forKey:@"name"];
     
     NSDictionary<NSString *, NSString *> *comScoreLabelsDictionary = [labels comScoreLabelsDictionary];
     if (comScoreLabelsDictionary) {
-        [pageViewLabelsDictionary addEntriesFromDictionary:comScoreLabelsDictionary];
+        [fullLabelsDictionary addEntriesFromDictionary:comScoreLabelsDictionary];
     }
     
-    [CSComScore viewWithLabels:pageViewLabelsDictionary];
+    if (self.configuration.unitTesting) {
+        fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+    }
+    
+    [SCORAnalytics notifyViewEventWithLabels:[fullLabelsDictionary copy]];
 }
 
 - (void)trackTagCommanderPageViewWithTitle:(NSString *)title
@@ -306,6 +283,10 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
         [fullLabelsDictionary addEntriesFromDictionary:labelsDictionary];
     }
     
+    if (self.configuration.unitTesting) {
+        fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+    }
+    
     [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];
 }
 
@@ -319,6 +300,11 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 - (void)trackHiddenEventWithName:(NSString *)name
                           labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
+    if (! self.configuration) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+        return;
+    }
+    
     if (name.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing name. No event will be sent");
         return;
@@ -330,28 +316,30 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 
 - (void)trackComScoreHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
-    if (self.configuration.unitTesting) {
-        return;
-    }
-    
     NSAssert(name.length != 0, @"A name is required");
+    NSAssert(self.configuration != nil, @"The tracker must be started");
     
-    NSMutableDictionary *hiddenEventLabelsDictionary = [NSMutableDictionary dictionary];
-    [hiddenEventLabelsDictionary srg_safelySetString:name forKey:@"srg_title"];
-    [hiddenEventLabelsDictionary srg_safelySetString:@"app" forKey:@"category"];
-    [hiddenEventLabelsDictionary srg_safelySetString:[NSString stringWithFormat:@"app.%@", name.srg_comScoreFormattedString] forKey:@"name"];
+    NSMutableDictionary *fullLabelsDictionary = [NSMutableDictionary dictionary];
+    [fullLabelsDictionary srg_safelySetString:name forKey:@"srg_title"];
+    [fullLabelsDictionary srg_safelySetString:@"app" forKey:@"ns_category"];
+    [fullLabelsDictionary srg_safelySetString:[NSString stringWithFormat:@"app.%@", name.srg_comScoreFormattedString] forKey:@"name"];
     
     NSDictionary<NSString *, NSString *> *comScoreLabelsDictionary = [labels comScoreLabelsDictionary];
     if (comScoreLabelsDictionary) {
-        [hiddenEventLabelsDictionary addEntriesFromDictionary:comScoreLabelsDictionary];
+        [fullLabelsDictionary addEntriesFromDictionary:comScoreLabelsDictionary];
     }
     
-    [CSComScore hiddenWithLabels:hiddenEventLabelsDictionary];
+    if (self.configuration.unitTesting) {
+        fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+    }
+    
+    [self trackComScoreEventWithLabels:[fullLabelsDictionary copy]];
 }
 
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
     NSAssert(name.length != 0, @"A name is required");
+    NSAssert(self.configuration != nil, @"The tracker must be started");
     
     NSMutableDictionary<NSString *, NSString *> *fullLabelsDictionary = [NSMutableDictionary dictionary];
     [fullLabelsDictionary srg_safelySetString:@"hidden_event" forKey:@"event_id"];
@@ -360,6 +348,10 @@ __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
     if (labelsDictionary) {
         [fullLabelsDictionary addEntriesFromDictionary:labelsDictionary];
+    }
+    
+    if (self.configuration.unitTesting) {
+        fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
     [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];

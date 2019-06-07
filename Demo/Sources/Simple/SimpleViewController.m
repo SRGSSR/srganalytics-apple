@@ -94,9 +94,11 @@
     [self srg_trackPageView];
 }
 
-- (void)dismiss:(id)sender
+// Use reset button so that KIF can reliably return to the root controller (using the navigation bar button, whose
+// title changes depending on the available space, is unreliable)
+- (IBAction)reset:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

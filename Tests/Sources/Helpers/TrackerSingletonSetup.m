@@ -15,4 +15,9 @@ __attribute__((constructor)) static void SetupTestSingletonTracker(void)
                                                                                              netMetrixIdentifier:@"test"];
     configuration.unitTesting = YES;
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
+    
+    // The comScore SDK caches events recorded during the initial ~5 seconds after it has been initialized. Then events
+    // are sent as they are recorded. For this reason, to get reliable timings in our tests, we need to wait ~5 seconds
+    // after starting the tracker
+    [NSThread sleepForTimeInterval:6.];
 }

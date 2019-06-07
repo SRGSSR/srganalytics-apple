@@ -4,9 +4,11 @@
 //  License information is available from the LICENSE file.
 //
 
+#import "SRGAnalyticsStreamLabels.h"
+
 #import <Foundation/Foundation.h>
 #import <SRGAnalytics/SRGAnalytics.h>
-#import <SRGMediaplayer/SRGSegment.h>
+#import <SRGMediaplayer/SRGMediaPlayer.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -4,13 +4,17 @@
 //  License information is available from the LICENSE file.
 //
 
-#import "AnalyticsTestCase.h"
+#import "XCTestCase+Tests.h"
 
-@interface PageViewLabelsTestCase : AnalyticsTestCase
+#import "SRGAnalyticsLabels+Private.h"
+
+@interface PageViewLabelsTestCase : XCTestCase
 
 @end
 
 @implementation PageViewLabelsTestCase
+
+#pragma mark Tests
 
 - (void)testEmpty
 {

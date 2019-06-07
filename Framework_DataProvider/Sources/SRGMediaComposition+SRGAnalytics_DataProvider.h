@@ -7,8 +7,7 @@
 #import "SRGPlaybackSettings.h"
 
 #import <SRGAnalytics/SRGAnalytics.h>
-#import <SRGDataProvider/SRGDataProvider.h>
-#import <SRGMediaPlayer/SRGMediaPlayer.h>
+#import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

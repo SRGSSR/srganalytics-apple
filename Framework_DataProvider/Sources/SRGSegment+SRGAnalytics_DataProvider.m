@@ -30,7 +30,6 @@
 {
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
     labels.customInfo = self.analyticsLabels;
-    labels.comScoreCustomSegmentInfo = self.comScoreAnalyticsLabels;
     return labels;
 }
 

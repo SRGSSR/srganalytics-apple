@@ -8,18 +8,11 @@ The SRG Analytics library for iOS makes it easy to add usage tracking informatio
 
 Measurements are based on events emitted by the application and collected by TagCommander, comScore and NetMetrix. 
 
-comScore will be soon discontinued and replaced with TagCommander, though. During a transition period, both solutions will coexist to ensure that measurements, currently performed entirely with comScore, will remain consistent after migration to the TagCommander service.
-
 The SRG Analytics library supports three kinds of measurements:
 
  * View events: Appearance of views (page views), which makes it possible to track which content is seen by users.
  * Hidden events: Custom events which can be used for measurement of application functionalities.
- * Stream playback events: Measurements for audio and video consumption.
-
-The library can be used independently, but also seamlessly integrates with our [SRG Media Player](https://github.com/SRGSSR/SRGMediaPlayer-iOS) and [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-ios) libraries:
-
-* When used in conjunction with the SRG Media Player library, media playback events are automatically tracked for media player controllers. Only basic measurement information is collected (type of the event, playback position, volume, etc.). Your application is responsible of providing other measurement information (e.g. title, duration, etc.), though.
-* When used in conjunction with the SRG Data Provider library as well, the additional SRG standard measurement information (title, duration, etc.) is automatically supplied, without any required work.
+ * Stream playback events: Audio and video consumption measurements for application using our [SRG Media Player](https://github.com/SRGSSR/SRGMediaPlayer-iOS). Additional playback information (title, duration, etc.) must be supplied externally. For application using our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-ios) library, though, this process is entirely automated.
  
 ## Compatibility
 
@@ -167,14 +160,14 @@ import SRGAnalytics_Identity            // For SRGAnalytics_Identity.framework
 
 ### Info.plist settings for application installation measurements
 
-The library automatically tracks which SRG SSR applications are installed on a user device, and sends this information to comScore. For this mechanism to work properly, though, your application **must** declare all official SRG SSR application URL schemes as being supported in its `Info.plist` file. 
+The library automatically tracks which SRG SSR applications are installed on a user device, and sends this information. For this mechanism to work properly, though, your application **must** declare all official SRG SSR application URL schemes as being supported in its `Info.plist` file. 
 
 This can be achieved as follows:
 
 * Run the `LSApplicationQueriesSchemesGenerator.swift ` script found in the `Scripts` folder. This script automatically generates an `LSApplicationQueriesSchemesGenerator.plist` file in the folder you are running it from, containing an up-to-date list of SRG SSR application schemes.
 * Open the generated `plist` file and either copy the `LSApplicationQueriesSchemes` to your project `Info.plist` file, or merge it with already existing entries.
 
-If URL schemes declared by your application do not match the current ones, application installations will not be accurately reported to comScore, and error messages will be logged when the application starts (see _Logging_ below). This situation is not catastropic but should be fixed when possible to ensure better measurements.
+If URL schemes declared by your application do not match the current ones, application installations will not be accurately reported, and error messages will be logged when the application starts (see _Logging_ below). This situation is not catastropic but should be fixed when possible to ensure better measurements.
 
 #### Remark
 
@@ -197,7 +190,14 @@ This logger either automatically integrates with your own logger, or can be easi
 
 ## Advertising Identifier (IDFA)
 
-Neither the SRG Analytics SDK, nor its dependencies, involve the use of the Advertising Identifier (IDFA). Provided all other components your application depends on do not use the IDFA, you can therefore safely answer _No_ to the corresponding question when submitting your binaries through iTunes Connect.
+SRG Analytics internally links against `AdSupport.framework` and therefore requires extra care when submitting an application to the App Store.
+
+As part of your application submission process, you must provide reasons for Advertising Identifier usage. Be sure to tick the following checkboxes when asked to:
+
+* _Attribute this app installation to a previously served advertisement_.
+* _Attribute an action taken within this app to a previously served advertisement_.
+
+Since SRG SSR applications do not contain any ads, you must leave the _Serve advertisements within the app_ checkbox unticked.
 
 ## Demo project
 
