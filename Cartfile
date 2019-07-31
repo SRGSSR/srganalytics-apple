@@ -1,5 +1,5 @@
 github "SRGSSR/ComScore-iOS-watchOS-tvOS" "5.8.4"
-github "SRGSSR/srgdataprovider-ios" "6.7"
+github "SRGSSR/srgdataprovider-ios" "b4cff29a3ac962f1af845917ff5caa9d603883ec"
 github "SRGSSR/srgidentity-ios" "1.0.3"
 github "SRGSSR/srgmediaplayer-ios" "2.7.1"
 github "SRGSSR/tagcommander-ios" "4.3.3_4.3.1"
