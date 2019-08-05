@@ -147,6 +147,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             labels.comScoreCustomInfo = @{ @"media_id" : @(indexPath.row).stringValue };
             
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
+            playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
             [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
             [self presentViewController:playerViewController animated:YES completion:nil];
             break;
