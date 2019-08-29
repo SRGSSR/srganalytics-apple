@@ -35,7 +35,7 @@ let task = URLSession.shared.dataTask(with: configURL, completionHandler: { (dat
     do {
         let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
         if let content = json as? NSArray {
-            let schemes = content.flatMap({ (entry) -> String? in
+            let schemes = content.compactMap({ (entry) -> String? in
                 guard let entry = entry as? NSDictionary else {
                     return nil
                 }
@@ -46,7 +46,7 @@ let task = URLSession.shared.dataTask(with: configURL, completionHandler: { (dat
             })
 
             print("💾 Saving schemes to file \(fileName)")
-            var schemesDictionary = ["LSApplicationQueriesSchemes": schemes]
+            let schemesDictionary = ["LSApplicationQueriesSchemes": schemes]
             let written = (schemesDictionary as NSDictionary).write(toFile: fileName, atomically: true)
             if written {
                 print("Done. Thanks. Bye. 🎉")
