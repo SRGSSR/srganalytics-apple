@@ -12,6 +12,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
+ *  Options (as an `NSDictionary<SRGResourceLoaderOption, id>`) which can be provided to the media resource loader,
+ *  through the `userInfo` dictionary supplied to playback methods.
+ *
+ *  @see `SRGResourceLoaderOption` for valid values.
+ */
+OBJC_EXPORT NSString * const SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey;
+
+/**
  *  Data provider compatibility additions to `SRGMediaPlayerController`. By playing medias with the methods provided
  *  by this category, playback and analytics metadata is entirely retrieved from the Integration Layer and automatically
  *  managed without additional work.
