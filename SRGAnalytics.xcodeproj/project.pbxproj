@@ -33,8 +33,8 @@
 		0811A8541D800BBC00A9863B /* libextobjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0811A8521D800BA000A9863B /* libextobjc.framework */; };
 		0811A8551D800BBC00A9863B /* libextobjc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0811A8521D800BA000A9863B /* libextobjc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		083EE17C1F2B8B2700413A68 /* ComScoreDataProviderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 083EE17A1F2B86B600413A68 /* ComScoreDataProviderTestCase.m */; };
+		0846F5DC232FBC3E00234065 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */; };
 		08539C271F306E390033D406 /* ComScoreTrackerTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 08539C251F306CAF0033D406 /* ComScoreTrackerTestCase.m */; };
-		088700D51DA2540F00D4961A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 088700AF1DA2525800D4961A /* LaunchScreen.xib */; };
 		088700D71DA2542700D4961A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B51DA2528900D4961A /* AppDelegate.m */; };
 		088700D81DA2542700D4961A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B61DA2528900D4961A /* main.m */; };
 		088700D91DA2542D00D4961A /* DemosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B91DA2528900D4961A /* DemosViewController.m */; };
@@ -357,8 +357,8 @@
 /* Begin PBXFileReference section */
 		0811A8521D800BA000A9863B /* libextobjc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libextobjc.framework; path = Carthage/Build/iOS/libextobjc.framework; sourceTree = "<group>"; };
 		083EE17A1F2B86B600413A68 /* ComScoreDataProviderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComScoreDataProviderTestCase.m; sourceTree = "<group>"; };
+		0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08539C251F306CAF0033D406 /* ComScoreTrackerTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComScoreTrackerTestCase.m; sourceTree = "<group>"; };
-		088700AF1DA2525800D4961A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		088700B41DA2528900D4961A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		088700B51DA2528900D4961A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		088700B61DA2528900D4961A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -984,7 +984,7 @@
 			isa = PBXGroup;
 			children = (
 				E6FC7F061D61FA4700A55085 /* Images.xcassets */,
-				088700AF1DA2525800D4961A /* LaunchScreen.xib */,
+				0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1368,8 +1368,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				088700D51DA2540F00D4961A /* LaunchScreen.xib in Resources */,
 				E6296E881DA6205200E33C32 /* SimpleViewController.storyboard in Resources */,
+				0846F5DC232FBC3E00234065 /* LaunchScreen.storyboard in Resources */,
 				E6296E861DA60CE700E33C32 /* DemosViewController.storyboard in Resources */,
 				E6FC7F1D1D61FA4700A55085 /* Images.xcassets in Resources */,
 			);
@@ -1797,7 +1797,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.7.4;
+				MARKETING_VERSION = 3.7.5;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1994,7 +1994,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.7.4;
+				MARKETING_VERSION = 3.7.5;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2336,7 +2336,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.7.4;
+				MARKETING_VERSION = 3.7.5;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2389,7 +2389,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MARKETING_VERSION = 3.7.4;
+				MARKETING_VERSION = 3.7.5;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

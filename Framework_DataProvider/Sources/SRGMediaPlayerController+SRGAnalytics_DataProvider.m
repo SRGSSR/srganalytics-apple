@@ -13,9 +13,11 @@
 #import <libextobjc/libextobjc.h>
 #import <SRGContentProtection/SRGContentProtection.h>
 
-static NSString * const SRGAnalyticsMediaPlayerMediaCompositionKey = @"SRGAnalyticsMediaPlayerMediaComposition";
-static NSString * const SRGAnalyticsMediaPlayerResourceKey = @"SRGAnalyticsMediaPlayerResource";
-static NSString * const SRGAnalyticsMediaPlayerSourceUidKey = @"SRGAnalyticsMediaPlayerSourceUid";
+NSString * const SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey = @"SRGAnalyticsDataProviderUserInfoResourceLoaderOptions";
+
+static NSString * const SRGAnalyticsDataProviderMediaCompositionKey = @"SRGAnalyticsDataProviderMediaComposition";
+static NSString * const SRGAnalyticsDataProviderResourceKey = @"SRGAnalyticsDataProviderResource";
+static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDataProviderSourceUid";
 
 @implementation SRGMediaPlayerController (SRGAnalytics_DataProvider)
 
@@ -38,16 +40,15 @@ static NSString * const SRGAnalyticsMediaPlayerSourceUidKey = @"SRGAnalyticsMedi
         }
         
         NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionary];
-        fullUserInfo[SRGAnalyticsMediaPlayerMediaCompositionKey] = mediaComposition;
-        fullUserInfo[SRGAnalyticsMediaPlayerResourceKey] = resource;
-        fullUserInfo[SRGAnalyticsMediaPlayerSourceUidKey] = preferredSettings.sourceUid;
+        fullUserInfo[SRGAnalyticsDataProviderMediaCompositionKey] = mediaComposition;
+        fullUserInfo[SRGAnalyticsDataProviderResourceKey] = resource;
+        fullUserInfo[SRGAnalyticsDataProviderSourceUidKey] = preferredSettings.sourceUid;
         if (userInfo) {
             [fullUserInfo addEntriesFromDictionary:userInfo];
         }
         
-        NSString *URN = mediaComposition.segmentURN ?: mediaComposition.chapterURN;
-        NSDictionary<SRGResourceLoaderOption, id> *options = @{ SRGResourceLoaderOptionDiagnosticServiceNameKey : @"SRGPlaybackMetrics",
-                                                                SRGResourceLoaderOptionDiagnosticReportNameKey : URN };
+        NSDictionary<SRGResourceLoaderOption, id> *options = userInfo[SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey];
+        NSAssert([options isKindOfClass:NSDictionary.class], @"Resource loader options must be provided as a dictionary");
         
         AVURLAsset *URLAsset = nil;
         
@@ -82,7 +83,7 @@ static NSString * const SRGAnalyticsMediaPlayerSourceUidKey = @"SRGAnalyticsMedi
 
 - (void)setMediaComposition:(SRGMediaComposition *)mediaComposition
 {
-    SRGMediaComposition *currentMediaComposition = self.userInfo[SRGAnalyticsMediaPlayerMediaCompositionKey];
+    SRGMediaComposition *currentMediaComposition = self.userInfo[SRGAnalyticsDataProviderMediaCompositionKey];
     if (! currentMediaComposition || ! mediaComposition) {
         return;
     }
@@ -92,25 +93,25 @@ static NSString * const SRGAnalyticsMediaPlayerSourceUidKey = @"SRGAnalyticsMedi
     }
     
     NSMutableDictionary *userInfo = [self.userInfo mutableCopy];
-    userInfo[SRGAnalyticsMediaPlayerMediaCompositionKey] = mediaComposition;
+    userInfo[SRGAnalyticsDataProviderMediaCompositionKey] = mediaComposition;
     self.userInfo = [userInfo copy];
     
     // Synchronize analytics labels
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @keypath(SRGResource.new, quality), @(self.resource.quality)];
     SRGResource *resource = [[mediaComposition.mainChapter resourcesForStreamingMethod:self.resource.streamingMethod] filteredArrayUsingPredicate:predicate].firstObject;
-    self.analyticsLabels = [mediaComposition analyticsLabelsForResource:resource sourceUid:self.userInfo[SRGAnalyticsMediaPlayerSourceUidKey]];
+    self.analyticsLabels = [mediaComposition analyticsLabelsForResource:resource sourceUid:self.userInfo[SRGAnalyticsDataProviderSourceUidKey]];
     
     self.segments = mediaComposition.mainChapter.segments;
 }
 
 - (SRGMediaComposition *)mediaComposition
 {
-    return self.userInfo[SRGAnalyticsMediaPlayerMediaCompositionKey];
+    return self.userInfo[SRGAnalyticsDataProviderMediaCompositionKey];
 }
 
 - (SRGResource *)resource
 {
-    return self.userInfo[SRGAnalyticsMediaPlayerResourceKey];
+    return self.userInfo[SRGAnalyticsDataProviderResourceKey];
 }
 
 @end
