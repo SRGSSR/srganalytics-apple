@@ -359,9 +359,15 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
 - (BOOL)subtitlesEnabled
 {
     AVPlayerItem *playerItem = self.mediaPlayerController.player.currentItem;
-    AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-    AVMediaSelectionOption *currentLegibleOption = [playerItem selectedMediaOptionInMediaSelectionGroup:legibleGroup];
-    return currentLegibleOption != nil;
+    AVAsset *asset = playerItem.asset;
+    if ([asset statusOfValueForKey:@keypath(asset.availableMediaCharacteristicsWithMediaSelectionOptions) error:NULL] == AVKeyValueStatusLoaded) {
+        AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
+        AVMediaSelectionOption *currentLegibleOption = [playerItem selectedMediaOptionInMediaSelectionGroup:legibleGroup];
+        return currentLegibleOption != nil;
+    }
+    else {
+        return NO;
+    }
 }
 
 #pragma mark Notifications
