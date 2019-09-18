@@ -10,7 +10,7 @@
 		080C46C52221CC90000BF160 /* SRGAnalytics_MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C0D551D61E9CD00AEAE6D /* SRGAnalytics_MediaPlayer.framework */; };
 		0811A8531D800BA000A9863B /* libextobjc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0811A8521D800BA000A9863B /* libextobjc.framework */; };
 		083EE17C1F2B8B2700413A68 /* ComScoreDataProviderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 083EE17A1F2B86B600413A68 /* ComScoreDataProviderTestCase.m */; };
-		0846F5DC232FBC3E00234065 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */; };
+		0846F5DC232FBC3E00234065 /* LaunchScreen~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0846F5DB232FBC3E00234065 /* LaunchScreen~ios.storyboard */; };
 		08539C271F306E390033D406 /* ComScoreTrackerTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 08539C251F306CAF0033D406 /* ComScoreTrackerTestCase.m */; };
 		088700D71DA2542700D4961A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B51DA2528900D4961A /* AppDelegate.m */; };
 		088700D81DA2542700D4961A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B61DA2528900D4961A /* main.m */; };
@@ -124,8 +124,8 @@
 		E61388BC1D91903B00218919 /* SRGAnalyticsNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = E61388BA1D91903B00218919 /* SRGAnalyticsNotifications.m */; };
 		E61C0D751D61EFD200AEAE6D /* SRGAnalytics_MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E61C0D6A1D61EFD200AEAE6D /* SRGAnalytics_MediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E61C0D861D61F16000AEAE6D /* SRGMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C0D841D61F14A00AEAE6D /* SRGMediaPlayer.framework */; };
-		E6296E861DA60CE700E33C32 /* DemosViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6296E851DA60CE700E33C32 /* DemosViewController.storyboard */; };
-		E6296E881DA6205200E33C32 /* SimpleViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6296E871DA6205200E33C32 /* SimpleViewController.storyboard */; };
+		E6296E861DA60CE700E33C32 /* DemosViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6296E851DA60CE700E33C32 /* DemosViewController~ios.storyboard */; };
+		E6296E881DA6205200E33C32 /* SimpleViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6296E871DA6205200E33C32 /* SimpleViewController~ios.storyboard */; };
 		E64B11071D82D4F400CAD97B /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B11061D82D4F400CAD97B /* Segment.m */; };
 		E65490A61D803C03007D96E7 /* SRGAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E69A1FF31D61E2070064E6C1 /* SRGAnalytics.framework */; };
 		E65490B21D803CA2007D96E7 /* MediaPlayerTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = E65490B11D803CA2007D96E7 /* MediaPlayerTestCase.m */; };
@@ -257,7 +257,7 @@
 /* Begin PBXFileReference section */
 		0811A8521D800BA000A9863B /* libextobjc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libextobjc.framework; path = Carthage/Build/iOS/libextobjc.framework; sourceTree = "<group>"; };
 		083EE17A1F2B86B600413A68 /* ComScoreDataProviderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComScoreDataProviderTestCase.m; sourceTree = "<group>"; };
-		0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0846F5DB232FBC3E00234065 /* LaunchScreen~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "LaunchScreen~ios.storyboard"; sourceTree = "<group>"; };
 		08539C251F306CAF0033D406 /* ComScoreTrackerTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComScoreTrackerTestCase.m; sourceTree = "<group>"; };
 		088700B41DA2528900D4961A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		088700B51DA2528900D4961A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -365,8 +365,8 @@
 		E61C0D5F1D61EFD200AEAE6D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E61C0D6A1D61EFD200AEAE6D /* SRGAnalytics_MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRGAnalytics_MediaPlayer.h; sourceTree = "<group>"; };
 		E61C0D841D61F14A00AEAE6D /* SRGMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGMediaPlayer.framework; path = Carthage/Build/iOS/SRGMediaPlayer.framework; sourceTree = "<group>"; };
-		E6296E851DA60CE700E33C32 /* DemosViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DemosViewController.storyboard; sourceTree = "<group>"; };
-		E6296E871DA6205200E33C32 /* SimpleViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SimpleViewController.storyboard; sourceTree = "<group>"; };
+		E6296E851DA60CE700E33C32 /* DemosViewController~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "DemosViewController~ios.storyboard"; sourceTree = "<group>"; };
+		E6296E871DA6205200E33C32 /* SimpleViewController~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SimpleViewController~ios.storyboard"; sourceTree = "<group>"; };
 		E64B11051D82D4F400CAD97B /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
 		E64B11061D82D4F400CAD97B /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
 		E65490A11D803C03007D96E7 /* SRGAnalytics_tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SRGAnalytics_tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -518,7 +518,7 @@
 			children = (
 				088700B81DA2528900D4961A /* DemosViewController.h */,
 				088700B91DA2528900D4961A /* DemosViewController.m */,
-				E6296E851DA60CE700E33C32 /* DemosViewController.storyboard */,
+				E6296E851DA60CE700E33C32 /* DemosViewController~ios.storyboard */,
 			);
 			path = Demos;
 			sourceTree = "<group>";
@@ -528,7 +528,7 @@
 			children = (
 				088700C41DA2528900D4961A /* SimpleViewController.h */,
 				088700C51DA2528900D4961A /* SimpleViewController.m */,
-				E6296E871DA6205200E33C32 /* SimpleViewController.storyboard */,
+				E6296E871DA6205200E33C32 /* SimpleViewController~ios.storyboard */,
 			);
 			path = Simple;
 			sourceTree = "<group>";
@@ -867,7 +867,7 @@
 			isa = PBXGroup;
 			children = (
 				E6FC7F061D61FA4700A55085 /* Images.xcassets */,
-				0846F5DB232FBC3E00234065 /* LaunchScreen.storyboard */,
+				0846F5DB232FBC3E00234065 /* LaunchScreen~ios.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1251,9 +1251,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6296E881DA6205200E33C32 /* SimpleViewController.storyboard in Resources */,
-				0846F5DC232FBC3E00234065 /* LaunchScreen.storyboard in Resources */,
-				E6296E861DA60CE700E33C32 /* DemosViewController.storyboard in Resources */,
+				E6296E881DA6205200E33C32 /* SimpleViewController~ios.storyboard in Resources */,
+				0846F5DC232FBC3E00234065 /* LaunchScreen~ios.storyboard in Resources */,
+				E6296E861DA60CE700E33C32 /* DemosViewController~ios.storyboard in Resources */,
 				E6FC7F1D1D61FA4700A55085 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
