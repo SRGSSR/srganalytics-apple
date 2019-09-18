@@ -16,6 +16,8 @@
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(DYLIB_CURRENT_VERSION)</string>
 	<key>NSPrincipalClass</key>
