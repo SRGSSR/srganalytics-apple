@@ -31,7 +31,7 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
 {
     return [mediaComposition playbackContextWithPreferredSettings:preferredSettings contextBlock:^(NSURL * _Nonnull streamURL, SRGResource * _Nonnull resource, NSArray<id<SRGSegment>> * _Nullable segments, NSInteger index, SRGAnalyticsStreamLabels * _Nullable analyticsLabels) {
         if (resource.presentation == SRGPresentation360) {
-            if (self.view.viewMode != SRGMediaPlayerViewModeMonoscopic && self.view.viewMode != SRGMediaPlayerViewModeStereoscopic) {
+            if (self.view.viewMode == SRGMediaPlayerViewModeFlat) {
                 self.view.viewMode = SRGMediaPlayerViewModeMonoscopic;
             }
         }
