@@ -335,6 +335,7 @@
 		6FD86FFD1F2B2CA9001ED20F /* SRGAnalyticsTracker+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SRGAnalyticsTracker+Private.h"; sourceTree = "<group>"; };
 		6FD9B2441F0BC4E0004805D2 /* TCCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TCCore.framework; path = Carthage/Build/iOS/TCCore.framework; sourceTree = "<group>"; };
 		6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TCSDK.framework; path = Carthage/Build/iOS/TCSDK.framework; sourceTree = "<group>"; };
+		6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DemoTests.xcconfig; sourceTree = "<group>"; };
 		6FE021E42119D58200DF6617 /* SRGResource+SRGAnalytics_DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SRGResource+SRGAnalytics_DataProvider.m"; sourceTree = "<group>"; };
 		6FE021E52119D58200DF6617 /* SRGResource+SRGAnalytics_DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SRGResource+SRGAnalytics_DataProvider.h"; sourceTree = "<group>"; };
 		6FEBF9371F8B5815005DD291 /* HiddenEventLabelsTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HiddenEventLabelsTestCase.m; sourceTree = "<group>"; };
@@ -818,6 +819,7 @@
 			children = (
 				6FBDD1A821319A41001E4398 /* Sources */,
 				E66F8A711D62DC570004EB58 /* Info.plist */,
+				6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */,
 			);
 			path = DemoTests;
 			sourceTree = "<group>";
@@ -1812,6 +1814,7 @@
 		};
 		6F0C98C22121CBBB00073AB6 /* Debug-static */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1820,12 +1823,11 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics-demo.app/SRGAnalytics-demo";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 			};
 			name = "Debug-static";
 		};
@@ -1841,7 +1843,6 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = "Debug-static";
 		};
@@ -1998,6 +1999,7 @@
 		};
 		6F0C98C92121CBC400073AB6 /* Release-static */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2006,12 +2008,11 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics-demo.app/SRGAnalytics-demo";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 			};
 			name = "Release-static";
 		};
@@ -2027,7 +2028,6 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = "Release-static";
 		};
@@ -2338,7 +2338,6 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = Debug;
 		};
@@ -2354,12 +2353,12 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = Release;
 		};
 		E66F8A6D1D62DC250004EB58 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2368,17 +2367,17 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics-demo.app/SRGAnalytics-demo";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 			};
 			name = Debug;
 		};
 		E66F8A6E1D62DC250004EB58 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FDE6C8B23326C9F0029CA17 /* DemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2387,12 +2386,11 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics-demo.app/SRGAnalytics-demo";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 			};
 			name = Release;
 		};
