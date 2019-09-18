@@ -79,6 +79,7 @@
 		6FB331EE1D9BFB00001469F2 /* SRGAnalytics_DataProvider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB331E61D9BFB00001469F2 /* SRGAnalytics_DataProvider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6FB331F91D9BFB77001469F2 /* SRGAnalytics_DataProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FB331F71D9BFB77001469F2 /* SRGAnalytics_DataProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6FB74DAD2105A79100E2D365 /* SRGNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB74DA82105A77B00E2D365 /* SRGNetwork.framework */; };
+		6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB7CF1E23326FB0006EBCA4 /* Resources.m */; };
 		6FB97FE41E4AF0270014C4C2 /* MAKVONotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */; };
 		6FB97FE51E4AF0B50014C4C2 /* MAKVONotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */; };
 		6FB97FE61E4AF0CD0014C4C2 /* MAKVONotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */; };
@@ -315,6 +316,8 @@
 		6FB331F71D9BFB77001469F2 /* SRGAnalytics_DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRGAnalytics_DataProvider.h; sourceTree = "<group>"; };
 		6FB74DA82105A77B00E2D365 /* SRGNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGNetwork.framework; path = Carthage/Build/iOS/SRGNetwork.framework; sourceTree = "<group>"; };
 		6FB74DA92105A77B00E2D365 /* SRGContentProtection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGContentProtection.framework; path = Carthage/Build/iOS/SRGContentProtection.framework; sourceTree = "<group>"; };
+		6FB7CF1D23326FB0006EBCA4 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		6FB7CF1E23326FB0006EBCA4 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MAKVONotificationCenter.framework; path = Carthage/Build/iOS/MAKVONotificationCenter.framework; sourceTree = "<group>"; };
 		6FC24BAA219ABB1B0048091F /* SRGPlaybackSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRGPlaybackSettings.h; sourceTree = "<group>"; };
 		6FC24BAB219ABB1B0048091F /* SRGPlaybackSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRGPlaybackSettings.m; sourceTree = "<group>"; };
@@ -619,6 +622,15 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		6FB7CF1C23326FB0006EBCA4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6FB7CF1D23326FB0006EBCA4 /* Resources.h */,
+				6FB7CF1E23326FB0006EBCA4 /* Resources.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		6FBDD1A821319A41001E4398 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -879,6 +891,7 @@
 			children = (
 				088700B31DA2528900D4961A /* Application */,
 				088700B71DA2528900D4961A /* Demos */,
+				6FB7CF1C23326FB0006EBCA4 /* Helpers */,
 				088700C31DA2528900D4961A /* Simple */,
 			);
 			path = Sources;
@@ -1406,6 +1419,7 @@
 			files = (
 				088700D81DA2542700D4961A /* main.m in Sources */,
 				088700D71DA2542700D4961A /* AppDelegate.m in Sources */,
+				6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */,
 				088700DF1DA2543800D4961A /* SimpleViewController.m in Sources */,
 				088700D91DA2542D00D4961A /* DemosViewController.m in Sources */,
 			);
@@ -1828,6 +1842,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
 			};
 			name = "Debug-static";
 		};
@@ -1843,6 +1858,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = "Debug-static";
 		};
@@ -2013,6 +2029,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
 			};
 			name = "Release-static";
 		};
@@ -2028,6 +2045,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = "Release-static";
 		};
@@ -2338,6 +2356,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = Debug;
 		};
@@ -2353,6 +2372,7 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_testapp.app/SRGAnalytics_testapp";
 			};
 			name = Release;
 		};
@@ -2372,6 +2392,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
 			};
 			name = Debug;
 		};
@@ -2391,6 +2412,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
 			};
 			name = Release;
 		};
