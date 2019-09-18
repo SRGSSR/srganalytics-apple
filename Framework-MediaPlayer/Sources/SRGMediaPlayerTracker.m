@@ -287,13 +287,6 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     return @(observedBitrate);
 }
 
-- (NSString *)windowState
-{
-    CGSize size = self.mediaPlayerController.playerLayer.videoRect.size;
-    CGRect screenRect = UIScreen.mainScreen.bounds;
-    return roundf(size.width) == roundf(screenRect.size.width) && roundf(size.height) == roundf(screenRect.size.height) ? @"full" : @"norm";
-}
-
 - (NSNumber *)playerVolumeInPercent
 {
     // AVPlayer has a volume property, but its purpose is NOT end-user volume control (see documentation). This volume is
@@ -307,52 +300,6 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     else {
         NSInteger volume = [AVAudioSession sharedInstance].outputVolume * 100;
         return @(volume);
-    }
-}
-
-- (NSString *)scalingMode
-{
-    static NSDictionary<NSString *, NSString *> *s_gravities;
-    static dispatch_once_t s_onceToken;
-    dispatch_once(&s_onceToken, ^{
-        s_gravities = @{ AVLayerVideoGravityResize: @"fill",
-                         AVLayerVideoGravityResizeAspect : @"fit-a",
-                         AVLayerVideoGravityResizeAspectFill : @"fill-a" };
-    });
-    return s_gravities[self.mediaPlayerController.playerLayer.videoGravity] ?: @"no";
-}
-
-- (NSString *)orientation
-{
-    static NSDictionary<NSNumber *, NSString *> *s_orientations;
-    static dispatch_once_t s_onceToken;
-    dispatch_once(&s_onceToken, ^{
-        s_orientations = @{ @(UIDeviceOrientationFaceDown) : @"facedown",
-                            @(UIDeviceOrientationFaceUp) : @"faceup",
-                            @(UIDeviceOrientationPortrait) : @"pt",
-                            @(UIDeviceOrientationPortraitUpsideDown) : @"updown",
-                            @(UIDeviceOrientationLandscapeLeft) : @"left",
-                            @(UIDeviceOrientationLandscapeRight) : @"right" };
-    });
-    return s_orientations[@(UIDevice.currentDevice.orientation)];
-}
-
-- (NSString *)dimensions
-{
-    CGSize size = self.mediaPlayerController.playerLayer.videoRect.size;
-    return [NSString stringWithFormat:@"%0.fx%0.f", size.width, size.height];
-}
-
-- (NSString *)screenType
-{
-    if (self.mediaPlayerController.pictureInPictureController.pictureInPictureActive) {
-        return @"pip";
-    }
-    else if (self.mediaPlayerController.player.isExternalPlaybackActive) {
-        return @"airplay";
-    }
-    else {
-        return @"default";
     }
 }
 
