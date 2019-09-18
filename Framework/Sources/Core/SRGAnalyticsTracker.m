@@ -87,7 +87,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         builder.applicationName = [[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"] stringByAppendingString:@" iOS"];
         builder.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         
-        builder.vce = NO;
         builder.secureTransmission = YES;
         builder.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
         
