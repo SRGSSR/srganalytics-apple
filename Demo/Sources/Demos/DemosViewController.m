@@ -7,7 +7,7 @@
 #import "DemosViewController.h"
 
 #import "AppDelegate.h"
-#import "Resources.h"
+#import "NSBundle+Demo.h"
 #import "SimpleViewController.h"
 
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
@@ -21,8 +21,14 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 
 - (instancetype)init
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:ResourceNameForUIClass(self.class) bundle:nil];
-    return [storyboard instantiateInitialViewController];
+    return [super initWithStyle:UITableViewStyleGrouped];
+}
+
+#pragma mark Getters and setters
+
+- (NSString *)title
+{
+    return DemoNonLocalizedString(@"Demos");
 }
 
 #pragma mark View lifecycle
@@ -44,7 +50,72 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     [self reloadData];
 }
 
+#pragma mark Data
+
+#pragma mark UITableViewDataSource protocol
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * const kCellIdentifier = @"BasicCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    if (! cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
+    }
+    
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    static dispatch_once_t s_onceToken;
+    static NSDictionary<NSNumber *, NSNumber *> *s_rows;
+    dispatch_once(&s_onceToken, ^{
+        s_rows = @{ @0 : @6,
+                    @1 : @3,
+                    @2 : @1 };
+    });
+    return s_rows[@(section)].integerValue;
+}
+
 #pragma mark UITableViewDelegate protocol
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    static dispatch_once_t s_onceToken;
+    static NSDictionary<NSNumber *, NSString *> *s_titles;
+    dispatch_once(&s_onceToken, ^{
+        s_titles = @{ @0 : DemoNonLocalizedString(@"View events"),
+                      @1 : DemoNonLocalizedString(@"Streaming measurements"),
+                      @2 : DemoNonLocalizedString(@"Push notifications") };
+    });
+    return s_titles[@(section)];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static dispatch_once_t s_onceToken;
+    static NSDictionary<NSNumber *, NSDictionary<NSNumber *, NSString *> *> *s_titles;
+    dispatch_once(&s_onceToken, ^{
+        s_titles = @{ @0 : @{ @0 : DemoNonLocalizedString(@"Automatic tracking"),
+                              @1 : DemoNonLocalizedString(@"Automatic tracking with levels"),
+                              @2 : DemoNonLocalizedString(@"Automatic tracking with many levels"),
+                              @3 : DemoNonLocalizedString(@"Automatic tracking with levels and labels"),
+                              @4 : DemoNonLocalizedString(@"Missing title"),
+                              @5 : DemoNonLocalizedString(@"Manual tracking") },
+                      @1 : @{ @0 : DemoNonLocalizedString(@"Live"),
+                              @1 : DemoNonLocalizedString(@"VOD"),
+                              @2 : DemoNonLocalizedString(@"DVR") },
+                      @2 : @{ @0 : DemoNonLocalizedString(@"From push notification (simulated)") }
+        };
+    });
+    cell.textLabel.text = s_titles[@(indexPath.section)][@(indexPath.row)];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
