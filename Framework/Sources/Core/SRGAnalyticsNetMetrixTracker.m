@@ -41,7 +41,7 @@
         return;
     }
     
-    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/ios/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.device];
+    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/%@/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.platform, self.device];
     NSURL *netMetrixURL = [NSURL URLWithString:netMetrixURLString];
     
     NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:netMetrixURL resolvingAgainstBaseURL:NO];
@@ -51,7 +51,11 @@
     [request setValue:@"image/gif" forHTTPHeaderField:@"Accept"];
     
     // Which User-Agent MUST be used is defined at https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications
+#if TARGET_TV
+    NSString *userAgent = @"Mozilla/5.0 (tvOS-tv; U; CPU Apple TV OS like Mac OS X)";
+#else
     NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (iOS-%@; U; CPU %@ like Mac OS X)", self.device, self.operatingSystem];
+#endif
     [request setValue:userAgent forHTTPHeaderField:@"User-Agent"];
     
     // The app language must be sent, not the device language. This is sadly not documented in https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications,
@@ -66,8 +70,20 @@
 
 #pragma mark Information
 
+- (NSString *)platform
+{
+#if TARGET_OS_TV
+    return @"tvos";
+#else
+    return @"ios";
+#endif
+}
+
 - (NSString *)device
 {
+#if TARGET_OS_TV
+    return @"tv";
+#else
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return @"phone";
     }
@@ -77,6 +93,7 @@
     else {
         return @"universal";
     }
+#endif
 }
 
 - (NSString *)operatingSystem
