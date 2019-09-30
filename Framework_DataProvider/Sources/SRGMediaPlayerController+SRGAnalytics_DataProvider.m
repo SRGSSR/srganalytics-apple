@@ -48,7 +48,7 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
         }
         
         NSDictionary<SRGResourceLoaderOption, id> *options = userInfo[SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey];
-        NSAssert([options isKindOfClass:NSDictionary.class], @"Resource loader options must be provided as a dictionary");
+        NSAssert(! options || [options isKindOfClass:NSDictionary.class], @"Resource loader options must be provided as a dictionary");
         
         AVURLAsset *URLAsset = nil;
         
