@@ -51,7 +51,7 @@
     [request setValue:@"image/gif" forHTTPHeaderField:@"Accept"];
     
     // Which User-Agent MUST be used is defined at https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications
-#if TARGET_TV
+#if TARGET_OS_TV
     NSString *userAgent = @"Mozilla/5.0 (tvOS-tv; U; CPU Apple TV OS like Mac OS X)";
 #else
     NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (iOS-%@; U; CPU %@ like Mac OS X)", self.device, self.operatingSystem];
@@ -96,6 +96,8 @@
 #endif
 }
 
+#if TARGET_OS_IOS
+
 - (NSString *)operatingSystem
 {
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
@@ -108,5 +110,7 @@
         return @"OS";
     }
 }
+
+#endif
 
 @end
