@@ -41,7 +41,7 @@
         return;
     }
     
-    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/%@/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.platform, self.device];
+    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/%@/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.platform.lowercaseString, self.device];
     NSURL *netMetrixURL = [NSURL URLWithString:netMetrixURLString];
     
     NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:netMetrixURL resolvingAgainstBaseURL:NO];
@@ -51,11 +51,7 @@
     [request setValue:@"image/gif" forHTTPHeaderField:@"Accept"];
     
     // Which User-Agent MUST be used is defined at https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications
-#if TARGET_OS_TV
-    NSString *userAgent = @"Mozilla/5.0 (tvOS-tv; U; CPU Apple TV OS like Mac OS X)";
-#else
-    NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (iOS-%@; U; CPU %@ like Mac OS X)", self.device, self.operatingSystem];
-#endif
+    NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (%@-%@; U; CPU %@ like Mac OS X)", self.platform, self.device, self.operatingSystem];
     [request setValue:userAgent forHTTPHeaderField:@"User-Agent"];
     
     // The app language must be sent, not the device language. This is sadly not documented in https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications,
@@ -73,9 +69,9 @@
 - (NSString *)platform
 {
 #if TARGET_OS_TV
-    return @"tvos";
+    return @"tvOS";
 #else
-    return @"ios";
+    return @"iOS";
 #endif
 }
 
@@ -96,10 +92,11 @@
 #endif
 }
 
-#if TARGET_OS_IOS
-
 - (NSString *)operatingSystem
 {
+#if TARGET_OS_TV
+    return @"Apple TV OS";
+#else
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return @"iPhone OS";
     }
@@ -109,8 +106,7 @@
     else {
         return @"OS";
     }
-}
-
 #endif
+}
 
 @end
