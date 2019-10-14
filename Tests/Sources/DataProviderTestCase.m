@@ -167,7 +167,7 @@ static NSURL *MMFTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"media_segment"], @"Zwangsheirat – mitten unter uns");
-        XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"HD");
+        XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"SD");
         XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c825d897-9631-41d9-bc20-33f02c03f760");
         return YES;
     }];
