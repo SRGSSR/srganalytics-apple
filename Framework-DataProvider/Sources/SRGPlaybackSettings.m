@@ -16,7 +16,7 @@
         self.streamingMethod = SRGStreamingMethodNone;
         self.streamType = SRGStreamTypeNone;
         self.quality = SRGQualityNone;
-        self.DRM = NO;
+        self.DRM = YES;
         self.startBitRate = SRGDefaultStartBitRate;
     }
     return self;

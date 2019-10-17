@@ -53,6 +53,10 @@
 - (BOOL)playbackContextWithPreferredSettings:(SRGPlaybackSettings *)preferredSettings
                                 contextBlock:(NS_NOESCAPE SRGPlaybackContextBlock)contextBlock
 {
+    if (! preferredSettings) {
+        preferredSettings = [[SRGPlaybackSettings alloc] init];
+    }
+    
     SRGChapter *chapter = self.mainChapter;
     
     SRGStreamingMethod streamingMethod = preferredSettings.streamingMethod;

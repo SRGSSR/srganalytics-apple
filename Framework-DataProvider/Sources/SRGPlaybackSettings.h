@@ -47,7 +47,7 @@ static const NSUInteger SRGDefaultStartBitRate = 800;
  *  Set to `YES` if DRM-protected streams should be favored over non-protected ones. If set to `NO`, the first matching
  *  resource is used, based on their original order.
  *
- *  Default value is `NO`.
+ *  Default value is `YES`.
  */
 @property (nonatomic) BOOL DRM;
 
