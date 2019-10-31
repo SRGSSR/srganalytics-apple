@@ -7,7 +7,6 @@
 #import "DemosViewController.h"
 
 #import "AppDelegate.h"
-#import "NSBundle+Demo.h"
 #import "SimpleViewController.h"
 
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
@@ -28,7 +27,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 
 - (NSString *)title
 {
-    return DemoNonLocalizedString(@"Demos");
+    return NSLocalizedString(@"Demos", nil);
 }
 
 #pragma mark View lifecycle
@@ -74,13 +73,13 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     static dispatch_once_t s_onceToken;
-    static NSDictionary<NSNumber *, NSNumber *> *s_rows;
+    static NSArray<NSNumber *> *s_rows;
     dispatch_once(&s_onceToken, ^{
-        s_rows = @{ @0 : @6,
-                    @1 : @3,
-                    @2 : @1 };
+        s_rows = @[ @6,
+                    @3,
+                    @1 ];
     });
-    return s_rows[@(section)].integerValue;
+    return s_rows[section].integerValue;
 }
 
 #pragma mark UITableViewDelegate protocol
@@ -88,33 +87,32 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     static dispatch_once_t s_onceToken;
-    static NSDictionary<NSNumber *, NSString *> *s_titles;
+    static NSArray<NSString *> *s_titles;
     dispatch_once(&s_onceToken, ^{
-        s_titles = @{ @0 : DemoNonLocalizedString(@"View events"),
-                      @1 : DemoNonLocalizedString(@"Streaming measurements"),
-                      @2 : DemoNonLocalizedString(@"Push notifications") };
+        s_titles = @[ NSLocalizedString(@"View events", nil),
+                      NSLocalizedString(@"Streaming measurements", nil),
+                      NSLocalizedString(@"Push notifications", nil) ];
     });
-    return s_titles[@(section)];
+    return s_titles[section];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static dispatch_once_t s_onceToken;
-    static NSDictionary<NSNumber *, NSDictionary<NSNumber *, NSString *> *> *s_titles;
+    static NSArray<NSArray<NSString *> *> *s_titles;
     dispatch_once(&s_onceToken, ^{
-        s_titles = @{ @0 : @{ @0 : DemoNonLocalizedString(@"Automatic tracking"),
-                              @1 : DemoNonLocalizedString(@"Automatic tracking with levels"),
-                              @2 : DemoNonLocalizedString(@"Automatic tracking with many levels"),
-                              @3 : DemoNonLocalizedString(@"Automatic tracking with levels and labels"),
-                              @4 : DemoNonLocalizedString(@"Manual tracking"),
-                              @5 : DemoNonLocalizedString(@"Missing title") },
-                      @1 : @{ @0 : DemoNonLocalizedString(@"Live"),
-                              @1 : DemoNonLocalizedString(@"VOD"),
-                              @2 : DemoNonLocalizedString(@"DVR") },
-                      @2 : @{ @0 : DemoNonLocalizedString(@"From push notification (simulated)") }
-        };
+        s_titles = @[ @[ NSLocalizedString(@"Automatic tracking", nil),
+                         NSLocalizedString(@"Automatic tracking with levels", nil),
+                         NSLocalizedString(@"Automatic tracking with many levels", nil),
+                         NSLocalizedString(@"Automatic tracking with levels and labels", nil),
+                         NSLocalizedString(@"Manual tracking", nil),
+                         NSLocalizedString(@"Missing title", nil) ],
+                      @[ NSLocalizedString(@"Live", nil),
+                         NSLocalizedString(@"VOD", nil),
+                         NSLocalizedString(@"DVR", nil) ],
+                      @[ NSLocalizedString(@"From push notification (simulated)", nil) ] ];
     });
-    cell.textLabel.text = s_titles[@(indexPath.section)][@(indexPath.row)];
+    cell.textLabel.text = s_titles[indexPath.section][indexPath.row];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
