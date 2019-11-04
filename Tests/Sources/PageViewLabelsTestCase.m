@@ -50,7 +50,7 @@
     SRGAnalyticsPageViewLabels *labels = [[SRGAnalyticsPageViewLabels alloc] init];
     labels.customInfo = @{ @"key" : @"value" };
     
-    SRGAnalyticsPageViewLabels *labelsCopy = [labels copy];
+    SRGAnalyticsPageViewLabels *labelsCopy = labels.copy;
     XCTAssertEqualObjects(labels, labelsCopy);
 }
 

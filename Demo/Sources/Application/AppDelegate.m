@@ -13,7 +13,10 @@
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
 #import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>
 #import <SRGLogger/SRGLogger.h>
+// TODO: Remove when tvOS SDKs available
+#if TARGET_OS_IOS
 #import <TCCore/TCCore.h>
+#endif
 
 @implementation AppDelegate
 
@@ -22,7 +25,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    self.window.backgroundColor = UIColor.blackColor;
     [self.window makeKeyAndVisible];
     
     SRGIdentityService.currentIdentityService = [[SRGIdentityService alloc] initWithWebserviceURL:[NSURL URLWithString:@"https://hummingbird.rts.ch/api/profile"]
@@ -30,8 +32,11 @@
     
     [SRGLogger setLogHandler:SRGNSLogHandler()];
     
+    // TODO: Remove when tvOS SDKs available
+#if TARGET_OS_IOS
     [TCDebug setDebugLevel:TCLogLevel_Verbose];
     [TCDebug setNotificationLog:YES];
+#endif
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
                                                                                                        container:10

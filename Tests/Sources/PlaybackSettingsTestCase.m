@@ -56,7 +56,7 @@
     settings.sourceUid = @"Source unique id";
     
     // Make a copy
-    SRGPlaybackSettings *settingsCopy = [settings copy];
+    SRGPlaybackSettings *settingsCopy = settings.copy;
     
     // Modify the original
     settings.streamingMethod = SRGStreamingMethodNone;

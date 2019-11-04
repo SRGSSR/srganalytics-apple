@@ -72,7 +72,7 @@
     configuration.centralized = YES;
     configuration.unitTesting = YES;
     
-    SRGAnalyticsConfiguration *configurationCopy = [configuration copy];
+    SRGAnalyticsConfiguration *configurationCopy = configuration.copy;
     XCTAssertEqual(configuration.centralized, configurationCopy.centralized);
     XCTAssertEqual(configuration.unitTesting, configurationCopy.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, configurationCopy.businessUnitIdentifier);
