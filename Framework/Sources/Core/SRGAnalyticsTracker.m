@@ -128,7 +128,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             }
             [levelsComScoreFormattedString appendString:level.srg_comScoreFormattedString];
         }];
-        category = [levelsComScoreFormattedString copy];
+        category = levelsComScoreFormattedString.copy;
     }
     
     return [NSString stringWithFormat:@"%@.%@", category, title.srg_comScoreFormattedString];
@@ -154,9 +154,9 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.comScoreLabelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
     [fullLabels addEntriesFromDictionary:labels];
-    [SCORAnalytics notifyHiddenEventWithLabels:[fullLabels copy]];
+    [SCORAnalytics notifyHiddenEventWithLabels:fullLabels.copy];
 }
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
@@ -175,7 +175,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
     }
     
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.labelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
     [fullLabels addEntriesFromDictionary:labels];
     [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
         [self.tagCommander addData:key withValue:object];
@@ -248,7 +248,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             [levelsComScoreFormattedString appendString:levelValue.srg_comScoreFormattedString];
         }];
         
-        category = [levelsComScoreFormattedString copy];
+        category = levelsComScoreFormattedString.copy;
     }
     
     [fullLabelsDictionary srg_safelySetString:category forKey:@"ns_category"];
@@ -263,7 +263,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [SCORAnalytics notifyViewEventWithLabels:[fullLabelsDictionary copy]];
+    [SCORAnalytics notifyViewEventWithLabels:fullLabelsDictionary.copy];
 }
 
 - (void)trackTagCommanderPageViewWithTitle:(NSString *)title
@@ -299,7 +299,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackTagCommanderEventWithLabels:fullLabelsDictionary.copy];
 }
 
 #pragma mark Hidden event tracking
@@ -345,7 +345,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackComScoreEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackComScoreEventWithLabels:fullLabelsDictionary.copy];
 }
 
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
@@ -366,7 +366,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackTagCommanderEventWithLabels:fullLabelsDictionary.copy];
 }
 
 #pragma mark Application list measurement

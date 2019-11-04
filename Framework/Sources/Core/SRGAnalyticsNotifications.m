@@ -25,7 +25,7 @@ static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLCompo
     [URLComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull queryItem, NSUInteger idx, BOOL * _Nonnull stop) {
         labels[queryItem.name] = [queryItem.value stringByRemovingPercentEncoding];
     }];
-    return [labels copy];
+    return labels.copy;
 }
 
 @implementation NSURLSession (SRGAnalyticsProxy)

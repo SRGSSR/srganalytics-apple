@@ -23,11 +23,11 @@ static void *s_analyticsPlayerVersionKey = &s_analyticsPlayerVersionKey;
                                      userInfo:(NSDictionary *)userInfo
 {
     NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionary];
-    fullUserInfo[SRGAnalyticsMediaPlayerLabelsKey] = [analyticsLabels copy];
+    fullUserInfo[SRGAnalyticsMediaPlayerLabelsKey] = analyticsLabels.copy;
     if (userInfo) {
         [fullUserInfo addEntriesFromDictionary:userInfo];
     }
-    return [fullUserInfo copy];
+    return fullUserInfo.copy;
 }
 
 #pragma mark Playback methods
@@ -162,9 +162,9 @@ withAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
 
 - (void)setAnalyticsLabels:(SRGAnalyticsStreamLabels *)analyticsLabels
 {
-    NSMutableDictionary *userInfo = [self.userInfo mutableCopy] ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary *userInfo = self.userInfo.mutableCopy ?: [NSMutableDictionary dictionary];
     userInfo[SRGAnalyticsMediaPlayerLabelsKey] = analyticsLabels;
-    self.userInfo = [userInfo copy];
+    self.userInfo = userInfo.copy;
 }
 
 @end

@@ -238,7 +238,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         labels[@"srg_test_id"] = self.unitTestingIdentifier;
     }
     
-    [SRGAnalyticsTracker.sharedTracker trackTagCommanderEventWithLabels:[labels copy]];
+    [SRGAnalyticsTracker.sharedTracker trackTagCommanderEventWithLabels:labels.copy];
 }
 
 #pragma mark Heartbeats

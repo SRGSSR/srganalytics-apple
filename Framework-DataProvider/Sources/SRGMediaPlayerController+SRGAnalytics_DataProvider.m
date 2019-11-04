@@ -63,7 +63,7 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
             URLAsset = [AVURLAsset assetWithURL:streamURL];
         }
         
-        [self prepareToPlayURLAsset:URLAsset atIndex:index position:position inSegments:segments withAnalyticsLabels:analyticsLabels userInfo:[fullUserInfo copy] completionHandler:^{
+        [self prepareToPlayURLAsset:URLAsset atIndex:index position:position inSegments:segments withAnalyticsLabels:analyticsLabels userInfo:fullUserInfo.copy completionHandler:^{
             completionHandler ? completionHandler() : nil;
         }];
     }];
@@ -92,9 +92,9 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
         return;
     }
     
-    NSMutableDictionary *userInfo = [self.userInfo mutableCopy];
+    NSMutableDictionary *userInfo = self.userInfo.mutableCopy;
     userInfo[SRGAnalyticsDataProviderMediaCompositionKey] = mediaComposition;
-    self.userInfo = [userInfo copy];
+    self.userInfo = userInfo.copy;
     
     // Synchronize analytics labels
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @keypath(SRGResource.new, quality), @(self.resource.quality)];

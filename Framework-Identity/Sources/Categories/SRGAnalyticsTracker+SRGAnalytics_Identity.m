@@ -60,7 +60,7 @@ static void *s_analyticsIdentityServiceKey = &s_analyticsIdentityServiceKey;
     NSMutableDictionary<NSString *, NSString *> *customInfo = [NSMutableDictionary dictionary];
     customInfo[@"user_id"] = account.uid;
     customInfo[@"user_is_logged"] = account.uid ? @"true" : @"false";
-    globalLabels.customInfo = [customInfo copy];
+    globalLabels.customInfo = customInfo.copy;
     
     self.globalLabels = globalLabels;
 }

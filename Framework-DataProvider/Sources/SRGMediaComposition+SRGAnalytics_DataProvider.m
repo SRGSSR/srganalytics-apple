@@ -31,7 +31,7 @@
             [customInfo addEntriesFromDictionary:resource.analyticsLabels];
         }
         customInfo[@"source_id"] = sourceUid;
-        labels.customInfo = [customInfo copy];
+        labels.customInfo = customInfo.copy;
     }
     
     NSDictionary<NSString *, NSString *> *mainChapterComScoreLabels = self.mainChapter.comScoreAnalyticsLabels;
@@ -44,7 +44,7 @@
         if (resource.comScoreAnalyticsLabels) {
             [comScoreCustomInfo addEntriesFromDictionary:resource.comScoreAnalyticsLabels];
         }
-        labels.comScoreCustomInfo = [comScoreCustomInfo copy];
+        labels.comScoreCustomInfo = comScoreCustomInfo.copy;
     }
     
     return labels;
@@ -134,7 +134,7 @@
         }
     }];
     
-    NSMutableArray<NSSortDescriptor *> *sortDescriptors = [@[URLSchemeSortDescriptor, streamTypeSortDescriptor, qualitySortDescriptor] mutableCopy];
+    NSMutableArray<NSSortDescriptor *> *sortDescriptors = @[URLSchemeSortDescriptor, streamTypeSortDescriptor, qualitySortDescriptor].mutableCopy;
     
     // Favor DRM resources if desired, otherwise preserve the original order
     BOOL DRM = preferredSettings.DRM;
@@ -166,9 +166,9 @@
     if (startBitRate != 0 && [URL.host containsString:@"akamai"] && [URL.path.pathExtension isEqualToString:@"m3u8"]) {
         NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
         
-        NSMutableArray<NSURLQueryItem *> *queryItems = [URLComponents.queryItems mutableCopy] ?: [NSMutableArray array];
+        NSMutableArray<NSURLQueryItem *> *queryItems = URLComponents.queryItems.mutableCopy ?: [NSMutableArray array];
         [queryItems addObject:[NSURLQueryItem queryItemWithName:@"__b__" value:@(startBitRate).stringValue]];
-        URLComponents.queryItems = [queryItems copy];
+        URLComponents.queryItems = queryItems.copy;
         
         URL = URLComponents.URL;
     }

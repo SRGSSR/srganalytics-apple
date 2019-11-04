@@ -124,7 +124,7 @@
     labels.extraValue2 = @"extra_value2";
     labels.customInfo = @{ @"key" : @"value" };
     
-    SRGAnalyticsHiddenEventLabels *labelsCopy = [labels copy];
+    SRGAnalyticsHiddenEventLabels *labelsCopy = labels.copy;
     XCTAssertEqualObjects(labels, labelsCopy);
 }
 
