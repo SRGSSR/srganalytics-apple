@@ -120,7 +120,7 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testPrepareToPlay360VideoAlreadyStereoscopic
+- (void)testPrepareToPlay360VideoAlreadyStereoscopic API_UNAVAILABLE(tvos)
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Ready to play"];
     
@@ -310,7 +310,11 @@ static NSURL *MMFTestURL(void)
         return stopReceived && playReceived;
     }];
     
+#if TARGET_OS_IOS
     self.mediaPlayerController.view.viewMode = SRGMediaPlayerViewModeStereoscopic;
+#else
+    self.mediaPlayerController.view.viewMode = SRGMediaPlayerViewModeMonoscopic;
+#endif
     
     __block SRGMediaComposition *fetchedMediaComposition3 = nil;
     [[dataProvider mediaCompositionForURN:@"urn:rts:video:_gothard" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
@@ -323,7 +327,11 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     XCTAssertEqual(self.mediaPlayerController.mediaComposition, fetchedMediaComposition3);
+#if TARGET_OS_IOS
     XCTAssertEqual(self.mediaPlayerController.view.viewMode, SRGMediaPlayerViewModeStereoscopic);
+#else
+    XCTAssertEqual(self.mediaPlayerController.view.viewMode, SRGMediaPlayerViewModeMonoscopic);
+#endif
     
     stopReceived = NO;
     playReceived = NO;
