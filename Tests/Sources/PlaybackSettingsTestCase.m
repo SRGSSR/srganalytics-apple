@@ -22,7 +22,6 @@
     XCTAssertEqual(settings.streamingMethod, SRGStreamingMethodNone);
     XCTAssertEqual(settings.streamType, SRGStreamTypeNone);
     XCTAssertEqual(settings.quality, SRGQualityNone);
-    XCTAssertTrue(settings.DRM);
     XCTAssertEqual(settings.startBitRate, SRGDefaultStartBitRate);
     XCTAssertNil(settings.sourceUid);
 }
@@ -33,14 +32,12 @@
     settings.streamingMethod = SRGStreamingMethodHLS;
     settings.streamType = SRGStreamTypeDVR;
     settings.quality = SRGQualityHD;
-    settings.DRM = NO;
     settings.startBitRate = 1200;
     settings.sourceUid = @"Source unique id";
     
     XCTAssertEqual(settings.streamingMethod, SRGStreamingMethodHLS);
     XCTAssertEqual(settings.streamType, SRGStreamTypeDVR);
     XCTAssertEqual(settings.quality, SRGQualityHD);
-    XCTAssertFalse(settings.DRM);
     XCTAssertEqual(settings.startBitRate, 1200);
     XCTAssertEqual(settings.sourceUid, @"Source unique id");
 }
@@ -51,7 +48,6 @@
     settings.streamingMethod = SRGStreamingMethodHLS;
     settings.streamType = SRGStreamTypeDVR;
     settings.quality = SRGQualityHD;
-    settings.DRM = NO;
     settings.startBitRate = 1200;
     settings.sourceUid = @"Source unique id";
     
@@ -62,7 +58,6 @@
     settings.streamingMethod = SRGStreamingMethodNone;
     settings.streamType = SRGStreamTypeNone;
     settings.quality = SRGQualityNone;
-    settings.DRM = YES;
     settings.startBitRate = SRGDefaultStartBitRate;
     settings.sourceUid = @"Another source unique id";
     
@@ -70,7 +65,6 @@
     XCTAssertEqual(settingsCopy.streamingMethod, SRGStreamingMethodHLS);
     XCTAssertEqual(settingsCopy.streamType, SRGStreamTypeDVR);
     XCTAssertEqual(settingsCopy.quality, SRGQualityHD);
-    XCTAssertFalse(settingsCopy.DRM);
     XCTAssertEqual(settingsCopy.startBitRate, 1200);
     XCTAssertEqual(settingsCopy.sourceUid, @"Source unique id");
 }
