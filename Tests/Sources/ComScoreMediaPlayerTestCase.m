@@ -614,7 +614,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
-        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"44000");             // Not 45000 because of chunks
+        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
         XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
         return YES;
     }];
