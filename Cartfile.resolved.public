@@ -1,6 +1,6 @@
 github "AliSoftware/OHHTTPStubs" "8.0.0"
 github "Mantle/Mantle" "2.1.0"
-github "SRGSSR/ComScore-iOS-watchOS-tvOS" "5.8.5"
+github "SRGSSR/ComScore-iOS-watchOS-tvOS" "6.0.0"
 github "SRGSSR/FXReachability" "f20cd62474d5707d4ca04513473516ba6cdd6c80"
 github "SRGSSR/MAKVONotificationCenter" "acf9ce3d6a33592480da2a581dcdc30ed647deac"
 github "SRGSSR/UICKeyChainStore" "v2.1.2_srg1"
