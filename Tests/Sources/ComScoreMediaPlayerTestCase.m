@@ -144,6 +144,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
         
@@ -162,6 +163,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         // All intermediate events must have the same session identifier
         XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid1);
+        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         
         if (! [event isEqualToString:@"end"]) {
@@ -181,6 +183,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
         
@@ -196,6 +199,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid2);
         return YES;

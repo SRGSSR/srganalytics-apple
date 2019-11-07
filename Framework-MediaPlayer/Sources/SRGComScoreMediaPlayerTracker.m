@@ -67,10 +67,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 {
     if (self = [super init]) {
         self.mediaPlayerController = mediaPlayerController;
-        
         self.streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
-        [self.streamingAnalytics setMediaPlayerName:mediaPlayerController.analyticsPlayerName];
-        [self.streamingAnalytics setMediaPlayerVersion:mediaPlayerController.analyticsPlayerVersion];
         
         BOOL created = [self createPlaybackSession];
         if (! created) {
@@ -130,6 +127,11 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         return NO;
     }
     
+    [self.streamingAnalytics createPlaybackSession];
+    
+    [self.streamingAnalytics setMediaPlayerName:self.mediaPlayerController.analyticsPlayerName];
+    [self.streamingAnalytics setMediaPlayerVersion:self.mediaPlayerController.analyticsPlayerVersion];
+    
     SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
         NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
         
@@ -140,7 +142,6 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         [builder setCustomLabels:customLabels.copy];
     }];
     [self.streamingAnalytics setMetadata:streamingMetadata];
-    [self.streamingAnalytics createPlaybackSession];
     
     return YES;
 }
