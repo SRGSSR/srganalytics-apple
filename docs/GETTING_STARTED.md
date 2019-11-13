@@ -36,6 +36,15 @@ Once the tracker has been started, you can perform measurements.
 
 If and only if your application data will be analyzed by your business unit (and not by the SRG SSR General Direction), set the configuration `centralized` boolean to `NO`. Otherwise leave the default value as is, which means your application data will be analyzed according to the SRG SSR General Direction rules.
 
+## Application information
+
+The application information is automatically extracted from your application `Info.plist` file:
+
+- The application name is given by `CFBundleName`.
+- The application version is given by `CFBundleShortVersionString`.
+
+If your application has an Android equivalent, you should ensure that both the Android and iOS versions use the same application name.
+
 ## Measurement information
 
 Measurement information, often referred to as labels, is provided in the form of dictionaries mapping strings to strings. Part of the information sent in events follows SRG measurement guidelines and is handled internally, but you can add arbitrary information for your own measurement purposes if needed (see below how this is done for the various events your application can generate).
