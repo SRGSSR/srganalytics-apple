@@ -106,7 +106,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     SCORConfiguration *comScoreConfiguration = [SCORAnalytics configuration];
     [comScoreConfiguration addClientWithConfiguration:publisherConfiguration];
     
-    comScoreConfiguration.applicationName = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"];
     comScoreConfiguration.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     comScoreConfiguration.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
     
