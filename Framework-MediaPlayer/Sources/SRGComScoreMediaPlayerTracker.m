@@ -127,16 +127,21 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         return NO;
     }
     
-    if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-        [self.streamingAnalytics setLabelWithName:@"srg_test_id" value:SRGAnalyticsUnitTestingIdentifier()];
-    }
-    
-    // Provide the analytics library version (most useful information) as player information.
-    [self.streamingAnalytics setLabelWithName:@"ns_st_mp" value:self.mediaPlayerController.analyticsPlayerName];
-    [self.streamingAnalytics setLabelWithName:@"ns_st_mv" value:self.mediaPlayerController.analyticsPlayerVersion];
-    
     [self.streamingAnalytics createPlaybackSession];
-    [self.streamingAnalytics.playbackSession setAssetWithLabels:labelsDictionary];
+    
+    [self.streamingAnalytics setMediaPlayerName:self.mediaPlayerController.analyticsPlayerName];
+    [self.streamingAnalytics setMediaPlayerVersion:self.mediaPlayerController.analyticsPlayerVersion];
+    
+    SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
+        NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
+        
+        if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
+            customLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+        }
+        
+        [builder setCustomLabels:customLabels.copy];
+    }];
+    [self.streamingAnalytics setMetadata:streamingMetadata];
     
     return YES;
 }
@@ -187,72 +192,41 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     
     if (streamType == SRGMediaPlayerStreamTypeDVR) {
         [streamingAnalytics setDVRWindowLength:SRGMediaAnalyticsCMTimeToMilliseconds(timeRange.duration)];
-        [streamingAnalytics setDVRWindowOffset:SRGMediaAnalyticsTimeshiftInMilliseconds(streamType, timeRange, time, 0. /* offsets must be exact */).integerValue];
-        
-        switch (event) {
-            case ComScoreMediaPlayerTrackerEventPlay: {
-                [streamingAnalytics notifyPlay];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventPause: {
-                [streamingAnalytics notifyPause];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventEnd: {
-                [streamingAnalytics notifyEnd];
-                [self createPlaybackSession];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventSeek: {
-                [streamingAnalytics notifySeekStart];
-                break;
-            }
-            
-            case ComScoreMediaPlayerTrackerEventBuffer: {
-                [streamingAnalytics notifyBufferStart];
-                break;
-            }
-                
-            default: {
-                break;
-            }
-        }
+        [streamingAnalytics startFromDvrWindowOffset:SRGMediaAnalyticsTimeshiftInMilliseconds(streamType, timeRange, time, 0. /* offsets must be exact */).integerValue];
     }
     else {
-        long position = SRGMediaAnalyticsCMTimeToMilliseconds(time);
-        switch (event) {
-            case ComScoreMediaPlayerTrackerEventPlay: {
-                [streamingAnalytics notifyPlayWithPosition:position];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventPause: {
-                [streamingAnalytics notifyPauseWithPosition:position];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventEnd: {
-                [streamingAnalytics notifyEndWithPosition:position];
-                [self createPlaybackSession];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventSeek: {
-                [streamingAnalytics notifySeekStartWithPosition:position];
-                break;
-            }
-                
-            case ComScoreMediaPlayerTrackerEventBuffer: {
-                [streamingAnalytics notifyBufferStartWithPosition:position];
-                break;
-            }
-                
-            default: {
-                break;
-            }
+        [streamingAnalytics startFromPosition:SRGMediaAnalyticsCMTimeToMilliseconds(time)];
+    }
+    
+    switch (event) {
+        case ComScoreMediaPlayerTrackerEventPlay: {
+            [streamingAnalytics notifyPlay];
+            break;
+        }
+            
+        case ComScoreMediaPlayerTrackerEventPause: {
+            [streamingAnalytics notifyPause];
+            break;
+        }
+            
+        case ComScoreMediaPlayerTrackerEventEnd: {
+            [streamingAnalytics notifyEnd];
+            [self createPlaybackSession];
+            break;
+        }
+            
+        case ComScoreMediaPlayerTrackerEventSeek: {
+            [streamingAnalytics notifySeekStart];
+            break;
+        }
+        
+        case ComScoreMediaPlayerTrackerEventBuffer: {
+            [streamingAnalytics notifyBufferStart];
+            break;
+        }
+            
+        default: {
+            break;
         }
     }
 }

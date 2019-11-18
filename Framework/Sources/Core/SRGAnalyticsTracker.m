@@ -92,23 +92,23 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
         builder.publisherId = @"6036016";
-        builder.publisherSecret = @"fee16147939462a9b6faa0944ad832d1";
+        builder.secureTransmissionEnabled = YES;
         
-        builder.applicationName = [[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"] stringByAppendingString:@" iOS"];
-        builder.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        
-        builder.secureTransmission = YES;
-        builder.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
+        // Coding Document for Video Players, page 16
+        builder.httpRedirectCachingEnabled = NO;
         
         if (configuration.unitTesting) {
             builder.startLabels = @{ @"srg_test_id" : SRGAnalyticsUnitTestingIdentifier() };
         }
-        
-        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
-        // Coding Document for Video Players, page 16
-        builder.httpRedirectCaching = NO;
     }];
-    [[SCORAnalytics configuration] addClientWithConfiguration:publisherConfiguration];
+    
+    SCORConfiguration *comScoreConfiguration = [SCORAnalytics configuration];
+    [comScoreConfiguration addClientWithConfiguration:publisherConfiguration];
+    
+    comScoreConfiguration.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    comScoreConfiguration.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+    
     [SCORAnalytics start];
     
     [self sendApplicationList];
