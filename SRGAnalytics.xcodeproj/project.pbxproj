@@ -66,6 +66,17 @@
 		6FA09D891D9EC4BC00EDCA64 /* SRGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */; };
 		6FA09D8A1D9EC4CF00EDCA64 /* SRGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */; };
 		6FA09D8B1D9EC4DB00EDCA64 /* SRGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */; };
+		6FAB003B23849CE200435C65 /* ComScore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E672EA461D62EE5D00CFB080 /* ComScore.framework */; };
+		6FAB003C23849CE200435C65 /* ComScore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E672EA461D62EE5D00CFB080 /* ComScore.framework */; };
+		6FAB003D23849CE300435C65 /* ComScore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E672EA461D62EE5D00CFB080 /* ComScore.framework */; };
+		6FAB003E23849CEF00435C65 /* TCCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2441F0BC4E0004805D2 /* TCCore.framework */; };
+		6FAB003F23849CEF00435C65 /* TCCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2441F0BC4E0004805D2 /* TCCore.framework */; };
+		6FAB004023849CF000435C65 /* TCCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2441F0BC4E0004805D2 /* TCCore.framework */; };
+		6FAB004123849CF100435C65 /* TCCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2441F0BC4E0004805D2 /* TCCore.framework */; };
+		6FAB004223849CF400435C65 /* TCSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */; };
+		6FAB004423849CF600435C65 /* TCSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */; };
+		6FAB004523849CF600435C65 /* TCSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */; };
+		6FAB004623849CF800435C65 /* TCSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */; };
 		6FABE2EE1D9C0255001C4E9A /* SRGAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E69A1FF31D61E2070064E6C1 /* SRGAnalytics.framework */; };
 		6FABE2EF1D9C0258001C4E9A /* SRGAnalytics_MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C0D551D61E9CD00AEAE6D /* SRGAnalytics_MediaPlayer.framework */; };
 		6FABE2F01D9C0268001C4E9A /* SRGMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C0D841D61F14A00AEAE6D /* SRGMediaPlayer.framework */; };
@@ -392,12 +403,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				08EF58C02220A6BC000E7446 /* SRGNetwork.framework in Frameworks */,
+				6FAB003C23849CE200435C65 /* ComScore.framework in Frameworks */,
 				08EF58C32220A6BC000E7446 /* MAKVONotificationCenter.framework in Frameworks */,
 				08EF58C42220A6BC000E7446 /* libextobjc.framework in Frameworks */,
 				08EF59122220C454000E7446 /* UICKeyChainStore.framework in Frameworks */,
 				08EF59082220C2CC000E7446 /* Mantle.framework in Frameworks */,
 				08EF59182220C490000E7446 /* SRGIdentity.framework in Frameworks */,
 				08EF58C52220A6BC000E7446 /* SRGLogger.framework in Frameworks */,
+				6FAB004523849CF600435C65 /* TCSDK.framework in Frameworks */,
+				6FAB004023849CF000435C65 /* TCCore.framework in Frameworks */,
 				08EF58C82220A6BC000E7446 /* SRGAnalytics.framework in Frameworks */,
 				08EF590C2220C378000E7446 /* FXReachability.framework in Frameworks */,
 			);
@@ -422,12 +436,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F2E03F12150D94F00737B3C /* SRGContentProtection.framework in Frameworks */,
+				6FAB003D23849CE300435C65 /* ComScore.framework in Frameworks */,
 				6FB74DAD2105A79100E2D365 /* SRGNetwork.framework in Frameworks */,
 				08EF59072220C23C000E7446 /* SRGDataProvider.framework in Frameworks */,
 				6FB97FE61E4AF0CD0014C4C2 /* MAKVONotificationCenter.framework in Frameworks */,
 				E66BEC171DA7FA5900AD4450 /* libextobjc.framework in Frameworks */,
 				6FA09D8B1D9EC4DB00EDCA64 /* SRGLogger.framework in Frameworks */,
 				6FABE2F01D9C0268001C4E9A /* SRGMediaPlayer.framework in Frameworks */,
+				6FAB004623849CF800435C65 /* TCSDK.framework in Frameworks */,
+				6FAB004123849CF100435C65 /* TCCore.framework in Frameworks */,
 				6FABE2EF1D9C0258001C4E9A /* SRGAnalytics_MediaPlayer.framework in Frameworks */,
 				6FABE2EE1D9C0255001C4E9A /* SRGAnalytics.framework in Frameworks */,
 			);
@@ -441,7 +458,10 @@
 				6FA09D8A1D9EC4CF00EDCA64 /* SRGLogger.framework in Frameworks */,
 				0811A8531D800BA000A9863B /* libextobjc.framework in Frameworks */,
 				E6FC7FC31D62D90800A55085 /* SRGAnalytics.framework in Frameworks */,
+				6FAB004423849CF600435C65 /* TCSDK.framework in Frameworks */,
 				E61C0D861D61F16000AEAE6D /* SRGMediaPlayer.framework in Frameworks */,
+				6FAB003B23849CE200435C65 /* ComScore.framework in Frameworks */,
+				6FAB003F23849CEF00435C65 /* TCCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,8 +491,10 @@
 			files = (
 				6F821DD72257801700489EC8 /* AdSupport.framework in Frameworks */,
 				6FB97FE41E4AF0270014C4C2 /* MAKVONotificationCenter.framework in Frameworks */,
+				6FAB004223849CF400435C65 /* TCSDK.framework in Frameworks */,
 				E66BEC161DA7FA4800AD4450 /* libextobjc.framework in Frameworks */,
 				6FA09D891D9EC4BC00EDCA64 /* SRGLogger.framework in Frameworks */,
+				6FAB003E23849CEF00435C65 /* TCCore.framework in Frameworks */,
 				E672EA471D62EE5D00CFB080 /* ComScore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1486,6 +1508,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1512,6 +1535,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1537,6 +1561,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1563,6 +1588,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1730,6 +1756,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Framework/Info.plist;
@@ -1757,6 +1784,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Framework-MediaPlayer/Info.plist";
@@ -1783,6 +1811,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-DataProvider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1920,6 +1949,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Framework/Info.plist;
@@ -1947,6 +1977,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Framework-MediaPlayer/Info.plist";
@@ -1973,6 +2004,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-DataProvider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2137,6 +2169,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-DataProvider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2159,6 +2192,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Framework-DataProvider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2297,6 +2331,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Framework-MediaPlayer/Info.plist";
@@ -2321,6 +2356,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Framework-MediaPlayer/Info.plist";
@@ -2421,6 +2457,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Framework/Info.plist;
@@ -2445,6 +2482,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Framework/Info.plist;
