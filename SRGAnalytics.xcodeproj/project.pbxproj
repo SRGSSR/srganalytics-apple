@@ -59,7 +59,6 @@
 		6F3C401C1F87AF5E00FFEA85 /* SRGAnalyticsLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3C40161F87AF5E00FFEA85 /* SRGAnalyticsLabels.m */; };
 		6F4ED9B31F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F4ED9AF1F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F4ED9B41F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4ED9B01F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.m */; };
-		6F788E141E9BA56500D22495 /* KIF.framework in Copy Frameworks Into Test Bundle */ = {isa = PBXBuildFile; fileRef = 6F69505A1E9BA32B008FE8FA /* KIF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6F821DD72257801700489EC8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F821DD62257801700489EC8 /* AdSupport.framework */; };
 		6F8663E92238E26B00649647 /* XCTestCase+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D609281DA7762600FA44EB /* XCTestCase+Tests.m */; };
 		6F971F781F87EAED007C5049 /* PageViewLabelsTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F971F771F87EAED007C5049 /* PageViewLabelsTestCase.m */; };
@@ -231,17 +230,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6F788E131E9BA55A00D22495 /* Copy Frameworks Into Test Bundle */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6F788E141E9BA56500D22495 /* KIF.framework in Copy Frameworks Into Test Bundle */,
-			);
-			name = "Copy Frameworks Into Test Bundle";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E6FC7EA41D61F97500A55085 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,7 +293,6 @@
 		6F3C40161F87AF5E00FFEA85 /* SRGAnalyticsLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRGAnalyticsLabels.m; sourceTree = "<group>"; };
 		6F4ED9AF1F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SRGSegment+SRGAnalytics_DataProvider.h"; sourceTree = "<group>"; };
 		6F4ED9B01F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SRGSegment+SRGAnalytics_DataProvider.m"; sourceTree = "<group>"; };
-		6F69505A1E9BA32B008FE8FA /* KIF.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KIF.framework; path = Carthage/Build/iOS/KIF.framework; sourceTree = "<group>"; };
 		6F821DD62257801700489EC8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		6F971F771F87EAED007C5049 /* PageViewLabelsTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageViewLabelsTestCase.m; sourceTree = "<group>"; };
 		6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGLogger.framework; path = Carthage/Build/iOS/SRGLogger.framework; sourceTree = "<group>"; };
@@ -701,7 +688,6 @@
 				6F821DD62257801700489EC8 /* AdSupport.framework */,
 				E672EA461D62EE5D00CFB080 /* ComScore.framework */,
 				08EF590B2220C378000E7446 /* FXReachability.framework */,
-				6F69505A1E9BA32B008FE8FA /* KIF.framework */,
 				0811A8521D800BA000A9863B /* libextobjc.framework */,
 				6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */,
 				6FF3E20E1D9CE68600EB4A30 /* Mantle.framework */,
@@ -1087,7 +1073,6 @@
 				E66F8A621D62DC250004EB58 /* Sources */,
 				E66F8A631D62DC250004EB58 /* Frameworks */,
 				E66F8A641D62DC250004EB58 /* Resources */,
-				6F788E131E9BA55A00D22495 /* Copy Frameworks Into Test Bundle */,
 			);
 			buildRules = (
 			);
