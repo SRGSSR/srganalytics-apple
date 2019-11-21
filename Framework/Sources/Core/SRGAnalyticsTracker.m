@@ -17,22 +17,14 @@
 #import "UIViewController+SRGAnalytics.h"
 
 #import <ComScore/ComScore.h>
-
-// TODO: Remove when tvOS SDKs available
-#if TARGET_OS_IOS
 #import <TCCore/TCCore.h>
 #import <TCSDK/TCSDK.h>
-#endif
 
 static NSString * s_unitTestingIdentifier = nil;
 
 __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 {
-    // TODO: Remove when tvOS SDKs available
-#if TARGET_OS_IOS
     [TCDebug setDebugLevel:TCLogLevel_None];
-#endif
-    
     SRGAnalyticsRenewUnitTestingIdentifier();
 }
 
@@ -50,10 +42,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
 
-// TODO: Remove when tvOS SDKs available
-#if TARGET_OS_IOS
 @property (nonatomic) TagCommander *tagCommander;
-#endif
 @property (nonatomic) SRGAnalyticsNetMetrixTracker *netmetrixTracker;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
 
@@ -161,8 +150,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    // TODO: Remove when tvOS SDKs available
-#if TARGET_OS_IOS
     if ( ! self.tagCommander) {
         SRGAnalyticsConfiguration *configuration = self.configuration;
         NSAssert(configuration != nil, @"The tracker must be started");
@@ -181,7 +168,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addData:key withValue:object];
     }];
     [self.tagCommander sendData];
-#endif
 }
 
 #pragma mark Page view tracking

@@ -6,6 +6,9 @@
 
 #import "XCTestCase+Tests.h"
 
+// TODO: Use UIAutomation (recreate the test target with the proper Xcode template), or drop these tests entirely
+#if 0
+
 #import <KIF/KIF.h>
 #import <SRGAnalytics/SRGAnalytics.h>
 #import <UIKit/UIKit.h>
@@ -182,3 +185,5 @@ static NSDictionary *s_startLabels = nil;
 }
 
 @end
+
+#endif
