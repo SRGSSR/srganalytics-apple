@@ -132,7 +132,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return @"tablet";
     }
     else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
-        return @"tvbbox";
+        return @"tvbox";
     }
     else {
         return @"phone";
