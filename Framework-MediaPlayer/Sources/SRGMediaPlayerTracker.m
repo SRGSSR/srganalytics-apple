@@ -6,6 +6,7 @@
 
 #import "SRGMediaPlayerTracker.h"
 
+#import "AVPlayerItem+SRGAnalytics_MediaPlayer.h"
 #import "NSBundle+SRGAnalytics.h"
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "SRGAnalyticsLabels+Private.h"
@@ -309,7 +310,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     AVAsset *asset = playerItem.asset;
     if ([asset statusOfValueForKey:@keypath(asset.availableMediaCharacteristicsWithMediaSelectionOptions) error:NULL] == AVKeyValueStatusLoaded) {
         AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-        AVMediaSelectionOption *currentLegibleOption = [playerItem selectedMediaOptionInMediaSelectionGroup:legibleGroup];
+        AVMediaSelectionOption *currentLegibleOption = [playerItem srganalytics_selectedMediaOptionInMediaSelectionGroup:legibleGroup];
         return currentLegibleOption != nil;
     }
     else {
