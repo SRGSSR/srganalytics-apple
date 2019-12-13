@@ -6,17 +6,13 @@
 
 #import "XCTestCase+Tests.h"
 
-// TODO: Use UIAutomation (recreate the test target with the proper Xcode template), or drop these tests entirely
-#if 0
-
-#import <KIF/KIF.h>
 #import <UIKit/UIKit.h>
 
 typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
 
 static NSDictionary *s_startLabels = nil;
 
-@interface ComScoreViewEventTests : KIFTestCase
+@interface ComScoreViewEventTests : XCTestCase
 
 @end
 
@@ -27,19 +23,16 @@ static NSDictionary *s_startLabels = nil;
 - (void)setUp
 {
     SRGAnalyticsRenewUnitTestingIdentifier();
-    
-    [KIFSystemTestActor setDefaultTimeout:60.];
+    self.continueAfterFailure = NO;
 }
 
 #pragma mark Tests
 
-// For all tests, use KIF only to control the UI and wait for UI responses. For tests and waiting on other conditions, use
-// XCTest. While KIF provides similar functionalities, e.g. for waiting on notifications, expectations cannot be defined
-// prior to some code being run (e.g. tapping a UI element). If the code being run triggers the notification, it is
-// impossible to catch it with KIF. This is why the expectation - action - waiting model of XCTest is used instead
-
 - (void)testAutomaticTracking
 {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
     [self expectationForComScoreViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"name"], @"app.automatic-tracking");
         XCTAssertEqualObjects(labels[@"ns_category"], @"app");
@@ -58,13 +51,13 @@ static NSDictionary *s_startLabels = nil;
         return YES;
     }];
     
-    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"tableView"];
+    [app.tables/*@START_MENU_TOKEN@*/.staticTexts[@"Automatic tracking"]/*[[".cells.staticTexts[@\"Automatic tracking\"]",".staticTexts[@\"Automatic tracking\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [tester tapViewWithAccessibilityLabel:@"Reset"];
-    [tester waitForTimeInterval:2.];
+    [app.buttons[@"Reset"] tap];
 }
+
+#if 0
 
 - (void)testAutomaticTrackingWithLevels
 {
@@ -199,6 +192,6 @@ static NSDictionary *s_startLabels = nil;
     [tester waitForTimeInterval:2.];
 }
 
-@end
-
 #endif
+
+@end
