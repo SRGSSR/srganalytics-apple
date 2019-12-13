@@ -43,7 +43,7 @@ The application information is automatically extracted from your application `In
 - The application name is given by `CFBundleName`.
 - The application version is given by `CFBundleShortVersionString`.
 
-If your application has an Android equivalent, you should ensure that both the Android and iOS versions use the same application name.
+If your application has an Android equivalent, you should ensure that both the Android, iOS and tvOS versions use the same application name.
 
 ## Measurement information
 
