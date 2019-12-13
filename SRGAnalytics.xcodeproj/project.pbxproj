@@ -1100,7 +1100,7 @@
 			name = "SRGAnalytics-demo-tests";
 			productName = "SRGAnalytics-demo-tests";
 			productReference = E66F8A661D62DC250004EB58 /* SRGAnalytics_demo_tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		E69A1FF21D61E2070064E6C1 /* SRGAnalytics */ = {
 			isa = PBXNativeTarget;
@@ -1865,7 +1865,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
+				TEST_TARGET_NAME = "SRGAnalytics-demo";
 			};
 			name = "Debug-static";
 		};
@@ -2055,7 +2055,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
+				TEST_TARGET_NAME = "SRGAnalytics-demo";
 			};
 			name = "Release-static";
 		};
@@ -2418,7 +2418,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
+				TEST_TARGET_NAME = "SRGAnalytics-demo";
 			};
 			name = Debug;
 		};
@@ -2438,7 +2438,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalytics_demo.app/SRGAnalytics_demo";
+				TEST_TARGET_NAME = "SRGAnalytics-demo";
 			};
 			name = Release;
 		};
