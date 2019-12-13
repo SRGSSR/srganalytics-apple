@@ -106,18 +106,6 @@
                ReferencedContainer = "container:SRGAnalytics.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E66F8A651D62DC250004EB58"
-               BuildableName = "SRGAnalytics_demo_tests.xctest"
-               BlueprintName = "SRGAnalytics-demo-tests"
-               ReferencedContainer = "container:SRGAnalytics.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
