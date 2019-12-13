@@ -1,10 +1,10 @@
-![SRG Media Player logo](README-images/logo.png)
+[![SRG Analytics logo](README-images/logo.png)](https://github.com/SRGSSR/srganalytics-apple)
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
+[![GitHub releases](https://img.shields.io/github/v/release/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/releases) [![platform](https://img.shields.io/badge/platfom-ios%20%7C%20tvos-blue)](https://github.com/SRGSSR/srganalytics-apple) [![Build Status](https://travis-ci.org/SRGSSR/srganalytics-apple.svg?branch=master)](https://travis-ci.org/SRGSSR/srganalytics-apple/branches) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![GitHub license](https://img.shields.io/github/license/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/blob/master/LICENSE)
 
 ## About
 
-The SRG Analytics library for iOS makes it easy to add usage tracking information to your applications, following the SRG SSR standards.
+The SRG Analytics library makes it easy to add usage tracking information to your iOS and tvOS applications, following the SRG SSR standards.
 
 Measurements are based on events emitted by the application and collected by TagCommander, comScore and NetMetrix. 
 
@@ -12,11 +12,11 @@ The SRG Analytics library supports three kinds of measurements:
 
  * View events: Appearance of views (page views), which makes it possible to track which content is seen by users.
  * Hidden events: Custom events which can be used for measurement of application functionalities.
- * Stream playback events: Audio and video consumption measurements for application using our [SRG Media Player](https://github.com/SRGSSR/SRGMediaPlayer-iOS). Additional playback information (title, duration, etc.) must be supplied externally. For application using our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-ios) library, though, this process is entirely automated.
+ * Stream playback events: Audio and video consumption measurements for application using our [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple). Additional playback information (title, duration, etc.) must be supplied externally. For application using our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library, though, this process is entirely automated.
  
 ## Compatibility
 
-The library is suitable for applications running on iOS 9 and above. The project is meant to be opened with the latest Xcode version.
+The library is suitable for applications running on iOS 9, tvOS 12 and above. The project is meant to be opened with the latest Xcode version.
 
 ## Contributing
 
@@ -27,25 +27,25 @@ If you want to contribute to the project, have a look at our [contributing guide
 The library can be added to a project using [Carthage](https://github.com/Carthage/Carthage) by adding the following dependency to your `Cartfile`:
     
 ```
-github "SRGSSR/srganalytics-ios"
+github "SRGSSR/srganalytics-apple"
 ```
 
 For more information about Carthage and its use, refer to the [official documentation](https://github.com/Carthage/Carthage).
 
 ### Content protection
 
-The `SRGAnalytics_DataProvider.framework` companion framework provides convenience methods for playing content delivered by our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-ios) library. Not all content is publicly accessible for legal reasons, though, in particular livestreams or foreign TV series.
+The `SRGAnalytics_DataProvider.framework` companion framework provides convenience methods for playing content delivered by our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library. Not all content is publicly accessible for legal reasons, though, in particular livestreams or foreign TV series.
 
-To play protected content, and provided you have been granted access to it, an internal [SRG Content Protection](https://github.com/SRGSSR/srgcontentprotection-ios) framework is available and must be added to your project `Cartfile` as well:
+To play protected content, and provided you have been granted access to it, an internal [SRG Content Protection](https://github.com/SRGSSR/srgcontentprotection-apple) framework is available and must be added to your project `Cartfile` as well:
 
 ```
-github "SRGSSR/srgcontentprotection-ios"
+github "SRGSSR/srgcontentprotection-apple"
 ```
 
 If you have no access to this repository, use the fake public replacement framework by adding the following dependency instead:
 
 ```
-github "SRGSSR/srgcontentprotection-fake-ios"
+github "SRGSSR/srgcontentprotection-fake-apple"
 ```
 
 When linking against the fake framework, some content (e.g. livestreams) will not be playable.
@@ -62,7 +62,7 @@ Depending on your needs, the library requires the following frameworks to be add
   * `SRGLogger`: The framework used for internal logging.
   * `TCCore`: The core TagCommander framework.
   * `TCSDK`: The main TagCommander SDK framework.
-* If you use our [SRG Media Player library](https://github.com/SRGSSR/SRGMediaPlayer-iOS) and want automatic media consumption tracking as well, add the following frameworks to your target:
+* If you use our [SRG Media Player library](https://github.com/SRGSSR/srgmediaplayer-apple) and want automatic media consumption tracking as well, add the following frameworks to your target:
   * `ComScore`: comScore framework.
   * `libextobjc`: A utility framework.
   * `MAKVONotificationCenter`: A safe KVO framework.
@@ -71,7 +71,7 @@ Depending on your needs, the library requires the following frameworks to be add
   * `SRGLogger`: The framework used for internal logging.
   * `TCCore`: The core TagCommander framework.
   * `TCSDK`: The main TagCommander SDK framework.
-* If you use our [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-ios) to retrieve and play medias, add the following frameworks to your target:
+* If you use our [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-apple) to retrieve and play medias, add the following frameworks to your target:
   * `ComScore`: comScore framework.
   * `libextobjc`: A utility framework.
   * `MAKVONotificationCenter`: A safe KVO framework.
@@ -81,36 +81,42 @@ Depending on your needs, the library requires the following frameworks to be add
   * `SRGAnalytics_MediaPlayer`: The media player analytics companion framework.
   * `SRGContentProtection`: The framework to enable playback of protected medias.
   * `SRGLogger`: The framework used for internal logging.
-  * `SRGMediaPlayer`: The media player framework (if not already in your project).
+  * `SRGMediaPlayer`: The media player framework.
   * `SRGNetwork`: A networking framework.
   * `TCCore`: The core TagCommander framework.
   * `TCSDK`: The main TagCommander SDK framework.
-* If you use our [SRG Identity library](https://github.com/SRGSSR/srgidentity-ios) in your application, add the following frameworks to your target:
+* If you use our [SRG Identity library](https://github.com/SRGSSR/srgidentity-apple) in your application, add the following frameworks to your target:
   * `ComScore`: comScore framework.
+  * `FXReachability`: A reachability framework.
   * `libextobjc`: An utility framework.
   * `MAKVONotificationCenter`: A safe KVO framework.
+  * `Mantle`: The framework used to parse the data.
   * `SRGAnalytics`: The main analytics framework.
   * `SRGAnalytics_Identity`: The identity analytics companion framework.
+  * `SRGAppearance`: The appearance framework.
+  * `SRGIdentity`: The framework used to manage the user identity.
   * `SRGLogger`: The framework used for internal logging.
+  * `SRGNetwork`: A networking framework.
   * `TCCore`: The core TagCommander framework.
   * `TCSDK`: The main TagCommander SDK framework.
+  * `UICKeyChainStore`: The framework used to manage the keychain.
 
 ### Dynamic framework integration
 
 1. Run `carthage update` to update the dependencies (which is equivalent to `carthage update --configuration Release`). 
-2. Add the frameworks listed above and generated in the `Carthage/Build/iOS` folder to your target _Embedded binaries_.
+2. Add the frameworks listed above and generated in the `Carthage/Build/(iOS|tvOS)` folder to your target _Embedded binaries_.
 
 If your target is building an application, a few more steps are required:
 
 1. Add a _Run script_ build phase to your target, with `/usr/local/bin/carthage copy-frameworks` as command.
-2. Add each of the required frameworks above as input file `$(SRCROOT)/Carthage/Build/iOS/FrameworkName.framework`.
+2. Add each of the required frameworks above as input file `$(SRCROOT)/Carthage/Build/(iOS|tvOS)/FrameworkName.framework`.
 
 ### Static framework integration
 
 1. Run `carthage update --configuration Release-static` to update the dependencies. 
-2. Add the frameworks listed above and generated in the `Carthage/Build/iOS/Static` folder to the _Linked frameworks and libraries_ list of your target.
+2. Add the frameworks listed above and generated in the `Carthage/Build/(iOS|tvOS)/Static` folder to the _Linked frameworks and libraries_ list of your target.
 3. Also add any resource bundle `.bundle` found within the `.framework` folders to your target directly.
-4. Some non-statically built framework dependencies are built in the `Carthage/Build/iOS` folder. Add them by following the _Dynamic framework integration_ instructions above.
+4. Some non-statically built framework dependencies are built in the `Carthage/Build/(iOS|tvOS)` folder. Add them by following the _Dynamic framework integration_ instructions above.
 5. Add the `-all_load` flag to your target _Other linker flags_.
 
 ## Building the project
@@ -179,7 +185,7 @@ To learn about how the library can be used, have a look at the [getting started 
 
 ### Logging
 
-The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger-ios) library for logging, with the following subsystems:
+The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger-apple) library for logging, with the following subsystems:
 
 * `ch.srgssr.analytics` for `SRGAnalytics.framework` events.
 * `ch.srgssr.analytics.mediaplayer` for `SRGAnalytics_MediaPlayer.framework` events.

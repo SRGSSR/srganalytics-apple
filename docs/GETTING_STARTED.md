@@ -4,8 +4,8 @@ Getting started
 The SRG Analytics library is made of several frameworks:
 
 * A main `SRGAnalytics.framework` which supplies the singleton responsible of gathering measurements (tracker).
-* A companion optional `SRGAnalytics_MediaPlayer.framework` responsible of stream measurements for applications using our [SRG Media Player library](https://github.com/SRGSSR/SRGMediaPlayer-iOS).
-* A companion optional `SRGAnalytics_DataProvider.framework` transparently forwarding stream measurement analytics labels received from Integration Layer services by the [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-ios).
+* A companion optional `SRGAnalytics_MediaPlayer.framework` responsible of stream measurements for applications using our [SRG Media Player library](https://github.com/SRGSSR/srgmediaplayer-apple).
+* A companion optional `SRGAnalytics_DataProvider.framework` transparently forwarding stream measurement analytics labels received from Integration Layer services by the [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-apple).
 
 ## Starting the tracker
 
@@ -114,7 +114,7 @@ Custom labels can also be used to send any additional measurement information yo
 
 ## Measuring SRG Media Player media consumption
 
-To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/SRGMediaPlayer-iOS) controllers, you need to add the `SRGAnalytics_MediaPlayer.framework` companion framework to your project. As soon the framework has been added, it starts tracking any `SRGMediaPlayerController` instance by default. 
+To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) controllers, you need to add the `SRGAnalytics_MediaPlayer.framework` companion framework to your project. As soon the framework has been added, it starts tracking any `SRGMediaPlayerController` instance by default. 
 
 You can disable tracking by setting the `SRGMediaPlayerController` `tracked` property to `NO`. If you don't want the player to send any media playback events, you should perform this setup before actually beginning playback. You can still toggle the property on or off at any time if needed.
 
@@ -190,7 +190,7 @@ There is no such overloading mechanism for comScore measurements, which ignore s
 
 ## Automatic media consumption measurement labels using the SRG Data Provider library
 
-Our services directly supply the custom analytics labels which need to be sent with media consumption measurements. If you are using our [SRG DataProvider library](https://github.com/SRGSSR/srgdataprovider-ios) in your application, be sure to add the `SRGAnalytics_SRGDataProvider.framework` companion framework to your project as well, which will take care of the whole process for you.
+Our services directly supply the custom analytics labels which need to be sent with media consumption measurements. If you are using our [SRG DataProvider library](https://github.com/SRGSSR/srgdataprovider-apple) in your application, be sure to add the `SRGAnalytics_SRGDataProvider.framework` companion framework to your project as well, which will take care of the whole process for you.
 
 This framework adds a category `SRGMediaPlayerController (SRGAnalytics_DataProvider)`, which adds playback methods for media compositions to `SRGMediaPlayerController`. To play a media composition retrieved from an `SRGDataProvider` and have all measurement information automatically associated with the playback, simply call:
 
@@ -207,7 +207,7 @@ Nothing more is required for correct media consumption measurements. During play
 
 ## Automatic identity measurement labels using the SRG Identity library
 
-If you are using our [SRG Identity library](https://github.com/SRGSSR/srgidentity-ios) in your application, be sure to add the `SRGAnalytics_SRGIdentity.framework` companion framework to your project as well. This ensures that an identity can be automatically associated with analytics measurements.
+If you are using our [SRG Identity library](https://github.com/SRGSSR/srgidentity-apple) in your application, be sure to add the `SRGAnalytics_SRGIdentity.framework` companion framework to your project as well. This ensures that an identity can be automatically associated with analytics measurements.
 
 This framework adds a category `SRGAnalyticsTracker (SRGAnalytics_Identity)`, which provides an additional `-startWithConfiguration:identityService:` method to `SRGAnalyticsTracker`. To automatically asssociate an identity with analytics measurements, start your analytics tracker with this method instead of the orginal one:
 
@@ -238,4 +238,4 @@ The library is intended to be used from the main thread only. Trying to use if f
 
 In a near future, Apple will favor HTTPS over HTTP, and require applications to explicitly declare potentially insecure connections. These guidelines are referred to as [App Transport Security (ATS)](https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33).
 
-For information about how you should configure your application to access our services, please refer to the dedicated [SRG Data Provider wiki topic](https://github.com/SRGSSR/srgdataprovider-ios/wiki/App-Transport-Security-(ATS)).
+For information about how you should configure your application to access our services, please refer to the dedicated [SRG Data Provider wiki topic](https://github.com/SRGSSR/srgdataprovider-apple/wiki/App-Transport-Security-(ATS)).
