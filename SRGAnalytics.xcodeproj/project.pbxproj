@@ -36,6 +36,7 @@
 		08EF592A2220CFEE000E7446 /* IdentityTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EF59292220CFEE000E7446 /* IdentityTestCase.m */; };
 		08EF592B2220D22C000E7446 /* SRGAnalytics_Identity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EF58D72220A6BD000E7446 /* SRGAnalytics_Identity.framework */; };
 		08EF59542221B847000E7446 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EF59352221B772000E7446 /* main.m */; };
+		6F024F9F23A3E07A0037BB6A /* SRGAppearance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F024F9E23A3E07A0037BB6A /* SRGAppearance.framework */; };
 		6F04985F1F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F04985A1F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F0498601F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F04985B1F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.m */; };
 		6F0498611F343C7A00E88BEC /* SRGAnalyticsMediaPlayerLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F04985C1F343C7A00E88BEC /* SRGAnalyticsMediaPlayerLogger.h */; };
@@ -275,6 +276,7 @@
 		08EF59352221B772000E7446 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08EF59372221B772000E7446 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08EF593C2221B7B4000E7446 /* SRGAnalytics_testapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRGAnalytics_testapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F024F9E23A3E07A0037BB6A /* SRGAppearance.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGAppearance.framework; path = Carthage/Build/tvOS/SRGAppearance.framework; sourceTree = "<group>"; };
 		6F04985A1F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SRGMediaPlayerController+SRGAnalytics_MediaPlayer.h"; sourceTree = "<group>"; };
 		6F04985B1F343C7A00E88BEC /* SRGMediaPlayerController+SRGAnalytics_MediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SRGMediaPlayerController+SRGAnalytics_MediaPlayer.m"; sourceTree = "<group>"; };
 		6F04985C1F343C7A00E88BEC /* SRGAnalyticsMediaPlayerLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRGAnalyticsMediaPlayerLogger.h; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				6FAB004023849CF000435C65 /* TCCore.framework in Frameworks */,
 				08EF58C82220A6BC000E7446 /* SRGAnalytics.framework in Frameworks */,
 				08EF590C2220C378000E7446 /* FXReachability.framework in Frameworks */,
+				6F024F9F23A3E07A0037BB6A /* SRGAppearance.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +700,7 @@
 		AC99606425BE818BA71D7E4D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F024F9E23A3E07A0037BB6A /* SRGAppearance.framework */,
 				6F821DD62257801700489EC8 /* AdSupport.framework */,
 				E672EA461D62EE5D00CFB080 /* ComScore.framework */,
 				08EF590B2220C378000E7446 /* FXReachability.framework */,
@@ -1307,6 +1311,7 @@
 				"$(SRCROOT)/Carthage/Build/$(CARTHAGE_PLATFORM)/TCSDK.framework",
 				"$(SRCROOT)/Carthage/Build/$(CARTHAGE_PLATFORM)/TCCore.framework",
 				"$(SRCROOT)/Carthage/Build/$(CARTHAGE_PLATFORM)/UICKeyChainStore.framework",
+				"$(SRCROOT)/Carthage/Build/$(CARTHAGE_PLATFORM)/SRGAppearance.framework",
 			);
 			name = "Copy Frameworks (Carthage)";
 			outputFileListPaths = (
@@ -1510,6 +1515,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1537,6 +1543,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1563,6 +1570,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1590,6 +1598,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)",
 					"$(PROJECT_DIR)/Carthage/Build/$(CARTHAGE_PLATFORM)/Static",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				INFOPLIST_FILE = "Framework-Identity/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
