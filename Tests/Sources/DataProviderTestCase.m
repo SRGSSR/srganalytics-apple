@@ -606,7 +606,7 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testNoDRMPreferenceWithHybridStream
+- (void)testDRMRequirementsHybridStream
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
@@ -614,7 +614,7 @@ static NSURL *MMFTestURL(void)
     [[dataProvider mediaCompositionForURN:@"urn:rts:video:_drm18_special_3" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         BOOL success = [mediaComposition playbackContextWithPreferredSettings:nil contextBlock:^(NSURL * _Nonnull streamURL, SRGResource * _Nonnull resource, NSArray<id<SRGSegment>> * _Nullable segments, NSInteger index, SRGAnalyticsStreamLabels * _Nullable analyticsLabels) {
             XCTAssertEqual(resource.streamingMethod, SRGStreamingMethodHLS);
-            XCTAssertTrue(resource.srg_requiresDRM);
+            XCTAssertFalse(resource.srg_requiresDRM);
         }];
         XCTAssertTrue(success);
         [expectation fulfill];
@@ -623,24 +623,7 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testDRMPreferenceWithHybridStream
-{
-    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
-    
-    SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:MMFTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:rts:video:_drm18_special_3" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
-        BOOL success = [mediaComposition playbackContextWithPreferredSettings:nil contextBlock:^(NSURL * _Nonnull streamURL, SRGResource * _Nonnull resource, NSArray<id<SRGSegment>> * _Nullable segments, NSInteger index, SRGAnalyticsStreamLabels * _Nullable analyticsLabels) {
-            XCTAssertEqual(resource.streamingMethod, SRGStreamingMethodHLS);
-            XCTAssertTrue(resource.srg_requiresDRM);
-        }];
-        XCTAssertTrue(success);
-        [expectation fulfill];
-    }] resume];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testNoDRMPreferenceWithDRMStream
+- (void)testDRMRequirementsWithDRMStream
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
@@ -657,7 +640,7 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testDRMPreferenceWithStandardStream
+- (void)testDRMRequirementsWithStandardStream
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
@@ -674,7 +657,7 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testDRMPreferenceWithDASHResource
+- (void)testDRMRequirementsWithDASHResource
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
