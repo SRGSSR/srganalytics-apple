@@ -16,7 +16,7 @@
         [dictionary addEntriesFromDictionary:self.customInfo];
     }
     
-    return [dictionary copy];
+    return dictionary.copy;
 }
 
 - (NSDictionary<NSString *, NSString *> *)comScoreLabelsDictionary
@@ -27,7 +27,7 @@
         [dictionary addEntriesFromDictionary:self.comScoreCustomInfo];
     }
     
-    return [dictionary copy];
+    return dictionary.copy;
 }
 
 #pragma mark NSCopying protocol

@@ -28,7 +28,7 @@
     [dictionary srg_safelySetString:self.extraValue5 forKey:@"event_value_5"];
     
     [dictionary addEntriesFromDictionary:[super labelsDictionary]];
-    return [dictionary copy];
+    return dictionary.copy;
 }
 
 - (NSDictionary<NSString *, NSString *> *)comScoreLabelsDictionary
@@ -40,7 +40,7 @@
     [dictionary srg_safelySetString:self.source forKey:@"srg_evsource"];
     
     [dictionary addEntriesFromDictionary:[super comScoreLabelsDictionary]];
-    return [dictionary copy];
+    return dictionary.copy;
 }
 
 #pragma mark NSCopying protocol

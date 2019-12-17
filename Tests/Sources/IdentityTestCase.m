@@ -14,14 +14,6 @@
 static NSString *TestValidToken = @"0123456789";
 static NSString *TestUserId = @"1234";
 
-@interface SRGIdentityService (Private)
-
-- (BOOL)handleCallbackURL:(NSURL *)callbackURL;
-
-@property (nonatomic, readonly, copy) NSString *identifier;
-
-@end
-
 static SRGAnalyticsConfiguration *TestConfiguration(void)
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
@@ -42,6 +34,21 @@ static NSURL *TestWebsiteURL(void)
     return [NSURL URLWithString:@"https://www.srgssr.local"];
 }
 
+static NSURL *OnDemandTestURL(void)
+{
+    return [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];
+}
+
+#if TARGET_OS_IOS
+
+@interface SRGIdentityService (Private)
+
+- (BOOL)handleCallbackURL:(NSURL *)callbackURL;
+
+@property (nonatomic, readonly, copy) NSString *identifier;
+
+@end
+
 static NSURL *TestLoginCallbackURL(SRGIdentityService *identityService, NSString *token)
 {
     NSString *URLString = [NSString stringWithFormat:@"srganalytics-tests://%@?identity_service=%@&token=%@", TestWebserviceURL().host, identityService.identifier, token];
@@ -54,10 +61,15 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     return [NSURL URLWithString:URLString];
 }
 
-static NSURL *OnDemandTestURL(void)
-{
-    return [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];
-}
+#else
+
+@interface SRGIdentityService (Private)
+
+- (BOOL)handleSessionToken:(NSString *)sessionToken;
+
+@end
+
+#endif
 
 @interface IdentityTestCase : XCTestCase
 
@@ -204,7 +216,11 @@ static NSURL *OnDemandTestURL(void)
         return YES;
     }];
     
+#if TARGET_OS_IOS
     [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -226,7 +242,11 @@ static NSURL *OnDemandTestURL(void)
     [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
     [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
     
+#if TARGET_OS_IOS
     [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -240,6 +260,119 @@ static NSURL *OnDemandTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
+
+- (void)testHiddenEventAfterLogout
+{
+    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
+    
+    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
+    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
+    
+#if TARGET_OS_IOS
+    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
+        XCTAssertNil(labels[@"user_id"]);
+        return YES;
+    }];
+    
+    [self.identityService logout];
+    
+    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPageViewEventLogged
+{
+    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
+    
+    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
+    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
+    
+#if TARGET_OS_IOS
+    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
+        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
+        return YES;
+    }];
+    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view"
+                                                       levels:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testHiddenPlaybackEventLogged
+{
+    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
+    
+    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
+    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
+    
+#if TARGET_OS_IOS
+    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
+        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
+        return [event isEqualToString:@"play"];
+    }];
+    
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.customInfo = @{ @"stream_name" : @"full" };
+    
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testHiddenEventForTrackerStartedWithLoggedInUser
+{
+    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
+    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
+    
+#if TARGET_OS_IOS
+    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
+#else
+    [self.identityService handleSessionToken:TestValidToken];
+#endif
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker new];
+    [analyticsTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
+    
+    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
+        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
+        return YES;
+    }];
+    
+    [analyticsTracker trackHiddenEventWithName:@"Hidden event"];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+#if TARGET_OS_IOS
 
 - (void)testHiddenEventAfterUnauthorizedCall
 {
@@ -273,99 +406,6 @@ static NSURL *OnDemandTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventAfterLogout
-{
-    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
-    
-    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
-    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
-    
-    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
-        XCTAssertNil(labels[@"user_id"]);
-        return YES;
-    }];
-    
-    [self.identityService logout];
-    
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testPageViewEventLogged
-{
-    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
-    
-    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
-    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
-    
-    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
-        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
-        return YES;
-    }];
-    
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view"
-                                                       levels:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testHiddenPlaybackEventLogged
-{
-    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
-    
-    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
-    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
-    
-    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
-        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
-        return [event isEqualToString:@"play"];
-    }];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testHiddenEventForTrackerStartedWithLoggedInUser
-{
-    [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
-    [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
-    
-    [self.identityService handleCallbackURL:TestLoginCallbackURL(self.identityService, TestValidToken)];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker new];
-    [analyticsTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
-    
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
-        XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
-        return YES;
-    }];
-    
-    [analyticsTracker trackHiddenEventWithName:@"Hidden event"];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
+#endif
 
 @end

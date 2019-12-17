@@ -22,7 +22,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    self.window.backgroundColor = UIColor.blackColor;
     [self.window makeKeyAndVisible];
     
     SRGIdentityService.currentIdentityService = [[SRGIdentityService alloc] initWithWebserviceURL:[NSURL URLWithString:@"https://hummingbird.rts.ch/api/profile"]
@@ -37,7 +36,6 @@
                                                                                                        container:10
                                                                                              comScoreVirtualSite:@"rts-app-test-v"
                                                                                              netMetrixIdentifier:@"test"];
-    configuration.unitTesting = (NSClassFromString(@"XCTestCase") != Nil);
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
     DemosViewController *demosViewController = [[DemosViewController alloc] init];

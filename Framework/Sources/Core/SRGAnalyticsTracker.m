@@ -25,7 +25,6 @@ static NSString * s_unitTestingIdentifier = nil;
 __attribute__((constructor)) static void SRGAnalyticsTrackerInit(void)
 {
     [TCDebug setDebugLevel:TCLogLevel_None];
-    
     SRGAnalyticsRenewUnitTestingIdentifier();
 }
 
@@ -82,24 +81,23 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
         builder.publisherId = @"6036016";
-        builder.publisherSecret = @"fee16147939462a9b6faa0944ad832d1";
+        builder.secureTransmissionEnabled = YES;
         
-        builder.applicationName = [[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleExecutable"] stringByAppendingString:@" iOS"];
-        builder.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        
-        builder.vce = NO;
-        builder.secureTransmission = YES;
-        builder.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
+        // Coding Document for Video Players, page 16
+        builder.httpRedirectCachingEnabled = NO;
         
         if (configuration.unitTesting) {
             builder.startLabels = @{ @"srg_test_id" : SRGAnalyticsUnitTestingIdentifier() };
         }
-        
-        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
-        // Coding Document for Video Players, page 16
-        builder.httpRedirectCaching = NO;
     }];
-    [[SCORAnalytics configuration] addClientWithConfiguration:publisherConfiguration];
+    
+    SCORConfiguration *comScoreConfiguration = [SCORAnalytics configuration];
+    [comScoreConfiguration addClientWithConfiguration:publisherConfiguration];
+    
+    comScoreConfiguration.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    comScoreConfiguration.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+    
     [SCORAnalytics start];
     
     [self sendApplicationList];
@@ -119,7 +117,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             }
             [levelsComScoreFormattedString appendString:level.srg_comScoreFormattedString];
         }];
-        category = [levelsComScoreFormattedString copy];
+        category = levelsComScoreFormattedString.copy;
     }
     
     return [NSString stringWithFormat:@"%@.%@", category, title.srg_comScoreFormattedString];
@@ -134,7 +132,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return @"tablet";
     }
     else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
-        return @"tvbbox";
+        return @"tvbox";
     }
     else {
         return @"phone";
@@ -145,9 +143,9 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.comScoreLabelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
     [fullLabels addEntriesFromDictionary:labels];
-    [SCORAnalytics notifyHiddenEventWithLabels:[fullLabels copy]];
+    [SCORAnalytics notifyHiddenEventWithLabels:fullLabels.copy];
 }
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
@@ -164,7 +162,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
     }
     
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self.globalLabels.labelsDictionary mutableCopy] ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
     [fullLabels addEntriesFromDictionary:labels];
     [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
         [self.tagCommander addData:key withValue:object];
@@ -236,7 +234,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             [levelsComScoreFormattedString appendString:levelValue.srg_comScoreFormattedString];
         }];
         
-        category = [levelsComScoreFormattedString copy];
+        category = levelsComScoreFormattedString.copy;
     }
     
     [fullLabelsDictionary srg_safelySetString:category forKey:@"ns_category"];
@@ -251,7 +249,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [SCORAnalytics notifyViewEventWithLabels:[fullLabelsDictionary copy]];
+    [SCORAnalytics notifyViewEventWithLabels:fullLabelsDictionary.copy];
 }
 
 - (void)trackTagCommanderPageViewWithTitle:(NSString *)title
@@ -287,7 +285,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackTagCommanderEventWithLabels:fullLabelsDictionary.copy];
 }
 
 #pragma mark Hidden event tracking
@@ -333,7 +331,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackComScoreEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackComScoreEventWithLabels:fullLabelsDictionary.copy];
 }
 
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
@@ -354,7 +352,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         fullLabelsDictionary[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
     }
     
-    [self trackTagCommanderEventWithLabels:[fullLabelsDictionary copy]];
+    [self trackTagCommanderEventWithLabels:fullLabelsDictionary.copy];
 }
 
 #pragma mark Application list measurement

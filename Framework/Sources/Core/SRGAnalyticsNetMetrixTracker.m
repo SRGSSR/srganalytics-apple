@@ -41,7 +41,7 @@
         return;
     }
     
-    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/ios/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.device];
+    NSString *netMetrixURLString = [NSString stringWithFormat:@"https://%@.wemfbox.ch/cgi-bin/ivw/CP/apps/%@/%@/%@", netMetrixDomain, configuration.netMetrixIdentifier, self.platform.lowercaseString, self.device];
     NSURL *netMetrixURL = [NSURL URLWithString:netMetrixURLString];
     
     NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:netMetrixURL resolvingAgainstBaseURL:NO];
@@ -51,7 +51,7 @@
     [request setValue:@"image/gif" forHTTPHeaderField:@"Accept"];
     
     // Which User-Agent MUST be used is defined at https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications
-    NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (iOS-%@; U; CPU %@ like Mac OS X)", self.device, self.operatingSystem];
+    NSString *userAgent = [NSString stringWithFormat:@"Mozilla/5.0 (%@-%@; U; CPU %@ like Mac OS X)", self.platform, self.device, self.operatingSystem];
     [request setValue:userAgent forHTTPHeaderField:@"User-Agent"];
     
     // The app language must be sent, not the device language. This is sadly not documented in https://www.net-metrix.ch/fr/service/directives/directives-supplementaires-pour-les-applications,
@@ -66,8 +66,20 @@
 
 #pragma mark Information
 
+- (NSString *)platform
+{
+#if TARGET_OS_TV
+    return @"tvOS";
+#else
+    return @"iOS";
+#endif
+}
+
 - (NSString *)device
 {
+#if TARGET_OS_TV
+    return @"tv";
+#else
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return @"phone";
     }
@@ -77,10 +89,14 @@
     else {
         return @"universal";
     }
+#endif
 }
 
 - (NSString *)operatingSystem
 {
+#if TARGET_OS_TV
+    return @"Apple TV OS";
+#else
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return @"iPhone OS";
     }
@@ -90,6 +106,7 @@
     else {
         return @"OS";
     }
+#endif
 }
 
 @end
