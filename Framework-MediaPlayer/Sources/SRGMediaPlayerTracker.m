@@ -186,7 +186,8 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         
         self.lastEvent = event;
         
-        // Restore the heartbeat timer when transitioning to play again.
+        // Restore the heartbeat timer when transitioning to play again. We can use a simple `NSTimer` here since
+        // it needs to run while playing content (even in background), but will otherwise be inactive.
         if ([event isEqualToString:MediaPlayerTrackerEventPlay]) {
             if (! self.heartbeatTimer) {
                 SRGAnalyticsConfiguration *configuration = SRGAnalyticsTracker.sharedTracker.configuration;
