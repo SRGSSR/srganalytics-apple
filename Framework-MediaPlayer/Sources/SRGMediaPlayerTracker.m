@@ -197,6 +197,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                                                                      selector:@selector(heartbeat:)
                                                                      userInfo:nil
                                                                       repeats:YES];
+                self.heartbeatTimer.tolerance = heartbeatInterval / 10.;
                 self.heartbeatCount = 0;
             }
         }
