@@ -197,6 +197,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                                                                      selector:@selector(heartbeat:)
                                                                      userInfo:nil
                                                                       repeats:YES];
+                // Use the recommended 10% tolerance as default, see `tolerance` documentation
                 self.heartbeatTimer.tolerance = heartbeatInterval / 10.;
                 self.heartbeatCount = 0;
             }
