@@ -86,6 +86,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Protocol for custom containers to implement automatic page view tracking propagation to their children. Standard
  *  `UIKit` containers already conform to this protocol and do not require any additional work. For other custom
  *  containers conforming to this protocol is required so that automatic page views can be correctly propagated.
+ *
+ *  The implementation of a custom container might also need to inform the automatic page view tracking engine of
+ *  child controller appearance, see `-srg_setNeedsAutomaticPageViewTrackingInChildViewController:`.
  */
 @protocol SRGAnalyticsContainerViewTracking
 
@@ -93,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Must return the currently active view controllers in the container. For example:
  *    - The top view controller of a custom navigation controller.
  *    - The currently displayed view controller of a custom tab bar controller.
- *    - All view controllers displayed side by side by a customm split view controller.
+ *    - All view controllers displayed side by side in a custom split view controller.
  */
 @property (nonatomic, readonly) NSArray<UIViewController *> *srg_activeViewControllers;
 
