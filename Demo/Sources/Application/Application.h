@@ -6,7 +6,11 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  Build the standard application root view controller.
  */
 OBJC_EXPORT UIViewController *ApplicationRootViewController(void);
+
+NS_ASSUME_NONNULL_END
