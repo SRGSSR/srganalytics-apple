@@ -78,6 +78,18 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
+ *  Protocol for custom containers to implement automatic page view tracking propagation to their children.
+ */
+@protocol SRGAnalyticsContainerViewTracking
+
+/**
+ *  Must return the currently active view controllers for the container.
+ */
+@property (nonatomic, readonly) NSArray<UIViewController *> *srg_activeViewControllers;
+
+@end
+
+/**
  *  Analytics extensions for manual view controller tracking. This is especially useful when the `srg_trackedAutomatically`
  *  method has been implemented and returns `NO` (see above).
  */
@@ -87,6 +99,40 @@ NS_ASSUME_NONNULL_BEGIN
  *  Call this method to send a page view event manually.
  */
 - (void)srg_trackPageView;
+
+/**
+ *  For containers, call this method when the active view controllers changed. Has no effect if the receiver does not
+ *  conform to `SRGAnalyticsContainerViewTracking`.
+ */
+- (void)srg_setActiveViewControllersNeedUpdate;
+
+@end
+
+/**
+ *  Standard analytics containment support for `UINavigationController`.
+ */
+@interface UINavigationController (SRGAnalytics) <SRGAnalyticsContainerViewTracking>
+
+@end
+
+/**
+*  Standard analytics containment support for `UIPageViewController`.
+*/
+@interface UIPageViewController (SRGAnalytics) <SRGAnalyticsContainerViewTracking>
+
+@end
+
+/**
+ *  Standard analytics containment support for `UISplitViewController`.
+ */
+@interface UISplitViewController (SRGAnalytics) <SRGAnalyticsContainerViewTracking>
+
+@end
+
+/**
+ *  Standard analytics containment support for `UITabBarController`.
+ */
+@interface UITabBarController (SRGAnalytics) <SRGAnalyticsContainerViewTracking>
 
 @end
 
