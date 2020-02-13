@@ -6,8 +6,7 @@
 
 #import "AppDelegate.h"
 
-#import "DemosViewController.h"
-#import "SimpleViewController.h"
+#import "Application.h"
 
 #import <SRGAnalytics/SRGAnalytics.h>
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
@@ -38,30 +37,13 @@
                                                                                              netMetrixIdentifier:@"test"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
-    DemosViewController *demosViewController = [[DemosViewController alloc] init];
-    UINavigationController *demosNavigationController = [[UINavigationController alloc] initWithRootViewController:demosViewController];
-    demosNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Demos", nil) image:[UIImage imageNamed:@"demos"] tag:0];
-    
-    SimpleViewController *simpleViewController1 = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking"
-                                                                                                          levels:nil
-                                                                                                      customInfo:nil
-                                                                                      openedFromPushNotification:NO
-                                                                                            trackedAutomatically:YES];
-    simpleViewController1.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Automatic tracking", nil) image:[UIImage imageNamed:@"automatic"] tag:1];
-    
-    SimpleViewController *simpleViewController2 = [[SimpleViewController alloc] initWithTitle:@"Manual tracking"
-                                                                                       levels:nil
-                                                                                   customInfo:nil
-                                                                   openedFromPushNotification:NO
-                                                                         trackedAutomatically:NO];
-    simpleViewController2.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Manual tracking", nil) image:[UIImage imageNamed:@"manual"] tag:2];
-    
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[ demosNavigationController, simpleViewController1, simpleViewController2 ];
-    
-    self.window.rootViewController = tabBarController;
-    
+    self.window.rootViewController = ApplicationRootViewController();
     return YES;
+}
+
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0))
+{
+    return [[UISceneConfiguration alloc] initWithName:@"Default" sessionRole:connectingSceneSession.role];
 }
 
 @end
