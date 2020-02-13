@@ -8,21 +8,17 @@
 
 #import "SRGAnalyticsTracker.h"
 
-#import <libextobjc/libextobjc.h>
 #import <objc/runtime.h>
 
 // Associated object keys
-static void *s_observerKey = &s_observerKey;
 static void *s_appearedOnce = &s_appearedOnce;
 
 // Swizzled method original implementations
 static void (*s_UIViewController_viewDidAppear)(id, SEL, BOOL);
-static void (*s_UIViewController_viewWillDisappear)(id, SEL, BOOL);
 static void (*s_UITabBarController_setSelectedViewController)(id, SEL, id);
 
 // Swizzled method implementations
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated);
-static void swizzled_UIViewController_viewWillDisappear(UIViewController *self, SEL _cmd, BOOL animated);
 static void swizzled_UIViewController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController);
 
 @implementation UIViewController (SRGAnalytics)
@@ -34,10 +30,6 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     Method viewDidAppearMethod = class_getInstanceMethod(self, @selector(viewDidAppear:));
     s_UIViewController_viewDidAppear = (__typeof__(s_UIViewController_viewDidAppear))method_getImplementation(viewDidAppearMethod);
     method_setImplementation(viewDidAppearMethod, (IMP)swizzled_UIViewController_viewDidAppear);
-    
-    Method viewWillDisappearMethod = class_getInstanceMethod(self, @selector(viewWillDisappear:));
-    s_UIViewController_viewWillDisappear = (__typeof__(s_UIViewController_viewWillDisappear))method_getImplementation(viewWillDisappearMethod);
-    method_setImplementation(viewWillDisappearMethod, (IMP)swizzled_UIViewController_viewWillDisappear);
 }
 
 #pragma mark Tracking
@@ -101,6 +93,17 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     }
 }
 
+#pragma mark Notifications
+
++ (void)srganalytics_applicationWillEnterForeground:(NSNotification *)notification
+{
+    UIViewController *topViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    [topViewController srg_setActiveViewControllersNeedUpdate];
+}
+
 @end
 
 @implementation UINavigationController (SRGAnalytics)
@@ -156,6 +159,14 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 #pragma mark Functions
 
+__attribute__((constructor)) static void UIViewController_SRGAnalyticsInit(void)
+{
+    [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
+                                           selector:@selector(srganalytics_applicationWillEnterForeground:)
+                                               name:UIApplicationWillEnterForegroundNotification
+                                             object:nil];
+}
+
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated)
 {
     s_UIViewController_viewDidAppear(self, _cmd, animated);
@@ -169,25 +180,6 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
         [self srg_trackPageViewAutomatically:YES fromContainerUpdate:NO];
         objc_setAssociatedObject(self, s_appearedOnce, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    
-    // An anonymous observer (conveniently created with the notification center registration method taking a block as
-    // parameter) is required. If we simply registered `self` as observer, removal in `-viewWillDisappear:` would also
-    // remove all other registrations of the view controller for the same notifications!
-    @weakify(self)
-    id observer = [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
-        @strongify(self)
-        [self srg_trackPageViewAutomatically:YES fromContainerUpdate:NO];
-    }];
-    objc_setAssociatedObject(self, s_observerKey, observer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-static void swizzled_UIViewController_viewWillDisappear(UIViewController *self, SEL _cmd, BOOL animated)
-{
-    s_UIViewController_viewWillDisappear(self, _cmd, animated);
-    
-    id observer = objc_getAssociatedObject(self, s_observerKey);
-    [NSNotificationCenter.defaultCenter removeObserver:observer];
-    objc_setAssociatedObject(self, s_observerKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 static void swizzled_UIViewController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController)
