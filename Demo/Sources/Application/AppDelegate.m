@@ -39,7 +39,24 @@
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
     DemosViewController *demosViewController = [[DemosViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:demosViewController];
+    UINavigationController *demosNavigationController = [[UINavigationController alloc] initWithRootViewController:demosViewController];
+    
+    SimpleViewController *simpleViewController1 = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking"
+                                                                                                          levels:nil
+                                                                                                      customInfo:nil
+                                                                                      openedFromPushNotification:NO
+                                                                                            trackedAutomatically:YES];
+    SimpleViewController *simpleViewController2 = [[SimpleViewController alloc] initWithTitle:@"Manual tracking"
+                                                                                       levels:nil
+                                                                                   customInfo:nil
+                                                                   openedFromPushNotification:NO
+                                                                         trackedAutomatically:NO];
+    
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[ demosNavigationController, simpleViewController1, simpleViewController2 ];
+    
+    self.window.rootViewController = tabBarController;
     
     return YES;
 }
