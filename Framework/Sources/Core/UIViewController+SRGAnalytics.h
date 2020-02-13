@@ -93,12 +93,13 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SRGAnalyticsContainerViewTracking
 
 /**
- *  Must return the currently active view controllers in the container. For example:
+ *  Must return the currently active child view controllers in the container, i.e. those currently presented to the
+ *  user. Some examples:
  *    - The top view controller of a custom navigation controller.
  *    - The currently displayed view controller of a custom tab bar controller.
  *    - All view controllers displayed side by side in a custom split view controller.
  */
-@property (nonatomic, readonly) NSArray<UIViewController *> *srg_activeViewControllers;
+@property (nonatomic, readonly) NSArray<UIViewController *> *srg_activeChildViewControllers;
 
 @end
 

@@ -39,7 +39,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (void)srg_trackPageView
 {
-    [self srg_trackPageViewAutomatically:NO includeContainers:NO];
+    [self srg_trackPageViewAutomatic:NO includeContainers:NO];
 }
 
 - (void)srg_setNeedsAutomaticPageViewTrackingInChildViewController:(UIViewController *)childViewController
@@ -52,16 +52,16 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
         return;
     }
     
-    [childViewController srg_trackPageViewAutomatically:YES includeContainers:YES];
+    [childViewController srg_trackPageViewAutomatic:YES includeContainers:YES];
 }
 
-- (void)srg_trackPageViewAutomatically:(BOOL)automatically includeContainers:(BOOL)includeContainers
+- (void)srg_trackPageViewAutomatic:(BOOL)automatic includeContainers:(BOOL)includeContainers
 {
     if (includeContainers && [self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
         id<SRGAnalyticsContainerViewTracking> containerSelf = (id<SRGAnalyticsContainerViewTracking>)self;
-        NSArray<UIViewController *> *activeViewControllers = containerSelf.srg_activeViewControllers;
+        NSArray<UIViewController *> *activeViewControllers = containerSelf.srg_activeChildViewControllers;
         for (UIViewController *viewController in activeViewControllers) {
-            [viewController srg_trackPageViewAutomatically:automatically includeContainers:includeContainers];
+            [viewController srg_trackPageViewAutomatic:automatic includeContainers:includeContainers];
         }
     }
     
@@ -69,7 +69,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     if ([self conformsToProtocol:@protocol(SRGAnalyticsViewTracking)]) {
         id<SRGAnalyticsViewTracking> trackedSelf = (id<SRGAnalyticsViewTracking>)self;
         
-        if (automatically && [trackedSelf respondsToSelector:@selector(srg_isTrackedAutomatically)] && ! [trackedSelf srg_isTrackedAutomatically]) {
+        if (automatic && [trackedSelf respondsToSelector:@selector(srg_isTrackedAutomatically)] && ! [trackedSelf srg_isTrackedAutomatically]) {
             return;
         }
         
@@ -128,7 +128,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 #pragma mark SRGAnalyticsContainerViewTracking protocol
 
-- (NSArray<UIViewController *> *)srg_activeViewControllers
+- (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
     return @[self.topViewController];
 }
@@ -139,7 +139,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 #pragma mark SRGAnalyticsContainerViewTracking protocol
 
-- (NSArray<UIViewController *> *)srg_activeViewControllers
+- (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
     return @[self.viewControllers.firstObject];
 }
@@ -148,7 +148,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 @implementation UISplitViewController (SRGAnalytics)
 
-- (NSArray<UIViewController *> *)srg_activeViewControllers
+- (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
     return self.viewControllers;
 }
@@ -168,7 +168,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 #pragma mark SRGAnalyticsContainerViewTracking protocol
 
-- (NSArray<UIViewController *> *)srg_activeViewControllers
+- (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
     return @[self.selectedViewController];
 }
@@ -180,7 +180,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 __attribute__((constructor)) static void UIViewController_SRGAnalyticsInit(void)
 {
     if (@available(iOS 13, *)) {
-        // Scene support requires the `UIApplicationSceneManifest` to be set in the Info.plist.
+        // Scene support requires the `UIApplicationSceneManifest` key to be present in the Info.plist.
         if ([NSBundle.mainBundle objectForInfoDictionaryKey:@"UIApplicationSceneManifest"]) {
             [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
                                                    selector:@selector(srganalytics_sceneWillEnterForeground:)
@@ -208,7 +208,7 @@ static void UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(UIWindow *wind
     while (topViewController.presentedViewController) {
         topViewController = topViewController.presentedViewController;
     }
-    [topViewController srg_trackPageViewAutomatically:YES includeContainers:YES];
+    [topViewController srg_trackPageViewAutomatic:YES includeContainers:YES];
 }
 
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated)
@@ -221,7 +221,7 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
     //    - Modal presentation
     //    - View controller revealed after having been initially hidden behind a modal view controller
     if (! [objc_getAssociatedObject(self, s_appearedOnce) boolValue]) {
-        [self srg_trackPageViewAutomatically:YES includeContainers:NO];
+        [self srg_trackPageViewAutomatic:YES includeContainers:NO];
         objc_setAssociatedObject(self, s_appearedOnce, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
