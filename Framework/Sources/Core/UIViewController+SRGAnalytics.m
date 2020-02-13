@@ -39,21 +39,29 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (void)srg_trackPageView
 {
-    [self srg_trackPageViewAutomatically:NO fromContainerUpdate:NO];
+    [self srg_trackPageViewAutomatically:NO includeContainers:NO];
 }
 
-- (void)srg_setActiveViewControllersNeedUpdate
+- (void)srg_setNeedsAutomaticPageViewTrackingInChildViewController:(UIViewController *)childViewController
 {
-    [self srg_trackPageViewAutomatically:YES fromContainerUpdate:YES];
+    if (! [self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
+        return;
+    }
+    
+    if (! [self.childViewControllers containsObject:childViewController]) {
+        return;
+    }
+    
+    [childViewController srg_trackPageViewAutomatically:YES includeContainers:YES];
 }
 
-- (void)srg_trackPageViewAutomatically:(BOOL)automatically fromContainerUpdate:(BOOL)fromContainerUpdate
+- (void)srg_trackPageViewAutomatically:(BOOL)automatically includeContainers:(BOOL)includeContainers
 {
-    if ([self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
+    if (includeContainers && [self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
         id<SRGAnalyticsContainerViewTracking> containerSelf = (id<SRGAnalyticsContainerViewTracking>)self;
         NSArray<UIViewController *> *activeViewControllers = containerSelf.srg_activeViewControllers;
         for (UIViewController *viewController in activeViewControllers) {
-            [viewController srg_trackPageViewAutomatically:automatically fromContainerUpdate:fromContainerUpdate];
+            [viewController srg_trackPageViewAutomatically:automatically includeContainers:includeContainers];
         }
     }
     
@@ -68,7 +76,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
         // Inhibit container-triggered updates until the view controller has been displayed only once. First appearance
         // is detected by the view controller itself when added as a child.
         BOOL appearedOnce = [objc_getAssociatedObject(self, s_appearedOnce) boolValue];
-        if (fromContainerUpdate && ! appearedOnce) {
+        if (includeContainers && ! appearedOnce) {
             return;
         }
         
@@ -200,7 +208,7 @@ static void UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(UIWindow *wind
     while (topViewController.presentedViewController) {
         topViewController = topViewController.presentedViewController;
     }
-    [topViewController srg_setActiveViewControllersNeedUpdate];
+    [topViewController srg_trackPageViewAutomatically:YES includeContainers:YES];
 }
 
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated)
@@ -213,7 +221,7 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
     //    - Modal presentation
     //    - View controller revealed after having been initially hidden behind a modal view controller
     if (! [objc_getAssociatedObject(self, s_appearedOnce) boolValue]) {
-        [self srg_trackPageViewAutomatically:YES fromContainerUpdate:NO];
+        [self srg_trackPageViewAutomatically:YES includeContainers:NO];
         objc_setAssociatedObject(self, s_appearedOnce, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
@@ -224,6 +232,6 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     s_UITabBarController_setSelectedViewController(self, _cmd, viewController);
     
     if (changed) {
-        [self srg_setActiveViewControllersNeedUpdate];
+        [self srg_setNeedsAutomaticPageViewTrackingInChildViewController:viewController];
     }
 }
