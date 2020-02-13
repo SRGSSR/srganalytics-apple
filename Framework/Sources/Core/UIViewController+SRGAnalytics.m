@@ -13,6 +13,9 @@
 // Associated object keys
 static void *s_appearedOnce = &s_appearedOnce;
 
+// Functions
+static void UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(UIWindow *window);
+
 // Swizzled method original implementations
 static void (*s_UIViewController_viewDidAppear)(id, SEL, BOOL);
 static void (*s_UITabBarController_setSelectedViewController)(id, SEL, id);
@@ -95,13 +98,20 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 #pragma mark Notifications
 
++ (void)srganalytics_sceneWillEnterForeground:(NSNotification *)notification API_AVAILABLE(ios(13.0))
+{
+    if ([notification.object isKindOfClass:UIWindowScene.class]) {
+        UIWindowScene *windowScene = notification.object;
+        [windowScene.windows enumerateObjectsUsingBlock:^(UIWindow * _Nonnull window, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(window);
+        }];
+    }
+}
+
 + (void)srganalytics_applicationWillEnterForeground:(NSNotification *)notification
 {
-    UIViewController *topViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    [topViewController srg_setActiveViewControllersNeedUpdate];
+    UIWindow *keyWindow = UIApplication.sharedApplication.keyWindow;
+    UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(keyWindow);
 }
 
 @end
@@ -161,10 +171,36 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 __attribute__((constructor)) static void UIViewController_SRGAnalyticsInit(void)
 {
-    [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
-                                           selector:@selector(srganalytics_applicationWillEnterForeground:)
-                                               name:UIApplicationWillEnterForegroundNotification
-                                             object:nil];
+    if (@available(iOS 13, *)) {
+        // Scene support requires the `UIApplicationSceneManifest` to be set in the Info.plist.
+        if ([NSBundle.mainBundle objectForInfoDictionaryKey:@"UIApplicationSceneManifest"]) {
+            [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
+                                                   selector:@selector(srganalytics_sceneWillEnterForeground:)
+                                                       name:UISceneWillEnterForegroundNotification
+                                                     object:nil];
+        }
+        else {
+            [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
+                                                   selector:@selector(srganalytics_applicationWillEnterForeground:)
+                                                       name:UIApplicationWillEnterForegroundNotification
+                                                     object:nil];
+        }
+    }
+    else {
+        [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
+                                               selector:@selector(srganalytics_sceneWillEnterForeground:)
+                                                   name:UIApplicationWillEnterForegroundNotification
+                                                 object:nil];
+    }
+}
+
+static void UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(UIWindow *window)
+{
+    UIViewController *topViewController = window.rootViewController;
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    [topViewController srg_setActiveViewControllersNeedUpdate];
 }
 
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated)
