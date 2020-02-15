@@ -130,7 +130,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
-    return @[self.topViewController];
+    return self.topViewController ? @[self.topViewController] : @[];
 }
 
 @end
@@ -141,7 +141,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
-    return @[self.viewControllers.firstObject];
+    return self.viewControllers.firstObject ? @[self.viewControllers.firstObject] : @[];
 }
 
 @end
@@ -170,7 +170,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (NSArray<UIViewController *> *)srg_activeChildViewControllers
 {
-    return @[self.selectedViewController];
+    return self.selectedViewController ? @[self.selectedViewController] : @[];
 }
 
 @end
