@@ -240,6 +240,13 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     }
 }
 
+#pragma mark SRGAnalyticsViewTracking protocol
+
+- (NSString *)srg_pageViewTitle
+{
+    return @"home";
+}
+
 #pragma mark UI
 
 - (void)reloadData
