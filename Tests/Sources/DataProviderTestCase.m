@@ -280,7 +280,7 @@ static NSURL *MMFTestURL(void)
     }];
     
     __block SRGMediaComposition *fetchedMediaComposition2 = nil;
-    [[dataProvider mediaCompositionForURN:@"urn:rts:video:_balloon_360" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:rts:video:_example_360" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         fetchedMediaComposition2 = mediaComposition;
         
