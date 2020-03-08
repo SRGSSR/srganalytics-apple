@@ -27,6 +27,8 @@
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
+    XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
+    XCTAssertEqualObjects(configuration.environment, @"preprod");
 }
 
 - (void)testBusinessUnitSpecificConfiguration
@@ -44,6 +46,46 @@
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
+    XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
+    XCTAssertEqualObjects(configuration.environment, @"preprod");
+}
+
+- (void)testEnvironmentModePreProduction
+{
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
+                                                                                                       container:7
+                                                                                             comScoreVirtualSite:@"comscore-vsite"
+                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+    configuration.environmentMode = SRGAnalyticsEnvironmentModePreProduction;
+    
+    XCTAssertTrue(configuration.centralized);
+    XCTAssertFalse(configuration.unitTesting);
+    XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
+    XCTAssertEqual(configuration.site, 3666);
+    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
+    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
+    XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModePreProduction);
+    XCTAssertEqualObjects(configuration.environment, @"preprod");
+}
+
+- (void)testEnvironmentModeProduction
+{
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
+                                                                                                       container:7
+                                                                                             comScoreVirtualSite:@"comscore-vsite"
+                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+    configuration.environmentMode = SRGAnalyticsEnvironmentModeProduction;
+    
+    XCTAssertTrue(configuration.centralized);
+    XCTAssertFalse(configuration.unitTesting);
+    XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
+    XCTAssertEqual(configuration.site, 3666);
+    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
+    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
+    XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeProduction);
+    XCTAssertEqualObjects(configuration.environment, @"prod");
 }
 
 - (void)testUnitTestingConfiguration
@@ -61,6 +103,8 @@
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
+    XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
+    XCTAssertEqualObjects(configuration.environment, @"preprod");
 }
 
 - (void)testCopy
@@ -80,6 +124,8 @@
     XCTAssertEqual(configuration.container, configurationCopy.container);
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, configurationCopy.comScoreVirtualSite);
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, configurationCopy.netMetrixIdentifier);
+    XCTAssertEqual(configuration.environmentMode, configurationCopy.environmentMode);
+    XCTAssertEqualObjects(configuration.environment, configurationCopy.environment);
 }
 
 @end

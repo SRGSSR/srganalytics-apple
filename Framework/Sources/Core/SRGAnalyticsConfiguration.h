@@ -20,6 +20,33 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
 OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRG;
 OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI;
 
+
+/**
+ *  @name Analytics environment
+ */
+typedef NSString * SRGAnalyticsEnvironment NS_TYPED_ENUM;
+
+OBJC_EXPORT SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentPreProduction;
+OBJC_EXPORT SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction;
+
+/**
+ *  Anayltics environment mode.
+ */
+typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
+    /**
+     *  Automatic environment mode.
+     */
+    SRGAnalyticsEnvironmentModeAutomatic = 0,
+    /**
+     *  Force pre-production analytic environment.
+     */
+    SRGAnalyticsEnvironmentModePreProduction,
+    /**
+     *  Force production analytic environment.
+     */
+    SRGAnalyticsEnvironmentModeProduction
+};
+
 @interface SRGAnalyticsConfiguration : NSObject <NSCopying>
 
 /**
@@ -53,6 +80,16 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
 @property (nonatomic, getter=isUnitTesting) BOOL unitTesting;
 
 /**
+ *  Analytics environment mode.
+ *
+ *  @discussion: A Distribution build to AppStoreConnect uses the production environment (AppStore, TestFlight, AppStore B2B).
+ *              In House, Ad Hoc and Development builds use the pre-production environment.
+ *
+ *  Default value is `SRGAnalyticsEnvironmentModeAutomatic`.
+ */
+@property (nonatomic) SRGAnalyticsEnvironmentMode environmentMode;
+
+/**
  *  The SRG SSR business unit which measurements are associated with.
  */
 @property (nonatomic, readonly, copy) SRGAnalyticsBusinessUnitIdentifier businessUnitIdentifier;
@@ -81,6 +118,11 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
  *  The NetMetrix application identifier.
  */
 @property (nonatomic, readonly, copy) NSString *netMetrixIdentifier;
+
+/**
+ *  The analytics environment.
+ */
+@property (nonatomic, readonly) SRGAnalyticsEnvironment environment;
 
 @end
 

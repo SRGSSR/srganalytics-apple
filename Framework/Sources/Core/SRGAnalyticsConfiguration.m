@@ -6,12 +6,17 @@
 
 #import "SRGAnalyticsConfiguration.h"
 
+#import "NSBundle+SRGAnalytics.h"
+
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRSI = @"rsi";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTR = @"rtr";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTS = @"rts";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRF = @"srf";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRG = @"srg";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI = @"swi";
+
+SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentPreProduction = @"preprod";
+SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 
 @interface SRGAnalyticsConfiguration ()
 
@@ -37,6 +42,7 @@ SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI =
         self.comScoreVirtualSite = comScoreVirtualSite;
         self.netMetrixIdentifier = netMetrixIdentifier;
         self.centralized = YES;
+        self.environmentMode = SRGAnalyticsEnvironmentModeAutomatic;
     }
     return self;
 }
@@ -75,6 +81,19 @@ SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI =
     return s_domains[self.businessUnitIdentifier];
 }
 
+- (SRGAnalyticsEnvironment)environment
+{
+    if (self.environmentMode == SRGAnalyticsEnvironmentModeAutomatic) {
+        return NSBundle.srg_isProductionVersion ? SRGAnalyticsEnvironmentProduction : SRGAnalyticsEnvironmentPreProduction;
+    }
+    else if (self.environmentMode == SRGAnalyticsEnvironmentModeProduction) {
+        return SRGAnalyticsEnvironmentProduction;
+    }
+    else {
+        return SRGAnalyticsEnvironmentPreProduction;
+    }
+}
+
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
@@ -85,6 +104,7 @@ SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI =
     configuration.comScoreVirtualSite = self.comScoreVirtualSite;
     configuration.netMetrixIdentifier = self.netMetrixIdentifier;
     configuration.centralized = self.centralized;
+    configuration.environmentMode = self.environmentMode;
     configuration.unitTesting = self.unitTesting;
     return configuration;
 }
