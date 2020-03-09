@@ -94,6 +94,8 @@
 		6FC24BB0219AD4BD0048091F /* PlaybackSettingsTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC24BAF219AD4BD0048091F /* PlaybackSettingsTestCase.m */; };
 		6FC7C5A023A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FC7C59E23A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.h */; };
 		6FC7C5A123A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC7C59F23A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.m */; };
+		6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030623F580D10072EBC4 /* SceneDelegate.m */; };
+		6FCE030D23F582CB0072EBC4 /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030C23F582CB0072EBC4 /* Application.m */; };
 		6FD2856B23916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FD2856923916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.h */; };
 		6FD2856C23916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD2856A23916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.m */; };
 		6FD31A661FE6D8C300D13595 /* SRGMediaComposition+SRGAnalytics_DataProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FD31A641FE6D8C200D13595 /* SRGMediaComposition+SRGAnalytics_DataProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -307,6 +309,10 @@
 		6FC24BAF219AD4BD0048091F /* PlaybackSettingsTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaybackSettingsTestCase.m; sourceTree = "<group>"; };
 		6FC7C59E23A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVPlayerItem+SRGAnalytics_MediaPlayer.h"; sourceTree = "<group>"; };
 		6FC7C59F23A397540058349C /* AVPlayerItem+SRGAnalytics_MediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVPlayerItem+SRGAnalytics_MediaPlayer.m"; sourceTree = "<group>"; };
+		6FCE030523F580D10072EBC4 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		6FCE030623F580D10072EBC4 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		6FCE030B23F582CB0072EBC4 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		6FCE030C23F582CB0072EBC4 /* Application.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Application.m; sourceTree = "<group>"; };
 		6FD2856923916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.h"; sourceTree = "<group>"; };
 		6FD2856A23916AD100535128 /* SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SRGMediaPlayerViewController+SRGAnalytics_MediaPlayer.m"; sourceTree = "<group>"; };
 		6FD31A641FE6D8C200D13595 /* SRGMediaComposition+SRGAnalytics_DataProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SRGMediaComposition+SRGAnalytics_DataProvider.h"; sourceTree = "<group>"; };
@@ -490,7 +496,11 @@
 			children = (
 				088700B41DA2528900D4961A /* AppDelegate.h */,
 				088700B51DA2528900D4961A /* AppDelegate.m */,
+				6FCE030B23F582CB0072EBC4 /* Application.h */,
+				6FCE030C23F582CB0072EBC4 /* Application.m */,
 				088700B61DA2528900D4961A /* main.m */,
+				6FCE030523F580D10072EBC4 /* SceneDelegate.h */,
+				6FCE030623F580D10072EBC4 /* SceneDelegate.m */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1086,7 +1096,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SRG;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "SRG SSR";
 				TargetAttributes = {
 					08EF593B2221B7B4000E7446 = {
@@ -1344,6 +1354,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				088700D81DA2542700D4961A /* main.m in Sources */,
+				6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */,
+				6FCE030D23F582CB0072EBC4 /* Application.m in Sources */,
 				088700D71DA2542700D4961A /* AppDelegate.m in Sources */,
 				6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */,
 				088700DF1DA2543800D4961A /* SimpleViewController.m in Sources */,

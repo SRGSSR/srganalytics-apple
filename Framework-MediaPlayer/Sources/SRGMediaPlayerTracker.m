@@ -7,7 +7,6 @@
 #import "SRGMediaPlayerTracker.h"
 
 #import "AVPlayerItem+SRGAnalytics_MediaPlayer.h"
-#import "NSBundle+SRGAnalytics.h"
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsMediaPlayerLogger.h"
@@ -186,7 +185,8 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         
         self.lastEvent = event;
         
-        // Restore the heartbeat timer when transitioning to play again.
+        // Restore the heartbeat timer when transitioning to play again. We can use a simple `NSTimer` here since
+        // it needs to run while playing content (even in background), but will otherwise be inactive.
         if ([event isEqualToString:MediaPlayerTrackerEventPlay]) {
             if (! self.heartbeatTimer) {
                 SRGAnalyticsConfiguration *configuration = SRGAnalyticsTracker.sharedTracker.configuration;
@@ -196,6 +196,8 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                                                                      selector:@selector(heartbeat:)
                                                                      userInfo:nil
                                                                       repeats:YES];
+                // Use the recommended 10% tolerance as default, see `tolerance` documentation
+                self.heartbeatTimer.tolerance = heartbeatInterval / 10.;
                 self.heartbeatCount = 0;
             }
         }
@@ -207,7 +209,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     
     NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
     
-    [labels srg_safelySetString:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod" forKey:@"media_embedding_environment"];
+    [labels srg_safelySetString:SRGAnalyticsTracker.sharedTracker.configuration.environment forKey:@"media_embedding_environment"];
     
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerName forKey:@"media_player_display"];
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerVersion forKey:@"media_player_version"];

@@ -4,13 +4,13 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <SRGAnalytics/SRGAnalytics.h>
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DemosViewController : UITableViewController <SRGAnalyticsViewTracking, UITableViewDelegate>
-
-@end
+/**
+ *  Build the standard application root view controller.
+ */
+OBJC_EXPORT UIViewController *ApplicationRootViewController(void);
 
 NS_ASSUME_NONNULL_END

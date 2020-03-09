@@ -4,12 +4,14 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <SRGAnalytics/SRGAnalytics.h>
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DemosViewController : UITableViewController <SRGAnalyticsViewTracking, UITableViewDelegate>
+API_AVAILABLE(ios(13.0))
+@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
+
+@property (nonatomic) UIWindow *window;
 
 @end
 

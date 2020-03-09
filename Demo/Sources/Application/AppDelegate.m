@@ -6,8 +6,7 @@
 
 #import "AppDelegate.h"
 
-#import "DemosViewController.h"
-#import "SimpleViewController.h"
+#import "Application.h"
 
 #import <SRGAnalytics/SRGAnalytics.h>
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
@@ -38,10 +37,13 @@
                                                                                              netMetrixIdentifier:@"test"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
-    DemosViewController *demosViewController = [[DemosViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:demosViewController];
-    
+    self.window.rootViewController = ApplicationRootViewController();
     return YES;
+}
+
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0))
+{
+    return [[UISceneConfiguration alloc] initWithName:@"Default" sessionRole:connectingSceneSession.role];
 }
 
 @end

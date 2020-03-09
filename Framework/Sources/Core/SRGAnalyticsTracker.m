@@ -6,7 +6,6 @@
 
 #import "SRGAnalyticsTracker.h"
 
-#import "NSBundle+SRGAnalytics.h"
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "NSString+SRGAnalytics.h"
 #import "SRGAnalytics.h"
@@ -158,7 +157,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander enableRunningInBackground];
         [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
         [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.comScoreVirtualSite];
-        [self.tagCommander addPermanentData:@"navigation_environment" withValue:NSBundle.srg_isProductionVersion ? @"prod" : @"preprod"];
+        [self.tagCommander addPermanentData:@"navigation_environment" withValue:configuration.environment];
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
     }
     
