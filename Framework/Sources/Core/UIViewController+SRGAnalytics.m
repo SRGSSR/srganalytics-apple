@@ -179,7 +179,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 __attribute__((constructor)) static void UIViewController_SRGAnalyticsInit(void)
 {
-    if (@available(iOS 13, *)) {
+    if (@available(iOS 13, tvOS 13, *)) {
         // Scene support requires the `UIApplicationSceneManifest` key to be present in the Info.plist.
         if ([NSBundle.mainBundle objectForInfoDictionaryKey:@"UIApplicationSceneManifest"]) {
             [NSNotificationCenter.defaultCenter addObserver:UIViewController.class
