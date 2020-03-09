@@ -20,6 +20,33 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
 OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRG;
 OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI;
 
+
+/**
+ *  @name Analytics environment
+ */
+typedef NSString * SRGAnalyticsEnvironment NS_TYPED_ENUM;
+
+OBJC_EXPORT SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentPreProduction;
+OBJC_EXPORT SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction;
+
+/**
+ *  Anayltics environment mode.
+ */
+typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
+    /**
+     *  Automatic environment mode. The environment is determined from application bundle analysis.
+     */
+    SRGAnalyticsEnvironmentModeAutomatic = 0,
+    /**
+     *  Force pre-production analytics environment.
+     */
+    SRGAnalyticsEnvironmentModePreProduction,
+    /**
+     *  Force production analytics environment.
+     */
+    SRGAnalyticsEnvironmentModeProduction
+};
+
 @interface SRGAnalyticsConfiguration : NSObject <NSCopying>
 
 /**
@@ -53,6 +80,21 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
 @property (nonatomic, getter=isUnitTesting) BOOL unitTesting;
 
 /**
+ *  Analytics environment mode. Determines how the analytics environment (production / pre-production) is resolved.
+ *
+ *  The default value `SRGAnalyticsEnvironmentModeAutomatic` is the recommended choice in almost all cases. It automatically
+ *  determines from the application bundle whether it corresponds to an App Store Connect release or not, and sets the environment
+ *  accordingly.
+ *
+ *  You should use a forced mode only in very specific cases, e.g. if you distribute internal development builds via TestFlight.
+ *  Otherwise stick with the default behavior.
+ *
+ *  @discussion: A Distribution build to App Store Connect (App Store, TestFlight, App Store B2B) should use the production
+ *               environment. In House, Ad Hoc and Development builds should use the pre-production environment.
+ */
+@property (nonatomic) SRGAnalyticsEnvironmentMode environmentMode;
+
+/**
  *  The SRG SSR business unit which measurements are associated with.
  */
 @property (nonatomic, readonly, copy) SRGAnalyticsBusinessUnitIdentifier businessUnitIdentifier;
@@ -81,6 +123,11 @@ OBJC_EXPORT SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIde
  *  The NetMetrix application identifier.
  */
 @property (nonatomic, readonly, copy) NSString *netMetrixIdentifier;
+
+/**
+ *  The analytics environment.
+ */
+@property (nonatomic, readonly, copy) SRGAnalyticsEnvironment environment;
 
 @end
 
