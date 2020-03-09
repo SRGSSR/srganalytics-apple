@@ -83,14 +83,22 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 
 - (SRGAnalyticsEnvironment)environment
 {
-    if (self.environmentMode == SRGAnalyticsEnvironmentModeAutomatic) {
-        return NSBundle.srg_isProductionVersion ? SRGAnalyticsEnvironmentProduction : SRGAnalyticsEnvironmentPreProduction;
-    }
-    else if (self.environmentMode == SRGAnalyticsEnvironmentModeProduction) {
-        return SRGAnalyticsEnvironmentProduction;
-    }
-    else {
-        return SRGAnalyticsEnvironmentPreProduction;
+    switch (self.environmentMode) {
+        case SRGAnalyticsEnvironmentModePreProduction: {
+            return SRGAnalyticsEnvironmentPreProduction;
+            break;
+        }
+            
+        case SRGAnalyticsEnvironmentModeProduction: {
+            return SRGAnalyticsEnvironmentProduction;
+            break;
+        }
+        
+        case SRGAnalyticsEnvironmentModeAutomatic:
+        default: {
+            return NSBundle.srg_isProductionVersion ? SRGAnalyticsEnvironmentProduction : SRGAnalyticsEnvironmentPreProduction;
+            break;
+        }
     }
 }
 

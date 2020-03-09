@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, readonly) NSBundle *srg_analyticsBundle;
 
 /**
- *  Return `YES` iff the application bundle corresponds to an AppStore or TestFlight release.
+ *  Return `YES` iff the application bundle corresponds to an App Store or TestFlight release.
  */
 @property (class, nonatomic, readonly) BOOL srg_isProductionVersion;
 

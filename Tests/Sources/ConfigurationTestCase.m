@@ -28,7 +28,7 @@
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
-    XCTAssertEqualObjects(configuration.environment, @"preprod");
+    XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
 
 - (void)testBusinessUnitSpecificConfiguration
@@ -47,7 +47,7 @@
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
-    XCTAssertEqualObjects(configuration.environment, @"preprod");
+    XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
 
 - (void)testEnvironmentModePreProduction
@@ -66,7 +66,7 @@
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModePreProduction);
-    XCTAssertEqualObjects(configuration.environment, @"preprod");
+    XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
 
 - (void)testEnvironmentModeProduction
@@ -104,7 +104,7 @@
     XCTAssertEqualObjects(configuration.comScoreVirtualSite, @"comscore-vsite");
     XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
-    XCTAssertEqualObjects(configuration.environment, @"preprod");
+    XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
 
 - (void)testCopy

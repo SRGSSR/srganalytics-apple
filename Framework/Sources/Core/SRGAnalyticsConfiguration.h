@@ -34,15 +34,15 @@ OBJC_EXPORT SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction;
  */
 typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
     /**
-     *  Automatic environment mode.
+     *  Automatic environment mode. The environment is determined from application bundle analysis.
      */
     SRGAnalyticsEnvironmentModeAutomatic = 0,
     /**
-     *  Force pre-production analytic environment.
+     *  Force pre-production analytics environment.
      */
     SRGAnalyticsEnvironmentModePreProduction,
     /**
-     *  Force production analytic environment.
+     *  Force production analytics environment.
      */
     SRGAnalyticsEnvironmentModeProduction
 };
@@ -80,12 +80,17 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
 @property (nonatomic, getter=isUnitTesting) BOOL unitTesting;
 
 /**
- *  Analytics environment mode.
+ *  Analytics environment mode. Determines how the analytics environment (production / pre-production) is resolved.
  *
- *  @discussion: A Distribution build to AppStoreConnect uses the production environment (AppStore, TestFlight, AppStore B2B).
- *              In House, Ad Hoc and Development builds use the pre-production environment.
+ *  The default value `SRGAnalyticsEnvironmentModeAutomatic` is the recommended choice in almost all cases. It automatically
+ *  determines from the application bundle whether it corresponds to an App Store Connect release or not, and sets the environment
+ *  accordingly.
  *
- *  Default value is `SRGAnalyticsEnvironmentModeAutomatic`.
+ *  You should use a forced mode only in very specific cases, e.g. if you distribute internal development builds via TestFlight.
+ *  Otherwise stick with the default behavior.
+ *
+ *  @discussion: A Distribution build to App Store Connect (App Store, TestFlight, App Store B2B) should use the production
+ *               environment. In House, Ad Hoc and Development builds should use the pre-production environment.
  */
 @property (nonatomic) SRGAnalyticsEnvironmentMode environmentMode;
 
@@ -122,7 +127,7 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
 /**
  *  The analytics environment.
  */
-@property (nonatomic, readonly) SRGAnalyticsEnvironment environment;
+@property (nonatomic, readonly, copy) SRGAnalyticsEnvironment environment;
 
 @end
 
