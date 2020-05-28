@@ -43,6 +43,29 @@ static void *s_streamOffset = &s_streamOffset;
     objc_setAssociatedObject(self, s_streamOffset, @(streamOffset), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+// TODO: Once streamOffset is not required anymore, update the documentation of these properties (will be used
+//       interchangeably with the mark range).
+
+- (NSDate *)markInDate
+{
+    if (self.resourceReferenceDate) {
+        return [self.resourceReferenceDate dateByAddingTimeInterval:self.markIn / 1000.];
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSDate *)markOutDate
+{
+    if (self.resourceReferenceDate) {
+        return [self.resourceReferenceDate dateByAddingTimeInterval:self.markOut / 1000.];
+    }
+    else {
+        return nil;
+    }
+}
+
 #pragma mark SRGAnalyticsSegment protocol
 
 - (SRGMarkRange *)srg_markRange
