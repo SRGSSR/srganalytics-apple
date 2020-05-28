@@ -9,6 +9,7 @@
 #import "SRGMediaComposition+SRGAnalytics_DataProvider.h"
 #import "SRGMediaComposition+SRGAnalytics_DataProvider_Private.h"
 #import "SRGSegment+SRGAnalytics_DataProvider.h"
+#import "SRGSegment+SRGAnalytics_DataProvider_Private.h"
 
 #import <libextobjc/libextobjc.h>
 #import <SRGContentProtection/SRGContentProtection.h>
@@ -101,7 +102,13 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
     SRGResource *resource = [[mediaComposition.mainChapter resourcesForStreamingMethod:self.resource.streamingMethod] filteredArrayUsingPredicate:predicate].firstObject;
     self.analyticsLabels = [mediaComposition analyticsLabelsForResource:resource sourceUid:self.userInfo[SRGAnalyticsDataProviderSourceUidKey]];
     
-    self.segments = mediaComposition.mainChapter.segments;
+    SRGChapter *mainChapter = mediaComposition.mainChapter;
+    NSArray<SRGSegment *> *segments = mainChapter.segments;
+    
+    // Associate segment-related information needed for date calculations
+    SRGAnalyticsDataProviderAssociateSegmentDateInformation(segments, mainChapter.resourceReferenceDate, resource.streamOffset);
+    
+    self.segments = segments;
 }
 
 - (SRGMediaComposition *)mediaComposition

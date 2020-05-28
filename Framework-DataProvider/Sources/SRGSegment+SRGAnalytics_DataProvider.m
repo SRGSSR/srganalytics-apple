@@ -6,15 +6,57 @@
 
 #import "SRGSegment+SRGAnalytics_DataProvider.h"
 
+#import <objc/runtime.h>
+
+// Associated object keys
+static void *s_resourceReferenceDate = &s_resourceReferenceDate;
+static void *s_streamOffset = &s_streamOffset;
+
+@interface SRGSegment (SRGAnalytics_DataProvider_Private)
+
+@property (nonatomic) NSDate *resourceReferenceDate;
+@property (nonatomic) NSTimeInterval streamOffset;
+
+@end
+
 @implementation SRGSegment (SRGAnalytics_DataProvider)
+
+#pragma mark Getters and setters
+
+- (NSDate *)resourceReferenceDate
+{
+    return objc_getAssociatedObject(self, s_resourceReferenceDate);
+}
+
+- (void)setResourceReferenceDate:(NSDate *)resourceReferenceDate
+{
+    objc_setAssociatedObject(self, s_resourceReferenceDate, resourceReferenceDate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSTimeInterval)streamOffset
+{
+    return [objc_getAssociatedObject(self, s_streamOffset) doubleValue];
+}
+
+- (void)setStreamOffset:(NSTimeInterval)streamOffset
+{
+    objc_setAssociatedObject(self, s_streamOffset, @(streamOffset), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 #pragma mark SRGAnalyticsSegment protocol
 
 - (SRGMarkRange *)srg_markRange
 {
-    SRGMark *markIn = self.markInDate ? [SRGMark markAtDate:self.markInDate] : [SRGMark markAtTime:CMTimeMakeWithSeconds(self.markIn / 1000., NSEC_PER_SEC)];
-    SRGMark *markOut = self.markOutDate ? [SRGMark markAtDate:self.markOutDate] : [SRGMark markAtTime:CMTimeMakeWithSeconds(self.markOut / 1000., NSEC_PER_SEC)];
-    return [SRGMarkRange rangeFromMark:markIn toMark:markOut];
+    if (self.resourceReferenceDate) {
+        NSDate *markInDate = [self.resourceReferenceDate dateByAddingTimeInterval:(self.markIn + self.streamOffset) / 1000.];
+        NSDate *markOutDate = [self.resourceReferenceDate dateByAddingTimeInterval:(self.markOut + self.streamOffset) / 1000.];
+        return [SRGMarkRange rangeFromMark:[SRGMark markAtDate:markInDate] toMark:[SRGMark markAtDate:markOutDate]];
+    }
+    else {
+        SRGMark *fromMark = [SRGMark markAtTime:CMTimeMakeWithSeconds(self.markIn / 1000., NSEC_PER_SEC)];
+        SRGMark *toMark = [SRGMark markAtTime:CMTimeMakeWithSeconds(self.markOut / 1000., NSEC_PER_SEC)];
+        return [SRGMarkRange rangeFromMark:fromMark toMark:toMark];
+    }
 }
 
 - (BOOL)srg_isBlocked
@@ -35,3 +77,11 @@
 }
 
 @end
+
+void SRGAnalyticsDataProviderAssociateSegmentDateInformation(NSArray<SRGSegment *> *segments, NSDate *resourceReferenceDate, NSTimeInterval streamOffset)
+{
+    [segments enumerateObjectsUsingBlock:^(SRGSegment * _Nonnull segment, NSUInteger idx, BOOL * _Nonnull stop) {
+        segment.resourceReferenceDate = resourceReferenceDate;
+        segment.streamOffset = streamOffset;
+    }];
+}

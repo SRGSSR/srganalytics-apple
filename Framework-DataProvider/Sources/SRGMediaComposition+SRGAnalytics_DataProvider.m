@@ -9,6 +9,7 @@
 #import "SRGAnalyticsMediaPlayerLogger.h"
 #import "SRGResource+SRGAnalytics_DataProvider.h"
 #import "SRGSegment+SRGAnalytics_DataProvider.h"
+#import "SRGSegment+SRGAnalytics_DataProvider_Private.h"
 
 #import <libextobjc/libextobjc.h>
 
@@ -159,6 +160,10 @@
     
     SRGAnalyticsStreamLabels *labels = [self analyticsLabelsForResource:resource sourceUid:preferredSettings.sourceUid];
     NSInteger index = [chapter.segments indexOfObject:self.mainSegment];
+    
+    // Associate segment-related information needed for date calculations
+    SRGAnalyticsDataProviderAssociateSegmentDateInformation(chapter.segments, chapter.resourceReferenceDate, resource.streamOffset);
+    
     contextBlock(URL, resource, chapter.segments, index, labels);
     return YES;
 }

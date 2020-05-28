@@ -36,6 +36,7 @@
 		6F1D285922539CFE00CE5802 /* SRGMediaAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D285722539CFE00CE5802 /* SRGMediaAnalytics.m */; };
 		6F1D285C2253D41C00CE5802 /* SRGAnalyticsStreamLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1D285A2253D41C00CE5802 /* SRGAnalyticsStreamLabels.m */; };
 		6F1D285D2253D41C00CE5802 /* SRGAnalyticsStreamLabels.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F1D285B2253D41C00CE5802 /* SRGAnalyticsStreamLabels.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6F223819247F932000586143 /* SRGSegment+SRGAnalytics_DataProvider_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F223818247F931800586143 /* SRGSegment+SRGAnalytics_DataProvider_Private.h */; };
 		6F399DB92232739900219478 /* SRGAnalyticsNotifications+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F399DB82232739900219478 /* SRGAnalyticsNotifications+Private.h */; };
 		6F3C40171F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F3C40111F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F3C40181F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3C40121F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.m */; };
@@ -239,6 +240,7 @@
 		6F1D285722539CFE00CE5802 /* SRGMediaAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRGMediaAnalytics.m; sourceTree = "<group>"; };
 		6F1D285A2253D41C00CE5802 /* SRGAnalyticsStreamLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRGAnalyticsStreamLabels.m; sourceTree = "<group>"; };
 		6F1D285B2253D41C00CE5802 /* SRGAnalyticsStreamLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRGAnalyticsStreamLabels.h; sourceTree = "<group>"; };
+		6F223818247F931800586143 /* SRGSegment+SRGAnalytics_DataProvider_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SRGSegment+SRGAnalytics_DataProvider_Private.h"; sourceTree = "<group>"; };
 		6F399DB82232739900219478 /* SRGAnalyticsNotifications+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SRGAnalyticsNotifications+Private.h"; sourceTree = "<group>"; };
 		6F3C40111F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRGAnalyticsHiddenEventLabels.h; sourceTree = "<group>"; };
 		6F3C40121F87AF5E00FFEA85 /* SRGAnalyticsHiddenEventLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRGAnalyticsHiddenEventLabels.m; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				6FF3E21B1D9CFD7D00EB4A30 /* SRGMediaPlayerController+SRGAnalytics_DataProvider.m */,
 				6FC24BAA219ABB1B0048091F /* SRGPlaybackSettings.h */,
 				6FC24BAB219ABB1B0048091F /* SRGPlaybackSettings.m */,
+				6F223818247F931800586143 /* SRGSegment+SRGAnalytics_DataProvider_Private.h */,
 				6F4ED9AF1F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.h */,
 				6F4ED9B01F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.m */,
 			);
@@ -804,6 +807,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F223819247F932000586143 /* SRGSegment+SRGAnalytics_DataProvider_Private.h in Headers */,
 				6F4ED9B31F38A50200E3EA51 /* SRGSegment+SRGAnalytics_DataProvider.h in Headers */,
 				6FF3E21C1D9CFD7D00EB4A30 /* SRGMediaPlayerController+SRGAnalytics_DataProvider.h in Headers */,
 				6FC24BAC219ABB1B0048091F /* SRGPlaybackSettings.h in Headers */,
@@ -1016,7 +1020,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SRG;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "SRG SSR";
 				TargetAttributes = {
 					08EF593B2221B7B4000E7446 = {
