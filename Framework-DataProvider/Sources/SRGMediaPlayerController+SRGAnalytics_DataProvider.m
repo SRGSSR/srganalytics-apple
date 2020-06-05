@@ -9,7 +9,6 @@
 #import "SRGMediaComposition+SRGAnalytics_DataProvider.h"
 #import "SRGMediaComposition+SRGAnalytics_DataProvider_Private.h"
 #import "SRGSegment+SRGAnalytics_DataProvider.h"
-#import "SRGSegment+SRGAnalytics_DataProvider_Private.h"
 
 #import <libextobjc/libextobjc.h>
 #import <SRGContentProtection/SRGContentProtection.h>
@@ -46,6 +45,11 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
         fullUserInfo[SRGAnalyticsDataProviderSourceUidKey] = preferredSettings.sourceUid;
         if (userInfo) {
             [fullUserInfo addEntriesFromDictionary:userInfo];
+        }
+        
+        NSTimeInterval streamOffsetInSeconds = resource.streamOffset / 1000.;
+        if (streamOffsetInSeconds != 0.) {
+            fullUserInfo[SRGMediaPlayerUserInfoStreamOffsetKey] = [NSValue valueWithCMTime:CMTimeMakeWithSeconds(streamOffsetInSeconds, NSEC_PER_SEC)];
         }
         
         NSDictionary<SRGResourceLoaderOption, id> *options = userInfo[SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey];
@@ -102,13 +106,7 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
     SRGResource *resource = [[mediaComposition.mainChapter resourcesForStreamingMethod:self.resource.streamingMethod] filteredArrayUsingPredicate:predicate].firstObject;
     self.analyticsLabels = [mediaComposition analyticsLabelsForResource:resource sourceUid:self.userInfo[SRGAnalyticsDataProviderSourceUidKey]];
     
-    SRGChapter *mainChapter = mediaComposition.mainChapter;
-    NSArray<SRGSegment *> *segments = mainChapter.segments;
-    
-    // Associate segment-related information needed for date calculations
-    SRGAnalyticsDataProviderAssociateSegmentDateInformation(segments, mainChapter.resourceReferenceDate, resource.streamOffset);
-    
-    self.segments = segments;
+    self.segments = mediaComposition.mainChapter.segments;
 }
 
 - (SRGMediaComposition *)mediaComposition
