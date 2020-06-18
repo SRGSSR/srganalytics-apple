@@ -47,6 +47,11 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
             [fullUserInfo addEntriesFromDictionary:userInfo];
         }
         
+        NSTimeInterval streamOffsetInSeconds = resource.streamOffset / 1000.;
+        if (streamOffsetInSeconds != 0.) {
+            fullUserInfo[SRGMediaPlayerUserInfoStreamOffsetKey] = [NSValue valueWithCMTime:CMTimeMakeWithSeconds(streamOffsetInSeconds, NSEC_PER_SEC)];
+        }
+        
         NSDictionary<SRGResourceLoaderOption, id> *options = userInfo[SRGAnalyticsDataProviderUserInfoResourceLoaderOptionsKey];
         NSAssert(! options || [options isKindOfClass:NSDictionary.class], @"Resource loader options must be provided as a dictionary");
         
