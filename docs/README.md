@@ -209,10 +209,6 @@ Since SRG SSR applications do not contain any ads, you must leave the _Serve adv
 
 To test what the library is capable of, run the associated demo.
 
-## Migration from previous major versions
-
-For information about migration from older major library versions, please read the [migration guide](MIGRATION_GUIDE.md).
-
 ## License
 
 See the [LICENSE](../LICENSE) file for more information.

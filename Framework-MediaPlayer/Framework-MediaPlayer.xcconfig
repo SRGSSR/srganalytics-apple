@@ -1,2 +1,3 @@
 #include "../Common.xcconfig"
 
+ OTHER_LDFLAGS = -framework AdSupport -framework ComScore -framework libextobjc -framework MAKVONotificationCenter -framework SRGAnalytics -framework SRGLogger -framework SRGMediaPlayer -framework TCCore -framework TCSDK

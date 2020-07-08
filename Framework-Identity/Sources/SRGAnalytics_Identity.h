@@ -5,7 +5,7 @@
 //
 
 #import <SRGAnalytics/SRGAnalytics.h>
-#import <SRGIdentity/SRGidentity.h>
+#import <SRGIdentity/SRGIdentity.h>
 
 // Public headers.
 #import "SRGAnalyticsTracker+SRGAnalytics_Identity.h"
