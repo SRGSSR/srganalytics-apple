@@ -1,0 +1,1 @@
+../../../Sources/SRGAnalyticsDataProvider/SRGResource+SRGAnalyticsDataProvider.h

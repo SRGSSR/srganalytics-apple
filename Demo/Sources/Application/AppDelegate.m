@@ -10,7 +10,7 @@
 
 #import <SRGAnalytics/SRGAnalytics.h>
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
-#import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>
+#import <SRGAnalyticsMediaPlayer/SRGAnalyticsMediaPlayer.h>
 #import <SRGLogger/SRGLogger.h>
 #import <TCCore/TCCore.h>
 

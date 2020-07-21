@@ -34,7 +34,7 @@ For more information about Carthage and its use, refer to the [official document
 
 ### Content protection
 
-The `SRGAnalytics_DataProvider.framework` companion framework provides convenience methods for playing content delivered by our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library. Not all content is publicly accessible for legal reasons, though, in particular livestreams or foreign TV series.
+The `SRGAnalyticsDataProvider.framework` companion framework provides convenience methods for playing content delivered by our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library. Not all content is publicly accessible for legal reasons, though, in particular livestreams or foreign TV series.
 
 To play protected content, and provided you have been granted access to it, an internal [SRG Content Protection](https://github.com/SRGSSR/srgcontentprotection-apple) framework is available and must be added to your project `Cartfile` as well:
 
@@ -67,7 +67,7 @@ Depending on your needs, the library requires the following frameworks to be add
   * `libextobjc`: A utility framework.
   * `MAKVONotificationCenter`: A safe KVO framework.
   * `SRGAnalytics`: The main analytics framework.
-  * `SRGAnalytics_MediaPlayer`: The media player analytics companion framework.
+  * `SRGAnalyticsMediaPlayer`: The media player analytics companion framework.
   * `SRGLogger`: The framework used for internal logging.
   * `TCCore`: The core TagCommander framework.
   * `TCSDK`: The main TagCommander SDK framework.
@@ -77,8 +77,8 @@ Depending on your needs, the library requires the following frameworks to be add
   * `MAKVONotificationCenter`: A safe KVO framework.
   * `Mantle`:  The framework used to parse the data.
   * `SRGAnalytics`: The main analytics framework.
-  * `SRGAnalytics_DataProvider`: The data provider analytics companion framework.
-  * `SRGAnalytics_MediaPlayer`: The media player analytics companion framework.
+  * `SRGAnalyticsDataProvider`: The data provider analytics companion framework.
+  * `SRGAnalyticsMediaPlayer`: The media player analytics companion framework.
   * `SRGContentProtection`: The framework to enable playback of protected medias.
   * `SRGLogger`: The framework used for internal logging.
   * `SRGMediaPlayer`: The media player framework.
@@ -139,8 +139,8 @@ Import the global header files using:
 
 ```objective-c
 #import <SRGAnalytics/SRGAnalytics.h>	                            // For SRGAnalytics.framework
-#import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>       // For SRGAnalytics_MediaPlayer.framework
-#import <SRGAnalytics_DataProvider/SRGAnalytics_DataProvider.h>     // For SRGAnalytics_DataProvider.framework
+#import <SRGAnalyticsMediaPlayer/SRGAnalyticsMediaPlayer.h>       // For SRGAnalyticsMediaPlayer.framework
+#import <SRGAnalyticsDataProvider/SRGAnalyticsDataProvider.h>     // For SRGAnalyticsDataProvider.framework
 #import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>             // For SRGAnalytics_Identity.framework
 ```
 
@@ -148,8 +148,8 @@ or directly import the modules themselves:
 
 ```objective-c
 @import SRGAnalytics;                    // For SRGAnalytics.framework
-@import SRGAnalytics_MediaPlayer;        // For SRGAnalytics_MediaPlayer.framework
-@import SRGAnalytics_DataProvider;       // For SRGAnalytics_DataProvider.framework
+@import SRGAnalyticsMediaPlayer;        // For SRGAnalyticsMediaPlayer.framework
+@import SRGAnalyticsDataProvider;       // For SRGAnalyticsDataProvider.framework
 @import SRGAnalytics_Identity;     	     // For SRGAnalytics_Identity.framework
 ```
 
@@ -159,8 +159,8 @@ Import the modules where needed:
 
 ```swift
 import SRGAnalytics                     // For SRGAnalytics.framework
-import SRGAnalytics_MediaPlayer         // For SRGAnalytics_MediaPlayer.framework
-import SRGAnalytics_DataProvider        // For SRGAnalytics_DataProvider.framework
+import SRGAnalyticsMediaPlayer         // For SRGAnalyticsMediaPlayer.framework
+import SRGAnalyticsDataProvider        // For SRGAnalyticsDataProvider.framework
 import SRGAnalytics_Identity            // For SRGAnalytics_Identity.framework
 ```
 
@@ -188,8 +188,8 @@ To learn about how the library can be used, have a look at the [getting started 
 The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger-apple) library for logging, with the following subsystems:
 
 * `ch.srgssr.analytics` for `SRGAnalytics.framework` events.
-* `ch.srgssr.analytics.mediaplayer` for `SRGAnalytics_MediaPlayer.framework` events.
-* `ch.srgssr.analytics.dataprovider` for `SRGAnalytics_DataProvider.framework` events.
+* `ch.srgssr.analytics.mediaplayer` for `SRGAnalyticsMediaPlayer.framework` events.
+* `ch.srgssr.analytics.dataprovider` for `SRGAnalyticsDataProvider.framework` events.
 * `ch.srgssr.analytics.identity` for `SRGAnalytics_Identity.framework` events.
 
 This logger either automatically integrates with your own logger, or can be easily integrated with it. Refer to the SRG Logger documentation for more information.
