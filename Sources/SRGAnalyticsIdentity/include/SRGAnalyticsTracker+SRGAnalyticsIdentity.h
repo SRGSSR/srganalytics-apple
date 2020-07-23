@@ -4,12 +4,12 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <SRGAnalytics/SRGAnalytics.h>
-#import <SRGIdentity/SRGIdentity.h>
+@import SRGAnalytics;
+@import SRGIdentity;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SRGAnalyticsTracker (SRGAnalytics_Identity)
+@interface SRGAnalyticsTracker (SRGAnalyticsIdentity)
 
 /**
  *  Start the tracker. Same as `-startWithConfiguration:` SRGAnalyticsTracker method, with an optional identity service.

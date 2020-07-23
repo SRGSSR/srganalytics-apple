@@ -4,7 +4,7 @@
 //  License information is available from the LICENSE file.
 //
 
-#import "SRGAnalyticsTracker+SRGAnalytics_Identity.h"
+#import "SRGAnalyticsTracker+SRGAnalyticsIdentity.h"
 
 #import "SRGAnalyticsTracker+Private.h"
 
@@ -12,7 +12,7 @@
 
 static void *s_analyticsIdentityServiceKey = &s_analyticsIdentityServiceKey;
 
-@implementation SRGAnalyticsTracker (SRGAnalytics_Identity)
+@implementation SRGAnalyticsTracker (SRGAnalyticsIdentity)
 
 #pragma mark Startup
 

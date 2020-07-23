@@ -6,8 +6,6 @@ struct ProjectSettings {
     static let marketingVersion: String = "4.2.4"
 }
 
-// ---> TODO: -framework AdSupport for all frameworks. Possible? Use target linker settings with .linkFramework("CoreData")?
-
 let package = Package(
     name: "SRGAnalytics",
     defaultLocalization: "en",
@@ -27,6 +25,10 @@ let package = Package(
         .library(
             name: "SRGAnalyticsDataProvider",
             targets: ["SRGAnalyticsDataProvider"]
+        ),
+        .library(
+            name: "SRGAnalyticsIdentity",
+            targets: ["SRGAnalyticsIdentity"]
         )
     ],
     dependencies: [
@@ -57,6 +59,13 @@ let package = Package(
         .target(
             name: "SRGAnalyticsDataProvider",
             dependencies: ["SRGAnalyticsMediaPlayer", "SRGContentProtection", "SRGDataProvider"]
+        ),
+        .target(
+            name: "SRGAnalyticsIdentity",
+            dependencies: ["SRGAnalytics", "SRGIdentity"],
+            cSettings: [
+                .headerSearchPath("Private")
+            ]
         ),
         .testTarget(
             name: "SRGAnalyticsTests",

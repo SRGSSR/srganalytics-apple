@@ -92,7 +92,7 @@ Depending on your needs, the library requires the following frameworks to be add
   * `MAKVONotificationCenter`: A safe KVO framework.
   * `Mantle`: The framework used to parse the data.
   * `SRGAnalytics`: The main analytics framework.
-  * `SRGAnalytics_Identity`: The identity analytics companion framework.
+  * `SRGAnalyticsIdentity`: The identity analytics companion framework.
   * `SRGAppearance`: The appearance framework.
   * `SRGIdentity`: The framework used to manage the user identity.
   * `SRGLogger`: The framework used for internal logging.
@@ -141,7 +141,7 @@ Import the global header files using:
 #import <SRGAnalytics/SRGAnalytics.h>	                            // For SRGAnalytics.framework
 #import <SRGAnalyticsMediaPlayer/SRGAnalyticsMediaPlayer.h>       // For SRGAnalyticsMediaPlayer.framework
 #import <SRGAnalyticsDataProvider/SRGAnalyticsDataProvider.h>     // For SRGAnalyticsDataProvider.framework
-#import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>             // For SRGAnalytics_Identity.framework
+#import <SRGAnalyticsIdentity/SRGAnalyticsIdentity.h>             // For SRGAnalyticsIdentity.framework
 ```
 
 or directly import the modules themselves:
@@ -150,7 +150,7 @@ or directly import the modules themselves:
 @import SRGAnalytics;                    // For SRGAnalytics.framework
 @import SRGAnalyticsMediaPlayer;        // For SRGAnalyticsMediaPlayer.framework
 @import SRGAnalyticsDataProvider;       // For SRGAnalyticsDataProvider.framework
-@import SRGAnalytics_Identity;     	     // For SRGAnalytics_Identity.framework
+@import SRGAnalyticsIdentity;     	     // For SRGAnalyticsIdentity.framework
 ```
 
 ### Usage from Swift source files
@@ -161,7 +161,7 @@ Import the modules where needed:
 import SRGAnalytics                     // For SRGAnalytics.framework
 import SRGAnalyticsMediaPlayer         // For SRGAnalyticsMediaPlayer.framework
 import SRGAnalyticsDataProvider        // For SRGAnalyticsDataProvider.framework
-import SRGAnalytics_Identity            // For SRGAnalytics_Identity.framework
+import SRGAnalyticsIdentity            // For SRGAnalyticsIdentity.framework
 ```
 
 ### Info.plist settings for application installation measurements
@@ -190,7 +190,7 @@ The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger
 * `ch.srgssr.analytics` for `SRGAnalytics.framework` events.
 * `ch.srgssr.analytics.mediaplayer` for `SRGAnalyticsMediaPlayer.framework` events.
 * `ch.srgssr.analytics.dataprovider` for `SRGAnalyticsDataProvider.framework` events.
-* `ch.srgssr.analytics.identity` for `SRGAnalytics_Identity.framework` events.
+* `ch.srgssr.analytics.identity` for `SRGAnalyticsIdentity.framework` events.
 
 This logger either automatically integrates with your own logger, or can be easily integrated with it. Refer to the SRG Logger documentation for more information.
 

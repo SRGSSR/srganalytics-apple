@@ -211,7 +211,7 @@ Nothing more is required for correct media consumption measurements. During play
 
 If you are using our [SRG Identity library](https://github.com/SRGSSR/srgidentity-apple) in your application, be sure to add the `SRGAnalytics_SRGIdentity.framework` companion framework to your project as well. This ensures that an identity can be automatically associated with analytics measurements.
 
-This framework adds a category `SRGAnalyticsTracker (SRGAnalytics_Identity)`, which provides an additional `-startWithConfiguration:identityService:` method to `SRGAnalyticsTracker`. To automatically asssociate an identity with analytics measurements, start your analytics tracker with this method instead of the orginal one:
+This framework adds a category `SRGAnalyticsTracker (SRGAnalyticsIdentity)`, which provides an additional `-startWithConfiguration:identityService:` method to `SRGAnalyticsTracker`. To automatically asssociate an identity with analytics measurements, start your analytics tracker with this method instead of the orginal one:
 
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

@@ -6,10 +6,10 @@
 
 #import "XCTestCase+Tests.h"
 
-#import <libextobjc/libextobjc.h>
-#import <OHHTTPStubs/OHHTTPStubs.h>
-#import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
-#import <SRGAnalyticsMediaPlayer/SRGAnalyticsMediaPlayer.h>
+@import libextobjc;
+@import OHHTTPStubs;
+@import SRGAnalyticsIdentity;
+@import SRGAnalyticsMediaPlayer;
 
 static NSString *TestValidToken = @"0123456789";
 static NSString *TestUserId = @"1234";
@@ -89,9 +89,9 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     self.identityService = [[SRGIdentityService alloc] initWithWebserviceURL:TestWebserviceURL() websiteURL:TestWebsiteURL()];
     [self.identityService logout];
     
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+    [HTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         return [request.URL.host isEqual:TestWebserviceURL().host];
-    } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
+    } withStubResponse:^HTTPStubsResponse *(NSURLRequest *request) {
         if ([request.URL.host isEqualToString:TestWebsiteURL().host]) {
             if ([request.URL.path containsString:@"login"]) {
                 NSURLComponents *URLComponents = [[NSURLComponents alloc] initWithURL:request.URL resolvingAgainstBaseURL:NO];
@@ -104,16 +104,16 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
                 queryItems = [queryItems arrayByAddingObject:[[NSURLQueryItem alloc] initWithName:@"token" value:TestValidToken]];
                 redirectURLComponents.queryItems = queryItems;
                 
-                return [[OHHTTPStubsResponse responseWithData:[NSData data]
-                                                   statusCode:302
-                                                      headers:@{ @"Location" : redirectURLComponents.URL.absoluteString }] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
+                return [[HTTPStubsResponse responseWithData:[NSData data]
+                                                 statusCode:302
+                                                    headers:@{ @"Location" : redirectURLComponents.URL.absoluteString }] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
             }
         }
         else if ([request.URL.host isEqualToString:TestWebserviceURL().host]) {
             if ([request.URL.path containsString:@"logout"]) {
-                return [[OHHTTPStubsResponse responseWithData:[NSData data]
-                                                   statusCode:204
-                                                      headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
+                return [[HTTPStubsResponse responseWithData:[NSData data]
+                                                 statusCode:204
+                                                    headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
             }
             else if ([request.URL.path containsString:@"userinfo"]) {
                 NSString *validAuthorizationHeader = [NSString stringWithFormat:@"sessionToken %@", TestValidToken];
@@ -126,22 +126,22 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
                                                                @"lastName": @"SRG",
                                                                @"gender": @"other",
                                                                @"birthdate": @"2001-01-01" };
-                    return [[OHHTTPStubsResponse responseWithData:[NSJSONSerialization dataWithJSONObject:account options:0 error:NULL]
-                                                       statusCode:200
-                                                          headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
+                    return [[HTTPStubsResponse responseWithData:[NSJSONSerialization dataWithJSONObject:account options:0 error:NULL]
+                                                     statusCode:200
+                                                        headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
                 }
                 else {
-                    return [[OHHTTPStubsResponse responseWithData:[NSData data]
-                                                       statusCode:401
-                                                          headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
+                    return [[HTTPStubsResponse responseWithData:[NSData data]
+                                                     statusCode:401
+                                                        headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
                 }
             }
         }
         
         // No match, return 404
-        return [[OHHTTPStubsResponse responseWithData:[NSData data]
-                                           statusCode:404
-                                              headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
+        return [[HTTPStubsResponse responseWithData:[NSData data]
+                                         statusCode:404
+                                            headers:nil] requestTime:1. responseTime:OHHTTPStubsDownloadSpeedWifi];
     }];
     
     self.mediaPlayerController = [[SRGMediaPlayerController alloc] init];
@@ -152,7 +152,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     [self.identityService logout];
     self.identityService = nil;
     
-    [OHHTTPStubs removeAllStubs];
+    [HTTPStubs removeAllStubs];
     
     [self.mediaPlayerController reset];
     self.mediaPlayerController = nil;

@@ -8,11 +8,11 @@
 
 #import "Application.h"
 
-#import <SRGAnalytics/SRGAnalytics.h>
-#import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
-#import <SRGAnalyticsMediaPlayer/SRGAnalyticsMediaPlayer.h>
-#import <SRGLogger/SRGLogger.h>
-#import <TCCore/TCCore.h>
+@import SRGAnalytics;
+@import SRGAnalyticsIdentity;
+@import SRGAnalyticsMediaPlayer;
+@import SRGLogger;
+@import TCCore;
 
 @implementation AppDelegate
 
