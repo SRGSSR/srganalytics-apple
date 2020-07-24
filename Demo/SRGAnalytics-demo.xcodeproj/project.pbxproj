@@ -25,7 +25,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0811A8521D800BA000A9863B /* libextobjc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libextobjc.framework; path = Carthage/Build/iOS/libextobjc.framework; sourceTree = "<group>"; };
 		0846F5DB232FBC3E00234065 /* LaunchScreen~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "LaunchScreen~ios.storyboard"; sourceTree = "<group>"; };
 		088700B41DA2528900D4961A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		088700B51DA2528900D4961A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -34,30 +33,16 @@
 		088700B91DA2528900D4961A /* DemosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemosViewController.m; sourceTree = "<group>"; };
 		088700C41DA2528900D4961A /* SimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleViewController.h; sourceTree = "<group>"; };
 		088700C51DA2528900D4961A /* SimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleViewController.m; sourceTree = "<group>"; };
-		08EF590B2220C378000E7446 /* FXReachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FXReachability.framework; path = Carthage/Build/iOS/FXReachability.framework; sourceTree = "<group>"; };
-		08EF59112220C454000E7446 /* UICKeyChainStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UICKeyChainStore.framework; path = Carthage/Build/iOS/UICKeyChainStore.framework; sourceTree = "<group>"; };
-		08EF59172220C490000E7446 /* SRGIdentity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGIdentity.framework; path = Carthage/Build/iOS/SRGIdentity.framework; sourceTree = "<group>"; };
-		6F024F9E23A3E07A0037BB6A /* SRGAppearance.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGAppearance.framework; path = Carthage/Build/tvOS/SRGAppearance.framework; sourceTree = "<group>"; };
 		6F821DD62257801700489EC8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGLogger.framework; path = Carthage/Build/iOS/SRGLogger.framework; sourceTree = "<group>"; };
-		6FB74DA82105A77B00E2D365 /* SRGNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGNetwork.framework; path = Carthage/Build/iOS/SRGNetwork.framework; sourceTree = "<group>"; };
-		6FB74DA92105A77B00E2D365 /* SRGContentProtection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGContentProtection.framework; path = Carthage/Build/iOS/SRGContentProtection.framework; sourceTree = "<group>"; };
 		6FB7CF1D23326FB0006EBCA4 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		6FB7CF1E23326FB0006EBCA4 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
-		6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MAKVONotificationCenter.framework; path = Carthage/Build/iOS/MAKVONotificationCenter.framework; sourceTree = "<group>"; };
 		6FCE030523F580D10072EBC4 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		6FCE030623F580D10072EBC4 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		6FCE030B23F582CB0072EBC4 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		6FCE030C23F582CB0072EBC4 /* Application.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Application.m; sourceTree = "<group>"; };
 		6FD65C75233235A10016CCFE /* Demo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Demo.xcconfig; sourceTree = "<group>"; };
-		6FD9B2441F0BC4E0004805D2 /* TCCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TCCore.framework; path = Carthage/Build/iOS/TCCore.framework; sourceTree = "<group>"; };
-		6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TCSDK.framework; path = Carthage/Build/iOS/TCSDK.framework; sourceTree = "<group>"; };
-		6FF3E20E1D9CE68600EB4A30 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
-		6FF3E2101D9CE6CF00EB4A30 /* SRGDataProvider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGDataProvider.framework; path = Carthage/Build/iOS/SRGDataProvider.framework; sourceTree = "<group>"; };
 		6FF9F6552332A2C200F981F7 /* SimpleViewController~tvos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "SimpleViewController~tvos.storyboard"; sourceTree = "<group>"; };
-		E61C0D841D61F14A00AEAE6D /* SRGMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SRGMediaPlayer.framework; path = Carthage/Build/iOS/SRGMediaPlayer.framework; sourceTree = "<group>"; };
 		E6296E871DA6205200E33C32 /* SimpleViewController~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SimpleViewController~ios.storyboard"; sourceTree = "<group>"; };
-		E672EA461D62EE5D00CFB080 /* ComScore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ComScore.framework; path = Carthage/Build/iOS/ComScore.framework; sourceTree = "<group>"; };
 		E6FC7E881D61F95C00A55085 /* SRGAnalytics_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRGAnalytics_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6FC7F041D61FA4700A55085 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6FC7F061D61FA4700A55085 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -144,22 +129,7 @@
 		AC99606425BE818BA71D7E4D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6F024F9E23A3E07A0037BB6A /* SRGAppearance.framework */,
 				6F821DD62257801700489EC8 /* AdSupport.framework */,
-				E672EA461D62EE5D00CFB080 /* ComScore.framework */,
-				08EF590B2220C378000E7446 /* FXReachability.framework */,
-				0811A8521D800BA000A9863B /* libextobjc.framework */,
-				6FB97FE31E4AF0270014C4C2 /* MAKVONotificationCenter.framework */,
-				6FF3E20E1D9CE68600EB4A30 /* Mantle.framework */,
-				6FB74DA92105A77B00E2D365 /* SRGContentProtection.framework */,
-				6FF3E2101D9CE6CF00EB4A30 /* SRGDataProvider.framework */,
-				08EF59172220C490000E7446 /* SRGIdentity.framework */,
-				6FA09D881D9EC4BC00EDCA64 /* SRGLogger.framework */,
-				E61C0D841D61F14A00AEAE6D /* SRGMediaPlayer.framework */,
-				6FB74DA82105A77B00E2D365 /* SRGNetwork.framework */,
-				6FD9B2441F0BC4E0004805D2 /* TCCore.framework */,
-				6FD9B2451F0BC4E0004805D2 /* TCSDK.framework */,
-				08EF59112220C454000E7446 /* UICKeyChainStore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
