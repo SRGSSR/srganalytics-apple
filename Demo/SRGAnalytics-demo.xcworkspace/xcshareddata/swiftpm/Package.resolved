@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/SRGSSR/libextobjc.git",
         "state": {
           "branch": "feature/spm-support",
-          "revision": "bec0bafcb6f837267ac58c2babd9ff9e1402e091",
+          "revision": "b59db57fa76b5f6dce35b09443b90205a19123af",
           "version": null
         }
       },
@@ -69,7 +69,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
           "branch": "feature/spm-support",
-          "revision": "ac5a980eaa4aae584e3bedc3be79375e0415b92a",
+          "revision": "5bfee5ae9ecbaadb2b6cf91c358662fe540cee79",
           "version": null
         }
       },
@@ -87,7 +87,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
           "branch": "feature/spm-support",
-          "revision": "e3693e6a2c408bf1daadf72cce7c6b5724eccbe7",
+          "revision": "0221096f4d4cc6d93682d0ae1afc07944f685cd7",
           "version": null
         }
       },

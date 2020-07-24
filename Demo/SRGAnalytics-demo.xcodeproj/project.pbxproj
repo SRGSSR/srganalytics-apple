@@ -164,6 +164,7 @@
 				E6FC7E841D61F95C00A55085 /* Sources */,
 				E6FC7E851D61F95C00A55085 /* Frameworks */,
 				E6FC7E861D61F95C00A55085 /* Resources */,
+				6F27A3A624CB4A80007B98E7 /* Copy Frameworks (SPM beta workaround) */,
 			);
 			buildRules = (
 			);
@@ -227,6 +228,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6F27A3A624CB4A80007B98E7 /* Copy Frameworks (SPM beta workaround) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/ComScore.framework",
+				"$(BUILT_PRODUCTS_DIR)/TCCore.framework",
+				"$(BUILT_PRODUCTS_DIR)/TCSDK.framework",
+			);
+			name = "Copy Frameworks (SPM beta workaround)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E6FC7E841D61F95C00A55085 /* Sources */ = {
