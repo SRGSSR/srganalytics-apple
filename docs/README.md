@@ -36,16 +36,6 @@ The library is made of serveral smaller libraries. Which ones your project must 
 - If you need SRG standard media playback tracking with associated media metadata retrieved by [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple), also link against `SRGAnalyticsDataProvider`. This library provides several playback helpers you should use to ensure that context information is complete when playing a media.
 - If you are using [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) in your project, also link against `SRGAnalyticsIdentity`.
 
-### Content protection
-
-The `SRGAnalyticsDataProvider` companion library provides convenience methods for playing content delivered by our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library. Not all content is publicly accessible for legal reasons, though, in particular livestreams or foreign TV series.
-
-To play protected content, and provided you have been granted access to it, an internal [SRG Content Protection](https://github.com/SRGSSR/srgcontentprotection-apple) library is available and must be added to your project as well.
-
-If you have no access to this repository, use the fake public replacement library by adding the [fake replacement dependency](SRGSSR/srgcontentprotection-fake-apple) instead.
-
-When linking against the fake library, some content (e.g. TV livestreams) will not be playable.
-
 ### Info.plist settings for application installation measurements
 
 The library automatically tracks which SRG SSR applications are installed on a user device, and sends this information. For this mechanism to work properly, though, your application **must** declare all official SRG SSR application URL schemes as being supported in its `Info.plist` file. 
