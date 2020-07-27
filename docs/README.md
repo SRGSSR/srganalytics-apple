@@ -1,6 +1,6 @@
 [![SRG Analytics logo](README-images/logo.png)](https://github.com/SRGSSR/srganalytics-apple)
 
-[![GitHub releases](https://img.shields.io/github/v/release/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/releases) [![platform](https://img.shields.io/badge/platfom-ios%20%7C%20tvos-blue)](https://github.com/SRGSSR/srganalytics-apple) [![GitHub license](https://img.shields.io/github/license/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/blob/master/LICENSE)
+[![GitHub releases](https://img.shields.io/github/v/release/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/releases) [![platform](https://img.shields.io/badge/platfom-ios%20%7C%20tvos-blue)](https://github.com/SRGSSR/srganalytics-apple) [![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager) [![GitHub license](https://img.shields.io/github/license/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/blob/master/LICENSE)
 
 ## About
 
