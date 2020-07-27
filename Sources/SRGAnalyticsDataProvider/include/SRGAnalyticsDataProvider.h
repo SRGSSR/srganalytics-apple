@@ -4,10 +4,6 @@
 //  License information is available from the LICENSE file.
 //
 
-@import SRGAnalytics;
-@import SRGDataProvider;
-@import SRGMediaPlayer;
-
 // Public headers.
 #import "SRGMediaComposition+SRGAnalyticsDataProvider.h"
 #import "SRGMediaPlayerController+SRGAnalyticsDataProvider.h"
