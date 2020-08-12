@@ -12,6 +12,7 @@
 
 @import libextobjc;
 @import SRGAnalyticsDataProvider;
+@import SRGDataProviderNetwork;
 
 static NSURL *ServiceTestURL(void)
 {

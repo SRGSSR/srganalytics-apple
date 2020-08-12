@@ -8,6 +8,7 @@
 
 @import SRGAnalyticsDataProvider;
 @import SRGContentProtection;
+@import SRGDataProviderNetwork;
 
 /**
  *  Tests for common media flavors. Almost no livestream tests are made (since almost all of them require FairPlay).

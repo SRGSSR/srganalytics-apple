@@ -7,6 +7,7 @@
 #import "XCTestCase+Tests.h"
 
 @import SRGAnalyticsDataProvider;
+@import SRGDataProviderNetwork;
 
 static NSURL *ServiceTestURL(void)
 {

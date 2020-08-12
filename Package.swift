@@ -58,7 +58,11 @@ let package = Package(
         ),
         .target(
             name: "SRGAnalyticsDataProvider",
-            dependencies: ["SRGAnalyticsMediaPlayer", "SRGContentProtection", "SRGDataProvider"]
+            dependencies: [
+                "SRGAnalyticsMediaPlayer",
+                "SRGContentProtection",
+                .product(name: "SRGDataProviderNetwork", package: "SRGDataProvider")
+            ]
         ),
         .target(
             name: "SRGAnalyticsIdentity",
