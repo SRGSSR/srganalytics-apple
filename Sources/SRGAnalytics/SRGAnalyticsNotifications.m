@@ -33,10 +33,10 @@ static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLCompo
 + (void)srg_enableAnalyticsInterceptor
 {
     method_exchangeImplementations(class_getInstanceMethod(self, @selector(dataTaskWithRequest:completionHandler:)),
-                                   class_getInstanceMethod(self, @selector(swizzled_dataTaskWithRequest:completionHandler:)));
+                                   class_getInstanceMethod(self, @selector(srganalytics_swizzled_dataTaskWithRequest:completionHandler:)));
 }
 
-- (NSURLSessionDataTask *)swizzled_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
+- (NSURLSessionDataTask *)srganalytics_swizzled_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
 {
     NSURL *URL = request.URL;
     NSString *host = URL.host;
@@ -52,7 +52,7 @@ static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLCompo
                                                           object:nil
                                                         userInfo:@{ SRGAnalyticsNetmetrixURLKey : URL }];
     }
-    return [self swizzled_dataTaskWithRequest:request completionHandler:completionHandler];
+    return [self srganalytics_swizzled_dataTaskWithRequest:request completionHandler:completionHandler];
 }
 
 @end
