@@ -21,7 +21,7 @@ typedef void (^SRGPlaybackContextBlock)(NSURL *streamURL, SRGResource *resource,
  *  be found for the specified settings, a recommended approaching valid setup will be used instead.
  *
  *  @param preferredSettings The settings which should ideally be applied. If `nil`, default settings are used.
- *  @param resultBlock       The block called to return the resolved resource context (stream URL, resource, segments
+ *  @param contextBlock      The block called to return the resolved resource context (stream URL, resource, segments
  *                           associated with the media, segment index to start at, as well as consolidated analytics labels).
  *
  *  @return `YES` if a playback context can be resolved, in which case the context block is called. If no context can
