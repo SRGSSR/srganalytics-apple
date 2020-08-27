@@ -12,7 +12,6 @@
 		088700D81DA2542700D4961A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B61DA2528900D4961A /* main.m */; };
 		088700D91DA2542D00D4961A /* DemosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700B91DA2528900D4961A /* DemosViewController.m */; };
 		088700DF1DA2543800D4961A /* SimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088700C51DA2528900D4961A /* SimpleViewController.m */; };
-		6F6EC31D24C995A20085E981 /* SRGAnalyticsDataProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC31C24C995A20085E981 /* SRGAnalyticsDataProvider */; };
 		6F6EC32324C9985F0085E981 /* SRGAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32224C9985F0085E981 /* SRGAnalytics */; };
 		6F6EC32524C9985F0085E981 /* SRGAnalyticsIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32424C9985F0085E981 /* SRGAnalyticsIdentity */; };
 		6F6EC32724C9985F0085E981 /* SRGAnalyticsMediaPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */; };
@@ -55,7 +54,6 @@
 			files = (
 				6F6EC32724C9985F0085E981 /* SRGAnalyticsMediaPlayer in Frameworks */,
 				6F6EC32324C9985F0085E981 /* SRGAnalytics in Frameworks */,
-				6F6EC31D24C995A20085E981 /* SRGAnalyticsDataProvider in Frameworks */,
 				6F6EC32524C9985F0085E981 /* SRGAnalyticsIdentity in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,7 +170,6 @@
 			);
 			name = "SRGAnalytics-demo";
 			packageProductDependencies = (
-				6F6EC31C24C995A20085E981 /* SRGAnalyticsDataProvider */,
 				6F6EC32224C9985F0085E981 /* SRGAnalytics */,
 				6F6EC32424C9985F0085E981 /* SRGAnalyticsIdentity */,
 				6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */,
@@ -589,10 +586,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6F6EC31C24C995A20085E981 /* SRGAnalyticsDataProvider */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SRGAnalyticsDataProvider;
-		};
 		6F6EC32224C9985F0085E981 /* SRGAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SRGAnalytics;
