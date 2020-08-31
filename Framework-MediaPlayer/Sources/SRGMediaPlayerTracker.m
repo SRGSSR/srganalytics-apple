@@ -404,7 +404,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         SRGMediaPlayerStreamType streamType = mediaPlayerController.streamType;
         
         // Notify full-length end (only if not starting at the given segment, i.e. if the player is not preparing playback)
-        if (! notification.userInfo[SRGMediaPlayerPreviousSegmentKey]
+        if (! notification.userInfo[SRGMediaPlayerPreviousSelectedSegmentKey]
                 && mediaPlayerController.playbackState != SRGMediaPlayerPlaybackStatePreparing) {
             CMTime time = [notification.userInfo[SRGMediaPlayerLastPlaybackTimeKey] CMTimeValue];
             NSNumber *timeshift = SRGMediaAnalyticsTimeshiftInMilliseconds(streamType, mediaPlayerController.timeRange, time, mediaPlayerController.liveTolerance);
