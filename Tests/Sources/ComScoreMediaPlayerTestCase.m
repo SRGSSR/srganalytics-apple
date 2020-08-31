@@ -1001,12 +1001,12 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSegmentSelectionWhilePlayingNonSelectedSegment
 {
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
-        XCTAssertEqualObjects(labels[@"media_position"], @"52");
+        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 52);
         return YES;
     }];
     
@@ -1014,43 +1014,39 @@ static NSURL *DVRTestURL(void)
     Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full",
+    labels.comScoreCustomInfo = @{ @"stream_name" : @"full",
                            @"overridable_name" : @"full" };
     
     [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:[SRGPosition positionAtTimeInSeconds:52.] withSegments:@[segment1, segment2] analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Expect full-length to segment transition when selecting the segment
+    __block BOOL pauseReceived = NO;
+    __block BOOL playReceived = NO;
     
-    __block BOOL fullLengthEndReceived = NO;
-    __block BOOL segment2PlayReceived = NO;
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(fullLengthEndReceived);
-            XCTAssertFalse(segment2PlayReceived);
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        if ([labels[@"ns_st_ev"] isEqualToString:@"pause"]) {
+            XCTAssertFalse(pauseReceived);
+            XCTAssertFalse(playReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-            XCTAssertNil(labels[@"segment_name"]);
-            XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
-            XCTAssertEqualObjects(labels[@"media_position"], @"52");
-            fullLengthEndReceived = YES;
+            XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 52);
+            pauseReceived = YES;
         }
-        else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segment2PlayReceived);
+        else if ([labels[@"ns_st_ev"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-            XCTAssertEqualObjects(labels[@"segment_name"], @"segment2");
-            XCTAssertEqualObjects(labels[@"overridable_name"], @"segment2");
-            XCTAssertEqualObjects(labels[@"media_position"], @"100");
-            segment2PlayReceived = YES;
+            XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 100);
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
         
-        return fullLengthEndReceived && segment2PlayReceived;
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
+        XCTAssertNil(labels[@"segment_name"]);
+        XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
+        
+        return pauseReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment2 withCompletionHandler:nil];
