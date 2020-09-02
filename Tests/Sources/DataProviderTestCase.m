@@ -211,7 +211,6 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     XCTAssertEqual(self.mediaPlayerController.mediaComposition, fetchedMediaComposition);
-    XCTAssertNil(self.mediaPlayerController.segments);
     XCTAssertEqual(self.mediaPlayerController.view.viewMode, SRGMediaPlayerViewModeFlat);
 }
 

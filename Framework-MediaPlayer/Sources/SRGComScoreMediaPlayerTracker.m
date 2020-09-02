@@ -61,18 +61,45 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     }
 }
 
++ (SCORStreamingAnalytics *)streamingAnalyticsForMediaPlayerController:(SRGMediaPlayerController *)mediaPlayerController
+{
+    SRGAnalyticsStreamLabels *labels = mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
+    NSDictionary<NSString *, NSString *> *labelsDictionary = labels.comScoreLabelsDictionary;
+    if (labelsDictionary.count == 0) {
+        return nil;
+    }
+    
+    SCORStreamingAnalytics *streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
+    [streamingAnalytics createPlaybackSession];
+    
+    [streamingAnalytics setMediaPlayerName:mediaPlayerController.analyticsPlayerName];
+    [streamingAnalytics setMediaPlayerVersion:mediaPlayerController.analyticsPlayerVersion];
+    
+    SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
+        NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
+        
+        if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
+            customLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+        }
+        
+        [builder setCustomLabels:customLabels.copy];
+    }];
+    [streamingAnalytics setMetadata:streamingMetadata];
+    
+    return streamingAnalytics;
+}
+
 #pragma mark Object lifecycle
 
 - (instancetype)initWithMediaPlayerController:(SRGMediaPlayerController *)mediaPlayerController
 {
     if (self = [super init]) {
-        self.mediaPlayerController = mediaPlayerController;
-        self.streamingAnalytics = [[SCORStreamingAnalytics alloc] init];
-        
-        BOOL created = [self createPlaybackSession];
-        if (! created) {
+        self.streamingAnalytics = [SRGComScoreMediaPlayerTracker streamingAnalyticsForMediaPlayerController:mediaPlayerController];
+        if (! self.streamingAnalytics) {
             return nil;
         }
+        
+        self.mediaPlayerController = mediaPlayerController;
         
         // No need to send explicit 'buffer stop' events. Sending a play or pause at the end of the buffering phase
         // (which our player does) suffices to implicitly finish the buffering phase. Buffer events are not required
@@ -118,33 +145,6 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 #pragma clang diagnostic pop
 
 #pragma mark Tracking
-
-- (BOOL)createPlaybackSession
-{
-    SRGAnalyticsStreamLabels *labels = self.mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
-    NSDictionary<NSString *, NSString *> *labelsDictionary = labels.comScoreLabelsDictionary;
-    if (labelsDictionary.count == 0) {
-        return NO;
-    }
-    
-    [self.streamingAnalytics createPlaybackSession];
-    
-    [self.streamingAnalytics setMediaPlayerName:self.mediaPlayerController.analyticsPlayerName];
-    [self.streamingAnalytics setMediaPlayerVersion:self.mediaPlayerController.analyticsPlayerVersion];
-    
-    SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
-        NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
-        
-        if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-            customLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
-        }
-        
-        [builder setCustomLabels:customLabels.copy];
-    }];
-    [self.streamingAnalytics setMetadata:streamingMetadata];
-    
-    return YES;
-}
 
 - (void)recordEventForPlaybackState:(SRGMediaPlayerPlaybackState)playbackState
                      withStreamType:(SRGMediaPlayerStreamType)streamType
@@ -211,7 +211,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
             
         case ComScoreMediaPlayerTrackerEventEnd: {
             [streamingAnalytics notifyEnd];
-            [self createPlaybackSession];
+            self.streamingAnalytics = [SRGComScoreMediaPlayerTracker streamingAnalyticsForMediaPlayerController:self.mediaPlayerController];
             break;
         }
             
