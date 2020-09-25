@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "SimpleViewController.h"
 
-#import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
-#import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>
+@import SRGAnalyticsIdentity;
+@import SRGAnalyticsMediaPlayer;
 
 static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 

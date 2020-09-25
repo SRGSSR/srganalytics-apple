@@ -1,0 +1,701 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6F312A2324C9A78D007F79BD /* IdentityTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F312A1F24C9A78D007F79BD /* IdentityTestCase.m */; };
+		6F312A2624C9A9BA007F79BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F312A2124C9A78D007F79BD /* main.m */; };
+		6F312A3024C9AD90007F79BD /* SRGAnalyticsIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 6F312A2F24C9AD90007F79BD /* SRGAnalyticsIdentity */; };
+		6F312A3324C9AE9B007F79BD /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = 6F312A3224C9AE9B007F79BD /* OHHTTPStubs */; };
+		6FF19B2524C9B5A100388C5F /* SRGAnalyticsMediaPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 6FF19B2424C9B5A100388C5F /* SRGAnalyticsMediaPlayer */; };
+		6FF19B2624C9B6B200388C5F /* XCTestCase+Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F312A2B24C9ACC5007F79BD /* XCTestCase+Tests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		08EF59562221B945000E7446 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F1518B31AC2F1CE00AE051D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08EF593B2221B7B4000E7446;
+			remoteInfo = "SRGAnalytics-testapp";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08EF593C2221B7B4000E7446 /* SRGAnalyticsIdentity_tests_host.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRGAnalyticsIdentity_tests_host.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F312A1F24C9A78D007F79BD /* IdentityTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentityTestCase.m; sourceTree = "<group>"; };
+		6F312A2124C9A78D007F79BD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6F312A2224C9A78D007F79BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F312A2724C9AA96007F79BD /* Tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Tests.xcconfig; sourceTree = "<group>"; };
+		6F312A2824C9AC2E007F79BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F312A2A24C9ACC5007F79BD /* XCTestCase+Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XCTestCase+Tests.h"; path = "SRGAnalyticsTests/XCTestCase+Tests.h"; sourceTree = "<group>"; };
+		6F312A2B24C9ACC5007F79BD /* XCTestCase+Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+Tests.m"; path = "SRGAnalyticsTests/XCTestCase+Tests.m"; sourceTree = "<group>"; };
+		E65490A11D803C03007D96E7 /* SRGAnalyticsIdentity_tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SRGAnalyticsIdentity_tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		08EF59392221B7B4000E7446 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E654909E1D803C03007D96E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F312A3024C9AD90007F79BD /* SRGAnalyticsIdentity in Frameworks */,
+				6FF19B2524C9B5A100388C5F /* SRGAnalyticsMediaPlayer in Frameworks */,
+				6F312A3324C9AE9B007F79BD /* OHHTTPStubs in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6F312A1E24C9A78D007F79BD /* SRGAnalyticsIdentityTests */ = {
+			isa = PBXGroup;
+			children = (
+				6F312A1F24C9A78D007F79BD /* IdentityTestCase.m */,
+				6F312A2824C9AC2E007F79BD /* Info.plist */,
+			);
+			path = SRGAnalyticsIdentityTests;
+			sourceTree = "<group>";
+		};
+		6F312A2024C9A78D007F79BD /* SRGAnalyticsIdentityTestsHost */ = {
+			isa = PBXGroup;
+			children = (
+				6F312A2224C9A78D007F79BD /* Info.plist */,
+				6F312A2124C9A78D007F79BD /* main.m */,
+			);
+			path = SRGAnalyticsIdentityTestsHost;
+			sourceTree = "<group>";
+		};
+		6F312A2C24C9ACD0007F79BD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				6F312A2A24C9ACC5007F79BD /* XCTestCase+Tests.h */,
+				6F312A2B24C9ACC5007F79BD /* XCTestCase+Tests.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		9F1518B21AC2F1CE00AE051D = {
+			isa = PBXGroup;
+			children = (
+				6F312A2724C9AA96007F79BD /* Tests.xcconfig */,
+				6F312A2C24C9ACD0007F79BD /* Shared */,
+				6F312A1E24C9A78D007F79BD /* SRGAnalyticsIdentityTests */,
+				6F312A2024C9A78D007F79BD /* SRGAnalyticsIdentityTestsHost */,
+				AC99606425BE818BA71D7E4D /* Frameworks */,
+				9F1518BC1AC2F1CE00AE051D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9F1518BC1AC2F1CE00AE051D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E65490A11D803C03007D96E7 /* SRGAnalyticsIdentity_tests.xctest */,
+				08EF593C2221B7B4000E7446 /* SRGAnalyticsIdentity_tests_host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC99606425BE818BA71D7E4D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		08EF593B2221B7B4000E7446 /* SRGAnalyticsIdentity-tests-host */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08EF594F2221B7B6000E7446 /* Build configuration list for PBXNativeTarget "SRGAnalyticsIdentity-tests-host" */;
+			buildPhases = (
+				08EF59382221B7B4000E7446 /* Sources */,
+				08EF59392221B7B4000E7446 /* Frameworks */,
+				08EF593A2221B7B4000E7446 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SRGAnalyticsIdentity-tests-host";
+			productName = "SRGAnalytics-testapp";
+			productReference = 08EF593C2221B7B4000E7446 /* SRGAnalyticsIdentity_tests_host.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E65490A01D803C03007D96E7 /* SRGAnalyticsIdentity-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E65490AB1D803C03007D96E7 /* Build configuration list for PBXNativeTarget "SRGAnalyticsIdentity-tests" */;
+			buildPhases = (
+				E654909D1D803C03007D96E7 /* Sources */,
+				E654909E1D803C03007D96E7 /* Frameworks */,
+				E654909F1D803C03007D96E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08EF59572221B945000E7446 /* PBXTargetDependency */,
+			);
+			name = "SRGAnalyticsIdentity-tests";
+			packageProductDependencies = (
+				6F312A2F24C9AD90007F79BD /* SRGAnalyticsIdentity */,
+				6F312A3224C9AE9B007F79BD /* OHHTTPStubs */,
+				6FF19B2424C9B5A100388C5F /* SRGAnalyticsMediaPlayer */,
+			);
+			productName = "SRGAnalytics-tests";
+			productReference = E65490A11D803C03007D96E7 /* SRGAnalyticsIdentity_tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F1518B31AC2F1CE00AE051D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SRG;
+				LastUpgradeCheck = 1200;
+				ORGANIZATIONNAME = "SRG SSR";
+				TargetAttributes = {
+					08EF593B2221B7B4000E7446 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = VMGRRW6SG7;
+						ProvisioningStyle = Automatic;
+					};
+					E65490A01D803C03007D96E7 = {
+						CreatedOnToolsVersion = 7.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 08EF593B2221B7B4000E7446;
+					};
+				};
+			};
+			buildConfigurationList = 9F1518B61AC2F1CE00AE051D /* Build configuration list for PBXProject "SRGAnalyticsIdentity-tests" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9F1518B21AC2F1CE00AE051D;
+			packageReferences = (
+				6F312A3124C9AE9B007F79BD /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
+			);
+			productRefGroup = 9F1518BC1AC2F1CE00AE051D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E65490A01D803C03007D96E7 /* SRGAnalyticsIdentity-tests */,
+				08EF593B2221B7B4000E7446 /* SRGAnalyticsIdentity-tests-host */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08EF593A2221B7B4000E7446 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E654909F1D803C03007D96E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08EF59382221B7B4000E7446 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F312A2624C9A9BA007F79BD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E654909D1D803C03007D96E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FF19B2624C9B6B200388C5F /* XCTestCase+Tests.m in Sources */,
+				6F312A2324C9A78D007F79BD /* IdentityTestCase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		08EF59572221B945000E7446 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08EF593B2221B7B4000E7446 /* SRGAnalyticsIdentity-tests-host */;
+			targetProxy = 08EF59562221B945000E7446 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		08EF59502221B7B6000E7446 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VMGRRW6SG7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		08EF59512221B7B6000E7446 /* Debug-static */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VMGRRW6SG7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				SDKROOT = iphoneos;
+			};
+			name = "Debug-static";
+		};
+		08EF59522221B7B6000E7446 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VMGRRW6SG7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		08EF59532221B7B6000E7446 /* Release-static */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VMGRRW6SG7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+			};
+			name = "Release-static";
+		};
+		6F0C98BD2121CBBB00073AB6 /* Debug-static */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_NUMBER = 1;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
+				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
+			};
+			name = "Debug-static";
+		};
+		6F0C98C32121CBBB00073AB6 /* Debug-static */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
+			};
+			name = "Debug-static";
+		};
+		6F0C98C42121CBC400073AB6 /* Release-static */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_NUMBER = 1;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
+				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-static";
+		};
+		6F0C98CA2121CBC400073AB6 /* Release-static */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
+			};
+			name = "Release-static";
+		};
+		9F1518CD1AC2F1CE00AE051D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_NUMBER = 1;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
+				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
+			};
+			name = Debug;
+		};
+		9F1518CE1AC2F1CE00AE051D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_NUMBER = 1;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
+				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
+				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E65490A91D803C03007D96E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
+			};
+			name = Debug;
+		};
+		E65490AA1D803C03007D96E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08EF594F2221B7B6000E7446 /* Build configuration list for PBXNativeTarget "SRGAnalyticsIdentity-tests-host" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08EF59502221B7B6000E7446 /* Debug */,
+				08EF59512221B7B6000E7446 /* Debug-static */,
+				08EF59522221B7B6000E7446 /* Release */,
+				08EF59532221B7B6000E7446 /* Release-static */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F1518B61AC2F1CE00AE051D /* Build configuration list for PBXProject "SRGAnalyticsIdentity-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F1518CD1AC2F1CE00AE051D /* Debug */,
+				6F0C98BD2121CBBB00073AB6 /* Debug-static */,
+				9F1518CE1AC2F1CE00AE051D /* Release */,
+				6F0C98C42121CBC400073AB6 /* Release-static */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E65490AB1D803C03007D96E7 /* Build configuration list for PBXNativeTarget "SRGAnalyticsIdentity-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E65490A91D803C03007D96E7 /* Debug */,
+				6F0C98C32121CBBB00073AB6 /* Debug-static */,
+				E65490AA1D803C03007D96E7 /* Release */,
+				6F0C98CA2121CBC400073AB6 /* Release-static */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6F312A3124C9AE9B007F79BD /* XCRemoteSwiftPackageReference "OHHTTPStubs" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AliSoftware/OHHTTPStubs.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6F312A2F24C9AD90007F79BD /* SRGAnalyticsIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SRGAnalyticsIdentity;
+		};
+		6F312A3224C9AE9B007F79BD /* OHHTTPStubs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6F312A3124C9AE9B007F79BD /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
+			productName = OHHTTPStubs;
+		};
+		6FF19B2424C9B5A100388C5F /* SRGAnalyticsMediaPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SRGAnalyticsMediaPlayer;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 9F1518B31AC2F1CE00AE051D /* Project object */;
+}

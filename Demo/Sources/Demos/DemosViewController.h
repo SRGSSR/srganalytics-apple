@@ -4,8 +4,8 @@
 //  License information is available from the LICENSE file.
 //
 
-#import <SRGAnalytics/SRGAnalytics.h>
-#import <UIKit/UIKit.h>
+@import SRGAnalytics;
+@import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
