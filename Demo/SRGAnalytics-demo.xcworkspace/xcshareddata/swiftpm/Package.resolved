@@ -59,8 +59,8 @@
         "package": "SRGContentProtection",
         "repositoryURL": "https://github.com/SRGSSR/srgcontentprotection-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "5b1587d9212e1bbaceea3f6ca054232807c3308f",
+          "branch": "feature/akamai-token-fix",
+          "revision": "fa6a5755ddc2fa8d518d699942cb0a7d45d17a64",
           "version": null
         }
       },

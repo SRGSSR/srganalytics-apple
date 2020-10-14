@@ -10,7 +10,7 @@ let package = Package(
     name: "SRGAnalytics",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v9),
+        .iOS(.v12),
         .tvOS(.v12)
     ],
     products: [
@@ -33,7 +33,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "ComScore", url: "https://github.com/SRGSSR/ComScore-xcframework-apple.git", .exact("6.6.0")),
-        .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .branch("develop")),
+        .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .branch("feature/akamai-token-fix")),
         .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .branch("develop")),
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .branch("develop")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .branch("develop")),
