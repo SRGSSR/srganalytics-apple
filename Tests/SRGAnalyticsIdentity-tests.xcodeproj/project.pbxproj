@@ -270,30 +270,6 @@
 			};
 			name = Debug;
 		};
-		08EF59512221B7B6000E7446 /* Debug-static */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = VMGRRW6SG7;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				SDKROOT = iphoneos;
-			};
-			name = "Debug-static";
-		};
 		08EF59522221B7B6000E7446 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
@@ -317,175 +293,6 @@
 				SDKROOT = iphoneos;
 			};
 			name = Release;
-		};
-		08EF59532221B7B6000E7446 /* Release-static */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VMGRRW6SG7;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = SRGAnalyticsIdentityTestsHost/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-			};
-			name = "Release-static";
-		};
-		6F0C98BD2121CBBB00073AB6 /* Debug-static */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_NUMBER = 1;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
-				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
-				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
-				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
-			};
-			name = "Debug-static";
-		};
-		6F0C98C32121CBBB00073AB6 /* Debug-static */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
-			};
-			name = "Debug-static";
-		};
-		6F0C98C42121CBC400073AB6 /* Release-static */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_NUMBER = 1;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
-				DYLIB_COMPATIBILITY_VERSION = "$(BUILD_NUMBER)";
-				DYLIB_CURRENT_VERSION = "$(BUILD_NUMBER)";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.srgssr.$(TARGET_NAME)";
-				PRODUCT_NAME = "${TARGET_NAME:c99extidentifier}";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-static";
-		};
-		6F0C98CA2121CBC400073AB6 /* Release-static */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F312A2724C9AA96007F79BD /* Tests.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = SRGAnalyticsIdentityTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SRGAnalyticsIdentity_tests_host.app/SRGAnalyticsIdentity_tests_host";
-			};
-			name = "Release-static";
 		};
 		9F1518CD1AC2F1CE00AE051D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -639,9 +446,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08EF59502221B7B6000E7446 /* Debug */,
-				08EF59512221B7B6000E7446 /* Debug-static */,
 				08EF59522221B7B6000E7446 /* Release */,
-				08EF59532221B7B6000E7446 /* Release-static */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -650,9 +455,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F1518CD1AC2F1CE00AE051D /* Debug */,
-				6F0C98BD2121CBBB00073AB6 /* Debug-static */,
 				9F1518CE1AC2F1CE00AE051D /* Release */,
-				6F0C98C42121CBC400073AB6 /* Release-static */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -661,9 +464,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E65490A91D803C03007D96E7 /* Debug */,
-				6F0C98C32121CBBB00073AB6 /* Debug-static */,
 				E65490AA1D803C03007D96E7 /* Release */,
-				6F0C98CA2121CBC400073AB6 /* Release-static */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
