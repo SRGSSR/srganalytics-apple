@@ -7,7 +7,6 @@
 #import "XCTestCase+Tests.h"
 
 @import SRGAnalyticsDataProvider;
-@import SRGContentProtection;
 @import SRGDataProviderNetwork;
 
 /**
@@ -42,11 +41,6 @@
 
 - (void)testTokenProtectedOnDemandVideoRSI
 {
-    if (SRGContentProtectionIsPublic()) {
-        NSLog(@"Test disabled. Test stream not available in a public setup.");
-        return;
-    }
-    
     [self playMediaWithURN:@"urn:rsi:video:11498675"];
 }
 
@@ -74,11 +68,6 @@
 
 - (void)testTokenProtectedOnDemandVideoRTS
 {
-    if (SRGContentProtectionIsPublic()) {
-        NSLog(@"Test disabled. Test stream not available in a public setup.");
-        return;
-    }
-    
     [self playMediaWithURN:@"urn:rts:video:10260786"];
 }
 
