@@ -218,6 +218,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
             playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            playerViewController.allowsPictureInPicturePlayback = NO;
             [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
             [self presentViewController:playerViewController animated:YES completion:nil];
             break;
