@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "SimpleViewController.h"
 
-#import <SRGAnalytics_Identity/SRGAnalytics_Identity.h>
-#import <SRGAnalytics_MediaPlayer/SRGAnalytics_MediaPlayer.h>
+@import SRGAnalyticsIdentity;
+@import SRGAnalyticsMediaPlayer;
 
 static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 
@@ -218,6 +218,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
             playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            playerViewController.allowsPictureInPicturePlayback = NO;
             [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
             [self presentViewController:playerViewController animated:YES completion:nil];
             break;

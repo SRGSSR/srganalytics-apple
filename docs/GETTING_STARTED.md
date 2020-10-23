@@ -4,8 +4,8 @@ Getting started
 The SRG Analytics library is made of several frameworks:
 
 * A main `SRGAnalytics.framework` which supplies the singleton responsible of gathering measurements (tracker).
-* A companion optional `SRGAnalytics_MediaPlayer.framework` responsible of stream measurements for applications using our [SRG Media Player library](https://github.com/SRGSSR/srgmediaplayer-apple).
-* A companion optional `SRGAnalytics_DataProvider.framework` transparently forwarding stream measurement analytics labels received from Integration Layer services by the [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-apple).
+* A companion optional `SRGAnalyticsMediaPlayer.framework` responsible of stream measurements for applications using our [SRG Media Player library](https://github.com/SRGSSR/srgmediaplayer-apple).
+* A companion optional `SRGAnalyticsDataProvider.framework` transparently forwarding stream measurement analytics labels received from Integration Layer services by the [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-apple).
 
 ## Starting the tracker
 
@@ -116,7 +116,7 @@ Custom labels can also be used to send any additional measurement information yo
 
 ## Measuring SRG Media Player media consumption
 
-To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) controllers, you need to add the `SRGAnalytics_MediaPlayer.framework` companion framework to your project. As soon the framework has been added, it starts tracking any `SRGMediaPlayerController` instance by default. 
+To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) controllers, you need to add the `SRGAnalyticsMediaPlayer.framework` companion framework to your project. As soon the framework has been added, it starts tracking any `SRGMediaPlayerController` instance by default. 
 
 You can disable tracking by setting the `SRGMediaPlayerController` `tracked` property to `NO`. If you don't want the player to send any media playback events, you should perform this setup before actually beginning playback. You can still toggle the property on or off at any time if needed.
 
@@ -194,7 +194,7 @@ There is no such overloading mechanism for comScore measurements, which ignore s
 
 Our services directly supply the custom analytics labels which need to be sent with media consumption measurements. If you are using our [SRG DataProvider library](https://github.com/SRGSSR/srgdataprovider-apple) in your application, be sure to add the `SRGAnalytics_SRGDataProvider.framework` companion framework to your project as well, which will take care of the whole process for you.
 
-This framework adds a category `SRGMediaPlayerController (SRGAnalytics_DataProvider)`, which adds playback methods for media compositions to `SRGMediaPlayerController`. To play a media composition retrieved from an `SRGDataProvider` and have all measurement information automatically associated with the playback, simply call:
+This framework adds a category `SRGMediaPlayerController (SRGAnalyticsDataProvider)`, which adds playback methods for media compositions to `SRGMediaPlayerController`. To play a media composition retrieved from an `SRGDataProvider` and have all measurement information automatically associated with the playback, simply call:
 
 ```objective-c
 [mediaPlayerController playMediaComposition:mediaComposition
@@ -211,7 +211,7 @@ Nothing more is required for correct media consumption measurements. During play
 
 If you are using our [SRG Identity library](https://github.com/SRGSSR/srgidentity-apple) in your application, be sure to add the `SRGAnalytics_SRGIdentity.framework` companion framework to your project as well. This ensures that an identity can be automatically associated with analytics measurements.
 
-This framework adds a category `SRGAnalyticsTracker (SRGAnalytics_Identity)`, which provides an additional `-startWithConfiguration:identityService:` method to `SRGAnalyticsTracker`. To automatically asssociate an identity with analytics measurements, start your analytics tracker with this method instead of the orginal one:
+This framework adds a category `SRGAnalyticsTracker (SRGAnalyticsIdentity)`, which provides an additional `-startWithConfiguration:identityService:` method to `SRGAnalyticsTracker`. To automatically asssociate an identity with analytics measurements, start your analytics tracker with this method instead of the orginal one:
 
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -228,7 +228,7 @@ This framework adds a category `SRGAnalyticsTracker (SRGAnalytics_Identity)`, wh
 
 ## Manual resource retrieval
 
-Using the `SRGAnalytics_DataProvider.framework` companion framework is all you need to play a media with complete analytics information, right within an SRG Media Player controller instance.
+Using the `SRGAnalyticsDataProvider.framework` companion framework is all you need to play a media with complete analytics information, right within an SRG Media Player controller instance.
 
 In the case you need to play a resource without an SRG Media Player controller instance (e.g. with Google Cast default receiver), the companion framework provides the `-[SRGMediaComposition playbackContextWithPreferredSettings:contextBlock:]` method, with which you can find the proper resource to play.
 
