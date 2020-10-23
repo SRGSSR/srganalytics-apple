@@ -32,12 +32,12 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "ComScore", url: "https://github.com/SRGSSR/ComScore-xcframework-apple.git", .exact("6.6.0")),
-        .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .branch("develop")),
-        .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .branch("develop")),
-        .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .branch("develop")),
-        .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .branch("develop")),
-        .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .branch("develop")),
+        .package(name: "ComScore", url: "https://github.com/SRGSSR/ComScore-xcframework-apple.git", .upToNextMinor(from: "6.6.0")),
+        .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .upToNextMinor(from: "3.0.0")),
+        .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .upToNextMinor(from: "9.0.0")),
+        .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.0.0")),
+        .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.0.0")),
+        .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "6.0.0")),
         .package(name: "TCCore", url: "https://github.com/SRGSSR/TCCore-xcframework-apple.git", .exact("4.5.4-srg3")),
         .package(name: "TCSDK", url: "https://github.com/SRGSSR/TCSDK-xcframework-apple.git", .exact("4.4.1-srg3"))
     ],
