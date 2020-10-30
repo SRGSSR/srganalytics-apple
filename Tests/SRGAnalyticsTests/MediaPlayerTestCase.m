@@ -1070,7 +1070,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Pause playback. Expect segment information
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -1084,7 +1083,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Resume playback. Expect segment information
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -1101,12 +1099,11 @@ static NSURL *DVRTestURL(void)
 
 - (void)testInitialSegmentSelectionAndPlaythrough
 {
-    // No end on full since we start with the segment, only a play for the segment
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertEqualObjects(labels[@"segment_name"], @"segment");
-        XCTAssertEqualObjects(labels[@"overridable_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
+        XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
@@ -1120,40 +1117,15 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Let the segment be played through until we receive the transition notifications (since both are the same, capture
-    // them with a single expectation)
-    
-    __block BOOL segmentEndReceived = NO;
-    __block BOOL fullPlayReceived = NO;
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"eof"]) {
-            XCTAssertFalse(segmentEndReceived);
-            XCTAssertFalse(fullPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-            XCTAssertEqualObjects(labels[@"segment_name"], @"segment");
-            XCTAssertEqualObjects(labels[@"overridable_name"], @"segment");
-            XCTAssertEqualObjects(labels[@"media_position"], @"53");
-            segmentEndReceived = YES;
-        }
-        else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-            XCTAssertNil(labels[@"segment_name"]);
-            XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
-            XCTAssertEqualObjects(labels[@"media_position"], @"53");
-            fullPlayReceived = YES;
-        }
-        else {
-            XCTFail(@"Unexpected event %@", event);
-        }
-        
-        return segmentEndReceived && fullPlayReceived;
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
+        XCTFail(@"No event must be received");
     }];
     
-    [self waitForExpectationsWithTimeout:20. handler:nil];
+    [self expectationForElapsedTimeInterval:10. withHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
 }
 
 - (void)testPrepareInitialSegmentSelectionAndPlayAndReset
