@@ -691,7 +691,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -746,7 +746,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -780,7 +780,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -802,7 +802,7 @@ static NSURL *DVRTestURL(void)
         XCTFail(@"No event must be received when preparing a player");
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self prepareToPlayURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] completionHandler:^{
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
     }];
@@ -836,7 +836,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -880,8 +880,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment1 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment2 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2]];
     
@@ -918,8 +918,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment1 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment2 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:[SRGPosition positionAtTimeInSeconds:52.] withSegments:@[segment1, segment2]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -961,8 +961,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(20., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(23., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment1 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(20., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment2 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(23., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -986,7 +986,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1020,8 +1020,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(60., NSEC_PER_SEC), CMTimeMakeWithSeconds(20., NSEC_PER_SEC))];
+    Segment *segment1 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment2 = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(60., NSEC_PER_SEC), CMTimeMakeWithSeconds(20., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1057,7 +1057,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1087,7 +1087,7 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSelectedSegmentAtStreamEnd
 {
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
@@ -1122,7 +1122,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1155,7 +1155,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment blockedSegmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1191,7 +1191,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment blockedSegmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1226,7 +1226,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
+    Segment *segment = [Segment blockedSegmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1240,7 +1240,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment blockedSegmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1344,7 +1344,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1435,7 +1435,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1493,7 +1493,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     self.mediaPlayerController.tracked = NO;
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1549,7 +1549,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     self.mediaPlayerController.tracked = NO;
-    Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
+    Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     [self playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment]];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
