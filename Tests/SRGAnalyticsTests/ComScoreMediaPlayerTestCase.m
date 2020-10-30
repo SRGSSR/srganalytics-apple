@@ -773,7 +773,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 2);
         return YES;
@@ -792,7 +792,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 2);
         return YES;
@@ -802,11 +802,10 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Resume playback. Expect segment information
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 2);
         return YES;
@@ -822,7 +821,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 50);
         return YES;
@@ -869,7 +868,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 50);
         return YES;
@@ -882,7 +881,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertNil(labels[@"segment_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
         XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 50);
         return YES;
