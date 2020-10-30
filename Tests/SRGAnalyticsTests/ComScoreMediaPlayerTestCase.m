@@ -1221,6 +1221,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlayStartingWithBlockedSegment
 {
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 60);
         return YES;
     }];

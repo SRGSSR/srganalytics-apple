@@ -1105,28 +1105,27 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
     }];
     
-    __block BOOL fullEndReceived = NO;
-    __block BOOL segmentPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(fullEndReceived);
-            XCTAssertFalse(segmentPlayReceived);
+        if ([event isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"1");
-            fullEndReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segmentPlayReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segmentPlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullEndReceived && segmentPlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment withCompletionHandler:nil];
@@ -1148,28 +1147,27 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL segment1EndReceived = NO;
-    __block BOOL segment2PlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(segment1EndReceived);
-            XCTAssertFalse(segment2PlayReceived);
+        if ([event isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segment1EndReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segment2PlayReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"100");
-            segment2PlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return segment1EndReceived && segment2PlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment2 withCompletionHandler:nil];
@@ -1191,28 +1189,27 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 
-    __block BOOL fullLengthEndReceived = NO;
-    __block BOOL segment2PlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(fullLengthEndReceived);
-            XCTAssertFalse(segment2PlayReceived);
+        if ([event isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"52");
-            fullLengthEndReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segment2PlayReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"100");
-            segment2PlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullLengthEndReceived && segment2PlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment2 withCompletionHandler:nil];
@@ -1234,31 +1231,15 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL segment1EndReceived = NO;
-    __block BOOL fullLengthPlayReceived = NO;
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"eof"]) {
-            XCTAssertFalse(segment1EndReceived);
-            XCTAssertFalse(fullLengthPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"23");
-            segment1EndReceived = YES;
-        }
-        else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullLengthPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"23");
-            fullLengthPlayReceived = YES;
-        }
-        else {
-            XCTFail(@"Unexpected event %@", event);
-        }
-        
-        return segment1EndReceived && fullLengthPlayReceived;
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
+        XCTFail(@"No event must be received");
     }];
     
-    [self waitForExpectationsWithTimeout:20. handler:nil];
+    [self expectationForElapsedTimeInterval:5. withHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
 }
 
 - (void)testSegmentRepeatedSelection
@@ -1274,28 +1255,27 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL segmentEndReceived = NO;
-    __block BOOL segmentPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(segmentEndReceived);
-            XCTAssertFalse(segmentPlayReceived);
+        if ([event isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segmentEndReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segmentPlayReceived);
+            XCTAssertFalse(playReceived);
 
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segmentPlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return segmentEndReceived && segmentPlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment withCompletionHandler:nil];
@@ -1317,34 +1297,24 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL segment1SeekReceived = NO;
-    __block BOOL segment1StopReceived = NO;
-    __block BOOL fullLengthPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"seek"]) {
-            XCTAssertFalse(segment1SeekReceived);
-            XCTAssertFalse(segment1StopReceived);
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segment1SeekReceived = YES;
-        }
-        else if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(segment1StopReceived);
-            XCTAssertFalse(fullLengthPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segment1StopReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"70");
-            fullLengthPlayReceived = YES;
+            playReceived = YES;
         }
-        
-        return segment1SeekReceived && segment1StopReceived && fullLengthPlayReceived;
+        return seekReceived && seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:CMTimeMakeWithSeconds(70., NSEC_PER_SEC)] withCompletionHandler:nil];
@@ -1385,7 +1355,6 @@ static NSURL *DVRTestURL(void)
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
         return segmentSeekReceived && segmentPlayReceived;
     }];
     
@@ -1411,38 +1380,10 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqualObjects(self.mediaPlayerController.currentSegment, segment);
     XCTAssertEqualObjects(self.mediaPlayerController.selectedSegment, segment);
     
-    __block BOOL segmentEofReceived = NO;
-    __block BOOL fullLengthPlayReceived = NO;
-    __block BOOL fullLengthEofReceived = NO;
-    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"eof"]) {
-            if (! segmentEofReceived) {
-                XCTAssertFalse(fullLengthPlayReceived);
-                XCTAssertFalse(fullLengthEofReceived);
-                
-                XCTAssertEqualObjects(labels[@"media_position"], @"1800");
-                segmentEofReceived = YES;
-            }
-            else {
-                XCTAssertFalse(fullLengthEofReceived);
-                
-                XCTAssertEqualObjects(labels[@"media_position"], @"1800");
-                fullLengthEofReceived = YES;
-            }
-        }
-        else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullLengthPlayReceived);
-            XCTAssertFalse(fullLengthEofReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"1800");
-            fullLengthPlayReceived = YES;
-        }
-        else {
-            XCTFail(@"Unexpected event %@", event);
-        }
-        
-        return segmentEofReceived && fullLengthPlayReceived && fullLengthEofReceived;
+        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(labels[@"media_position"], @"1800");
+        return YES;
     }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1497,28 +1438,27 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL fullLengthSeekReceived = NO;
-    __block BOOL fullLengthPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"seek"]) {
-            XCTAssertFalse(fullLengthSeekReceived);
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"0");
-            fullLengthSeekReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"60");
-            fullLengthPlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullLengthSeekReceived && fullLengthPlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment withCompletionHandler:nil];
@@ -1559,7 +1499,6 @@ static NSURL *DVRTestURL(void)
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
         return fullLengthSeekReceived && fullLengthPlayReceived;
     }];
     
@@ -1570,37 +1509,36 @@ static NSURL *DVRTestURL(void)
 
 - (void)testPlayStartingWithBlockedSegment
 {
-    __block BOOL fullLengthPlayAt50Received = NO;
-    __block BOOL fullLengthSeekAt50Received = NO;
-    __block BOOL fullLengthPlayAt60Received = NO;
+    __block BOOL playAt50Received = NO;
+    __block BOOL seekAt50Received = NO;
+    __block BOOL playAt60Received = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"play"]) {
             if ([labels[@"media_position"] isEqualToString:@"50"]) {
-                XCTAssertFalse(fullLengthSeekAt50Received);
-                XCTAssertFalse(fullLengthPlayAt60Received);
+                XCTAssertFalse(seekAt50Received);
+                XCTAssertFalse(playAt60Received);
                 
-                fullLengthPlayAt50Received = YES;
+                playAt50Received = YES;
             }
             else if ([labels[@"media_position"] isEqualToString:@"60"]) {
-                fullLengthPlayAt60Received = YES;
+                playAt60Received = YES;
             }
             else {
                 XCTFail(@"Unexpected event %@", event);
             }
         }
         else if ([event isEqualToString:@"seek"]) {
-            XCTAssertFalse(fullLengthPlayAt60Received);
+            XCTAssertFalse(playAt60Received);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             
-            fullLengthSeekAt50Received = YES;
+            seekAt50Received = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullLengthPlayAt50Received && fullLengthSeekAt50Received && fullLengthPlayAt60Received;
+        return playAt50Received && seekAt50Received && playAt60Received;
     }];
     
     Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
@@ -1622,26 +1560,25 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    __block BOOL fullLengthSeekReceived = NO;
-    __block BOOL fullLengthPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"seek"]) {
-            XCTAssertFalse(fullLengthSeekReceived);
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
             XCTAssertEqualObjects(labels[@"media_position"], @"2");
-            fullLengthSeekReceived = YES;
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(fullLengthPlayReceived);
+            XCTAssertFalse(playReceived);
             XCTAssertEqualObjects(labels[@"media_position"], @"5");
-            fullLengthPlayReceived = YES;
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullLengthSeekReceived && fullLengthPlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
@@ -1793,7 +1730,6 @@ static NSURL *DVRTestURL(void)
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
         return fullLengthSeekReceived && fullLengthStopReceived;
     }];
     
@@ -1976,7 +1912,6 @@ static NSURL *DVRTestURL(void)
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
         return fullLengthPlayReceived && fullLengthSeekReceived;
     }];
     
@@ -2032,7 +1967,6 @@ static NSURL *DVRTestURL(void)
         else {
             XCTFail(@"Unexpected event received");
         }
-        
         return playReceived && pauseReceived;
     }];
     
@@ -2241,16 +2175,10 @@ static NSURL *DVRTestURL(void)
     Segment *updatedSegment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(4., NSEC_PER_SEC), CMTimeMakeWithSeconds(7., NSEC_PER_SEC))];
     self.mediaPlayerController.segments = @[updatedSegment];
     
-    __block NSInteger fullLengthHeartbeatCount = 0;
-    __block NSInteger segmentHeartbeatCount = 0;
+    __block NSInteger heartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            if ([labels[@"segment_name"] isEqualToString:@"segment"]) {
-                ++segmentHeartbeatCount;
-            }
-            else {
-                ++fullLengthHeartbeatCount;
-            }
+            ++heartbeatCount;
         }
     }];
     
@@ -2259,8 +2187,7 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:heartbeatEventObserver];
     }];
     
-    XCTAssertEqual(fullLengthHeartbeatCount, 2);
-    XCTAssertEqual(segmentHeartbeatCount, 2);
+    XCTAssertEqual(heartbeatCount, 4);
 }
 
 - (void)testHeartbeatWithSegmentSelectionAfterStartOnFullLength
@@ -2284,28 +2211,23 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
     }];
     
-    __block BOOL fullEndReceived = NO;
-    __block BOOL segmentPlayReceived = NO;
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([event isEqualToString:@"stop"]) {
-            XCTAssertFalse(fullEndReceived);
-            XCTAssertFalse(segmentPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"1");
-            fullEndReceived = YES;
+        if ([event isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
+            seekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
-            XCTAssertFalse(segmentPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"media_position"], @"50");
-            segmentPlayReceived = YES;
+            XCTAssertFalse(playReceived);
+            playReceived = YES;
         }
         else {
             XCTFail(@"Unexpected event %@", event);
         }
-        
-        return fullEndReceived && segmentPlayReceived;
+        return seekReceived && playReceived;
     }];
     
     [self.mediaPlayerController seekToPosition:nil inSegment:segment withCompletionHandler:nil];
@@ -2315,16 +2237,10 @@ static NSURL *DVRTestURL(void)
     Segment *updatedSegment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(7., NSEC_PER_SEC))];
     self.mediaPlayerController.segments = @[updatedSegment];
     
-    __block NSInteger fullLengthHeartbeatCount = 0;
-    __block NSInteger segmentHeartbeatCount = 0;
+    __block NSInteger heartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            if ([labels[@"segment_name"] isEqualToString:@"segment"]) {
-                ++segmentHeartbeatCount;
-            }
-            else {
-                ++fullLengthHeartbeatCount;
-            }
+            ++heartbeatCount;
         }
     }];
     
@@ -2333,8 +2249,7 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:heartbeatEventObserver];
     }];
     
-    XCTAssertEqual(fullLengthHeartbeatCount, 2);
-    XCTAssertEqual(segmentHeartbeatCount, 2);
+    XCTAssertEqual(heartbeatCount, 4);
 }
 
 - (void)testDVRLiveHeartbeats
@@ -2537,7 +2452,7 @@ static NSURL *DVRTestURL(void)
     labels.customInfo = @{ @"stream_name" : @"full" };
     
     NSDictionary *userInfo = @{ @"key" : @"value" };
-    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:userInfo];
     XCTAssertEqualObjects([self.mediaPlayerController.userInfo dictionaryWithValuesForKeys:userInfo.allKeys], userInfo);
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
