@@ -120,78 +120,10 @@ To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/sr
 
 You can disable tracking by setting the `SRGMediaPlayerController` `tracked` property to `NO`. If you don't want the player to send any media playback events, you should perform this setup before actually beginning playback. You can still toggle the property on or off at any time if needed.
 
-Two levels of measurement information (labels) can be provided:
-
-* Labels associated with the content being played, and which can be supplied when playing the media. Dedicated methods are available from `SRGMediaPlayerController+SRGAnalytics.h`.
-* Labels associated with a segment being played, and which are supplied by having segments implement the `SRGAnalyticsSegment` protocol. Note that comScore tracking ignores segments altogether.
-
-When playing a segment, segment labels are superimposed to content labels. You can therefore decide to selectively override content labels by having segments return labels with matching names, if needed. 
-
-### Example
-
-You could have a segment return the following information:
-
-```objective-c
-@interface Segment : NSObject <SRGAnalyticsSegment>
-
-- (instancetype)initWithName:(NSString *)name timeRange:(CMTimeRange)timeRange;
-
-@property (nonatomic, readonly, copy) NSString *name;
-
-// ...
-
-@end
-
-@implementation Segment
-
-- (SRGAnalyticsPlayerLabels *)srg_analyticsLabels
-{
-    SRGAnalyticsPlayerLabels *labels = [[SRGAnalyticsPlayerLabels alloc] init];
-    labels.customInfo = @{ @"MYAPP_MEDIA_ID" : self.name };
-    labels.comScoreCustomInfo = @{ @"myapp_media_id" : self.name };
-    return labels;
-}
-
-// ...
-
-@end
-
-```
-
-and play some content, associating measurement labels with it:
-
-```objective-c
-Segment *segment = [[Segment alloc] initWithName:@"Subject" timeRange:...];
-NSURL *URL = ...;
-
-SRGAnalyticsPlayerLabels *labels = [[SRGAnalyticsPlayerLabels alloc] init];
-labels.customInfo = @{ @"MYAPP_MEDIA_ID" : @"My media". @"MYAPP_PRODUCER" : @"RTS" };
-labels.comScoreCustomInfo = @{ @"myapp_media_id" : self.name };
-
-SRGMediaPlayerController *mediaPlayerController = [[SRGMediaPlayerController alloc] init];
-[mediaPlayerController playURL:URL atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
-```
-
-You can adjust tolerances to have precise but slower startup at the specified location (`kCMTimeZero`, like in the example above), or faster startup at around the specified location (`kCMTimePositiveInfinity` or some bounded positive value).
-
-When playing the content, tracking information sent to TagCommander will contain:
-
-```
-MYAPP_MEDIA_ID = My media
-MYAPP_PRODUCER = RTS
-```
-
-but when playing the segment (after the user selects it), this information will be overridden as follows:
-
-```
-MYAPP_MEDIA_ID = Subject
-MYAPP_PRODUCER = RTS
-```
-
-There is no such overloading mechanism for comScore measurements, which ignore segments altogether.
+Measurement information (labels) can be associated with the content being played. This is achieved by providing an `analyticsLabels` dictionary to playback methods available from `SRGMediaPlayerController+SRGAnalytics.h`.
 
 ## Automatic media consumption measurement labels using the SRG Data Provider library
-
+x
 Our services directly supply the custom analytics labels which need to be sent with media consumption measurements. If you are using our [SRG DataProvider library](https://github.com/SRGSSR/srgdataprovider-apple) in your application, be sure to add the `SRGAnalytics_SRGDataProvider.framework` companion framework to your project as well, which will take care of the whole process for you.
 
 This framework adds a category `SRGMediaPlayerController (SRGAnalyticsDataProvider)`, which adds playback methods for media compositions to `SRGMediaPlayerController`. To play a media composition retrieved from an `SRGDataProvider` and have all measurement information automatically associated with the playback, simply call:

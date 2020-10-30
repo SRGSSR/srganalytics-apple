@@ -8,7 +8,7 @@
 
 @implementation SRGSegment (SRGAnalyticsDataProvider)
 
-#pragma mark SRGAnalyticsSegment protocol
+#pragma mark SRGSegment protocol
 
 - (SRGMarkRange *)srg_markRange
 {
@@ -25,13 +25,6 @@
 - (BOOL)srg_isHidden
 {
     return self.hidden;
-}
-
-- (SRGAnalyticsStreamLabels *)srg_analyticsLabels
-{
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = self.analyticsLabels;
-    return labels;
 }
 
 @end

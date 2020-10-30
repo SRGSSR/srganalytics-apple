@@ -49,12 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  ### Labels associated with the content
  *
  *  Labels associated with a media being played can be supplied when starting playback, using one of the plaback
- *  methods made available below.
- *
- *  ### Labels associated with a segment
- *
- *  To supply labels for a segment, have your segment model class conform to the `SRGAnalyticsSegment` protocol instead
- *  of `SRGSegment`, and implement the required `srg_analyticsLabels` method.
+ *  methods available below.
  */
 @interface SRGMediaPlayerController (SRGAnalyticsMediaPlayer)
 
