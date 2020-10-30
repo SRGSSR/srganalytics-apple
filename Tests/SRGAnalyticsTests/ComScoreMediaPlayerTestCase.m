@@ -63,6 +63,17 @@ static NSURL *DVRTestURL(void)
     [self.mediaPlayerController prepareToPlayURL:URL atPosition:position withSegments:segments analyticsLabels:labels userInfo:nil completionHandler:completionHandler];
 }
 
+- (void)prepareToPlayURL:(NSURL *)URL
+                 atIndex:(NSInteger)index
+                position:(SRGPosition *)position
+              inSegments:(NSArray<id<SRGSegment>> *)segments
+       completionHandler:(void (^)(void))completionHandler
+{
+    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
+    labels.comScoreCustomInfo = @{ @"test_label" : @"test_value" };
+    [self.mediaPlayerController prepareToPlayURL:URL atIndex:index position:position inSegments:segments withAnalyticsLabels:labels userInfo:nil completionHandler:completionHandler];
+}
+
 - (void)playURL:(NSURL *)URL
      atPosition:(SRGPosition *)position
    withSegments:(NSArray<id<SRGSegment>> *)segments
@@ -792,7 +803,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil completionHandler:^{
+    [self prepareToPlayURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] completionHandler:^{
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
     }];
     
