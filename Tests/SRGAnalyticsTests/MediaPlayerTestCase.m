@@ -60,10 +60,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForElapsedTimeInterval:3. withHandler:nil];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil completionHandler:^{
+    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil completionHandler:^{
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
     }];
     
@@ -96,10 +93,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -135,21 +129,15 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        
         if (! [event isEqualToString:@"eof"]) {
             return NO;
         }
@@ -165,7 +153,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -176,7 +163,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"pause");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -194,10 +180,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -229,10 +212,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -267,10 +247,7 @@ static NSURL *DVRTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver1];
@@ -336,10 +313,7 @@ static NSURL *DVRTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -399,10 +373,7 @@ static NSURL *DVRTestURL(void)
         return [event isEqualToString:@"play"];
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -493,10 +464,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:[NSURL URLWithString:@"http://httpbin.org/status/403"] atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:[NSURL URLWithString:@"http://httpbin.org/status/403"] atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -524,6 +492,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
+        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
@@ -547,10 +516,7 @@ static NSURL *DVRTestURL(void)
     self.mediaPlayerController.analyticsPlayerName = @"CustomPlayer";
     self.mediaPlayerController.analyticsPlayerVersion = @"1.0";
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -572,7 +538,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -600,10 +566,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -639,10 +602,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -696,10 +656,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -762,10 +719,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -833,10 +787,7 @@ static NSURL *DVRTestURL(void)
         player.muted = YES;
     };
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -860,10 +811,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -886,10 +834,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -915,10 +860,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -943,10 +885,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -965,15 +904,11 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -989,7 +924,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
@@ -999,7 +933,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
@@ -1025,22 +958,17 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1051,7 +979,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1065,16 +992,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1095,17 +1018,13 @@ static NSURL *DVRTestURL(void)
         XCTFail(@"No event must be received when preparing a player");
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil completionHandler:^{
+    [self.mediaPlayerController prepareToPlayURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil completionHandler:^{
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
@@ -1116,7 +1035,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
@@ -1130,16 +1048,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1160,14 +1074,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullEndReceived);
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"1");
             fullEndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segmentPlayReceived = YES;
         }
@@ -1187,18 +1099,13 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
     Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1210,14 +1117,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segment1EndReceived);
             XCTAssertFalse(segment2PlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segment1EndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segment2PlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"100");
             segment2PlayReceived = YES;
         }
@@ -1237,18 +1142,13 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"52");
         return YES;
     }];
     
     Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(100., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:[SRGPosition positionAtTimeInSeconds:52.] withSegments:@[segment1, segment2] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:[SRGPosition positionAtTimeInSeconds:52.] withSegments:@[segment1, segment2] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 
@@ -1260,14 +1160,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullLengthEndReceived);
             XCTAssertFalse(segment2PlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"52");
             fullLengthEndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segment2PlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"100");
             segment2PlayReceived = YES;
         }
@@ -1287,18 +1185,13 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"20");
         return YES;
     }];
     
     Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(20., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
     Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(23., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1310,14 +1203,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segment1EndReceived);
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"23");
             segment1EndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"23");
             fullLengthPlayReceived = YES;
         }
@@ -1335,17 +1226,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1357,14 +1243,11 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segmentEndReceived);
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segmentEndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segmentPlayReceived);
-            
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
 
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segmentPlayReceived = YES;
@@ -1385,18 +1268,13 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
     Segment *segment1 = [Segment segmentWithName:@"segment1" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
     Segment *segment2 = [Segment segmentWithName:@"segment2" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(60., NSEC_PER_SEC), CMTimeMakeWithSeconds(20., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment1, segment2] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1410,7 +1288,6 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segment1StopReceived);
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segment1SeekReceived = YES;
         }
@@ -1418,14 +1295,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segment1StopReceived);
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segment1StopReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"70");
             fullLengthPlayReceived = YES;
         }
@@ -1442,17 +1317,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1464,14 +1334,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(segmentSeekReceived);
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segmentSeekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"53");
             segmentPlayReceived = YES;
         }
@@ -1493,15 +1361,11 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"1795");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1518,14 +1382,12 @@ static NSURL *DVRTestURL(void)
                 XCTAssertFalse(fullLengthPlayReceived);
                 XCTAssertFalse(fullLengthEofReceived);
                 
-                XCTAssertEqualObjects(labels[@"stream_name"], @"full");
                 XCTAssertEqualObjects(labels[@"media_position"], @"1800");
                 segmentEofReceived = YES;
             }
             else {
                 XCTAssertFalse(fullLengthEofReceived);
                 
-                XCTAssertEqualObjects(labels[@"stream_name"], @"full");
                 XCTAssertEqualObjects(labels[@"media_position"], @"1800");
                 fullLengthEofReceived = YES;
             }
@@ -1534,7 +1396,6 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullLengthPlayReceived);
             XCTAssertFalse(fullLengthEofReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"1800");
             fullLengthPlayReceived = YES;
         }
@@ -1555,17 +1416,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
     
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1580,7 +1436,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"51");
         return YES;
     }];
@@ -1594,16 +1449,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1615,14 +1466,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullLengthSeekReceived);
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"0");
             fullLengthSeekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"60");
             fullLengthPlayReceived = YES;
         }
@@ -1642,17 +1491,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
     
     Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1664,14 +1508,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullLengthSeekReceived);
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"0");
             fullLengthSeekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(fullLengthPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"60");
             fullLengthPlayReceived = YES;
         }
@@ -1699,13 +1541,9 @@ static NSURL *DVRTestURL(void)
                 XCTAssertFalse(fullLengthSeekAt50Received);
                 XCTAssertFalse(fullLengthPlayAt60Received);
                 
-                XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-                
                 fullLengthPlayAt50Received = YES;
             }
             else if ([labels[@"media_position"] isEqualToString:@"60"]) {
-                XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-                
                 fullLengthPlayAt60Received = YES;
             }
             else {
@@ -1715,7 +1553,6 @@ static NSURL *DVRTestURL(void)
         else if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(fullLengthPlayAt60Received);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             
             fullLengthSeekAt50Received = YES;
@@ -1727,11 +1564,8 @@ static NSURL *DVRTestURL(void)
         return fullLengthPlayAt50Received && fullLengthSeekAt50Received && fullLengthPlayAt60Received;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(10., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
@@ -1740,17 +1574,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
     
     Segment *segment = [Segment blockedSegmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1761,13 +1590,11 @@ static NSURL *DVRTestURL(void)
         if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(fullLengthSeekReceived);
             XCTAssertFalse(fullLengthPlayReceived);
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"2");
             fullLengthSeekReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(fullLengthPlayReceived);
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"5");
             fullLengthPlayReceived = YES;
         }
@@ -1789,11 +1616,8 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForElapsedTimeInterval:5. withHandler:nil];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -1807,10 +1631,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1835,10 +1656,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1859,23 +1677,17 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
     
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1893,10 +1705,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1927,10 +1736,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1963,22 +1769,17 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1989,7 +1790,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2007,11 +1807,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2035,17 +1832,12 @@ static NSURL *DVRTestURL(void)
     
     self.mediaPlayerController.tracked = NO;
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2066,11 +1858,8 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -2099,11 +1888,7 @@ static NSURL *DVRTestURL(void)
     
     self.mediaPlayerController.tracked = NO;
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(2., NSEC_PER_SEC), CMTimeMakeWithSeconds(3., NSEC_PER_SEC))];
-    
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -2111,7 +1896,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2132,11 +1916,8 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -2177,11 +1958,8 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
@@ -2232,10 +2010,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2267,11 +2042,8 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2301,21 +2073,16 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     __block NSInteger heartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
@@ -2332,7 +2099,6 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
@@ -2343,7 +2109,6 @@ static NSURL *DVRTestURL(void)
     heartbeatCount = 0;
     heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
@@ -2370,7 +2135,6 @@ static NSURL *DVRTestURL(void)
     heartbeatCount = 0;
     heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
@@ -2390,16 +2154,12 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2407,13 +2167,11 @@ static NSURL *DVRTestURL(void)
     __block NSInteger liveHeartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertTrue(([labels[@"media_position"] integerValue] % 3) == 0);
             XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertTrue(([labels[@"media_position"] integerValue] % 6) == 0);
             XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
             ++liveHeartbeatCount;
@@ -2436,11 +2194,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(4., NSEC_PER_SEC), CMTimeMakeWithSeconds(7., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atIndex:0 position:nil inSegments:@[segment] withAnalyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2476,11 +2231,8 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(50., NSEC_PER_SEC), CMTimeMakeWithSeconds(7., NSEC_PER_SEC))];
-    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2501,14 +2253,12 @@ static NSURL *DVRTestURL(void)
             XCTAssertFalse(fullEndReceived);
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"1");
             fullEndReceived = YES;
         }
         else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(segmentPlayReceived);
             
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             XCTAssertEqualObjects(labels[@"media_position"], @"50");
             segmentPlayReceived = YES;
         }
@@ -2552,14 +2302,10 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2567,11 +2313,9 @@ static NSURL *DVRTestURL(void)
     __block NSInteger liveHeartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++liveHeartbeatCount;
         }
     }];
@@ -2589,14 +2333,10 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"stream_name"], @"full");
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:DVRTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2613,11 +2353,9 @@ static NSURL *DVRTestURL(void)
     __block NSInteger liveHeartbeatCount = 0;
     id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++heartbeatCount;
         }
         else if ([event isEqualToString:@"uptime"]) {
-            XCTAssertEqualObjects(labels[@"stream_name"], @"full");
             ++liveHeartbeatCount;
         }
     }];
@@ -2638,10 +2376,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -2696,11 +2431,8 @@ static NSURL *DVRTestURL(void)
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
     
-    SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
-    labels.customInfo = @{ @"stream_name" : @"full" };
-    
     self.mediaPlayerController.tracked = NO;
-    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
+    [self.mediaPlayerController playURL:LiveTestURL() atPosition:nil withSegments:nil analyticsLabels:nil userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
