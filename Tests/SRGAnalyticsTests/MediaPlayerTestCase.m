@@ -1055,8 +1055,8 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertEqualObjects(labels[@"segment_name"], @"segment");
-        XCTAssertEqualObjects(labels[@"overridable_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
+        XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1074,8 +1074,8 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"pause");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertEqualObjects(labels[@"segment_name"], @"segment");
-        XCTAssertEqualObjects(labels[@"overridable_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
+        XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1088,8 +1088,8 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
-        XCTAssertEqualObjects(labels[@"segment_name"], @"segment");
-        XCTAssertEqualObjects(labels[@"overridable_name"], @"segment");
+        XCTAssertNil(labels[@"segment_name"]);
+        XCTAssertEqualObjects(labels[@"overridable_name"], @"full");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];

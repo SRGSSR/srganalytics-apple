@@ -367,11 +367,6 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         return;
     }
     
-    // Inhibit usual playback transitions occuring during segment selection
-    if ([notification.userInfo[SRGMediaPlayerSelectionKey] boolValue]) {
-        return;
-    }
-    
     [self recordEventForPlaybackState:playbackState
                        withStreamType:mediaPlayerController.streamType
                                  time:mediaPlayerController.currentTime
