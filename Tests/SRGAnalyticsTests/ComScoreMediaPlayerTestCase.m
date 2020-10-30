@@ -55,8 +55,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testPrepareToPlay
 {
-    // If the player starts in a paused state, no event needs to be emitted (there is no measurable media consumption
-    // after all)
     id prepareObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when preparing a player");
     }];
@@ -112,7 +110,6 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    // Seek near the end of the video
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
     
@@ -126,8 +123,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Let playback finish normally
-    
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
         XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 1800);
@@ -139,7 +134,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testReplay
 {
-    // The session identifier must change when the same media is replayed
     __block NSString *sessionUid1 = nil;
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -161,7 +155,6 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        // All intermediate events must have the same session identifier
         XCTAssertEqualObjects(labels[@"ns_st_id"], sessionUid1);
         XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -225,7 +218,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Play for a while. No stream events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -261,7 +253,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Play for a while. No stream events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -303,7 +294,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Expect seek - pause media player transition, but no analytics labels emitted
     id eventObserver1 = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -388,7 +378,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testConsecutiveMedias
 {
-    // The session identifier must change when a different media is played
     __block NSString *sessionUid1 = nil;
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -644,7 +633,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Play for a while. No stream events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -676,7 +664,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Pause for a while. No stream events must be received
     eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when paused");
     }];
@@ -717,7 +704,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Let the segment be played through. No events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received");
     }];
@@ -728,7 +714,6 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
     }];
     
-    // Pause playback. Expect full-length information
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -741,7 +726,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Resume playback. Expect full-length information
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -850,7 +834,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testPrepareInitialSegmentSelectionAndPlayAndReset
 {
-    // Prepare the player until it is paused. No event must be received
     id prepareObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when preparing a player");
     }];
@@ -864,7 +847,6 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:prepareObserver];
     }];
     
-    // Now playing must trigger a play event
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full");
@@ -912,7 +894,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Play for a while. No stream events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -1234,7 +1215,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSelectedSegmentAtStreamEnd
 {
-    // Precise timing information gathered from the stream itself
     Segment *segment = [Segment segmentWithName:@"segment" timeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -1293,7 +1273,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Play for a while. No stream events must be received
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received when playing");
     }];
@@ -1337,8 +1316,6 @@ static NSURL *DVRTestURL(void)
     [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    // Expect pause and play (corresponding to the segment being skipped)
     
     __block BOOL pauseReceived = NO;
     __block BOOL playReceived = NO;
@@ -1457,8 +1434,6 @@ static NSURL *DVRTestURL(void)
     [self.mediaPlayerController playURL:OnDemandTestURL() atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    // Play for a while. Expect pause / play for the full-length when skipping over the segment
     
     __block BOOL fullLengthPauseReceived = NO;
     __block BOOL fullLengthPlayReceived = NO;
@@ -1941,7 +1916,6 @@ static NSURL *DVRTestURL(void)
 
 - (void)testDisableTwiceTrackingWhilePlaying
 {
-    // Wait until the media plays
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
         return YES;
@@ -1954,7 +1928,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Stop tracking twice while playing. Expect a single end to be received
     __block NSInteger endEventCount = 0;
     id endEventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"end"]) {
@@ -1969,19 +1942,16 @@ static NSURL *DVRTestURL(void)
     self.mediaPlayerController.tracked = NO;
     self.mediaPlayerController.tracked = NO;
     
-    // Wait a little bit to collect potential events
     [self expectationForElapsedTimeInterval:5. withHandler:nil];
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:endEventObserver];
     }];
     
-    // Check we have received the end notification only once
     XCTAssertEqual(endEventCount, 1);
 }
 
 - (void)testEnableTrackingTwiceWhilePlaying
 {
-    // Wait until the media plays
     [self expectationForSingleNotification:SRGMediaPlayerPlaybackStateDidChangeNotification object:self.mediaPlayerController handler:^BOOL(NSNotification *notification) {
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
@@ -1994,7 +1964,6 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // Start tracking twice while playing. Expect a single play to be received
     __block NSInteger playEventCount = 0;
     id endEventObserver = [NSNotificationCenter.defaultCenter addObserverForComScorePlayerEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         if ([event isEqualToString:@"play"]) {
@@ -2009,13 +1978,11 @@ static NSURL *DVRTestURL(void)
     self.mediaPlayerController.tracked = YES;
     self.mediaPlayerController.tracked = YES;
     
-    // Wait a little bit to collect potential events
     [self expectationForElapsedTimeInterval:5. withHandler:nil];
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:endEventObserver];
     }];
     
-    // Check we have received the end notification only once
     XCTAssertEqual(playEventCount, 1);
 }
 
