@@ -897,12 +897,59 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
-        XCTAssertNil(labels[@"media_subtitle_selection"]);
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
     }];
     
     [self.mediaPlayerController reset];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testSubtitlesToEnd
+{
+    MACaptionAppearanceSetDisplayType(kMACaptionAppearanceDomainUser, kMACaptionAppearanceDisplayTypeAlwaysOn);
+    MACaptionAppearanceAddSelectedLanguage(kMACaptionAppearanceDomainUser, (__bridge CFStringRef _Nonnull)@"en");
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+        return YES;
+    }];
+    
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+        return YES;
+    }];
+    
+    CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
+    [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+        return YES;
+    }];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+        return YES;
+    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
@@ -948,30 +995,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertNil(labels[@"media_audio_track"]);
-        return YES;
-    }];
-    
-    [self.mediaPlayerController reset];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testNoAudioTrack
-{
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertNil(labels[@"media_audio_track"]);
-        return YES;
-    }];
-    
-    [self playURL:OnDemandVideoWithoutaudioTestURL() atPosition:nil withSegments:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertNil(labels[@"media_audio_track"]);
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"EN");
         return YES;
     }];
     
@@ -989,6 +1013,29 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self playURL:LiveTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController reset];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testNoAudioTrack
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertNil(labels[@"media_audio_track"]);
+        return YES;
+    }];
+    
+    [self playURL:OnDemandVideoWithoutaudioTestURL() atPosition:nil withSegments:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1024,11 +1071,58 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertNil(labels[@"media_audio_track"]);
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"FR");
         return YES;
     }];
     
     [self.mediaPlayerController reset];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testSelectedAudioTrackToEnd
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.audioConfigurationBlock = ^AVMediaSelectionOption * _Nonnull(NSArray<AVMediaSelectionOption *> * _Nonnull audioOptions, AVMediaSelectionOption * _Nonnull defaultAudioOption) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(AVMediaSelectionOption * _Nullable option, NSDictionary<NSString *,id> * _Nullable bindings) {
+            return [[option.locale objectForKey:NSLocaleLanguageCode] isEqualToString:@"de"];
+        }];
+        return [audioOptions filteredArrayUsingPredicate:predicate].firstObject ?: defaultAudioOption;
+    };
+    
+    [self playURL:OnDemandMutliAudioTracksTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+        return YES;
+    }];
+    
+    CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
+    [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+        return YES;
+    }];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+        return YES;
+    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }

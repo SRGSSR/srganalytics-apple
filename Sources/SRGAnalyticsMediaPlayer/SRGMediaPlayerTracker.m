@@ -46,6 +46,9 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
 
 @property (nonatomic, copy) MediaPlayerTrackerEvent lastEvent;
 
+@property (nonatomic) AVMediaSelectionOption *lastSubtitlesMediaOption;
+@property (nonatomic) AVMediaSelectionOption *lastAudioTrackMediaOption;
+
 @property (nonatomic, copy) NSString *unitTestingIdentifier;
 
 @end
@@ -221,16 +224,20 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     
     [labels srg_safelySetString:self.playerVolumeInPercent.stringValue ?: @"0" forKey:@"media_volume"];
     
-    AVMediaSelectionOption *subtitlesMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicLegible];
-    [labels srg_safelySetString:subtitlesMediaOption != nil ? @"true" : @"false" forKey:@"media_subtitles_on"];
-    if (subtitlesMediaOption) {
-        NSString *subtitlesLanguageCode = [subtitlesMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
+    if (! [event isEqualToString:MediaPlayerTrackerEventStop]) {
+        self.lastSubtitlesMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicLegible];
+    }
+    [labels srg_safelySetString:self.lastSubtitlesMediaOption != nil ? @"true" : @"false" forKey:@"media_subtitles_on"];
+    if (self.lastSubtitlesMediaOption) {
+        NSString *subtitlesLanguageCode = [self.lastSubtitlesMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
         [labels srg_safelySetString:subtitlesLanguageCode.uppercaseString forKey:@"media_subtitle_selection"];
     }
     
-    AVMediaSelectionOption *audioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
-    if (audioTrackMediaOption) {
-        NSString *audioTrackLanguageCode = [audioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
+    if (! [event isEqualToString:MediaPlayerTrackerEventStop]) {
+        self.lastAudioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
+    }
+    if (self.lastAudioTrackMediaOption) {
+        NSString *audioTrackLanguageCode = [self.lastAudioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
         [labels srg_safelySetString:audioTrackLanguageCode.uppercaseString forKey:@"media_audio_track"];
     }
     
