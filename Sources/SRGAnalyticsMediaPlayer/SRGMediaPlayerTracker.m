@@ -229,8 +229,10 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     }
     
     AVMediaSelectionOption *audioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
-    NSString *audioTrackLanguageCode = [audioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
-    [labels srg_safelySetString:audioTrackLanguageCode.uppercaseString forKey:@"media_audio_track"];
+    if (audioTrackMediaOption) {
+        NSString *audioTrackLanguageCode = [audioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
+        [labels srg_safelySetString:audioTrackLanguageCode.uppercaseString forKey:@"media_audio_track"];
+    }
     
     [labels srg_safelySetString:self.bandwidthInBitsPerSecond.stringValue forKey:@"media_bandwidth"];
     
