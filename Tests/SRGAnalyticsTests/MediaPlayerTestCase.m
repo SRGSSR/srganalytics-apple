@@ -882,7 +882,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
-        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"en");
+        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
     }];
     
@@ -933,7 +933,7 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"en");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"EN");
         return YES;
     }];
     
@@ -943,7 +943,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"und");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
     
@@ -956,7 +956,7 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"und");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
     
@@ -966,7 +966,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"und");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
     
@@ -979,7 +979,7 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"fr");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"FR");
         return YES;
     }];
     
@@ -996,7 +996,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"und");
+        XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
     

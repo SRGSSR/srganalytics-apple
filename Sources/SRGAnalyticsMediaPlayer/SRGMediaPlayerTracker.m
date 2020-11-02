@@ -225,12 +225,12 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels srg_safelySetString:subtitlesMediaOption != nil ? @"true" : @"false" forKey:@"media_subtitles_on"];
     if (subtitlesMediaOption) {
         NSString *subtitlesLanguageCode = [subtitlesMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
-        [labels srg_safelySetString:subtitlesLanguageCode forKey:@"media_subtitle_selection"];
+        [labels srg_safelySetString:subtitlesLanguageCode.uppercaseString forKey:@"media_subtitle_selection"];
     }
     
     AVMediaSelectionOption *audioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
     NSString *audioTrackLanguageCode = [audioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
-    [labels srg_safelySetString:audioTrackLanguageCode forKey:@"media_audio_track"];
+    [labels srg_safelySetString:audioTrackLanguageCode.uppercaseString forKey:@"media_audio_track"];
     
     [labels srg_safelySetString:self.bandwidthInBitsPerSecond.stringValue forKey:@"media_bandwidth"];
     
