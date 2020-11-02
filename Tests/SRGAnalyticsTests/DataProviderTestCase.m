@@ -163,7 +163,10 @@ static NSURL *MMFTestURL(void)
 - (void)testPlaySegmentInMediaComposition
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
         XCTAssertEqualObjects(labels[@"media_segment"], @"10vor10 vom 05.03.2019");
         XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"SD");
         XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:28bf1034-f531-4f3d-b25d-c4fc84394bef");
@@ -855,7 +858,10 @@ static NSURL *MMFTestURL(void)
 - (void)testPlaySegmentInMediaCompositionWithSourceUid
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
         XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:d5cdaf81-7df7-42d8-8c1a-ea31ed1913fc");
         XCTAssertEqualObjects(labels[@"source_id"], @"SRF source unique id");
         return YES;
@@ -877,7 +883,10 @@ static NSURL *MMFTestURL(void)
 - (void)testSeekToSegmentInMediaCompositionWithSourceUid
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
         XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:d5cdaf81-7df7-42d8-8c1a-ea31ed1913fc");
         XCTAssertEqualObjects(labels[@"source_id"], @"SRF source unique id");
         return YES;
