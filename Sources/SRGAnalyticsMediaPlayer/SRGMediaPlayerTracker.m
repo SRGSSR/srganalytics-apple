@@ -32,6 +32,8 @@ static MediaPlayerTrackerEvent const MediaPlayerTrackerEventSegment = @"segment"
 
 static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil;
 
+static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSelectionReason reason);
+
 @interface SRGMediaPlayerTracker ()
 
 @property (nonatomic, weak) SRGMediaPlayerController *mediaPlayerController;
@@ -83,6 +85,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                                    withStreamType:mediaPlayerController.streamType
                                              time:mediaPlayerController.currentTime
                                         timeshift:SRGMediaAnalyticsPlayerTimeshiftInMilliseconds(mediaPlayerController)
+                                  analyticsLabels:nil
                                          userInfo:mediaPlayerController.userInfo];
             }
             else {
@@ -90,6 +93,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                    withStreamType:mediaPlayerController.streamType
                              time:mediaPlayerController.currentTime
                         timeshift:SRGMediaAnalyticsPlayerTimeshiftInMilliseconds(mediaPlayerController)
+                  analyticsLabels:nil
                          userInfo:mediaPlayerController.userInfo];
             }
         }];
@@ -127,6 +131,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                      withStreamType:(SRGMediaPlayerStreamType)streamType
                                time:(CMTime)time
                           timeshift:(NSNumber *)timeshift
+                    analyticsLabels:(NSDictionary<NSString *, NSString *> *)analyticsLabels
                            userInfo:(NSDictionary *)userInfo
 {
     static dispatch_once_t s_onceToken;
@@ -144,13 +149,14 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         return;
     }
     
-    [self recordEvent:event withStreamType:streamType time:time timeshift:timeshift userInfo:userInfo];
+    [self recordEvent:event withStreamType:streamType time:time timeshift:timeshift analyticsLabels:analyticsLabels userInfo:userInfo];
 }
 
 - (void)recordEvent:(MediaPlayerTrackerEvent)event
      withStreamType:(SRGMediaPlayerStreamType)streamType
                time:(CMTime)time
           timeshift:(NSNumber *)timeshift
+    analyticsLabels:(NSDictionary<NSString *, NSString *> *)analyticsLabels
            userInfo:(NSDictionary *)userInfo
 {
     NSAssert(event.length != 0, @"An event is required");
@@ -158,7 +164,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     // Ensure a play is emitted before events requiring a session to be opened (the Tag Commander SDK does not open sessions
     // automatically)
     if ([self.lastEvent isEqualToString:MediaPlayerTrackerEventStop] && ([event isEqualToString:MediaPlayerTrackerEventPause] || [event isEqualToString:MediaPlayerTrackerEventSeek])) {
-        [self recordEvent:MediaPlayerTrackerEventPlay withStreamType:streamType time:time timeshift:timeshift userInfo:userInfo];
+        [self recordEvent:MediaPlayerTrackerEventPlay withStreamType:streamType time:time timeshift:timeshift analyticsLabels:analyticsLabels userInfo:userInfo];
     }
     
     if (! [event isEqualToString:MediaPlayerTrackerEventPosition] && ! [event isEqualToString:MediaPlayerTrackerEventUptime] && ! [event isEqualToString:MediaPlayerTrackerEventSegment]) {
@@ -220,6 +226,10 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     
     if (timeshift) {
         [labels srg_safelySetString:@(timeshift.integerValue / 1000).stringValue forKey:@"media_timeshift"];
+    }
+    
+    if (analyticsLabels) {
+        [labels addEntriesFromDictionary:analyticsLabels];
     }
     
     SRGAnalyticsStreamLabels *mainLabels = userInfo[SRGAnalyticsMediaPlayerLabelsKey];
@@ -346,6 +356,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                       withStreamType:streamType
                                 time:time
                            timeshift:timeshift
+                     analyticsLabels:nil
                             userInfo:notification.userInfo[SRGMediaPlayerPreviousUserInfoKey]];
             }
             s_trackers[key] = nil;
@@ -371,6 +382,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
                        withStreamType:mediaPlayerController.streamType
                                  time:mediaPlayerController.currentTime
                             timeshift:SRGMediaAnalyticsPlayerTimeshiftInMilliseconds(mediaPlayerController)
+                      analyticsLabels:nil
                              userInfo:mediaPlayerController.userInfo];
 }
 
@@ -382,10 +394,17 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
     }
     
     if ([notification.userInfo[SRGMediaPlayerSelectionKey] boolValue]) {
+        NSMutableDictionary<NSString *, NSString *> *analyticsLabels = [NSMutableDictionary dictionary];
+        
+        SRGMediaPlayerSelectionReason selectionReason = [notification.userInfo[SRGMediaPlayerSelectionReasonKey] integerValue];
+        NSString *selectionReasonLabel = SRGMediaPlayerTrackerLabelForSelectionReason(selectionReason);
+        analyticsLabels[@"segment_change_origin"] = selectionReasonLabel;
+        
         [self recordEvent:MediaPlayerTrackerEventSegment
            withStreamType:mediaPlayerController.streamType
                      time:mediaPlayerController.currentTime
                 timeshift:SRGMediaAnalyticsPlayerTimeshiftInMilliseconds(mediaPlayerController)
+          analyticsLabels:analyticsLabels.copy
                  userInfo:mediaPlayerController.userInfo];
     }
 }
@@ -406,6 +425,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
        withStreamType:streamType
                  time:mediaPlayerController.currentTime
             timeshift:timeshift
+      analyticsLabels:nil
              userInfo:mediaPlayerController.userInfo];
     
     // Send a live heartbeat each minute
@@ -414,6 +434,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
            withStreamType:streamType
                      time:mediaPlayerController.currentTime
                 timeshift:timeshift
+          analyticsLabels:nil
                  userInfo:mediaPlayerController.userInfo];
     }
     
@@ -433,4 +454,15 @@ __attribute__((constructor)) static void SRGMediaPlayerTrackerInit(void)
                                              object:nil];
     
     s_trackers = [NSMutableDictionary dictionary];
+}
+
+static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSelectionReason reason)
+{
+    static dispatch_once_t s_onceToken;
+    static NSDictionary *s_labels;
+    dispatch_once(&s_onceToken, ^{
+        s_labels = @{ @(SRGMediaPlayerSelectionReasonInitial) : @"start",
+                      @(SRGMediaPlayerSelectionReasonUpdate) : @"click" };
+    });
+    return s_labels[@(reason)];
 }
