@@ -123,7 +123,7 @@ You can disable tracking by setting the `SRGMediaPlayerController` `tracked` pro
 Measurement information (labels) can be associated with the content being played. This is achieved by providing an `analyticsLabels` dictionary to playback methods available from `SRGMediaPlayerController+SRGAnalytics.h`.
 
 ## Automatic media consumption measurement labels using the SRG Data Provider library
-x
+
 Our services directly supply the custom analytics labels which need to be sent with media consumption measurements. If you are using our [SRG DataProvider library](https://github.com/SRGSSR/srgdataprovider-apple) in your application, be sure to add the `SRGAnalytics_SRGDataProvider.framework` companion framework to your project as well, which will take care of the whole process for you.
 
 This framework adds a category `SRGMediaPlayerController (SRGAnalyticsDataProvider)`, which adds playback methods for media compositions to `SRGMediaPlayerController`. To play a media composition retrieved from an `SRGDataProvider` and have all measurement information automatically associated with the playback, simply call:
