@@ -220,7 +220,17 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels srg_safelySetString:@(round(mediaPosition / 1000)).stringValue forKey:@"media_position"];
     
     [labels srg_safelySetString:self.playerVolumeInPercent.stringValue ?: @"0" forKey:@"media_volume"];
-    [labels srg_safelySetString:self.subtitlesEnabled ? @"true" : @"false" forKey:@"media_subtitles_on"];
+    
+    AVMediaSelectionOption *subtitlesMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicLegible];
+    [labels srg_safelySetString:subtitlesMediaOption != nil ? @"true" : @"false" forKey:@"media_subtitles_on"];
+    if (subtitlesMediaOption) {
+        NSString *subtitlesLanguageCode = [subtitlesMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"unknown";
+        [labels srg_safelySetString:subtitlesLanguageCode forKey:@"media_subtitle_selection"];
+    }
+    
+    AVMediaSelectionOption *audioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
+    NSString *audioTrackLanguageCode = [audioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"unknown";
+    [labels srg_safelySetString:audioTrackLanguageCode forKey:@"media_audio_track"];
     
     [labels srg_safelySetString:self.bandwidthInBitsPerSecond.stringValue forKey:@"media_bandwidth"];
     
@@ -304,17 +314,16 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     }
 }
 
-- (BOOL)subtitlesEnabled
+- (AVMediaSelectionOption *)selectedMediaOptionForMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic
 {
     AVPlayerItem *playerItem = self.mediaPlayerController.player.currentItem;
     AVAsset *asset = playerItem.asset;
     if ([asset statusOfValueForKey:@keypath(asset.availableMediaCharacteristicsWithMediaSelectionOptions) error:NULL] == AVKeyValueStatusLoaded) {
-        AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-        AVMediaSelectionOption *currentLegibleOption = [playerItem srganalytics_selectedMediaOptionInMediaSelectionGroup:legibleGroup];
-        return currentLegibleOption != nil;
+        AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:mediaCharacteristic];
+        return [playerItem srganalytics_selectedMediaOptionInMediaSelectionGroup:legibleGroup];
     }
     else {
-        return NO;
+        return nil;
     }
 }
 
