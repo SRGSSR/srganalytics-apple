@@ -161,7 +161,7 @@ static NSMutableDictionary<NSValue *, SRGMediaPlayerTracker *> *s_trackers = nil
         [self recordEvent:MediaPlayerTrackerEventPlay withStreamType:streamType time:time timeshift:timeshift userInfo:userInfo];
     }
     
-    if (! [event isEqualToString:MediaPlayerTrackerEventPosition] && ! [event isEqualToString:MediaPlayerTrackerEventUptime]) {
+    if (! [event isEqualToString:MediaPlayerTrackerEventPosition] && ! [event isEqualToString:MediaPlayerTrackerEventUptime] && ! [event isEqualToString:MediaPlayerTrackerEventSegment]) {
         static dispatch_once_t s_onceToken;
         static NSDictionary<NSString *, NSArray<NSString *> *> *s_transitions;
         dispatch_once(&s_onceToken, ^{
