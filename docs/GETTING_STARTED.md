@@ -26,11 +26,11 @@ Before measurements can be collected, the tracker singleton responsible of all a
 }
 ```
 
-The various setup parameters to use must be obtained by the team responsible of measurements for your application.
+The various setup parameters to use must be obtained from the team responsible of measurements for your application.
 
 For unit tests, you can set the `unitTesting` flag to emit notifications which can be used to check when analytics information is sent, and whether it is correct.
 
-Once the tracker has been started, you can perform measurements.
+Once the tracker has been started your application can collect analytics data.
 
 #### Remark
 
@@ -137,7 +137,7 @@ This framework adds a category `SRGMediaPlayerController (SRGAnalyticsDataProvid
 
 on an `SRGMediaPlayerController` instance.
 
-Nothing more is required for correct media consumption measurements. During playback, all analytics labels for the content and its segments will be transparently managed for you.
+Nothing more is required for correct media consumption measurements. During playback all analytics labels for the content and its segments will be transparently managed for you.
 
 ## Automatic identity measurement labels using the SRG Identity library
 

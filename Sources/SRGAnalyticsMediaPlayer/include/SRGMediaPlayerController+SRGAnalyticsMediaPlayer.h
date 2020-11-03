@@ -16,12 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  companion framework which can be used to easily measure audio and video consumption in applications powered by
  *  the SRG Media Player library.
  *
- *  When playing a media, two levels of analytics information (labels) are consolidated:
- *    - Labels associated with the content being played.
- *    - Labels associated with the segment being played, merged on top of the chapter labels.
- *
- *  The SRGAnalyticsMediaPlayer framework automatically takes care of content and segment playback tracking, and
- *  supplies mechanisms to add your custom measurement labels to stream events if needed.
+ *  The SRGAnalyticsMediaPlayer framework automatically takes care of tracking playback events, but you can still add
+ *  custom measurement labels to emitted events if needed.
  *
  *  ## Usage
  *
@@ -39,17 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  ## Additional measurement labels
  *
  *  You can supply additional custom measurement labels with stream events sent from your application. These labels
- *  are provided through `SRGAnalyticsStreamLabels` instances whose properties can be set depending on which information
- *  is needed.
- *
- *  Custom information can be added to both content and segment labels. When playing a segment, its labels are merged
- *  with labels associated with the content, overriding existing keys. You can take advantage of this behavior to add
- *  segment information on top of content labels.
- *
- *  ### Labels associated with the content
- *
- *  Labels associated with a media being played can be supplied when starting playback, using one of the plaback
- *  methods available below.
+ *  are defined using `SRGAnalyticsStreamLabels` instances whose properties can be set depending on which information
+ *  is needed. Such instances must be supplied to one of the playback methods available from this file to associate them
+ *  with the playback. Labels they contain will then be automatically sent in playback events.
  */
 @interface SRGMediaPlayerController (SRGAnalyticsMediaPlayer)
 
