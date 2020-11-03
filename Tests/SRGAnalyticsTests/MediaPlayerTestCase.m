@@ -602,17 +602,6 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
-        XCTAssertEqualObjects(labels[@"media_position"], @"0");
-        XCTAssertNil(labels[@"media_timeshift"]);
-        return YES;
-    }];
-    
-    [self.mediaPlayerController pause];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         XCTAssertNil(labels[@"media_timeshift"]);
