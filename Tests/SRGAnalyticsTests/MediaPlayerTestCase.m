@@ -1764,20 +1764,10 @@ static NSURL *DVRTestURL(void)
 - (void)testDisableTrackingWhilePaused
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(event, @"play");
-        return YES;
+        return [event isEqualToString:@"pause"];
     }];
     
-    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(event, @"pause");
-        return YES;
-    }];
-    
-    [self.mediaPlayerController pause];
+    [self prepareToPlayURL:OnDemandTestURL() atPosition:nil withSegments:nil completionHandler:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
