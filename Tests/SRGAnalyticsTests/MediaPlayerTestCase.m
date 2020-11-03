@@ -349,21 +349,13 @@ static NSURL *DVRTestURL(void)
     }];
 }
 
-- (void)testPlayPauseSeekPause
+- (void)testSeekWhilePaused
 {
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        return [event isEqualToString:@"play"];
-    }];
-    
-    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         return [event isEqualToString:@"pause"];
     }];
     
-    [self.mediaPlayerController pause];
+    [self prepareToPlayURL:OnDemandTestURL() atPosition:nil withSegments:nil completionHandler:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
