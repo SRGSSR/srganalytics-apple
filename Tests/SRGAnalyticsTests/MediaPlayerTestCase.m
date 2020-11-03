@@ -907,7 +907,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testSubtitlesToEnd
+- (void)testSubtitlesDuringEntirePlayback
 {
     MACaptionAppearanceSetDisplayType(kMACaptionAppearanceDomainUser, kMACaptionAppearanceDisplayTypeAlwaysOn);
     MACaptionAppearanceAddSelectedLanguage(kMACaptionAppearanceDomainUser, (__bridge CFStringRef _Nonnull)@"en");
@@ -1080,7 +1080,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testSelectedAudioTrackToEnd
+- (void)testSelectedAudioTrackDuringEntirePlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
@@ -1233,7 +1233,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testInitialSegmentSelectionAndPlaythrough
+- (void)testInitialSegmentSelectionAndPlayback
 {
     __block BOOL segmentReceived = NO;
     __block BOOL playReceived = NO;
@@ -1843,7 +1843,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testBlockedSegmentPlaythrough
+- (void)testBlockedSegmentPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
@@ -2468,7 +2468,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqual(liveHeartbeatCount, 2);
 }
 
-- (void)testHeartbeatWithInitialSegmentSelectionAndPlaythrough
+- (void)testHeartbeatWithInitialSegmentSelectionAndPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         return [event isEqualToString:@"play"];
