@@ -18,12 +18,12 @@ static NSURL *OnDemandTestURL(void)
     return [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];
 }
 
-static NSURL *OnDemandMutliAudioTracksTestURL(void)
+static NSURL *OnDemandMultiAudioTracksTestURL(void)
 {
     return [NSURL URLWithString:@"https://rtsvodww-vh.akamaihd.net/i/docfu/2017/docfu_20170728_full_f_1027021,-1201k,-701k,-301k,-101k,-2001k,-fra-ad,-roh,-deu,-ita,.mp4.csmil/master.m3u8?audiotrack=0:fr:Fran%C3%A7ais,5:fr:Fran%C3%A7ais%20(AD):ad,6:rm:Rumantsch,7:de:Deutsch,8:it:Italiano&subtitles=it,gsw,fr:sdh"];
 }
 
-static NSURL *OnDemandVideoWithoutaudioTestURL(void)
+static NSURL *OnDemandVideoWithoutAudioTestURL(void)
 {
     return [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear1/prog_index.m3u8"];
 }
@@ -1035,7 +1035,7 @@ static NSURL *DVRTestURL(void)
         return YES;
     }];
     
-    [self playURL:OnDemandVideoWithoutaudioTestURL() atPosition:nil withSegments:nil];
+    [self playURL:OnDemandVideoWithoutAudioTestURL() atPosition:nil withSegments:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1065,7 +1065,7 @@ static NSURL *DVRTestURL(void)
         return [audioOptions filteredArrayUsingPredicate:predicate].firstObject ?: defaultAudioOption;
     };
     
-    [self playURL:OnDemandMutliAudioTracksTestURL() atPosition:nil withSegments:nil];
+    [self playURL:OnDemandMultiAudioTracksTestURL() atPosition:nil withSegments:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1095,7 +1095,7 @@ static NSURL *DVRTestURL(void)
         return [audioOptions filteredArrayUsingPredicate:predicate].firstObject ?: defaultAudioOption;
     };
     
-    [self playURL:OnDemandMutliAudioTracksTestURL() atPosition:nil withSegments:nil];
+    [self playURL:OnDemandMultiAudioTracksTestURL() atPosition:nil withSegments:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
