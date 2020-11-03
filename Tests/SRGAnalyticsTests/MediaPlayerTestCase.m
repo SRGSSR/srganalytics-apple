@@ -2360,7 +2360,7 @@ static NSURL *DVRTestURL(void)
         }
     }];
     
-    [self expectationForElapsedTimeInterval:15. withHandler:nil];
+    [self expectationForElapsedTimeInterval:13. withHandler:nil];
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:heartbeatEventObserver];
     }];
