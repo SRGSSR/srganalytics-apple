@@ -5,6 +5,5 @@
 //
 
 // Public headers.
-#import "SRGAnalyticsSegment.h"
 #import "SRGAnalyticsStreamLabels.h"
 #import "SRGMediaPlayerController+SRGAnalyticsMediaPlayer.h"
