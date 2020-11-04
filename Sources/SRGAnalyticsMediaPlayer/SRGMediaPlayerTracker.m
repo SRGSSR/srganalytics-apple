@@ -46,6 +46,9 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
 
 @property (nonatomic, copy) MediaPlayerTrackerEvent lastEvent;
 
+@property (nonatomic) AVMediaSelectionOption *lastSubtitlesMediaOption;
+@property (nonatomic) AVMediaSelectionOption *lastAudioTrackMediaOption;
+
 @property (nonatomic, copy) NSString *unitTestingIdentifier;
 
 @end
@@ -220,7 +223,23 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels srg_safelySetString:@(round(mediaPosition / 1000)).stringValue forKey:@"media_position"];
     
     [labels srg_safelySetString:self.playerVolumeInPercent.stringValue ?: @"0" forKey:@"media_volume"];
-    [labels srg_safelySetString:self.subtitlesEnabled ? @"true" : @"false" forKey:@"media_subtitles_on"];
+    
+    if (! [event isEqualToString:MediaPlayerTrackerEventStop]) {
+        self.lastSubtitlesMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicLegible];
+    }
+    [labels srg_safelySetString:self.lastSubtitlesMediaOption != nil ? @"true" : @"false" forKey:@"media_subtitles_on"];
+    if (self.lastSubtitlesMediaOption) {
+        NSString *subtitlesLanguageCode = [self.lastSubtitlesMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
+        [labels srg_safelySetString:subtitlesLanguageCode.uppercaseString forKey:@"media_subtitle_selection"];
+    }
+    
+    if (! [event isEqualToString:MediaPlayerTrackerEventStop]) {
+        self.lastAudioTrackMediaOption = [self selectedMediaOptionForMediaCharacteristic:AVMediaCharacteristicAudible];
+    }
+    if (self.lastAudioTrackMediaOption) {
+        NSString *audioTrackLanguageCode = [self.lastAudioTrackMediaOption.locale objectForKey:NSLocaleLanguageCode] ?: @"und";
+        [labels srg_safelySetString:audioTrackLanguageCode.uppercaseString forKey:@"media_audio_track"];
+    }
     
     [labels srg_safelySetString:self.bandwidthInBitsPerSecond.stringValue forKey:@"media_bandwidth"];
     
@@ -304,17 +323,16 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     }
 }
 
-- (BOOL)subtitlesEnabled
+- (AVMediaSelectionOption *)selectedMediaOptionForMediaCharacteristic:(AVMediaCharacteristic)mediaCharacteristic
 {
     AVPlayerItem *playerItem = self.mediaPlayerController.player.currentItem;
     AVAsset *asset = playerItem.asset;
     if ([asset statusOfValueForKey:@keypath(asset.availableMediaCharacteristicsWithMediaSelectionOptions) error:NULL] == AVKeyValueStatusLoaded) {
-        AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-        AVMediaSelectionOption *currentLegibleOption = [playerItem srganalytics_selectedMediaOptionInMediaSelectionGroup:legibleGroup];
-        return currentLegibleOption != nil;
+        AVMediaSelectionGroup *legibleGroup = [playerItem.asset mediaSelectionGroupForMediaCharacteristic:mediaCharacteristic];
+        return [playerItem srganalytics_selectedMediaOptionInMediaSelectionGroup:legibleGroup];
     }
     else {
-        return NO;
+        return nil;
     }
 }
 
