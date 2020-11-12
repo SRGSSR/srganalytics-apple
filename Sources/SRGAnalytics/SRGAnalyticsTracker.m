@@ -83,6 +83,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
         builder.publisherId = @"6036016";
         builder.secureTransmissionEnabled = YES;
+        builder.persistentLabels = @{ @"mp_v" : [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"] };
         
         // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
         // Coding Document for Video Players, page 16
@@ -144,9 +145,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (NSDictionary *)defaultComScoreLabels
 {
-    NSMutableDictionary *labels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
-    labels[@"mp_v"] = [SCORAnalytics configuration].applicationVersion;
-    return labels;
+    return self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
 }
 
 - (NSDictionary *)defaultLabels
