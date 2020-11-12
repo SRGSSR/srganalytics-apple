@@ -142,9 +142,21 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark General event tracking (internal use only)
 
+- (NSDictionary *)defaultComScoreLabels
+{
+    NSMutableDictionary *labels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    labels[@"mp_v"] = [SCORAnalytics configuration].applicationVersion;
+    return labels;
+}
+
+- (NSDictionary *)defaultLabels
+{
+    return self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+}
+
 - (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultComScoreLabels].mutableCopy;
     [fullLabels addEntriesFromDictionary:labels];
     [SCORAnalytics notifyHiddenEventWithLabels:fullLabels.copy];
 }
@@ -163,7 +175,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
     }
     
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultLabels].mutableCopy;
     [fullLabels addEntriesFromDictionary:labels];
     [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
         [self.tagCommander addData:key withValue:object];
@@ -210,7 +222,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSAssert(title.length != 0, @"A title is required");
     
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultComScoreLabels].mutableCopy;
     [fullLabels srg_safelySetString:title forKey:@"srg_title"];
     [fullLabels srg_safelySetString:@(fromPushNotification).stringValue forKey:@"srg_ap_push"];
     
