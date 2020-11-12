@@ -24,6 +24,19 @@ typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
 
 #pragma mark Tests
 
+- (void)testCommonLabels
+{
+    [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertNotNil(labels[@"ns_ap_ver"]);
+        XCTAssertEqualObjects(labels[@"ns_ap_ver"], labels[@"mp_v"]);
+        return YES;
+    }];
+    
+    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
 - (void)testHiddenEvent
 {
     [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
