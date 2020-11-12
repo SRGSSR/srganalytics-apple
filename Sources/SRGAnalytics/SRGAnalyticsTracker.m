@@ -107,6 +107,23 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark Labels
 
+- (NSDictionary *)persistentComscoreLabels
+{
+    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+    labels[@"mp_v"] = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    return labels.copy;
+}
+
+- (NSDictionary *)defaultComScoreLabels
+{
+    return self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+}
+
+- (NSDictionary *)defaultLabels
+{
+    return self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+}
+
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
 {
     NSString *category = @"app";
@@ -142,23 +159,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 }
 
 #pragma mark General event tracking (internal use only)
-
-- (NSDictionary *)persistentComscoreLabels
-{
-    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
-    labels[@"mp_v"] = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    return labels.copy;
-}
-
-- (NSDictionary *)defaultComScoreLabels
-{
-    return self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
-}
-
-- (NSDictionary *)defaultLabels
-{
-    return self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
-}
 
 - (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
