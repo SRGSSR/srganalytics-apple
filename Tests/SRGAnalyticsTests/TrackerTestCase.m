@@ -27,7 +27,7 @@ typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
 - (void)testCommonLabels
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
+        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"xctest");
         XCTAssertEqualObjects(labels[@"navigation_environment"], @"preprod");
         return YES;
     }];

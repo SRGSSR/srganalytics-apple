@@ -18,7 +18,6 @@ Before measurements can be collected, the tracker singleton responsible of all a
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:3
-                                                                                             comScoreVirtualSite:@"srf-vsite"
                                                                                              netMetrixIdentifier:@"srf-app-identifier"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
                                                      
