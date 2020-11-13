@@ -487,12 +487,14 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"c2"], @"6036016");
+        XCTAssertEqualObjects(labels[@"ns_ap_an"], @"xctest");
+        // Cannot sadly test mp_v with SPM and XCTest
+        XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGMediaPlayerMarketingVersion());
         XCTAssertEqualObjects(labels[@"ns_st_it"], @"c");
         XCTAssertEqualObjects(labels[@"test_label"], @"test_value");
-        XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
         return YES;
     }];
     

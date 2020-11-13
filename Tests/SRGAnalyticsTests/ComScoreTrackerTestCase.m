@@ -28,6 +28,8 @@ typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
 {
     [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"c2"], @"6036016");
+        XCTAssertEqualObjects(labels[@"ns_ap_an"], @"xctest");
+        // Cannot sadly test mp_v with SPM and XCTest
         XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
         return YES;
     }];
