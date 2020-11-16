@@ -56,10 +56,12 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *  @param businessUnitIdentifier The identifier of the business unit which measurements are made for. Usually the
  *                                business unit which publishes the application.
  *  @param container              The TagCommander container identifier to which measurements will be sent.
+ *  @param comScoreVirtualSite    The comScore virtual site to which measurements must be sent.
  *  @param netMetrixIdentifier    The NetMetrix application identifier to send measurements for.
  */
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
                                      container:(NSInteger)container
+                           comScoreVirtualSite:(NSString *)comScoreVirtualSite
                            netMetrixIdentifier:(NSString *)netMetrixIdentifier;
 
 /**
@@ -106,6 +108,11 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *  The TagCommander container identifier.
  */
 @property (nonatomic, readonly) NSInteger container;
+
+/**
+ *  The comScore virtual site to which measurements must be sent. By default `business_unit-app-test-v`.
+ */
+@property (nonatomic, readonly, copy) NSString *comScoreVirtualSite;
 
 /**
  *  The NetMetrix domain.
