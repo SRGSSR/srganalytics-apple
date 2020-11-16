@@ -161,13 +161,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark General event tracking (internal use only)
 
-- (void)trackComScoreEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
-{
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultComScoreLabels].mutableCopy;
-    [fullLabels addEntriesFromDictionary:labels];
-    [SCORAnalytics notifyHiddenEventWithLabels:fullLabels.copy];
-}
-
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
     if ( ! self.tagCommander) {
@@ -329,29 +322,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     
     [self trackTagCommanderHiddenEventWithName:name labels:labels];
-    [self trackComScoreHiddenEventWithName:name labels:labels];
-}
-
-- (void)trackComScoreHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
-{
-    NSAssert(name.length != 0, @"A name is required");
-    NSAssert(self.configuration != nil, @"The tracker must be started");
-    
-    NSMutableDictionary *fullLabels = [NSMutableDictionary dictionary];
-    [fullLabels srg_safelySetString:name forKey:@"srg_title"];
-    [fullLabels srg_safelySetString:@"app" forKey:@"ns_category"];
-    [fullLabels srg_safelySetString:[NSString stringWithFormat:@"app.%@", name.srg_comScoreFormattedString] forKey:@"name"];
-    
-    NSDictionary<NSString *, NSString *> *comScoreLabelsDictionary = [labels comScoreLabelsDictionary];
-    if (comScoreLabelsDictionary) {
-        [fullLabels addEntriesFromDictionary:comScoreLabelsDictionary];
-    }
-    
-    if (self.configuration.unitTesting) {
-        fullLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
-    }
-    
-    [self trackComScoreEventWithLabels:fullLabels.copy];
 }
 
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels

@@ -11,8 +11,6 @@
 @import SRGAnalyticsMediaPlayer;
 @import ComScore;
 
-typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
-
 static NSURL *OnDemandTestURL(void)
 {
     return [NSURL URLWithString:@"https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];

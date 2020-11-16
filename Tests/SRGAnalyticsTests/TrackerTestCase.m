@@ -7,8 +7,6 @@
 #import "NSNotificationCenter+Tests.h"
 #import "XCTestCase+Tests.h"
 
-typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
-
 @interface TrackerTestCase : XCTestCase
 
 @end
