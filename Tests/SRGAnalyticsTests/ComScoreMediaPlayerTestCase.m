@@ -11,8 +11,6 @@
 @import SRGAnalyticsMediaPlayer;
 @import ComScore;
 
-typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
-
 static NSURL *OnDemandTestURL(void)
 {
     return [NSURL URLWithString:@"https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];
@@ -486,6 +484,10 @@ static NSURL *DVRTestURL(void)
 - (void)testCommonLabels
 {
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"c2"], @"6036016");
+        XCTAssertEqualObjects(labels[@"ns_ap_an"], @"xctest");
+        // Cannot sadly test mp_v with SPM and XCTest
+        XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGMediaPlayerMarketingVersion());

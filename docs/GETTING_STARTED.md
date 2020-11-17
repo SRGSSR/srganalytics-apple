@@ -112,7 +112,7 @@ To measure any kind of application functionality, you typically use hidden event
 [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"full-screen"];
 ```
 
-Custom labels can also be used to send any additional measurement information you could need, and which might be different for TagCommander and comScore.
+Custom labels can also be used to send any additional measurement information you could need.
 
 ## Measuring SRG Media Player media consumption
 

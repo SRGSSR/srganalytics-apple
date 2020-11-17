@@ -11,8 +11,6 @@
 @import MediaAccessibility;
 @import SRGAnalyticsMediaPlayer;
 
-typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
-
 static NSURL *OnDemandTestURL(void)
 {
     return [NSURL URLWithString:@"https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"];
@@ -26,6 +24,11 @@ static NSURL *OnDemandMultiAudioTracksTestURL(void)
 static NSURL *OnDemandVideoWithoutAudioTestURL(void)
 {
     return [NSURL URLWithString:@"https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/gear1/prog_index.m3u8"];
+}
+
+static NSURL *OnDemandAudioTestURL(void)
+{
+    return [NSURL URLWithString:@"https://rtsww-a-d.rts.ch/la-1ere/programmes/c-est-pas-trop-tot/2017/c-est-pas-trop-tot_20170628_full_c-est-pas-trop-tot_007d77e7-61fb-4aef-9491-5e6b07f7f931-128k.mp3"];
 }
 
 static NSURL *LiveTestURL(void)
@@ -533,6 +536,8 @@ static NSURL *DVRTestURL(void)
 - (void)testCommonLabels
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
+        XCTAssertEqualObjects(labels[@"navigation_environment"], @"preprod");
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
@@ -981,6 +986,33 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
+- (void)testSubtitlesForAudioContent
+{
+    MACaptionAppearanceSetDisplayType(kMACaptionAppearanceDomainUser, kMACaptionAppearanceDisplayTypeAutomatic);
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
+        XCTAssertNil(labels[@"media_subtitle_selection"]);
+        return YES;
+    }];
+    
+    [self playURL:OnDemandAudioTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
+        XCTAssertNil(labels[@"media_subtitle_selection"]);
+        return YES;
+    }];
+    
+    [self.mediaPlayerController reset];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
 - (void)testDefaultAudioTrack
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -1036,6 +1068,29 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self playURL:OnDemandVideoWithoutAudioTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertNil(labels[@"media_audio_track"]);
+        return YES;
+    }];
+    
+    [self.mediaPlayerController reset];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testAudioTrackForAudioContent
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertNil(labels[@"media_audio_track"]);
+        return YES;
+    }];
+    
+    [self playURL:OnDemandAudioTestURL() atPosition:nil withSegments:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
