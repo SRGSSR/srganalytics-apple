@@ -59,9 +59,9 @@
         "package": "SRGContentProtection",
         "repositoryURL": "https://github.com/SRGSSR/srgcontentprotection-apple.git",
         "state": {
-          "branch": null,
-          "revision": "e85f920a9e3f34af2e605d55b0509223eb4bf5e8",
-          "version": "3.0.0"
+          "branch": "feature/resource-loader-improvement",
+          "revision": "02e6c856412441f4d472d81a48de6a1fde36373f",
+          "version": null
         }
       },
       {
