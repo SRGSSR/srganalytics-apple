@@ -9,8 +9,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  The following notifications can be used if you need to track when TagCommander, comScore and NetMetrix 
- *  requests are made, and which information will be sent to these services, for unit testing purposes. 
+ *  The following notifications can be used if you need to track when TagCommander and comScore requests are made,
+ *  and which information will be sent to these services, for unit testing purposes.
  *
  *  These notifications are only emitted when enabling the `unitTesting` tracker configuration flag, @see
  *  `SRGAnalyticsConfiguration`.
@@ -29,12 +29,6 @@ OBJC_EXPORT NSString * const SRGAnalyticsComScoreRequestNotification;
 
 // Information available for `SRGAnalyticsComScoreRequestNotification`.
 OBJC_EXPORT NSString * const SRGAnalyticsComScoreLabelsKey;                 // Key for accessing the comScore labels (as an `NSDictionary<NSString *, NSString *>`) available from the user info.
-
-// Notification sent when a request is made to NetMetrix.
-OBJC_EXPORT NSString * const SRGAnalyticsNetmetrixRequestNotification;
-
-// Information available for `SRGAnalyticsNetmetrixRequestNotification`.
-OBJC_EXPORT NSString * const SRGAnalyticsNetmetrixURLKey;
 
 /**
  *  Get the currrent unique identifier added to all measurements made in unit testing mode.

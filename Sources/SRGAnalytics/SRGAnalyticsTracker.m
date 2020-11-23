@@ -11,7 +11,6 @@
 #import "SRGAnalytics.h"
 #import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsLogger.h"
-#import "SRGAnalyticsNetMetrixTracker.h"
 #import "SRGAnalyticsNotifications+Private.h"
 #import "UIViewController+SRGAnalytics.h"
 
@@ -44,7 +43,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
 
 @property (nonatomic) TagCommander *tagCommander;
-@property (nonatomic) SRGAnalyticsNetMetrixTracker *netmetrixTracker;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
 
 @property (nonatomic) SRGAnalyticsLabels *globalLabels;
@@ -207,12 +205,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
-    
-    if (! self.netmetrixTracker) {
-        self.netmetrixTracker = [[SRGAnalyticsNetMetrixTracker alloc] initWithConfiguration:self.configuration];
-    }
-    
-    [self.netmetrixTracker trackView];
 }
 
 - (void)trackComScorePageViewWithTitle:(NSString *)title

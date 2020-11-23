@@ -33,8 +33,7 @@
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
                                                                                                        container:10
-                                                                                                        siteName:@"rts-app-test-v"
-                                                                                             netMetrixIdentifier:@"test"];
+                                                                                                        siteName:@"rts-app-test-v"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
     self.window.rootViewController = ApplicationRootViewController();

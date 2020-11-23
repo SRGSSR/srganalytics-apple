@@ -57,12 +57,10 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *                                business unit which publishes the application.
  *  @param container              The TagCommander container identifier to which measurements will be sent.
  *  @param siteName               The name of the site which measurements must be associated with.
- *  @param netMetrixIdentifier    The NetMetrix application identifier to send measurements for.
  */
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
                                      container:(NSInteger)container
-                                      siteName:(NSString *)siteName
-                           netMetrixIdentifier:(NSString *)netMetrixIdentifier;
+                                      siteName:(NSString *)siteName;
 
 /**
  *  Set to `YES` if measurements are studied by the General SRG SSR Direction, or to `NO` if the business
@@ -113,16 +111,6 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *  The name of the site which TagCommander measurements must be associated with. By default `business_unit-app-test-v`.
  */
 @property (nonatomic, readonly, copy) NSString *siteName;
-
-/**
- *  The NetMetrix domain.
- */
-@property (nonatomic, readonly, copy, nullable) NSString *netMetrixDomain;
-
-/**
- *  The NetMetrix application identifier.
- */
-@property (nonatomic, readonly, copy) NSString *netMetrixIdentifier;
 
 /**
  *  The analytics environment.

@@ -16,9 +16,6 @@ NSString * const SRGAnalyticsLabelsKey = @"SRGAnalyticsLabels";
 NSString * const SRGAnalyticsComScoreRequestNotification = @"SRGAnalyticsComScoreRequestNotification";
 NSString * const SRGAnalyticsComScoreLabelsKey = @"SRGAnalyticsComScoreLabels";
 
-NSString * const SRGAnalyticsNetmetrixRequestNotification = @"SRGAnalyticsNetmetrixRequestNotification";
-NSString * const SRGAnalyticsNetmetrixURLKey = @"SRGAnalyticsNetmetrixURL";
-
 static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLComponents(NSURLComponents *URLComponents)
 {
     NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
@@ -46,11 +43,6 @@ static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLCompo
                                                           object:nil
                                                         userInfo:@{ SRGAnalyticsComScoreLabelsKey : SRGAnalyticsProxyLabelsFromURLComponents(URLComponents) }];
         
-    }
-    else if ([host containsString:@"wemfbox"]) {
-        [NSNotificationCenter.defaultCenter postNotificationName:SRGAnalyticsNetmetrixRequestNotification
-                                                          object:nil
-                                                        userInfo:@{ SRGAnalyticsNetmetrixURLKey : URL }];
     }
     return [self srganalytics_swizzled_dataTaskWithRequest:request completionHandler:completionHandler];
 }
