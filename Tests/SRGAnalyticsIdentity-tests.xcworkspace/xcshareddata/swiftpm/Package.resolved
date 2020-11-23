@@ -60,17 +60,17 @@
         "repositoryURL": "https://github.com/SRGSSR/srgappearance-apple.git",
         "state": {
           "branch": null,
-          "revision": "48258a788952348c7fa38b5b8e9181b25f3c87b8",
-          "version": "3.0.0"
+          "revision": "80ebf882d46451001c1fd7d3e21baa264ad88477",
+          "version": "3.0.1"
         }
       },
       {
         "package": "SRGContentProtection",
         "repositoryURL": "https://github.com/SRGSSR/srgcontentprotection-apple.git",
         "state": {
-          "branch": null,
-          "revision": "e85f920a9e3f34af2e605d55b0509223eb4bf5e8",
-          "version": "3.0.0"
+          "branch": "develop",
+          "revision": "8b192cf4122c253585eb931449b5de5ca92fe21c",
+          "version": null
         }
       },
       {
@@ -113,9 +113,9 @@
         "package": "SRGMediaPlayer",
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
-          "branch": null,
-          "revision": "7a89c2d7ade084c31e9b0271ad7d0b9fcd85b743",
-          "version": "6.0.0"
+          "branch": "develop",
+          "revision": "168439edd70bca0d447831f02de2afe63f772b8c",
+          "version": null
         }
       },
       {

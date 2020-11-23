@@ -59,9 +59,9 @@
         "package": "SRGContentProtection",
         "repositoryURL": "https://github.com/SRGSSR/srgcontentprotection-apple.git",
         "state": {
-          "branch": null,
-          "revision": "e85f920a9e3f34af2e605d55b0509223eb4bf5e8",
-          "version": "3.0.0"
+          "branch": "develop",
+          "revision": "8b192cf4122c253585eb931449b5de5ca92fe21c",
+          "version": null
         }
       },
       {
@@ -105,7 +105,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
           "branch": "develop",
-          "revision": "9d15a62433e43e880a578d4c82f0849742782cee",
+          "revision": "168439edd70bca0d447831f02de2afe63f772b8c",
           "version": null
         }
       },
