@@ -68,9 +68,9 @@
         "package": "SRGContentProtection",
         "repositoryURL": "https://github.com/SRGSSR/srgcontentprotection-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "8b192cf4122c253585eb931449b5de5ca92fe21c",
-          "version": null
+          "branch": null,
+          "revision": "596f4161b4460fc648d30d5d3ca2c16f249863ef",
+          "version": "3.0.1"
         }
       },
       {
