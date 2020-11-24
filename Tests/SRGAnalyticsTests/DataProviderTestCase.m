@@ -51,7 +51,6 @@ static NSURL *MMFTestURL(void)
 
 - (void)testPrepareToPlayMediaComposition
 {
-    // Prepare playback. An opening play event must be received
     __block BOOL playReceived = NO;
     __block BOOL pauseReceived = NO;
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -90,7 +89,6 @@ static NSURL *MMFTestURL(void)
     
     XCTAssertEqual(self.mediaPlayerController.playbackState, SRGMediaPlayerPlaybackStatePaused);
     
-    // Start playback and check labels
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
         XCTAssertEqualObjects(labels[@"media_segment"], @"Archive footage of the man and his moods");
@@ -164,12 +162,14 @@ static NSURL *MMFTestURL(void)
 
 - (void)testPlaySegmentInMediaComposition
 {
-    // Use a segment id as video id, expect segment labels
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_segment"], @"Zwangsheirat – mitten unter uns");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
+        XCTAssertEqualObjects(labels[@"media_segment"], @"10vor10 vom 05.03.2019");
         XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"SD");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c825d897-9631-41d9-bc20-33f02c03f760");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:28bf1034-f531-4f3d-b25d-c4fc84394bef");
         return YES;
     }];
     
@@ -403,7 +403,6 @@ static NSURL *MMFTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    // The test media title changes over time. Wait a little bit to detect a change.
     [self expectationForElapsedTimeInterval:2. withHandler:nil];
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -467,7 +466,6 @@ static NSURL *MMFTestURL(void)
         
         self.mediaPlayerController.mediaComposition = mediaComposition;
         
-        // Incompatible media composition. No update must have taken place
         XCTAssertEqualObjects(self.mediaPlayerController.mediaComposition, fetchedMediaComposition1);
         XCTAssertEqualObjects(self.mediaPlayerController.segments, fetchedMediaComposition1.mainChapter.segments);
         
@@ -479,7 +477,6 @@ static NSURL *MMFTestURL(void)
 
 - (void)testMediaCompositionUpdateWithDifferentMainSegment
 {
-    // Retrieve two media compositions of segments belonging to the same media composition
     [self expectationForSingleNotification:SRGMediaPlayerPlaybackStateDidChangeNotification object:self.mediaPlayerController handler:^BOOL(NSNotification * _Nonnull notification) {
         return [notification.userInfo[SRGMediaPlayerPlaybackStateKey] integerValue] == SRGMediaPlayerPlaybackStatePlaying;
     }];
@@ -533,7 +530,6 @@ static NSURL *MMFTestURL(void)
     
     XCTAssertEqualObjects(self.mediaPlayerController.segments, fetchedMediaComposition1.mainChapter.segments);
     
-    // The full DVR adds a highlight every 5 seconds. Wait a little bit to detect a change.
     [self expectationForElapsedTimeInterval:5. withHandler:nil];
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -862,8 +858,11 @@ static NSURL *MMFTestURL(void)
 - (void)testPlaySegmentInMediaCompositionWithSourceUid
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:84043ead-6e5a-4a05-875c-c1aa2998aa43");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:d5cdaf81-7df7-42d8-8c1a-ea31ed1913fc");
         XCTAssertEqualObjects(labels[@"source_id"], @"SRF source unique id");
         return YES;
     }];
@@ -884,8 +883,11 @@ static NSURL *MMFTestURL(void)
 - (void)testSeekToSegmentInMediaCompositionWithSourceUid
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:84043ead-6e5a-4a05-875c-c1aa2998aa43");
+        if (! [event isEqualToString:@"play"]) {
+            return NO;
+        }
+        
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:d5cdaf81-7df7-42d8-8c1a-ea31ed1913fc");
         XCTAssertEqualObjects(labels[@"source_id"], @"SRF source unique id");
         return YES;
     }];
@@ -914,7 +916,7 @@ static NSURL *MMFTestURL(void)
         }
         
         XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:802df764-3044-488e-aff0-fca3cdec85ff");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:d5cdaf81-7df7-42d8-8c1a-ea31ed1913fc");
         XCTAssertEqualObjects(labels[@"source_id"], @"SRF source unique id");
         return YES;
     }];

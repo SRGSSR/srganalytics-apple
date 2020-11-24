@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  to TagCommander, comScore and NetMetrix. The usage data is simply a collection of key-values (both strings), named
  *  labels, which can then be used by data analysts in studies and reports.
  *
- *  The analytics tracker implementation follows the SRG SSRG guidelines for application measurements (mostly label name
+ *  The analytics tracker implementation follows the SRG SSR guidelines for application measurements (mostly label name
  *  conventions) and is therefore only intended for use by applications produced under the SRG SSR umbrella.
  *
  *  ## Measurements
@@ -41,24 +41,24 @@ NS_ASSUME_NONNULL_BEGIN
  *  1. Start the tracker early in your application lifecycle, for example in your application delegate
  *     `-application:didFinishLaunchingWithOptions:` implementation, by calling the `-startWithConfiguration:` method. 
  *     This method expect a single configuration object containing all analytics setup information.
- *  1. To track page views related to view controllers, have them conform to the `SRGAnalyticsViewTracking` protocol.
+ *  2. To track page views related to view controllers, have them conform to the `SRGAnalyticsViewTracking` protocol.
  *     View controllers conforming to this protocol are automatically tracked by default, but this behavior can be
  *     tailored to your needs, especially if the time at which the measurement is made (when the view appears) is 
  *     inappropriate. Please refer to the `SRGAnalyticsViewTracking` documentation for more information. If your
  *     application uses plain views (not view controllers) which must be tracked as well, you can still perform
  *     manual tracking via the `-[SRGAnalyticsTracker trackPageViewWithTitle:levels:labels:fromPushNotification:]`
  *     method.
- *  1. When you need to track specific functionalities in your application (e.g. the use of some interface button
+ *  3. When you need to track specific functionalities in your application (e.g. the use of some interface button
  *     or of some feature of your application), send a hidden event using one of the `-trackHiddenEvent...` methods
  *     available from `SRGAnalyticsTracker`.
- *  1. If you need to track media playback using SRG MediaPlayer, you must add the SRGAnalyticsMediaPlayer subframework
+ *  4. If you need to track media playback using SRG MediaPlayer, you must add the SRGAnalyticsMediaPlayer subframework
  *     to your project (@see `SRGMediaPlayerController+SRGAnalyticsMediaPlayer.h` for more information). You are 
  *     still responsible of providing most metadata associated with playback (e.g. title or duration of what is 
  *     being played) when calling one of the playback methods provided by this subframework.
- *  1. If medias you play are retrieved using our SRG DataProvider library, you must add the SRGAnalyticsDataProvider
+ *  5. If medias you play are retrieved using our SRG DataProvider library, you must add the SRGAnalyticsDataProvider
  *     subframework to your project as well (@see `SRGMediaPlayerController+SRGAnalyticsDataProvider.h` for more 
  *     information). In this case, all mandatory stream measurement metadata will be automatically provided when
- *     playing the content through one of the playback methods provided in this subframework.
+ *     playing the content through one of the playback methods made available by this subframework.
  */
 @interface SRGAnalyticsTracker : NSObject
 

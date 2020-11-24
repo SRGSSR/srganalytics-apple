@@ -103,7 +103,7 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
         static dispatch_once_t s_onceToken;
         static NSArray<NSString *> *s_playerEvents;
         dispatch_once(&s_onceToken, ^{
-            s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof"];
+            s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment"];
         });
         
         NSString *event = labels[@"event_id"];

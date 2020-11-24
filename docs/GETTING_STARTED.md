@@ -18,7 +18,7 @@ Before measurements can be collected, the tracker singleton responsible of all a
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:3
-                                                                                             comScoreVirtualSite:@"srf-vsite"
+                                                                                                        siteName:@"srf-app-site"
                                                                                              netMetrixIdentifier:@"srf-app-identifier"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
                                                      
@@ -26,11 +26,11 @@ Before measurements can be collected, the tracker singleton responsible of all a
 }
 ```
 
-The various setup parameters to use must be obtained by the team responsible of measurements for your application.
+The various setup parameters to use must be obtained from the team responsible of measurements for your application.
 
 For unit tests, you can set the `unitTesting` flag to emit notifications which can be used to check when analytics information is sent, and whether it is correct.
 
-Once the tracker has been started, you can perform measurements.
+Once the tracker has been started your application can collect analytics data.
 
 #### Remark
 
@@ -112,7 +112,7 @@ To measure any kind of application functionality, you typically use hidden event
 [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"full-screen"];
 ```
 
-Custom labels can also be used to send any additional measurement information you could need, and which might be different for TagCommander and comScore.
+Custom labels can also be used to send any additional measurement information you could need.
 
 ## Measuring SRG Media Player media consumption
 
@@ -120,75 +120,7 @@ To measure media consumption for [SRG Media Player](https://github.com/SRGSSR/sr
 
 You can disable tracking by setting the `SRGMediaPlayerController` `tracked` property to `NO`. If you don't want the player to send any media playback events, you should perform this setup before actually beginning playback. You can still toggle the property on or off at any time if needed.
 
-Two levels of measurement information (labels) can be provided:
-
-* Labels associated with the content being played, and which can be supplied when playing the media. Dedicated methods are available from `SRGMediaPlayerController+SRGAnalytics.h`.
-* Labels associated with a segment being played, and which are supplied by having segments implement the `SRGAnalyticsSegment` protocol. Note that comScore tracking ignores segments altogether.
-
-When playing a segment, segment labels are superimposed to content labels. You can therefore decide to selectively override content labels by having segments return labels with matching names, if needed. 
-
-### Example
-
-You could have a segment return the following information:
-
-```objective-c
-@interface Segment : NSObject <SRGAnalyticsSegment>
-
-- (instancetype)initWithName:(NSString *)name timeRange:(CMTimeRange)timeRange;
-
-@property (nonatomic, readonly, copy) NSString *name;
-
-// ...
-
-@end
-
-@implementation Segment
-
-- (SRGAnalyticsPlayerLabels *)srg_analyticsLabels
-{
-    SRGAnalyticsPlayerLabels *labels = [[SRGAnalyticsPlayerLabels alloc] init];
-    labels.customInfo = @{ @"MYAPP_MEDIA_ID" : self.name };
-    labels.comScoreCustomInfo = @{ @"myapp_media_id" : self.name };
-    return labels;
-}
-
-// ...
-
-@end
-
-```
-
-and play some content, associating measurement labels with it:
-
-```objective-c
-Segment *segment = [[Segment alloc] initWithName:@"Subject" timeRange:...];
-NSURL *URL = ...;
-
-SRGAnalyticsPlayerLabels *labels = [[SRGAnalyticsPlayerLabels alloc] init];
-labels.customInfo = @{ @"MYAPP_MEDIA_ID" : @"My media". @"MYAPP_PRODUCER" : @"RTS" };
-labels.comScoreCustomInfo = @{ @"myapp_media_id" : self.name };
-
-SRGMediaPlayerController *mediaPlayerController = [[SRGMediaPlayerController alloc] init];
-[mediaPlayerController playURL:URL atPosition:nil withSegments:@[segment] analyticsLabels:labels userInfo:nil];
-```
-
-You can adjust tolerances to have precise but slower startup at the specified location (`kCMTimeZero`, like in the example above), or faster startup at around the specified location (`kCMTimePositiveInfinity` or some bounded positive value).
-
-When playing the content, tracking information sent to TagCommander will contain:
-
-```
-MYAPP_MEDIA_ID = My media
-MYAPP_PRODUCER = RTS
-```
-
-but when playing the segment (after the user selects it), this information will be overridden as follows:
-
-```
-MYAPP_MEDIA_ID = Subject
-MYAPP_PRODUCER = RTS
-```
-
-There is no such overloading mechanism for comScore measurements, which ignore segments altogether.
+Measurement information (labels) can be associated with the content being played. This is achieved by providing an `analyticsLabels` dictionary to playback methods available from `SRGMediaPlayerController+SRGAnalytics.h`.
 
 ## Automatic media consumption measurement labels using the SRG Data Provider library
 
@@ -205,7 +137,7 @@ This framework adds a category `SRGMediaPlayerController (SRGAnalyticsDataProvid
 
 on an `SRGMediaPlayerController` instance.
 
-Nothing more is required for correct media consumption measurements. During playback, all analytics labels for the content and its segments will be transparently managed for you.
+Nothing more is required for correct media consumption measurements. During playback all analytics labels for the content and its segments will be transparently managed for you.
 
 ## Automatic identity measurement labels using the SRG Identity library
 
