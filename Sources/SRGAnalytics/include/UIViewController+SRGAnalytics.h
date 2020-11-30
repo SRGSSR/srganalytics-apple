@@ -32,7 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  If your application uses custom view controller containers, and if you want to use automatic tracking, be sure to
  *  have them conform to the `SRGAnalyticsContainerViewTracking` protocol so that automatic page views are correctly
- *  propagated through your application view controller hierarchy.
+ *  propagated through your application view controller hierarchy. If a view controller does not implement this protocol
+ *  but contains children, page view events will be propagated to all children, which might not be correct (e.g. if
+ *  there are several children but only one is visible).
  */
 @protocol SRGAnalyticsViewTracking <NSObject>
 

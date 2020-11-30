@@ -55,12 +55,22 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     [childViewController srg_trackPageViewAutomatic:YES recursive:YES];
 }
 
+- (NSArray<UIViewController *> *)srg_childViewControllers
+{
+    if ([self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
+        id<SRGAnalyticsContainerViewTracking> containerSelf = (id<SRGAnalyticsContainerViewTracking>)self;
+        return containerSelf.srg_activeChildViewControllers;
+    }
+    else {
+        return self.childViewControllers;
+    }
+}
+
 - (void)srg_trackPageViewAutomatic:(BOOL)automatic recursive:(BOOL)recursive
 {
-    if (recursive && [self conformsToProtocol:@protocol(SRGAnalyticsContainerViewTracking)]) {
-        id<SRGAnalyticsContainerViewTracking> containerSelf = (id<SRGAnalyticsContainerViewTracking>)self;
-        NSArray<UIViewController *> *activeViewControllers = containerSelf.srg_activeChildViewControllers;
-        for (UIViewController *viewController in activeViewControllers) {
+    if (recursive) {
+        NSArray<UIViewController *> *childViewControllers = [self srg_childViewControllers];
+        for (UIViewController *viewController in childViewControllers) {
             [viewController srg_trackPageViewAutomatic:automatic recursive:recursive];
         }
     }
