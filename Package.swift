@@ -19,6 +19,10 @@ let package = Package(
             targets: ["SRGAnalytics"]
         ),
         .library(
+            name: "SRGAnalyticsSwiftUI",
+            targets: ["SRGAnalyticsSwiftUI"]
+        ),
+        .library(
             name: "SRGAnalyticsMediaPlayer",
             targets: ["SRGAnalyticsMediaPlayer"]
         ),
@@ -48,6 +52,10 @@ let package = Package(
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
             ]
+        ),
+        .target(
+            name: "SRGAnalyticsSwiftUI",
+            dependencies: ["SRGAnalytics"]
         ),
         .target(
             name: "SRGAnalyticsMediaPlayer",

@@ -4,6 +4,7 @@ Getting started
 The SRG Analytics library is made of several frameworks:
 
 * A main `SRGAnalytics.framework` which supplies the singleton responsible of gathering measurements (tracker).
+* A companion option `SRGAnalyticsSwiftUI.framework` for page view tracking of SwiftUI views.
 * A companion optional `SRGAnalyticsMediaPlayer.framework` responsible of stream measurements for applications using our [SRG Media Player library](https://github.com/SRGSSR/srgmediaplayer-apple).
 * A companion optional `SRGAnalyticsDataProvider.framework` transparently forwarding stream measurement analytics labels received from Integration Layer services by the [SRG Data Provider library](https://github.com/SRGSSR/srgdataprovider-apple).
 
@@ -51,7 +52,7 @@ Measurement information, often referred to as labels, is provided in the form of
 
 Be careful when using custom labels, though, and ensure your custom keys do not match reserved values by using appropriate naming conventions (e.g. a prefix). Also check with the measurement team whether the custom labels you are using is supported.
 
-## Measuring page views
+## Measuring page views (UIKit)
 
 View controllers represent the units of screen interaction in an application, this is why page view measurements are primarily made on view controllers. All methods and protocols for view controller tracking have been gathered in the `UIViewController+SRGAnalytics.h` file.
 
@@ -103,6 +104,20 @@ and implement the methods you need to supply measurement information:
 When the view is opened for the first time, or if the view is visible on screen when waking up the application, this information will be automatically sent.
 
 Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for TagCommander first (unlike comScore information which can be freely defined).
+
+## Measuring page views (SwiftUI)
+
+Measuring page views in SwiftUI is simply made using a view modifier:
+
+```swift
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            // ...
+        }.tracked(withTitle: "home")
+    }
+}
+```
 
 ## Measuring application functionalities
 
