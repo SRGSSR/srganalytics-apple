@@ -31,7 +31,7 @@ The library must be integrated using [Swift Package Manager](https://swift.org/p
 
 The library is made of serveral smaller libraries. Which ones your project must link against depends on your needs:
 
-- If you only need basic view tracking, just link against `SRGAnalytics`.
+- If you only need basic view and hidden event tracking, just link against `SRGAnalytics`. If you need to track SwiftUI views link against `SRGAnalyticsSwiftUI` as well.
 - If you need [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) media playback tracking, also link against `SRGAnalyticsMediaPlayer`.
 - If you need SRG standard media playback tracking with associated media metadata retrieved by [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple), also link against `SRGAnalyticsDataProvider`. This library provides several playback helpers you should use to ensure that context information is complete when playing a media.
 - If you are using [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) in your project, also link against `SRGAnalyticsIdentity`.
