@@ -86,18 +86,9 @@ The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger
 
 This logger either automatically integrates with your own logger, or can be easily integrated with it. Refer to the SRG Logger documentation for more information.
 
-## Advertising Identifier (IDFA)
+## App Privacy details on the App Store
 
-SRG Analytics internally links against `AdSupport.framework` and therefore requires extra care when submitting an application to the App Store.
-
-As part of your application submission process, you must provide reasons for Advertising Identifier usage. Be sure to tick the following checkboxes when asked to:
-
-* _Attribute this app installation to a previously served advertisement_.
-* _Attribute an action taken within this app to a previously served advertisement_.
-
-Since SRG SSR applications do not contain any ads, you must leave the _Serve advertisements within the app_ checkbox unticked.
-
-You can also answer _No_ to the _Does this app use the Advertising Identifier (IDFA)?_ question, as the SRG Analytics library (or any of its dependencies) does not use the IDFA.
+You are required to provide additional information about the data collected by your app and how it is used. Please refer to our [associated documentation](https://github.com/SRGSSR/srgletterbox-apple/wiki/App-Privacy-details-on-the-App-Store) for more information.
 
 ## Demo project
 
