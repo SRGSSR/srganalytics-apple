@@ -66,6 +66,7 @@ or in Swift:
 
 ```swift
 import SRGAnalytics
+import SRGAnalyticsSwiftUI
 import SRGAnalyticsMediaPlayer
 import SRGAnalyticsDataProvider
 import SRGAnalyticsIdentity
