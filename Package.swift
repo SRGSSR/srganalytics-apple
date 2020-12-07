@@ -3,7 +3,7 @@
 import PackageDescription
 
 struct ProjectSettings {
-    static let marketingVersion: String = "6.0.0"
+    static let marketingVersion: String = "6.1.0"
 }
 
 let package = Package(
@@ -17,6 +17,10 @@ let package = Package(
         .library(
             name: "SRGAnalytics",
             targets: ["SRGAnalytics"]
+        ),
+        .library(
+            name: "SRGAnalyticsSwiftUI",
+            targets: ["SRGAnalyticsSwiftUI"]
         ),
         .library(
             name: "SRGAnalyticsMediaPlayer",
@@ -34,7 +38,7 @@ let package = Package(
     dependencies: [
         .package(name: "ComScore", url: "https://github.com/SRGSSR/ComScore-xcframework-apple.git", .upToNextMinor(from: "6.6.0")),
         .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .upToNextMinor(from: "3.0.1")),
-        .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .upToNextMinor(from: "9.0.0")),
+        .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .upToNextMinor(from: "9.1.0")),
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.0.0")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.0.0")),
         .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "6.1.0")),
@@ -48,6 +52,10 @@ let package = Package(
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
             ]
+        ),
+        .target(
+            name: "SRGAnalyticsSwiftUI",
+            dependencies: ["SRGAnalytics"]
         ),
         .target(
             name: "SRGAnalyticsMediaPlayer",

@@ -31,7 +31,7 @@ The library must be integrated using [Swift Package Manager](https://swift.org/p
 
 The library is made of serveral smaller libraries. Which ones your project must link against depends on your needs:
 
-- If you only need basic view tracking, just link against `SRGAnalytics`.
+- If you only need basic view and hidden event tracking, just link against `SRGAnalytics`. If you need to track SwiftUI views link against `SRGAnalyticsSwiftUI` as well.
 - If you need [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) media playback tracking, also link against `SRGAnalyticsMediaPlayer`.
 - If you need SRG standard media playback tracking with associated media metadata retrieved by [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple), also link against `SRGAnalyticsDataProvider`. This library provides several playback helpers you should use to ensure that context information is complete when playing a media.
 - If you are using [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) in your project, also link against `SRGAnalyticsIdentity`.
@@ -66,6 +66,7 @@ or in Swift:
 
 ```swift
 import SRGAnalytics
+import SRGAnalyticsSwiftUI
 import SRGAnalyticsMediaPlayer
 import SRGAnalyticsDataProvider
 import SRGAnalyticsIdentity
@@ -86,18 +87,9 @@ The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger
 
 This logger either automatically integrates with your own logger, or can be easily integrated with it. Refer to the SRG Logger documentation for more information.
 
-## Advertising Identifier (IDFA)
+## App Privacy details on the App Store
 
-SRG Analytics internally links against `AdSupport.framework` and therefore requires extra care when submitting an application to the App Store.
-
-As part of your application submission process, you must provide reasons for Advertising Identifier usage. Be sure to tick the following checkboxes when asked to:
-
-* _Attribute this app installation to a previously served advertisement_.
-* _Attribute an action taken within this app to a previously served advertisement_.
-
-Since SRG SSR applications do not contain any ads, you must leave the _Serve advertisements within the app_ checkbox unticked.
-
-You can also answer _No_ to the _Does this app use the Advertising Identifier (IDFA)?_ question, as the SRG Analytics library (or any of its dependencies) does not use the IDFA.
+You are required to provide additional information about the data collected by your app and how it is used. Please refer to our [associated documentation](https://github.com/SRGSSR/srgletterbox-apple/wiki/App-Privacy-details-on-the-App-Store) for more information.
 
 ## Demo project
 
