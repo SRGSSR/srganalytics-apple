@@ -51,6 +51,7 @@ let package = Package(
             dependencies: ["ComScore", "SRGLogger", "TCCore", "TCSDK"],
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
+                .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
             ]
         ),
         .target(
@@ -61,7 +62,8 @@ let package = Package(
             name: "SRGAnalyticsMediaPlayer",
             dependencies: ["SRGAnalytics", "SRGMediaPlayer"],
             cSettings: [
-                .headerSearchPath("Private")
+                .headerSearchPath("Private"),
+                .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
             ]
         ),
         .target(
@@ -70,13 +72,17 @@ let package = Package(
                 "SRGAnalyticsMediaPlayer",
                 "SRGContentProtection",
                 .product(name: "SRGDataProviderNetwork", package: "SRGDataProvider")
+            ],
+            cSettings: [
+                .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
             ]
         ),
         .target(
             name: "SRGAnalyticsIdentity",
             dependencies: ["SRGAnalytics", "SRGIdentity"],
             cSettings: [
-                .headerSearchPath("Private")
+                .headerSearchPath("Private"),
+                .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
             ]
         ),
         .testTarget(
