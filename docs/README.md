@@ -6,7 +6,7 @@
 
 The SRG Analytics library makes it easy to add usage tracking information to your iOS and tvOS applications, following the SRG SSR standards.
 
-Measurements are based on events emitted by the application and collected by TagCommander, comScore and NetMetrix. 
+Measurements are based on events emitted by the application and sent to TagCommander (for internal analytics purposes) as well as Mediapulse (for official audience measurements, via comScore).
 
 The SRG Analytics library supports three kinds of measurements:
 

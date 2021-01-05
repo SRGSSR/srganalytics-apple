@@ -23,7 +23,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 @property (nonatomic, copy) SRGAnalyticsBusinessUnitIdentifier businessUnitIdentifier;
 @property (nonatomic) NSInteger container;
 @property (nonatomic, copy) NSString *siteName;
-@property (nonatomic, copy) NSString *netMetrixIdentifier;
 
 @end
 
@@ -34,13 +33,11 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
                                      container:(NSInteger)container
                                       siteName:(NSString *)siteName
-                           netMetrixIdentifier:(NSString *)netMetrixIdentifier
 {
     if (self = [super init] ) {
         self.businessUnitIdentifier = businessUnitIdentifier;
         self.container = container;
         self.siteName = siteName;
-        self.netMetrixIdentifier = netMetrixIdentifier;
         self.centralized = YES;
         self.environmentMode = SRGAnalyticsEnvironmentModeAutomatic;
     }
@@ -64,21 +61,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     
     NSString *businessUnitIdentifier = self.centralized ? SRGAnalyticsBusinessUnitIdentifierSRG : self.businessUnitIdentifier;
     return s_sites[businessUnitIdentifier].integerValue;
-}
-
-- (NSString *)netMetrixDomain
-{
-    // HTTPs domains as documented here: https://srfmmz.atlassian.net/wiki/display/SRGPLAY/HTTPS+Transition
-    static dispatch_once_t s_onceToken;
-    static NSDictionary<NSString *, NSString *> *s_domains;
-    dispatch_once(&s_onceToken, ^{
-        s_domains = @{ SRGAnalyticsBusinessUnitIdentifierRSI : @"rsi-ssl",
-                       SRGAnalyticsBusinessUnitIdentifierRTR : @"rtr-ssl",
-                       SRGAnalyticsBusinessUnitIdentifierRTS : @"rts-ssl",
-                       SRGAnalyticsBusinessUnitIdentifierSRF : @"sftv-ssl",
-                       SRGAnalyticsBusinessUnitIdentifierSWI : @"sinf-ssl" };
-    });
-    return s_domains[self.businessUnitIdentifier];
 }
 
 - (SRGAnalyticsEnvironment)environment
@@ -110,7 +92,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     configuration.businessUnitIdentifier = self.businessUnitIdentifier;
     configuration.container = self.container;
     configuration.siteName = self.siteName;
-    configuration.netMetrixIdentifier = self.netMetrixIdentifier;
     configuration.centralized = self.centralized;
     configuration.environmentMode = self.environmentMode;
     configuration.unitTesting = self.unitTesting;
@@ -121,14 +102,13 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; businessUnitIdentifier = %@; site = %@; container = %@; siteName = %@; netMetrixIdentifier = %@>",
+    return [NSString stringWithFormat:@"<%@: %p; businessUnitIdentifier = %@; site = %@; container = %@; siteName = %@",
             self.class,
             self,
             self.businessUnitIdentifier,
             @(self.site),
             @(self.container),
-            self.siteName,
-            self.netMetrixIdentifier];
+            self.siteName];
 }
 
 @end

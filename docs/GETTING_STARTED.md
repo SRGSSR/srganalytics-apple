@@ -19,8 +19,7 @@ Before measurements can be collected, the tracker singleton responsible of all a
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:3
-                                                                                                        siteName:@"srf-app-site"
-                                                                                             netMetrixIdentifier:@"srf-app-identifier"];
+                                                                                                        siteName:@"srf-app-site"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
                                                      
     // ...
