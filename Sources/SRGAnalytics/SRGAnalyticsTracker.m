@@ -83,7 +83,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         builder.secureTransmissionEnabled = YES;
         builder.persistentLabels = [self persistentComScoreLabels];
         
-        // See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/721420782/ComScore+-+Media+Metrix+Report
+        // See https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/ComScore+-+Media+Metrix+Report
         // Coding Document for Video Players, page 16
         builder.httpRedirectCachingEnabled = NO;
         
@@ -343,7 +343,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     // Tracks which SRG SSR applications are installed on the user device
     //
-    // Specifications are available at: https://srfmmz.atlassian.net/wiki/display/INTFORSCHUNG/App+Overlapping+Measurement
+    // Specifications are available at: https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/App+Overlapping+Measurement
     //
     // This measurement is not critical and is therefore performed only once the tracker starts. If it fails for some reason
     // (no network, for example), the measurement will be attempted again the next time the application is started
