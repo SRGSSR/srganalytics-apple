@@ -118,6 +118,12 @@ struct ContentView: View {
 }
 ```
 
+## Measuring page views (web views)
+
+SRG SSR websites must be in general tracked so that users of a web browser (Safari, Chrome, Edge, etc.) are tracked. When displayed by an app in a web view, however, an SRG SSR website must not be tracked.
+
+An app can perform a native page view when a web view is displayed, but this is entirely optional. What is important is that no measurements are emitted from web views.
+
 ## Measuring application functionalities
 
 To measure any kind of application functionality, you typically use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
