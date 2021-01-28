@@ -12,8 +12,8 @@ The SRG Analytics library supports three kinds of measurements:
 
  * View events: Appearance of views (page views), which makes it possible to track which content is seen by users.
  * Hidden events: Custom events which can be used for measurement of application functionalities.
- * Stream playback events: Audio and video consumption measurements for application using our [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple). Additional playback information (title, duration, etc.) must be supplied externally. For application using our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library, though, this process is entirely automated.
- * Integration with our [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) library.
+ * Stream playback events: Audio and video consumption measurements for application using our [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple). Additional playback information (title, duration, etc.) must be supplied externally. For application using our [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple) library, though, this process is entirely automated.
+ * Integration with our [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) library.
  
 ## Compatibility
 
@@ -32,9 +32,9 @@ The library must be integrated using [Swift Package Manager](https://swift.org/p
 The library is made of serveral smaller libraries. Which ones your project must link against depends on your needs:
 
 - If you only need basic view and hidden event tracking, just link against `SRGAnalytics`. If you need to track SwiftUI views link against `SRGAnalyticsSwiftUI` as well.
-- If you need [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) media playback tracking, also link against `SRGAnalyticsMediaPlayer`.
-- If you need SRG standard media playback tracking with associated media metadata retrieved by [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple), also link against `SRGAnalyticsDataProvider`. This library provides several playback helpers you should use to ensure that context information is complete when playing a media.
-- If you are using [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) in your project, also link against `SRGAnalyticsIdentity`.
+- If you need [SRG Media Player](https://github.com/SRGSSR/srgmediaplayer-apple) media playback tracking, also link against `SRGAnalyticsMediaPlayer`.
+- If you need SRG standard media playback tracking with associated media metadata retrieved by [SRG Data Provider](https://github.com/SRGSSR/srgdataprovider-apple), also link against `SRGAnalyticsDataProvider`. This library provides several playback helpers you should use to ensure that context information is complete when playing a media.
+- If you are using [SRG Identity](https://github.com/SRGSSR/srgidentity-apple) in your project, also link against `SRGAnalyticsIdentity`.
 
 ### Info.plist settings for application installation measurements
 
@@ -78,7 +78,7 @@ To learn about how the library can be used, have a look at the [getting started 
 
 ### Logging
 
-The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger-apple) library for logging, with the following subsystems:
+The library internally uses the [SRG Logger](https://github.com/SRGSSR/srglogger-apple) library for logging, with the following subsystems:
 
 * `ch.srgssr.analytics` for `SRGAnalytics` events.
 * `ch.srgssr.analytics.mediaplayer` for `SRGAnalyticsMediaPlayer` events.
