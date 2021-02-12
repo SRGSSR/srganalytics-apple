@@ -77,9 +77,9 @@
         "package": "SRGDataProvider",
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "fae257b900f89242eff367258ec3e546848a1dee",
-          "version": null
+          "branch": null,
+          "revision": "6556ac22f611b1f4913264ebb20f513165b0f748",
+          "version": "10.0.0"
         }
       },
       {
@@ -95,9 +95,9 @@
         "package": "SRGIdentity",
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "20fd3c6e0975c97e8df51e817791e210a15784c1",
-          "version": null
+          "branch": null,
+          "revision": "4b5db1151c7f15364665cbfbc28dfce5b60cfceb",
+          "version": "3.0.3"
         }
       },
       {
