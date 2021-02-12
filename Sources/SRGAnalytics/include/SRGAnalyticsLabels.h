@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SRGAnalyticsLabels : NSObject <NSCopying>
 
 /**
- *  Additional custom information, mapping variables to values. See https://srfmmz.atlassian.net/wiki/spaces/INTFORSCHUNG/pages/197019081
- *  for a full list of possible variable names.
+ *  Additional custom information, mapping variables to values.
  *
  *  You should rarely need to provide custom information with measurements, as this requires the variable name to be
  *  declared on TagCommander portal first (otherwise the associated value will be discarded).
@@ -25,8 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) NSDictionary<NSString *, NSString *> *customInfo;
 
 /**
- *  Additional custom information to be sent to comScore. See https://srfmmz.atlassian.net/wiki/spaces/SRGPLAY/pages/36077617/Measurement+of+SRG+Player+Apps
- *  for a full list of possible variable names.
+ *  Additional custom information to be sent to comScore.
  *
  *  Custom information can be used to override official labels. You should use this ability sparingly, though.
  */

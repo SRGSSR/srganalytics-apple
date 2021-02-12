@@ -19,8 +19,7 @@ Before measurements can be collected, the tracker singleton responsible of all a
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:3
-                                                                                                        siteName:@"srf-app-site"
-                                                                                             netMetrixIdentifier:@"srf-app-identifier"];
+                                                                                                        siteName:@"srf-app-site"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
                                                      
     // ...
@@ -118,6 +117,12 @@ struct ContentView: View {
     }
 }
 ```
+
+## Measuring page views (web views)
+
+SRG SSR websites must be in general tracked so that users of a web browser (Safari, Chrome, Edge, etc.) are tracked. When displayed by an app in a web view, however, an SRG SSR website must not be tracked.
+
+An app can perform a native page view when a web view is displayed, but this is entirely optional. What is important is that no measurements are emitted from web views.
 
 ## Measuring application functionalities
 

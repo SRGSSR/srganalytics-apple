@@ -18,15 +18,13 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     XCTAssertTrue(configuration.centralized);
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
@@ -35,8 +33,7 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     configuration.centralized = NO;
     
     XCTAssertFalse(configuration.centralized);
@@ -45,7 +42,6 @@
     XCTAssertEqual(configuration.site, 3667);
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
@@ -54,8 +50,7 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     configuration.environmentMode = SRGAnalyticsEnvironmentModePreProduction;
     
     XCTAssertTrue(configuration.centralized);
@@ -64,7 +59,6 @@
     XCTAssertEqual(configuration.site, 3666);
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModePreProduction);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
@@ -73,8 +67,7 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     configuration.environmentMode = SRGAnalyticsEnvironmentModeProduction;
     
     XCTAssertTrue(configuration.centralized);
@@ -83,7 +76,6 @@
     XCTAssertEqual(configuration.site, 3666);
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeProduction);
     XCTAssertEqualObjects(configuration.environment, @"prod");
 }
@@ -92,8 +84,7 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     configuration.unitTesting = YES;
     
     XCTAssertTrue(configuration.centralized);
@@ -102,7 +93,6 @@
     XCTAssertEqual(configuration.site, 3666);
     XCTAssertEqual(configuration.container, 7);
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, @"netmetrix-identifier");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
 }
@@ -111,8 +101,7 @@
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
                                                                                                        container:7
-                                                                                                        siteName:@"site-name"
-                                                                                             netMetrixIdentifier:@"netmetrix-identifier"];
+                                                                                                        siteName:@"site-name"];
     configuration.centralized = YES;
     configuration.unitTesting = YES;
     
@@ -123,7 +112,6 @@
     XCTAssertEqual(configuration.site, configurationCopy.site);
     XCTAssertEqual(configuration.container, configurationCopy.container);
     XCTAssertEqualObjects(configuration.siteName, configurationCopy.siteName);
-    XCTAssertEqualObjects(configuration.netMetrixIdentifier, configurationCopy.netMetrixIdentifier);
     XCTAssertEqual(configuration.environmentMode, configurationCopy.environmentMode);
     XCTAssertEqualObjects(configuration.environment, configurationCopy.environment);
 }

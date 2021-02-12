@@ -14,7 +14,7 @@
     NSLocale *posixLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     NSString *normalizedString = [self.lowercaseString stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:posixLocale];
     
-    // See rules at https://srfmmz.atlassian.net/wiki/display/SRGPLAY/Measurement+of+SRG+Player+Apps
+    // See rules at https://confluence.srg.beecollaboration.com/display/SRGPLAY/Measurement+of+SRG+Player+Apps#MeasurementofSRGPlayerApps-SupportedCharacters
     NSCharacterSet *andSet = [NSCharacterSet characterSetWithCharactersInString:@"+&"];
     normalizedString = [[normalizedString componentsSeparatedByCharactersInSet:andSet] componentsJoinedByString:@"and"];
     
