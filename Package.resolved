@@ -68,9 +68,9 @@
         "package": "SRGDataProvider",
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "fae257b900f89242eff367258ec3e546848a1dee",
-          "version": null
+          "branch": null,
+          "revision": "6556ac22f611b1f4913264ebb20f513165b0f748",
+          "version": "10.0.0"
         }
       },
       {
@@ -86,9 +86,9 @@
         "package": "SRGIdentity",
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "20fd3c6e0975c97e8df51e817791e210a15784c1",
-          "version": null
+          "branch": null,
+          "revision": "4b5db1151c7f15364665cbfbc28dfce5b60cfceb",
+          "version": "3.0.3"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/SRGSSR/TCCore-xcframework-apple.git",
         "state": {
           "branch": null,
-          "revision": "be5774e8e68bbf29a9da93506e6bfa6de1177268",
-          "version": "4.5.4-srg3"
+          "revision": "491957a21cee60a40d3e5e4912b5f4cf6542ff50",
+          "version": "4.5.4-srg4"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/SRGSSR/TCSDK-xcframework-apple.git",
         "state": {
           "branch": null,
-          "revision": "391dbdc47db04f4049fdabca6b5d1f5446589d3f",
-          "version": "4.4.1-srg3"
+          "revision": "bd6344e97db30e7f5a1cc233716e8dabb8ee6a16",
+          "version": "4.4.1-srg4"
         }
       },
       {
