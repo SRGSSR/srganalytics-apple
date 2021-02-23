@@ -22,6 +22,11 @@
 
 #pragma mark Tests
 
+- (void)testNoHiddenAdSupportFramework
+{
+    XCTAssertNil(NSClassFromString(@"ASIdentifierManager"));
+}
+
 - (void)testCommonLabels
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
