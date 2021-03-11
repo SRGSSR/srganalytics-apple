@@ -118,11 +118,42 @@ struct ContentView: View {
 }
 ```
 
-## Measuring page views (web views)
+## Measuring page views in the presence of web view content
 
-SRG SSR websites must be in general tracked so that users of a web browser (Safari, Chrome, Edge, etc.) are tracked. When displayed by an app in a web view, however, an SRG SSR website must not be tracked.
+Apps might embed or display web content in various ways, whether this content is part of SRG SSR offering or external to the company (e.g. some arbitrary Youtube page). 
 
-An app can perform a native page view when a web view is displayed, but this is entirely optional. What is important is that no measurements are emitted from web views.
+SRG SSR websites must themselves implement page view tracking in JavaScript, so that usage data can be properly collected when a browser (desktop and mobile Safari, Chrome, Edge, etc.) is used to navigate them.
+
+**To comply with Mediapulse guidelines, it is especially important that no tracked SRG SSR web content is displayed while a tracked app is running in the foreground.** The reason is that two separate analytics sessions would then coexist for native and web content with overlapping measurements (e.g. session duration), which is strictly forbidden by Mediapulse.
+
+For this reason you must carefully choose how web content must be displayed in your application. This section discusses which approach is suited to achieve the desired result you need, while still fulfilling Mediapulse requirements.
+
+### Glossary
+
+In the following we refer to the various ways of displaying web content as follows:
+
+- Web view: Component which an app can use to embed web content in a flexible way (`WKWebView`).
+- In-app web browser: Web browser interface which can be used to display web content without leaving an app (`SFSafariViewController`).
+- Device browser: Any standalone browser app that can be used on a device (e.g. Safari Mobile, Google Chrome, etc.). To invoke the default web browser use the `-[UIApplication openURL:options:completionHandler:]` API, which also provides support for deep linking for apps supporting it.
+
+### Using the device browser (recommended)
+
+Most of the time it is very difficult or nearly impossible to guarantee that, starting from some random web page (part of SRG SSR offering or not) you cannot somehow reach a tracked SRG SSR web page. For example, even if you open a Wikipedia page about some random topic, it is always possible that the user can search for an SRG SSR article and finally reach one of our tracked websites.
+
+For this very reason we recommend that your app always opens web pages with your device browser. This way your app will be sent to the background so that Mediapulse requirements are guaranteed to be fulfilled, no matter how the user navigates the web content afterwards.
+
+### Displaying web content in app (not recommended)
+
+Your app might have the strong requirement to display web content without the user leaving the app. In such cases, and only in such cases, should you consider the web view or in-app browser approaches.
+
+If the web page you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
+
+Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
+
+- Your application might display an SRG SSR web page offering degraded navigation abilities (e.g. no footer, no header, no links) so that the user cannot navigate away, or is forced to stay within a few untracked pages with no possibility to leave.
+- Your application might observe web navigation (e.g. by implementing `WKNavigationDelegate` if you are using `WKWebView`) and inhibit navigation to tracked SRG SSR websites. Alternatively it can force tracked SRG SSR websites to be opened in the device browser instead.
+
+Should you have to display web content within your application, please thoroughfully check that Mediapulse requirements are fulfilled, otherwise your application might be excluded from official reports when tested.
 
 ## Measuring application functionalities
 
