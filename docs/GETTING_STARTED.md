@@ -157,7 +157,7 @@ If the web contnt you want to display belongs to the SRG SSR, it must provide a 
 
 Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
 
-- Your application might display an SRG SSR web page offering degraded navigation abilities (e.g. no footer, no header, no links) so that the user cannot navigate away, or is forced to stay within a few untracked pages with no possibility to leave.
+- Your application might display an SRG SSR web page offering reduced navigation abilities (e.g. no footer, no header, no links) so that the user cannot navigate away, or is forced to stay within a few untracked pages with no possibility to leave.
 - Your application might observe web navigation (e.g. by implementing `WKNavigationDelegate` if you are using `WKWebView`) and inhibit navigation to tracked SRG SSR websites. Alternatively it can force tracked SRG SSR websites to be opened in the device browser instead.
 
 Should you have to display web content within your application, please thoroughfully check that Mediapulse requirements are fulfilled, otherwise your application might be excluded from official reports when tested.
