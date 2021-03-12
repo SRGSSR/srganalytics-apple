@@ -153,7 +153,7 @@ This approach works well for apps which present loosly related web content, for 
 
 Your app might need to display web content with tight integration into its native user interface. In such cases you must consider the web view or in-app browser approaches.
 
-If the web contnt you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
+If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
 
 Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
 
