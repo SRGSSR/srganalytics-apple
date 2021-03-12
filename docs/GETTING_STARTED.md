@@ -120,13 +120,13 @@ struct ContentView: View {
 
 ## Measuring page views in the presence of web view content
 
-Apps might embed or display web content in various ways, whether this content is part of SRG SSR offering or external to the company (e.g. some arbitrary Youtube page). 
+Apps might display or embed web content in various ways, whether this content is part of SRG SSR offering or external to the company (e.g. some arbitrary Youtube page). 
 
-SRG SSR websites must themselves implement page view tracking in JavaScript, so that usage data can be properly collected when a browser (desktop and mobile Safari, Chrome, Edge, etc.) is used to navigate them.
+SRG SSR websites must themselves implement page view tracking in JavaScript, so that usage data can be properly collected when a browser (desktop and mobile Safari, Chrome, Edge, etc.) is used to navigate them. External websites, while of course not tracked, often provide a way to navigate to an SRG SSR website by following some series of hyperlinks.
 
 **To comply with Mediapulse guidelines, it is especially important that no tracked SRG SSR web content is displayed while a tracked app is running in the foreground.** The reason is that two separate analytics sessions would then coexist for native and web content with overlapping measurements (e.g. session duration), which is strictly forbidden by Mediapulse.
 
-For this reason you must carefully choose how web content must be displayed in your application. This section discusses which approach is suited to achieve the desired result you need, while still fulfilling Mediapulse requirements.
+This section discusses how you should display web content in your application so that Mediapulse requirements are correctly fulfilled.
 
 ### Glossary
 
@@ -136,17 +136,24 @@ In the following we refer to the various ways of displaying web content as follo
 - In-app web browser: Web browser interface which can be used to display web content without leaving an app (`SFSafariViewController`).
 - Device browser: Any standalone browser app that can be used on a device (e.g. Safari Mobile, Google Chrome, etc.). To invoke the default web browser use the `-[UIApplication openURL:options:completionHandler:]` API, which also provides support for deep linking for apps supporting it.
 
-### Using the device browser (recommended)
+### Using the device browser
 
-Most of the time it is very difficult or nearly impossible to guarantee that, starting from some random web page (part of SRG SSR offering or not) you cannot somehow reach a tracked SRG SSR web page. For example, even if you open a Wikipedia page about some random topic, it is always possible that the user can search for an SRG SSR article and finally reach one of our tracked websites.
+Most of the time it is very difficult or nearly [impossible](https://en.wikipedia.org/wiki/Wikiracing) to guarantee that, starting from some random web page (part of SRG SSR offering or not) you cannot somehow reach a tracked SRG SSR web page. For example, even if your app opens a Wikipedia page about some random topic, it is always possible that the user can search for an SRG SSR article and finally reach one of our tracked websites. 
 
-For this very reason we recommend that your app always opens web pages with your device browser. This way your app will be sent to the background so that Mediapulse requirements are guaranteed to be fulfilled, no matter how the user navigates the web content afterwards.
+In such cases you should present the web content with the device browser. This ensures your app is automatically sent to the background so that Mediapulse requirements are guaranteed to be fulfilled, no matter how the user navigates the web content.
 
-### Displaying web content in app (not recommended)
+This approach works well for apps which present loosly related web content, for example a link to some article, to a user guide or to legal information pages. 
 
-Your app might have the strong requirement to display web content without the user leaving the app. In such cases, and only in such cases, should you consider the web view or in-app browser approaches.
+#### Examples
 
-If the web page you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
+- Mostly native application with documentation accessible via web pages.
+- Player application offering a few links to articles related to a media stemming from various sources.
+
+### Displaying web content in app
+
+Your app might need to display web content with tight integration into its native user interface. In such cases you must consider the web view or in-app browser approaches.
+
+If the web contnt you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
 
 Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
 
@@ -154,6 +161,11 @@ Moreover, no matter whether you display an SRG SSR web page or an external one, 
 - Your application might observe web navigation (e.g. by implementing `WKNavigationDelegate` if you are using `WKWebView`) and inhibit navigation to tracked SRG SSR websites. Alternatively it can force tracked SRG SSR websites to be opened in the device browser instead.
 
 Should you have to display web content within your application, please thoroughfully check that Mediapulse requirements are fulfilled, otherwise your application might be excluded from official reports when tested.
+
+#### Examples
+
+- News application displaying articles from the companion website as HTML.
+- Login web page displayed using `ASAuthenticationServices`, which itself uses the in-app browser for presentation.
 
 ## Measuring application functionalities
 
