@@ -118,7 +118,7 @@ struct ContentView: View {
 }
 ```
 
-## Measuring page views in the presence of web view content
+## Measuring page views when displaying web content
 
 Apps might display or embed web content in various ways, whether this content is part of SRG SSR offering or external to the company (e.g. some arbitrary Youtube page). 
 
