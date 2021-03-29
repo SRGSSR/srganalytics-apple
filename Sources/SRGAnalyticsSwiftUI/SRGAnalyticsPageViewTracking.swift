@@ -59,7 +59,10 @@ public extension View {
      *  Mark a view as being tracked with the provided title, levels and labels.
      */
     func tracked(withTitle title: String, levels: [String]? = nil, labels: SRGAnalyticsPageViewLabels? = nil) -> some View {
-        self.background(SRGPageTrackingView(title: title, levels: levels, labels: labels))
+        ZStack {
+            SRGPageTrackingView(title: title, levels: levels, labels: labels)
+            self
+        }
     }
 }
 
