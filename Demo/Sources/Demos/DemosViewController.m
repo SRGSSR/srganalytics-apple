@@ -218,7 +218,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
             playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-            if (@available(iOS 9, tvOS 14, *)) {
+            if (@available(iOS 12, tvOS 14, *)) {
                 playerViewController.allowsPictureInPicturePlayback = NO;
             }
             [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];
