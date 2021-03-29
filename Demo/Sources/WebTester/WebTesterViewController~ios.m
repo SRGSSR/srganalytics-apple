@@ -7,6 +7,7 @@
 #import "WebTesterViewController.h"
 
 #import "Resources.h"
+#import "WebViewController.h"
 
 @import SafariServices;
 
@@ -33,22 +34,20 @@
     return NSLocalizedString(@"Web tester", nil);
 }
 
-#pragma mark View lifecycle
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [self.URLTextField becomeFirstResponder];
-}
-
 #pragma mark Helpers
 
 - (NSURL *)checkURLString:(NSString *)URLString
 {
     NSURL *URL = [NSURL URLWithString:URLString];
     if (URL) {
-        return URL;
+        if (URL.scheme) {
+            return URL;
+        }
+        else {
+            NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
+            URLComponents.scheme = @"https";
+            return URLComponents.URL;
+        }
     }
     else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL", nil)
@@ -82,7 +81,9 @@
     
     NSURL *URL = [self checkURLString:self.URLTextField.text];
     if (URL) {
-        
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+        WebViewController *webViewController = [[WebViewController alloc] initWithRequest:request];
+        [self.navigationController pushViewController:webViewController animated:YES];
     }
 }
 

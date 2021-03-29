@@ -18,6 +18,8 @@
 		6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB7CF1E23326FB0006EBCA4 /* Resources.m */; };
 		6FC1DE3D2611A5420018F7E4 /* WebTesterViewController~ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */; };
 		6FC1DE422611AC970018F7E4 /* WebTesterViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */; };
+		6FC1DE4A2611CD560018F7E4 /* WebViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FC1DE472611CD560018F7E4 /* WebViewController~ios.storyboard */; };
+		6FC1DE4B2611CD560018F7E4 /* WebViewController~ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC1DE482611CD560018F7E4 /* WebViewController~ios.m */; };
 		6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030623F580D10072EBC4 /* SceneDelegate.m */; };
 		6FCE030D23F582CB0072EBC4 /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030C23F582CB0072EBC4 /* Application.m */; };
 		6FF9F6562332A2C200F981F7 /* SimpleViewController~tvos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FF9F6552332A2C200F981F7 /* SimpleViewController~tvos.storyboard */; };
@@ -40,6 +42,9 @@
 		6FC1DE3B2611A5420018F7E4 /* WebTesterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebTesterViewController.h; sourceTree = "<group>"; };
 		6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WebTesterViewController~ios.m"; sourceTree = "<group>"; };
 		6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "WebTesterViewController~ios.storyboard"; sourceTree = "<group>"; };
+		6FC1DE472611CD560018F7E4 /* WebViewController~ios.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "WebViewController~ios.storyboard"; sourceTree = "<group>"; };
+		6FC1DE482611CD560018F7E4 /* WebViewController~ios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebViewController~ios.m"; sourceTree = "<group>"; };
+		6FC1DE492611CD560018F7E4 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		6FCE030523F580D10072EBC4 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		6FCE030623F580D10072EBC4 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		6FCE030B23F582CB0072EBC4 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
@@ -119,6 +124,16 @@
 			path = WebTester;
 			sourceTree = "<group>";
 		};
+		6FC1DE462611CD560018F7E4 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				6FC1DE472611CD560018F7E4 /* WebViewController~ios.storyboard */,
+				6FC1DE482611CD560018F7E4 /* WebViewController~ios.m */,
+				6FC1DE492611CD560018F7E4 /* WebViewController.h */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
 		9F1518B21AC2F1CE00AE051D = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +179,7 @@
 				6FB7CF1C23326FB0006EBCA4 /* Helpers */,
 				088700C31DA2528900D4961A /* Simple */,
 				6FC1DE3A2611A4F90018F7E4 /* WebTester */,
+				6FC1DE462611CD560018F7E4 /* WebView */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -237,6 +253,7 @@
 				E6296E881DA6205200E33C32 /* SimpleViewController~ios.storyboard in Resources */,
 				0846F5DC232FBC3E00234065 /* LaunchScreen~ios.storyboard in Resources */,
 				E6FC7F1D1D61FA4700A55085 /* Images.xcassets in Resources */,
+				6FC1DE4A2611CD560018F7E4 /* WebViewController~ios.storyboard in Resources */,
 				6FF9F6562332A2C200F981F7 /* SimpleViewController~tvos.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +294,7 @@
 				6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */,
 				088700DF1DA2543800D4961A /* SimpleViewController.m in Sources */,
 				088700D91DA2542D00D4961A /* DemosViewController.m in Sources */,
+				6FC1DE4B2611CD560018F7E4 /* WebViewController~ios.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
