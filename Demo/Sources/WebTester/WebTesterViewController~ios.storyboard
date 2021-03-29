@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f5t-8C-qH3">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Web Tester View Controller-->
+        <scene sceneID="WlS-da-JKS">
+            <objects>
+                <viewController id="f5t-8C-qH3" customClass="WebTesterViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wbp-pu-EVd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hPO-ve-x4S">
+                                <rect key="frame" x="10" y="54" width="394" height="798"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFw-5P-R1M">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="slr-Vn-zHL">
+                                        <rect key="frame" x="0.0" y="24.5" width="394" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="f5t-8C-qH3" id="jYE-n1-7YN"/>
+                                        </connections>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JdV-1f-Bnd" userLabel="Spacer View">
+                                        <rect key="frame" x="0.0" y="62.5" width="394" height="20"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="3f0-uv-oNq"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k90-V5-1g3">
+                                        <rect key="frame" x="0.0" y="86.5" width="394" height="30"/>
+                                        <state key="normal" title="Open with In-app web view"/>
+                                        <connections>
+                                            <action selector="openWithInAppWebView:" destination="f5t-8C-qH3" eventType="touchUpInside" id="VWd-IM-0j9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSD-jH-cnR">
+                                        <rect key="frame" x="0.0" y="120.5" width="394" height="30"/>
+                                        <state key="normal" title="Open with in-app web browser"/>
+                                        <connections>
+                                            <action selector="openWithInAppBrowser:" destination="f5t-8C-qH3" eventType="touchUpInside" id="sgc-BW-b1f"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hk6-Hb-uX9">
+                                        <rect key="frame" x="0.0" y="154.5" width="394" height="30"/>
+                                        <state key="normal" title="Open with device browser"/>
+                                        <connections>
+                                            <action selector="openWithDeviceBrowser:" destination="f5t-8C-qH3" eventType="touchUpInside" id="lwr-gd-fTE"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5i-SM-s7B" userLabel="Spacer View">
+                                        <rect key="frame" x="0.0" y="188.5" width="394" height="609.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="S4B-Qg-ibk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="S4B-Qg-ibk" firstAttribute="bottom" secondItem="hPO-ve-x4S" secondAttribute="bottom" constant="10" id="3pd-e8-HT9"/>
+                            <constraint firstItem="hPO-ve-x4S" firstAttribute="top" secondItem="S4B-Qg-ibk" secondAttribute="top" constant="10" id="969-8V-88K"/>
+                            <constraint firstItem="hPO-ve-x4S" firstAttribute="leading" secondItem="S4B-Qg-ibk" secondAttribute="leading" constant="10" id="ktr-ZJ-MKE"/>
+                            <constraint firstItem="S4B-Qg-ibk" firstAttribute="trailing" secondItem="hPO-ve-x4S" secondAttribute="trailing" constant="10" id="ljq-fa-w5a"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="URLTextField" destination="slr-Vn-zHL" id="4s3-Bd-HuN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dRF-sd-Tlc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="39" y="53"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

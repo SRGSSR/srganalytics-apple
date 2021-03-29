@@ -16,6 +16,8 @@
 		6F6EC32524C9985F0085E981 /* SRGAnalyticsIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32424C9985F0085E981 /* SRGAnalyticsIdentity */; };
 		6F6EC32724C9985F0085E981 /* SRGAnalyticsMediaPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */; };
 		6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB7CF1E23326FB0006EBCA4 /* Resources.m */; };
+		6FC1DE3D2611A5420018F7E4 /* WebTesterViewController~ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */; };
+		6FC1DE422611AC970018F7E4 /* WebTesterViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */; };
 		6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030623F580D10072EBC4 /* SceneDelegate.m */; };
 		6FCE030D23F582CB0072EBC4 /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCE030C23F582CB0072EBC4 /* Application.m */; };
 		6FF9F6562332A2C200F981F7 /* SimpleViewController~tvos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FF9F6552332A2C200F981F7 /* SimpleViewController~tvos.storyboard */; };
@@ -35,6 +37,9 @@
 		6F821DD62257801700489EC8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		6FB7CF1D23326FB0006EBCA4 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		6FB7CF1E23326FB0006EBCA4 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
+		6FC1DE3B2611A5420018F7E4 /* WebTesterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebTesterViewController.h; sourceTree = "<group>"; };
+		6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WebTesterViewController~ios.m"; sourceTree = "<group>"; };
+		6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "WebTesterViewController~ios.storyboard"; sourceTree = "<group>"; };
 		6FCE030523F580D10072EBC4 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		6FCE030623F580D10072EBC4 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		6FCE030B23F582CB0072EBC4 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
@@ -104,6 +109,16 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		6FC1DE3A2611A4F90018F7E4 /* WebTester */ = {
+			isa = PBXGroup;
+			children = (
+				6FC1DE3B2611A5420018F7E4 /* WebTesterViewController.h */,
+				6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */,
+				6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */,
+			);
+			path = WebTester;
+			sourceTree = "<group>";
+		};
 		9F1518B21AC2F1CE00AE051D = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +163,7 @@
 				088700B71DA2528900D4961A /* Demos */,
 				6FB7CF1C23326FB0006EBCA4 /* Helpers */,
 				088700C31DA2528900D4961A /* Simple */,
+				6FC1DE3A2611A4F90018F7E4 /* WebTester */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -217,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FC1DE422611AC970018F7E4 /* WebTesterViewController~ios.storyboard in Resources */,
 				E6296E881DA6205200E33C32 /* SimpleViewController~ios.storyboard in Resources */,
 				0846F5DC232FBC3E00234065 /* LaunchScreen~ios.storyboard in Resources */,
 				E6FC7F1D1D61FA4700A55085 /* Images.xcassets in Resources */,
@@ -252,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FC1DE3D2611A5420018F7E4 /* WebTesterViewController~ios.m in Sources */,
 				088700D81DA2542700D4961A /* main.m in Sources */,
 				6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */,
 				6FCE030D23F582CB0072EBC4 /* Application.m in Sources */,

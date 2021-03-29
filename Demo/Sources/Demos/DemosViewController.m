@@ -247,7 +247,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
 
 - (NSString *)srg_pageViewTitle
 {
-    return @"home";
+    return @"demos";
 }
 
 #pragma mark UI
