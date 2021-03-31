@@ -167,6 +167,10 @@ Should you have to display web content within your application, please thoroughf
 - News application displaying articles from the companion website as HTML.
 - Login web page displayed using `ASAuthenticationServices`, which itself uses the in-app browser for presentation.
 
+### Testing tool
+
+The SRG Analytics demo provides a web testing tool which lets you display any web page in the context of a tracked app. You can use a proxy tool (e.g. [Charles proxy](https://www.charlesproxy.com)) to check how some web page behaves in the context of an app, whether this page is opened while the app is still in foreground (web view or in-app browser) or while the app is in background (device browser).
+
 ## Measuring application functionalities
 
 To measure any kind of application functionality, you typically use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
