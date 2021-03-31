@@ -51,7 +51,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgappearance-apple.git",
         "state": {
           "branch": "feature/font-overhaul",
-          "revision": "47eb91c047d2dcab0cef665d795037db11d01a30",
+          "revision": "7ff17657dc244258f408a26af53c76d1716d0ecf",
           "version": null
         }
       },
@@ -87,7 +87,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
           "branch": "feature/font-overhaul",
-          "revision": "1fb51cd4c8efd1825d3ede8cc7997b14c883c44c",
+          "revision": "65f0686f9afebf91a1ee9135dae3688bab7cb274",
           "version": null
         }
       },
