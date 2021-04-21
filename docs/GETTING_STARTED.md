@@ -38,12 +38,12 @@ If and only if your application data will be analyzed by your business unit (and
 
 ## Application information
 
-The application information is automatically extracted from your application `Info.plist` file:
+Application name and version are required in analytics measurements. This information is automatically extracted from your application `Info.plist` which must therefore be properly configured to send correct values:
 
-- The application name is given by `CFBundleName`.
-- The application version is given by `CFBundleShortVersionString`.
+- The [application name](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundlename) is extracted from `CFBundleName`.
+- The [application version](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring) is extracted from `CFBundleShortVersionString`.  
 
-If your application has an Android equivalent, you should ensure that both the Android, iOS and tvOS versions use the same application name.
+The application name must be consistent for all platforms your product is available on (e.g. iOS, tvOS and Android) so that measurements can be properly consolidated. Known expected application names are available from the corresponding [wiki page](https://jira.srg.beecollaboration.com/browse/PLAYRTS-1733). Should your product be new, please use the contact information available from this wiki page to request a dedicated application name.
 
 ## Measurement information
 
