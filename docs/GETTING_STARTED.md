@@ -43,7 +43,7 @@ Application name and version are required in analytics measurements. This inform
 - The [application name](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundlename) is extracted from `CFBundleName`.
 - The [application version](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring) is extracted from `CFBundleShortVersionString`.  
 
-The application name must be consistent for all platforms your product is available on (e.g. iOS, tvOS and Android) so that measurements can be properly consolidated. Known expected application names are available from the corresponding [wiki page](https://jira.srg.beecollaboration.com/browse/PLAYRTS-1733). Should your product be new, please use the contact information available from this wiki page to request a dedicated application name.
+The application name must be consistent for all platforms your product is available on (e.g. iOS, tvOS and Android) so that measurements can be properly consolidated. Known expected application names are available from the corresponding [wiki page](https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/Guidance+Implementation+Apps). Should your product be new, please use the contact information available from this wiki page to request a dedicated application name.
 
 ## Measurement information
 
