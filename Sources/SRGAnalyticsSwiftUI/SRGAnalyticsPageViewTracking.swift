@@ -4,6 +4,9 @@
 //  License information is available from the LICENSE file.
 //
 
+#if canImport(Combine)  // TODO: Can be removed once iOS 11 is the minimum target declared in the package manifest. Combine is
+                        //       used as testing canImport(SwiftUI) succeeds when building armv7 binaries.
+
 import SRGAnalytics
 import SwiftUI
 
@@ -59,3 +62,5 @@ public extension View {
         self.background(SRGPageTrackingView(title: title, levels: levels, labels: labels))
     }
 }
+
+#endif
