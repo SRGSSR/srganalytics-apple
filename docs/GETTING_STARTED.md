@@ -38,12 +38,12 @@ If and only if your application data will be analyzed by your business unit (and
 
 ## Application information
 
-The application information is automatically extracted from your application `Info.plist` file:
+Application name and version are required in analytics measurements. This information is automatically extracted from your application `Info.plist` which must therefore be properly configured to send correct values:
 
-- The application name is given by `CFBundleName`.
-- The application version is given by `CFBundleShortVersionString`.
+- The [application name](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundlename) is extracted from `CFBundleName`.
+- The [application version](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring) is extracted from `CFBundleShortVersionString`.  
 
-If your application has an Android equivalent, you should ensure that both the Android, iOS and tvOS versions use the same application name.
+The application name must be consistent for all platforms your product is available on (e.g. iOS, tvOS and Android) so that measurements can be properly consolidated. Known expected application names are available from the corresponding [wiki page](https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/Guidance+Implementation+Apps). Should your product be new, please use the contact information available from this wiki page to request a dedicated application name.
 
 ## Measurement information
 
@@ -166,6 +166,10 @@ Should you have to display web content within your application, please thoroughf
 
 - News application displaying articles from the companion website as HTML.
 - Login web page displayed using `ASAuthenticationServices`, which itself uses the in-app browser for presentation.
+
+### Testing tool
+
+The SRG Analytics demo provides a web testing tool which lets you display any web page in the context of a tracked app. You can use a proxy tool (e.g. [Charles proxy](https://www.charlesproxy.com)) to check how some web page behaves in the context of an app, whether this page is opened while the app is still in foreground (web view or in-app browser) or while the app is in background (device browser).
 
 ## Measuring application functionalities
 
