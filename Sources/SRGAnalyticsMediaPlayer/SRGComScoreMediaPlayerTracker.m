@@ -8,8 +8,10 @@
 
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "SRGAnalyticsLabels+Private.h"
+#import "SRGAnalyticsLogger.h"
 #import "SRGAnalyticsMediaPlayerLogger.h"
 #import "SRGAnalyticsStreamLabels.h"
+#import "SRGAnalyticsTracker+Private.h"
 #import "SRGMediaAnalytics.h"
 #import "SRGMediaPlayerController+SRGAnalyticsMediaPlayer.h"
 
@@ -63,6 +65,11 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
 
 + (SCORStreamingAnalytics *)streamingAnalyticsForMediaPlayerController:(SRGMediaPlayerController *)mediaPlayerController
 {
+    if (! SRGAnalyticsTracker.sharedTracker.active) {
+        SRGAnalyticsLogWarning(@"playerTracker", @"The tracker is not active yet");
+        return;
+    }
+    
     SRGAnalyticsStreamLabels *labels = mediaPlayerController.userInfo[SRGAnalyticsMediaPlayerLabelsKey];
     NSDictionary<NSString *, NSString *> *labelsDictionary = labels.comScoreLabelsDictionary;
     if (labelsDictionary.count == 0) {

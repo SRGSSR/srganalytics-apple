@@ -41,6 +41,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 @interface SRGAnalyticsTracker ()
 
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
+@property (nonatomic, getter=isActive) BOOL active;
 
 @property (nonatomic) TagCommander *tagCommander;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
@@ -76,10 +77,12 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
         [self activateConfiguration:configuration];
+        [self sendApplicationList];
     }
     else {
         __block id observer = [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             [self activateConfiguration:self.configuration];
+            [self sendApplicationList];
             [NSNotificationCenter.defaultCenter removeObserver:observer];
         }];
     }
@@ -113,7 +116,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     [SCORAnalytics start];
     
-    [self sendApplicationList];
+    self.active = YES;
 }
 
 #pragma mark Labels
@@ -174,6 +177,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
+    if (! self.active) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker is not active yet");
+        return;
+    }
+    
     if ( ! self.tagCommander) {
         SRGAnalyticsConfiguration *configuration = self.configuration;
         NSAssert(configuration != nil, @"The tracker must be started");
@@ -206,11 +214,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
-    if (! self.configuration) {
-        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
-        return;
-    }
-    
     if (title.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing title. No event will be sent");
         return;
@@ -225,6 +228,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                                 labels:(SRGAnalyticsPageViewLabels *)labels
                   fromPushNotification:(BOOL)fromPushNotification
 {
+    if (! self.active) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker is not active yet");
+        return;
+    }
+    
     NSAssert(title.length != 0, @"A title is required");
     
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultComScoreLabels].mutableCopy;
@@ -316,11 +324,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 - (void)trackHiddenEventWithName:(NSString *)name
                           labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
-    if (! self.configuration) {
-        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
-        return;
-    }
-    
     if (name.length == 0) {
         SRGAnalyticsLogWarning(@"tracker", @"Missing name. No event will be sent");
         return;
