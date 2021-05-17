@@ -74,6 +74,19 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     self.configuration = configuration;
     
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
+        [self activateConfiguration:configuration];
+    }
+    else {
+        __block id observer = [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            [self activateConfiguration:self.configuration];
+            [NSNotificationCenter.defaultCenter removeObserver:observer];
+        }];
+    }
+}
+
+- (void)activateConfiguration:(SRGAnalyticsConfiguration *)configuration
+{
     if (configuration.unitTesting) {
         SRGAnalyticsEnableRequestInterceptor();
     }
