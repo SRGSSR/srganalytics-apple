@@ -18,7 +18,7 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *OnDemandMultiAudioTracksTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsvodww-vh.akamaihd.net/i/docfu/2017/docfu_20170728_full_f_1027021,-1201k,-701k,-301k,-101k,-2001k,-fra-ad,-roh,-deu,-ita,.mp4.csmil/master.m3u8?audiotrack=0:fr:Fran%C3%A7ais,5:fr:Fran%C3%A7ais%20(AD):ad,6:rm:Rumantsch,7:de:Deutsch,8:it:Italiano&subtitles=it,gsw,fr:sdh"];
+    return [NSURL URLWithString:@"https://rts-vod-amd.akamaized.net/ww/hls/8806923/ead53ddc-4703-35bd-b6a2-c0a9231a4d62/master.m3u8"];
 }
 
 static NSURL *OnDemandVideoWithoutAudioTestURL(void)
