@@ -41,6 +41,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 @interface SRGAnalyticsTracker ()
 
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
+@property (nonatomic, getter=isActive) BOOL active;
 
 @property (nonatomic) TagCommander *tagCommander;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
@@ -114,6 +115,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [SCORAnalytics start];
     
     [self sendApplicationList];
+    
+    self.active = YES;
 }
 
 #pragma mark Labels
@@ -206,8 +209,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
-    if (! self.configuration) {
-        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+    if (! self.active) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker is not active yet");
         return;
     }
     
@@ -316,8 +319,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 - (void)trackHiddenEventWithName:(NSString *)name
                           labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
-    if (! self.configuration) {
-        SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
+    if (! self.active) {
+        SRGAnalyticsLogWarning(@"tracker", @"The tracker is not active yet");
         return;
     }
     
