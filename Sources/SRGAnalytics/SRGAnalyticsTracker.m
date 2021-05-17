@@ -78,7 +78,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self activateConfiguration:configuration];
     }
     else {
-        __block id observer = [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationDidBecomeActiveNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        __block id observer = [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             [self activateConfiguration:self.configuration];
             [NSNotificationCenter.defaultCenter removeObserver:observer];
         }];
