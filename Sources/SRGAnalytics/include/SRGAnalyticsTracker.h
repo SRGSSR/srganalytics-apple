@@ -61,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
  *     information). In this case, all mandatory stream measurement metadata will be automatically provided when
  *     playing the content through one of the playback methods made available by this subframework.
  */
+NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions")
 @interface SRGAnalyticsTracker : NSObject
 
 /**
