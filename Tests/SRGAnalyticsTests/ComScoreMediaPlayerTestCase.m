@@ -18,12 +18,12 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
 }
 
 @interface ComScoreMediaPlayerTestCase : XCTestCase
