@@ -399,10 +399,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                 [installedApplications addObject:application];
             }
             
-            // Since iOS 9, to be able to open a URL in another application (and thus to be able to test for URL scheme
-            // support), the application must declare the schemes it supports via its Info.plist file (under the
-            // `LSApplicationQueriesSchemes` key). If we are running on iOS 9 or above, check that the app list is consistent
-            // with the remote list, and log an error if this is not the case
+            // To be able to open a URL in another application (and thus to be able to test for URL scheme support),
+            // the application must declare the schemes it supports via its Info.plist file (under the
+            // `LSApplicationQueriesSchemes` key). Check that the app list is consistent with the remote list, and
+            // log an error if this is not the case.
             NSArray<NSString *> *declaredURLSchemesArray = NSBundle.mainBundle.infoDictionary[@"LSApplicationQueriesSchemes"];
             NSSet<NSString *> *declaredURLSchemes = declaredURLSchemesArray ? [NSSet setWithArray:declaredURLSchemesArray] : [NSSet set];
             if (! [URLSchemes isSubsetOfSet:declaredURLSchemes]) {
@@ -419,8 +419,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             labels.type = @"hidden";
             labels.source = @"SRGAnalytics";
             labels.value = [sortedInstalledApplications componentsJoinedByString:@";"];
-            labels.comScoreCustomInfo = @{ @"srg_evgroup": @"Installed Apps",
-                                           @"srg_evname": [sortedInstalledApplications componentsJoinedByString:@","] };
             
             [self trackHiddenEventWithName:@"Installed Apps" labels:labels];
         });
