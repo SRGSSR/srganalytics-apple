@@ -110,7 +110,8 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
         [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:title
                                                            levels:levels
                                                            labels:labels
-                                             fromPushNotification:fromPushNotification];
+                                             fromPushNotification:fromPushNotification
+                                           ignoreApplicationState:YES];
     }
 }
 
@@ -121,7 +122,6 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     if ([notification.object isKindOfClass:UIWindowScene.class]) {
         UIWindowScene *windowScene = notification.object;
         [windowScene.windows enumerateObjectsUsingBlock:^(UIWindow * _Nonnull window, NSUInteger idx, BOOL * _Nonnull stop) {
-            SRGAnalyticsTracker.sharedTracker.willEnterForeground = YES;
             UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(window);
         }];
     }
@@ -129,7 +129,6 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 + (void)srganalytics_applicationWillEnterForeground:(NSNotification *)notification
 {
-    SRGAnalyticsTracker.sharedTracker.willEnterForeground = YES;
     UIWindow *keyWindow = UIApplication.sharedApplication.keyWindow;
     UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(keyWindow);
 }

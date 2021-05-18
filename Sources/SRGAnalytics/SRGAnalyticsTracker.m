@@ -47,8 +47,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 @property (nonatomic) SRGAnalyticsLabels *globalLabels;
 
-@property (nonatomic) BOOL willEnterForeground;
-
 @end
 
 @implementation SRGAnalyticsTracker
@@ -195,15 +193,24 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
+    [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification ignoreApplicationState:NO];
+}
+
+- (void)trackPageViewWithTitle:(NSString *)title
+                        levels:(NSArray<NSString *> *)levels
+                        labels:(SRGAnalyticsPageViewLabels *)labels
+          fromPushNotification:(BOOL)fromPushNotification
+        ignoreApplicationState:(BOOL)ignoreApplicationState;
+
+{
     if (! self.configuration) {
         SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
         return;
     }
     
-    if (title.length == 0 || (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground && !self.willEnterForeground)) {
+    if (title.length == 0 || (! ignoreApplicationState && UIApplication.sharedApplication.applicationState == UIApplicationStateBackground)) {
         return;
     }
-    self.willEnterForeground = NO;
     
     [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
