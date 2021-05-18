@@ -198,8 +198,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    if (title.length == 0) {
-        SRGAnalyticsLogWarning(@"tracker", @"Missing title. No event will be sent");
+    if (title.length == 0 || UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
         return;
     }
     
