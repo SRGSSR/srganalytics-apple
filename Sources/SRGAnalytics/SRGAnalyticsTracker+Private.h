@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) SRGAnalyticsLabels *globalLabels;
 
+@property (nonatomic) BOOL willEnterForeground;
+
 - (void)trackTagCommanderEventWithLabels:(nullable NSDictionary<NSString *, NSString *> *)labels;
 
 @end

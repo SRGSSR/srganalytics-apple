@@ -47,6 +47,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 @property (nonatomic) SRGAnalyticsLabels *globalLabels;
 
+@property (nonatomic) BOOL willEnterForeground;
+
 @end
 
 @implementation SRGAnalyticsTracker
@@ -198,9 +200,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    if (title.length == 0 || UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+    if (title.length == 0 || (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground && !self.willEnterForeground)) {
         return;
     }
+    self.willEnterForeground = NO;
     
     [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];

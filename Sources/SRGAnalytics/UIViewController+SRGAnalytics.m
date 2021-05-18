@@ -6,7 +6,7 @@
 
 #import "UIViewController+SRGAnalytics.h"
 
-#import "SRGAnalyticsTracker.h"
+#import "SRGAnalyticsTracker+Private.h"
 
 #import <objc/runtime.h>
 
@@ -121,6 +121,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     if ([notification.object isKindOfClass:UIWindowScene.class]) {
         UIWindowScene *windowScene = notification.object;
         [windowScene.windows enumerateObjectsUsingBlock:^(UIWindow * _Nonnull window, NSUInteger idx, BOOL * _Nonnull stop) {
+            SRGAnalyticsTracker.sharedTracker.willEnterForeground = YES;
             UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(window);
         }];
     }
@@ -128,6 +129,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 + (void)srganalytics_applicationWillEnterForeground:(NSNotification *)notification
 {
+    SRGAnalyticsTracker.sharedTracker.willEnterForeground = YES;
     UIWindow *keyWindow = UIApplication.sharedApplication.keyWindow;
     UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(keyWindow);
 }
