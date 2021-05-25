@@ -193,13 +193,22 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
+    [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification ignoreApplicationState:NO];
+}
+
+- (void)trackPageViewWithTitle:(NSString *)title
+                        levels:(NSArray<NSString *> *)levels
+                        labels:(SRGAnalyticsPageViewLabels *)labels
+          fromPushNotification:(BOOL)fromPushNotification
+        ignoreApplicationState:(BOOL)ignoreApplicationState;
+
+{
     if (! self.configuration) {
         SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
         return;
     }
     
-    if (title.length == 0) {
-        SRGAnalyticsLogWarning(@"tracker", @"Missing title. No event will be sent");
+    if (title.length == 0 || (! ignoreApplicationState && UIApplication.sharedApplication.applicationState == UIApplicationStateBackground)) {
         return;
     }
     
@@ -386,10 +395,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                 [installedApplications addObject:application];
             }
             
-            // Since iOS 9, to be able to open a URL in another application (and thus to be able to test for URL scheme
-            // support), the application must declare the schemes it supports via its Info.plist file (under the
-            // `LSApplicationQueriesSchemes` key). If we are running on iOS 9 or above, check that the app list is consistent
-            // with the remote list, and log an error if this is not the case
+            // To be able to open a URL in another application (and thus to be able to test for URL scheme support),
+            // the application must declare the schemes it supports via its Info.plist file (under the
+            // `LSApplicationQueriesSchemes` key). Check that the app list is consistent with the remote list, and
+            // log an error if this is not the case.
             NSArray<NSString *> *declaredURLSchemesArray = NSBundle.mainBundle.infoDictionary[@"LSApplicationQueriesSchemes"];
             NSSet<NSString *> *declaredURLSchemes = declaredURLSchemesArray ? [NSSet setWithArray:declaredURLSchemesArray] : [NSSet set];
             if (! [URLSchemes isSubsetOfSet:declaredURLSchemes]) {
@@ -406,8 +415,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             labels.type = @"hidden";
             labels.source = @"SRGAnalytics";
             labels.value = [sortedInstalledApplications componentsJoinedByString:@";"];
-            labels.comScoreCustomInfo = @{ @"srg_evgroup": @"Installed Apps",
-                                           @"srg_evname": [sortedInstalledApplications componentsJoinedByString:@","] };
             
             [self trackHiddenEventWithName:@"Installed Apps" labels:labels];
         });

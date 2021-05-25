@@ -18,7 +18,7 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *OnDemandMultiAudioTracksTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsvodww-vh.akamaihd.net/i/docfu/2017/docfu_20170728_full_f_1027021,-1201k,-701k,-301k,-101k,-2001k,-fra-ad,-roh,-deu,-ita,.mp4.csmil/master.m3u8?audiotrack=0:fr:Fran%C3%A7ais,5:fr:Fran%C3%A7ais%20(AD):ad,6:rm:Rumantsch,7:de:Deutsch,8:it:Italiano&subtitles=it,gsw,fr:sdh"];
+    return [NSURL URLWithString:@"https://rts-vod-amd.akamaized.net/ww/hls/8806923/ead53ddc-4703-35bd-b6a2-c0a9231a4d62/master.m3u8"];
 }
 
 static NSURL *OnDemandVideoWithoutAudioTestURL(void)
@@ -33,12 +33,12 @@ static NSURL *OnDemandAudioTestURL(void)
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
 }
 
 @interface MediaPlayerTestCase : XCTestCase
@@ -152,22 +152,28 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
-        XCTAssertEqualObjects(labels[@"media_position"], @"0");
-        return YES;
+        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_position"], @"0");
+            seekReceived = YES;
+        }
+        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_position"], @"1795");
+            playReceived = YES;
+        }
+        return seekReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_position"], @"1795");
-        return YES;
-    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -704,24 +710,31 @@ static NSURL *DVRTestURL(void)
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
     }];
     
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
-        XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
-        XCTAssertEqualObjects(labels[@"media_position"], @"1");
-        return YES;
+        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
+            XCTAssertEqualObjects(labels[@"media_position"], @"1");
+            seekReceived = YES;
+        }
+        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_timeshift"], @"45");
+            XCTAssertEqualObjects(labels[@"media_position"], @"1");
+            playReceived = YES;
+        }
+        return seekReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(45., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
     
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_timeshift"], @"45");
-        XCTAssertEqualObjects(labels[@"media_position"], @"1");
-        return YES;
-    }];
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
@@ -928,24 +941,30 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
-        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
-        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
-        return YES;
+        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+            XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+            seekReceived = YES;
+        }
+        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
+            XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
+            playReceived = YES;
+        }
+        return seekReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
-        XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
-        return YES;
-    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -1154,22 +1173,28 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block BOOL seekReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"seek");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
-        return YES;
+        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+            XCTAssertFalse(seekReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+            seekReceived = YES;
+        }
+        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
+            playReceived = YES;
+        }
+        return seekReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
-        XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
-        return YES;
-    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     

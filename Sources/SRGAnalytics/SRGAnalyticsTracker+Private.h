@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) SRGAnalyticsLabels *globalLabels;
 
+- (void)trackPageViewWithTitle:(NSString *)title
+                        levels:(nullable NSArray<NSString *> *)levels
+                        labels:(nullable SRGAnalyticsPageViewLabels *)labels
+          fromPushNotification:(BOOL)fromPushNotification
+        ignoreApplicationState:(BOOL)ignoreApplicationState;
+
 - (void)trackTagCommanderEventWithLabels:(nullable NSDictionary<NSString *, NSString *> *)labels;
 
 @end

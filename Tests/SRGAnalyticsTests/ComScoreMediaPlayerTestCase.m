@@ -18,12 +18,12 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
+    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
 }
 
 @interface ComScoreMediaPlayerTestCase : XCTestCase
@@ -138,22 +138,28 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block BOOL pauseReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
-        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
-        return YES;
+        if ([labels[@"ns_st_ev"] isEqualToString:@"pause"]) {
+            XCTAssertFalse(pauseReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 0);
+            pauseReceived = YES;
+        }
+        else if ([labels[@"ns_st_ev"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 1795);
+            playReceived = YES;
+        }
+        return pauseReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(5., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
-        XCTAssertEqual([labels[@"ns_st_po"] integerValue] / 1000, 1795);
-        return YES;
-    }];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
@@ -589,24 +595,31 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
+    __block BOOL pauseReceived = NO;
+    __block BOOL playReceived = NO;
+    
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"pause");
-        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
-        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
-        return YES;
+        if ([labels[@"ns_st_ev"] isEqualToString:@"pause"]) {
+            XCTAssertFalse(pauseReceived);
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
+            XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
+            pauseReceived = YES;
+        }
+        else if ([labels[@"ns_st_ev"] isEqualToString:@"play"]) {
+            XCTAssertFalse(playReceived);
+            
+            XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
+            XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
+            playReceived = YES;
+        }
+        return pauseReceived && playReceived;
     }];
     
     CMTime pastTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(45., NSEC_PER_SEC));
     [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:pastTime] withCompletionHandler:nil];
     
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
-        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
-        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"7150000");
-        return YES;
-    }];
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
