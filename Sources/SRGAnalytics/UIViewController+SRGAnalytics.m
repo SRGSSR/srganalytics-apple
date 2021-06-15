@@ -6,7 +6,7 @@
 
 #import "UIViewController+SRGAnalytics.h"
 
-#import "SRGAnalyticsTracker.h"
+#import "SRGAnalyticsTracker+Private.h"
 
 #import <objc/runtime.h>
 
@@ -39,7 +39,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 
 - (void)srg_trackPageView
 {
-    [self srg_trackPageViewAutomatic:NO recursive:NO];
+    [self srg_trackPageViewAutomatic:NO recursive:NO ignoreApplicationState:NO];
 }
 
 - (void)srg_setNeedsAutomaticPageViewTrackingInChildViewController:(UIViewController *)childViewController
@@ -52,7 +52,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
         return;
     }
     
-    [childViewController srg_trackPageViewAutomatic:YES recursive:YES];
+    [childViewController srg_trackPageViewAutomatic:YES recursive:YES ignoreApplicationState:NO];
 }
 
 - (NSArray<UIViewController *> *)srg_childViewControllers
@@ -66,12 +66,12 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
     }
 }
 
-- (void)srg_trackPageViewAutomatic:(BOOL)automatic recursive:(BOOL)recursive
+- (void)srg_trackPageViewAutomatic:(BOOL)automatic recursive:(BOOL)recursive ignoreApplicationState:(BOOL)ignoreApplicationState
 {
     if (recursive) {
         NSArray<UIViewController *> *childViewControllers = [self srg_childViewControllers];
         for (UIViewController *viewController in childViewControllers) {
-            [viewController srg_trackPageViewAutomatic:automatic recursive:recursive];
+            [viewController srg_trackPageViewAutomatic:automatic recursive:recursive ignoreApplicationState:ignoreApplicationState];
         }
     }
     
@@ -110,7 +110,8 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
         [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:title
                                                            levels:levels
                                                            labels:labels
-                                             fromPushNotification:fromPushNotification];
+                                             fromPushNotification:fromPushNotification
+                                           ignoreApplicationState:ignoreApplicationState];
     }
 }
 
@@ -218,7 +219,7 @@ static void UIViewController_SRGAnalyticsUpdateAnalyticsForWindow(UIWindow *wind
     while (topViewController.presentedViewController) {
         topViewController = topViewController.presentedViewController;
     }
-    [topViewController srg_trackPageViewAutomatic:YES recursive:YES];
+    [topViewController srg_trackPageViewAutomatic:YES recursive:YES ignoreApplicationState:YES];
 }
 
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated)
@@ -231,7 +232,7 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
     //    - Modal presentation
     //    - View controller revealed after having been initially hidden behind a modal view controller
     if (! [objc_getAssociatedObject(self, s_appearedOnce) boolValue]) {
-        [self srg_trackPageViewAutomatic:YES recursive:NO];
+        [self srg_trackPageViewAutomatic:YES recursive:NO ignoreApplicationState:NO];
         objc_setAssociatedObject(self, s_appearedOnce, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }

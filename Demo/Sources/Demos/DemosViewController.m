@@ -192,17 +192,17 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             switch (indexPath.row) {
                 case 0: {
-                    URL = [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
+                    URL = [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
                     break;
                 }
                     
                 case 1: {
-                    URL = [NSURL URLWithString:@"http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4"];
+                    URL = [NSURL URLWithString:@"https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8"];
                     break;
                 }
                     
                 case 2: {
-                    URL = [NSURL URLWithString:@"http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
+                    URL = [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
                     break;
                 }
                     
