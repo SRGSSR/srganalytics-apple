@@ -105,12 +105,7 @@
     
     NSURL *URL = [self checkURLString:self.URLTextField.text];
     if (URL) {
-        if (@available(iOS 10, *)) {
-            [UIApplication.sharedApplication openURL:URL options:@{} completionHandler:nil];
-        }
-        else {
-            [UIApplication.sharedApplication openURL:URL];
-        }
+        [UIApplication.sharedApplication openURL:URL options:@{} completionHandler:nil];
     }
 }
 

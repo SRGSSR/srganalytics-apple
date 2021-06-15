@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SimpleViewController.h"
+#import "SRGAnalytics_demo-Swift.h"
 
 @import SRGAnalyticsIdentity;
 @import SRGAnalyticsMediaPlayer;
@@ -75,7 +76,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     static dispatch_once_t s_onceToken;
     static NSArray<NSNumber *> *s_rows;
     dispatch_once(&s_onceToken, ^{
-        s_rows = @[ @6,
+        s_rows = @[ @7,
                     @3,
                     @1 ];
     });
@@ -106,6 +107,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
                          NSLocalizedString(@"Automatic tracking with many levels", nil),
                          NSLocalizedString(@"Automatic tracking with levels and labels", nil),
                          NSLocalizedString(@"Manual tracking", nil),
+                         NSLocalizedString(@"SwiftUI", nil),
                          NSLocalizedString(@"Missing title", nil) ],
                       @[ NSLocalizedString(@"Live", nil),
                          NSLocalizedString(@"VOD", nil),
@@ -121,60 +123,75 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     
     switch (indexPath.section) {
         case 0: {
-            SimpleViewController *simpleViewController = nil;
+            UIViewController *viewController = nil;
             
             switch (indexPath.row) {
                 case 0: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking"
-                                                                                levels:nil
-                                                                            customInfo:nil
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:YES];
+                    viewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking"
+                                                                          levels:nil
+                                                                      customInfo:nil
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:YES];
                     break;
                 }
                     
                 case 1: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with levels"
-                                                                                levels:@[@"Level1", @"Level2", @"Level3"]
-                                                                            customInfo:nil
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:YES];
+                    viewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with levels"
+                                                                          levels:@[@"Level1", @"Level2", @"Level3"]
+                                                                      customInfo:nil
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:YES];
                     break;
                 }
                     
                 case 2: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with many levels"
-                                                                                levels:@[@"Level1", @"Level2", @"Level3", @"Level4", @"Level5", @"Level6", @"Level7", @"Level8", @"Level9", @"Level10", @"Level11", @"Level12"]
-                                                                            customInfo:nil
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:YES];
+                    viewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with many levels"
+                                                                          levels:@[@"Level1", @"Level2", @"Level3", @"Level4", @"Level5", @"Level6", @"Level7", @"Level8", @"Level9", @"Level10", @"Level11", @"Level12"]
+                                                                      customInfo:nil
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:YES];
                     break;
                 }
                     
                 case 3: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with levels and labels"
-                                                                                levels:@[@"Level1", @"Level2"]
-                                                                            customInfo:@{ @"custom_label": @"custom_value" }
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:YES];
+                    viewController = [[SimpleViewController alloc] initWithTitle:@"Automatic tracking with levels and labels"
+                                                                          levels:@[@"Level1", @"Level2"]
+                                                                      customInfo:@{ @"custom_label": @"custom_value" }
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:YES];
                     break;
                 }
                     
                 case 4: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@"Manual tracking"
-                                                                                levels:nil
-                                                                            customInfo:nil
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:NO];
+                    viewController = [[SimpleViewController alloc] initWithTitle:@"Manual tracking"
+                                                                          levels:nil
+                                                                      customInfo:nil
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:NO];
                     break;
                 }
                     
                 case 5: {
-                    simpleViewController = [[SimpleViewController alloc] initWithTitle:@""
-                                                                                levels:nil
-                                                                            customInfo:nil
-                                                            openedFromPushNotification:NO
-                                                                  trackedAutomatically:YES];
+                    if (@available(iOS 13, tvOS 13, *)) {
+                        viewController = [SwiftUIViewController viewController];
+                    }
+                    else {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Demo unavailable", nil)
+                                                                                                 message:NSLocalizedString(@"This demo is only available on iOS / tvOS 13 and above", nil)
+                                                                                          preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil) style:UIAlertActionStyleDefault handler:nil]];
+                        [self presentViewController:alertController animated:YES completion:nil];
+                        return;
+                    }
+                    break;
+                }
+                    
+                case 6: {
+                    viewController = [[SimpleViewController alloc] initWithTitle:@""
+                                                                          levels:nil
+                                                                      customInfo:nil
+                                                      openedFromPushNotification:NO
+                                                            trackedAutomatically:YES];
                     break;
                 }
                     
@@ -183,7 +200,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
                     break;
                 }
             }
-            [self.navigationController pushViewController:simpleViewController animated:YES];
+            [self.navigationController pushViewController:viewController animated:YES];
             break;
         }
             
@@ -218,7 +235,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             SRGMediaPlayerViewController *playerViewController = [[SRGMediaPlayerViewController alloc] init];
             playerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-            if (@available(iOS 9, tvOS 14, *)) {
+            if (@available(iOS 12, tvOS 14, *)) {
                 playerViewController.allowsPictureInPicturePlayback = NO;
             }
             [playerViewController.controller playURL:URL atPosition:nil withSegments:nil analyticsLabels:labels userInfo:nil];

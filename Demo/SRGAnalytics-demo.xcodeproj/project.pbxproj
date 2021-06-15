@@ -15,6 +15,8 @@
 		6F6EC32324C9985F0085E981 /* SRGAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32224C9985F0085E981 /* SRGAnalytics */; };
 		6F6EC32524C9985F0085E981 /* SRGAnalyticsIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32424C9985F0085E981 /* SRGAnalyticsIdentity */; };
 		6F6EC32724C9985F0085E981 /* SRGAnalyticsMediaPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */; };
+		6FA035AA261219EE006E4342 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA035A9261219EE006E4342 /* SwiftUIView.swift */; };
+		6FA035AD26121BFA006E4342 /* SRGAnalyticsSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6FA035AC26121BFA006E4342 /* SRGAnalyticsSwiftUI */; };
 		6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB7CF1E23326FB0006EBCA4 /* Resources.m */; };
 		6FC1DE3D2611A5420018F7E4 /* WebTesterViewController~ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC1DE3C2611A5420018F7E4 /* WebTesterViewController~ios.m */; };
 		6FC1DE422611AC970018F7E4 /* WebTesterViewController~ios.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FC1DE412611AC970018F7E4 /* WebTesterViewController~ios.storyboard */; };
@@ -37,6 +39,8 @@
 		088700C41DA2528900D4961A /* SimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleViewController.h; sourceTree = "<group>"; };
 		088700C51DA2528900D4961A /* SimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleViewController.m; sourceTree = "<group>"; };
 		6F821DD62257801700489EC8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		6FA035A9261219EE006E4342 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		6FA035B026121FCF006E4342 /* ObjectiveC-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveC-Bridge.h"; sourceTree = "<group>"; };
 		6FB7CF1D23326FB0006EBCA4 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		6FB7CF1E23326FB0006EBCA4 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		6FC1DE3B2611A5420018F7E4 /* WebTesterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebTesterViewController.h; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 			files = (
 				6F6EC32724C9985F0085E981 /* SRGAnalyticsMediaPlayer in Frameworks */,
 				6F6EC32324C9985F0085E981 /* SRGAnalytics in Frameworks */,
+				6FA035AD26121BFA006E4342 /* SRGAnalyticsSwiftUI in Frameworks */,
 				6F6EC32524C9985F0085E981 /* SRGAnalyticsIdentity in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,9 +110,18 @@
 			path = Simple;
 			sourceTree = "<group>";
 		};
+		6FA035A8261219BC006E4342 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				6FA035A9261219EE006E4342 /* SwiftUIView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		6FB7CF1C23326FB0006EBCA4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				6FA035B026121FCF006E4342 /* ObjectiveC-Bridge.h */,
 				6FB7CF1D23326FB0006EBCA4 /* Resources.h */,
 				6FB7CF1E23326FB0006EBCA4 /* Resources.m */,
 			);
@@ -180,6 +194,7 @@
 				088700C31DA2528900D4961A /* Simple */,
 				6FC1DE3A2611A4F90018F7E4 /* WebTester */,
 				6FC1DE462611CD560018F7E4 /* WebView */,
+				6FA035A8261219BC006E4342 /* SwiftUI */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -205,6 +220,7 @@
 				6F6EC32224C9985F0085E981 /* SRGAnalytics */,
 				6F6EC32424C9985F0085E981 /* SRGAnalyticsIdentity */,
 				6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */,
+				6FA035AC26121BFA006E4342 /* SRGAnalyticsSwiftUI */,
 			);
 			productName = "SRGAnalytics-demo";
 			productReference = E6FC7E881D61F95C00A55085 /* SRGAnalytics_demo.app */;
@@ -223,6 +239,7 @@
 					E6FC7E871D61F95C00A55085 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = VMGRRW6SG7;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -289,6 +306,7 @@
 				6FC1DE3D2611A5420018F7E4 /* WebTesterViewController~ios.m in Sources */,
 				088700D81DA2542700D4961A /* main.m in Sources */,
 				6FCE030723F580D10072EBC4 /* SceneDelegate.m in Sources */,
+				6FA035AA261219EE006E4342 /* SwiftUIView.swift in Sources */,
 				6FCE030D23F582CB0072EBC4 /* Application.m in Sources */,
 				088700D71DA2542700D4961A /* AppDelegate.m in Sources */,
 				6FB7CF1F23326FB0006EBCA4 /* Resources.m in Sources */,
@@ -416,6 +434,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICONS_SOURCE)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VMGRRW6SG7;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -425,6 +444,9 @@
 					"@executable_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/Sources/Helpers/ObjectiveC-Bridge.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -434,6 +456,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICONS_SOURCE)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VMGRRW6SG7;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -443,6 +466,8 @@
 					"@executable_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/Sources/Helpers/ObjectiveC-Bridge.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -481,6 +506,10 @@
 		6F6EC32624C9985F0085E981 /* SRGAnalyticsMediaPlayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SRGAnalyticsMediaPlayer;
+		};
+		6FA035AC26121BFA006E4342 /* SRGAnalyticsSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SRGAnalyticsSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
