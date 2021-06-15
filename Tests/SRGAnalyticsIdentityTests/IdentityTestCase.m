@@ -162,7 +162,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
 - (void)testHiddenEventWithStandardStartMethod
 {
     // This test requires a brand new analytics tracker
-    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker new];
+    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker performSelector:@selector(new)];
     [analyticsTracker startWithConfiguration:TestConfiguration()];
     
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -357,7 +357,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker new];
+    SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker performSelector:@selector(new)];
     [analyticsTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
