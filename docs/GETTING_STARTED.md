@@ -55,11 +55,19 @@ Be careful when using custom labels, though, and ensure your custom keys do not 
 
 View controllers represent the units of screen interaction in an application, this is why page view measurements are primarily made on view controllers. All methods and protocols for view controller tracking have been gathered in the `UIViewController+SRGAnalytics.h` file.
 
-View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked, the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires a single method to be implemented, returning the page view title to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen, and when the application wakes up from background with the view controller displayed.
+### View controller tracking
 
-The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify other custom measurement information (labels). If the required information is not available when the view controller appears, you can disable automatic tracking by implementing the optional `-srg_isTrackedAutomatically` protocol method, returning `NO`. You are then responsible of calling `-trackPageView` on the view controller when the data required by the page view is available, as well as when the application returns from background.
+View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires a single method to be implemented, returning the page view title to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen and when the application wakes up from background with the view controller displayed.
 
-Automatic page view measurements are propagated through your application view controller hierarchy when needed. If your application uses custom containers, you should have conform to the `SRGAnalyticsContainerViewTracking` protocol so that they are tracked accurately and call `srg_setNeedsAutomaticPageViewTrackingInChildViewController:` to inform the layout engine of child controller appearance. If a container does not implement `SRGAnalyticsContainerViewTracking` page view measurements will be propagated automatically to all its children view controllers. Refer to the related header documentation for more information.
+The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify other custom measurement information (labels). If the required information is not available when the view controller appears you can disable automatic tracking by implementing the optional `-srg_isTrackedAutomatically` protocol method, returning `NO`. You are then responsible of calling `-trackPageView` on the view controller when the data required by the page view is available, as well as when the application returns from background.
+
+### Containers
+
+Automatic page view measurements are propagated through your application view controller hierarchy when needed. If your application uses custom containers you should have them conform to the `SRGAnalyticsContainerViewTracking` protocol so that they are tracked correctly. You must also call `srg_setNeedsAutomaticPageViewTrackingInChildViewController:` at the appropriate time to inform the analytics engine of child controller appearance.
+
+All standard UIKit containers (`UINavigationController`, `UIPageViewController`, `UISplitViewController` and `UITabBarController`) support container view tracking, so provided you use standard containers only no additional work is required. If you use custom containers, though, you must ensure they implement `SRGAnalyticsContainerViewTracking` so that page view measurements can be automatically propagated to their children view controllers. Refer to the related header documentation for more information
+
+### Push notifications
 
 If a view can be opened from a push notification, you must implement the `-srg_openedFromPushNotification` method and return `YES` when the view controller was actually opened from a push notification.
 
