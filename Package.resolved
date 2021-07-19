@@ -50,8 +50,8 @@
         "package": "SRGAppearance",
         "repositoryURL": "https://github.com/SRGSSR/srgappearance-apple.git",
         "state": {
-          "branch": "feature/font-overhaul",
-          "revision": "cabd1e45126f3655114d2a13d381e67e96c21a11",
+          "branch": "develop",
+          "revision": "afb1621985dc7e797609644b2f4e2a26043a3a48",
           "version": null
         }
       },
@@ -86,8 +86,8 @@
         "package": "SRGIdentity",
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
-          "branch": "feature/font-overhaul",
-          "revision": "3757b5c4a5c6b8d285eeaefae572a7d35e556ad7",
+          "branch": "develop",
+          "revision": "6b2c3acd622514dd962abf4a9eff178bc0e2bd36",
           "version": null
         }
       },
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
           "branch": null,
-          "revision": "7ba6b8f78205ec9186d67aa9d1c40e376ffd4909",
-          "version": "6.1.2"
+          "revision": "4bab9588d7cd695a7a466c013c6019c3966c1e9d",
+          "version": "6.1.3"
         }
       },
       {
