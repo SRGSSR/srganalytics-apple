@@ -50,9 +50,9 @@
         "package": "SRGAppearance",
         "repositoryURL": "https://github.com/SRGSSR/srgappearance-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "afb1621985dc7e797609644b2f4e2a26043a3a48",
-          "version": null
+          "branch": null,
+          "revision": "fe65fea10fc080bc58305fe9a5a406e3730e4d91",
+          "version": "4.0.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
           "branch": null,
-          "revision": "1925363627bd1eabce8c63cc8541d5901e9d9266",
-          "version": "10.0.1"
+          "revision": "e936161d9375d01c73adf595b3e770bafaecd2ad",
+          "version": "11.0.0"
         }
       },
       {
@@ -86,9 +86,9 @@
         "package": "SRGIdentity",
         "repositoryURL": "https://github.com/SRGSSR/srgidentity-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "6b2c3acd622514dd962abf4a9eff178bc0e2bd36",
-          "version": null
+          "branch": null,
+          "revision": "b56873f352546a9496113e629f033da0df44d863",
+          "version": "3.1.0"
         }
       },
       {
