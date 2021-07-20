@@ -142,7 +142,7 @@
         return NO;
     }
     
-    // Use the preferrred start bit rate is set. Currrently only supported for HLS streams by Akamai, via a __b__ parameter
+    // Use the preferred start bit rate is set. Currently only supported for HLS streams by Akamai, via a __b__ parameter
     // (the actual bitrate will be rounded to the nearest available quality)
     NSURL *URL = resource.URL;
     NSUInteger startBitRate = preferredSettings.startBitRate;

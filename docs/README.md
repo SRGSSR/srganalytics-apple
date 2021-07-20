@@ -17,7 +17,7 @@ The SRG Analytics library supports three kinds of measurements:
  
 ## Compatibility
 
-The library is suitable for applications running on iOS 9, tvOS 12 and above. The project is meant to be compiled with the latest Xcode version.
+The library is suitable for applications running on iOS 12, tvOS 12 and above. The project is meant to be compiled with the latest Xcode version.
 
 ## Contributing
 

@@ -22,7 +22,7 @@ static void (*s_UITabBarController_setSelectedViewController)(id, SEL, id);
 
 // Swizzled method implementations
 static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL _cmd, BOOL animated);
-static void swizzled_UIViewController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController);
+static void swizzled_UITabBarController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController);
 
 @implementation UIViewController (SRGAnalytics)
 
@@ -174,7 +174,7 @@ static void swizzled_UIViewController_setSelectedViewController(UITabBarControll
 {
     Method setSelectedViewControllerMethod = class_getInstanceMethod(self, @selector(setSelectedViewController:));
     s_UITabBarController_setSelectedViewController = (__typeof__(s_UITabBarController_setSelectedViewController))method_getImplementation(setSelectedViewControllerMethod);
-    method_setImplementation(setSelectedViewControllerMethod, (IMP)swizzled_UIViewController_setSelectedViewController);
+    method_setImplementation(setSelectedViewControllerMethod, (IMP)swizzled_UITabBarController_setSelectedViewController);
 }
 
 #pragma mark SRGAnalyticsContainerViewTracking protocol
@@ -237,7 +237,7 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
     }
 }
 
-static void swizzled_UIViewController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController)
+static void swizzled_UITabBarController_setSelectedViewController(UITabBarController *self, SEL _cmd, UIViewController *viewController)
 {
     BOOL changed = (self.selectedViewController != viewController);
     s_UITabBarController_setSelectedViewController(self, _cmd, viewController);

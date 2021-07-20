@@ -31,7 +31,7 @@ OBJC_EXPORT NSString * const SRGAnalyticsComScoreRequestNotification;
 OBJC_EXPORT NSString * const SRGAnalyticsComScoreLabelsKey;                 // Key for accessing the comScore labels (as an `NSDictionary<NSString *, NSString *>`) available from the user info.
 
 /**
- *  Get the currrent unique identifier added to all measurements made in unit testing mode.
+ *  Get the current unique identifier added to all measurements made in unit testing mode.
  */
 OBJC_EXPORT NSString * _Nonnull SRGAnalyticsUnitTestingIdentifier(void);
 

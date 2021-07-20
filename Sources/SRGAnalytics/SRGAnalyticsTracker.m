@@ -161,7 +161,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    if ( ! self.tagCommander) {
+    if (! self.tagCommander) {
         SRGAnalyticsConfiguration *configuration = self.configuration;
         NSAssert(configuration != nil, @"The tracker must be started");
         
