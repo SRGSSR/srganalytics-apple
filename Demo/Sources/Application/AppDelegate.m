@@ -20,9 +20,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    [self.window makeKeyAndVisible];
-    
     SRGIdentityService.currentIdentityService = [[SRGIdentityService alloc] initWithWebserviceURL:[NSURL URLWithString:@"https://hummingbird.rts.ch/api/profile"]
                                                                                        websiteURL:[NSURL URLWithString:@"https://www.rts.ch/profile"]];
     
@@ -36,7 +33,12 @@
                                                                                                         siteName:@"rts-app-test-v"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
-    self.window.rootViewController = ApplicationRootViewController();
+    if (@available(iOS 13, tvOS 13, *)) {}
+    else {
+        self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        [self.window makeKeyAndVisible];
+        self.window.rootViewController = ApplicationRootViewController();
+    }
     return YES;
 }
 
