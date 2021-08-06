@@ -226,13 +226,9 @@ static void swizzled_UIViewController_viewDidAppear(UIViewController *self, SEL 
 {
     s_UIViewController_viewDidAppear(self, _cmd, animated);
     
-    // Track a view controller at most once automatically when appearing. This covers all possible appearance scenarios,
-    // e.g.
-    //    - Moving to a parent view controller
-    //    - Modal presentation
-    //    - View controller revealed after having been initially hidden behind a modal view controller
+    [self srg_trackPageViewAutomatic:YES recursive:NO ignoreApplicationState:NO];
+    
     if (! [objc_getAssociatedObject(self, s_appearedOnce) boolValue]) {
-        [self srg_trackPageViewAutomatic:YES recursive:NO ignoreApplicationState:NO];
         objc_setAssociatedObject(self, s_appearedOnce, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
