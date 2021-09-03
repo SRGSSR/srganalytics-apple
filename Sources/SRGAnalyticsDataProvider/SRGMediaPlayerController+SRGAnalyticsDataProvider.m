@@ -99,13 +99,16 @@ static NSString * const SRGAnalyticsDataProviderSourceUidKey = @"SRGAnalyticsDat
     
     NSMutableDictionary *userInfo = self.userInfo.mutableCopy;
     userInfo[SRGAnalyticsDataProviderMediaCompositionKey] = mediaComposition;
-    self.userInfo = userInfo.copy;
     
-    // Synchronize analytics labels
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @keypath(SRGResource.new, quality), @(self.resource.quality)];
     SRGResource *resource = [[mediaComposition.mainChapter resourcesForStreamingMethod:self.resource.streamingMethod] filteredArrayUsingPredicate:predicate].firstObject;
-    self.analyticsLabels = [mediaComposition analyticsLabelsForResource:resource sourceUid:self.userInfo[SRGAnalyticsDataProviderSourceUidKey]];
+    if (resource) {
+        userInfo[SRGAnalyticsDataProviderResourceKey] = resource;
+    }
     
+    self.userInfo = userInfo.copy;
+    self.analyticsLabels = [mediaComposition analyticsLabelsForResource:self.userInfo[SRGAnalyticsDataProviderResourceKey]
+                                                              sourceUid:self.userInfo[SRGAnalyticsDataProviderSourceUidKey]];
     self.segments = mediaComposition.mainChapter.segments;
 }
 
