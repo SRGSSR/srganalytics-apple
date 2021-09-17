@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/comScore/Comscore-Swift-Package-Manager.git",
         "state": {
           "branch": null,
-          "revision": "1bdfebcc54cef4ae96e3627f9014446218e806ca",
-          "version": "6.8.1"
+          "revision": "de8577f58200195a882d3b21f1270775b02b78e2",
+          "version": "6.9.0"
         }
       },
       {
@@ -104,9 +104,9 @@
         "package": "SRGMediaPlayer",
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
-          "branch": null,
-          "revision": "7ba6b8f78205ec9186d67aa9d1c40e376ffd4909",
-          "version": "6.1.2"
+          "branch": "develop",
+          "revision": "c3db516aef99ba58924f63cc8c8e24ca2392afaf",
+          "version": null
         }
       },
       {
