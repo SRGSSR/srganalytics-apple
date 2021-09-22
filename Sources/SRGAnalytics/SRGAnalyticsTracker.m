@@ -97,6 +97,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     
     comScoreConfiguration.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     comScoreConfiguration.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
+    comScoreConfiguration.preventAdSupportUsage = YES;
     
     [SCORAnalytics start];
     
