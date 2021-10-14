@@ -197,6 +197,18 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification ignoreApplicationState:NO];
 }
 
+- (void)uncheckedTrackPageViewWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
+{
+    [self uncheckedTrackPageViewWithTitle:title levels:levels labels:nil];
+}
+
+- (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                 levels:(NSArray<NSString *> *)levels
+                                 labels:(SRGAnalyticsPageViewLabels *)labels
+{
+    [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:NO ignoreApplicationState:YES];
+}
+
 - (void)trackPageViewWithTitle:(NSString *)title
                         levels:(NSArray<NSString *> *)levels
                         labels:(SRGAnalyticsPageViewLabels *)labels
