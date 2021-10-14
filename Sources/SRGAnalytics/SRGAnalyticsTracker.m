@@ -201,8 +201,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                         levels:(NSArray<NSString *> *)levels
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
-        ignoreApplicationState:(BOOL)ignoreApplicationState;
-
+        ignoreApplicationState:(BOOL)ignoreApplicationState
 {
     if (! self.configuration) {
         SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
