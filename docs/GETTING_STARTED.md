@@ -161,14 +161,9 @@ This approach works well for apps which present loosly related web content, for 
 
 Your app might need to display web content with tight integration into its native user interface. In such cases you must consider the web view or in-app browser approaches.
 
-If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
+If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely **for the first loaded web page** (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements. 
 
-Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
-
-- Your application might display an SRG SSR web page offering reduced navigation abilities (e.g. no footer, no header, no links) so that the user cannot navigate away, or is forced to stay within a few untracked pages with no possibility to leave.
-- Your application might observe web navigation (e.g. by implementing `WKNavigationDelegate` if you are using `WKWebView`) and inhibit navigation to tracked SRG SSR websites. Alternatively it can force tracked SRG SSR websites to be opened in the device browser instead.
-
-Should you have to display web content within your application, please thoroughfully check that Mediapulse requirements are fulfilled, otherwise your application might be excluded from official reports when tested.
+Note that only the first web navigation level is affected by this rule. As it is impossible to avoid reaching an SRG SSR web page starting from a random web page, Mediapulse namely agreed that levels deeper than the first one can be tracked.
 
 #### Examples
 
