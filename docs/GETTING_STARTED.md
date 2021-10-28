@@ -65,7 +65,7 @@ The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify oth
 
 Automatic page view measurements are propagated through your application view controller hierarchy when needed. If your application uses custom containers you should have them conform to the `SRGAnalyticsContainerViewTracking` protocol so that they are tracked correctly. You must also call `srg_setNeedsAutomaticPageViewTrackingInChildViewController:` at the appropriate time to inform the analytics engine of child controller appearance.
 
-All standard UIKit containers (`UINavigationController`, `UIPageViewController`, `UISplitViewController` and `UITabBarController`) support container view tracking, so provided you use standard containers only no additional work is required. If you use custom containers, though, you must ensure they implement `SRGAnalyticsContainerViewTracking` so that page view measurements can be automatically propagated to their children view controllers. Refer to the related header documentation for more information
+All standard UIKit containers (`UINavigationController`, `UIPageViewController`, `UISplitViewController` and `UITabBarController`) support container view tracking, so provided you use standard containers only no additional work is required. If you use custom containers, though, you must ensure they implement `SRGAnalyticsContainerViewTracking` so that page view measurements can be automatically propagated to their children view controllers. Refer to the related header documentation for more information.
 
 ### Push notifications
 
@@ -161,7 +161,7 @@ This approach works well for apps which present loosly related web content, for 
 
 Your app might need to display web content with tight integration into its native user interface. In such cases you must consider the web view or in-app browser approaches.
 
-If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely **for the first loaded web page** (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements. 
+If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely **for the first loaded web page** (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
 
 Note that only the first web navigation level is affected by this rule. As it is impossible to avoid reaching an SRG SSR web page starting from a random web page, Mediapulse namely agreed that levels deeper than the first one can be tracked.
 
