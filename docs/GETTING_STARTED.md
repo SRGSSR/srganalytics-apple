@@ -65,7 +65,7 @@ The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify oth
 
 Automatic page view measurements are propagated through your application view controller hierarchy when needed. If your application uses custom containers you should have them conform to the `SRGAnalyticsContainerViewTracking` protocol so that they are tracked correctly. You must also call `srg_setNeedsAutomaticPageViewTrackingInChildViewController:` at the appropriate time to inform the analytics engine of child controller appearance.
 
-All standard UIKit containers (`UINavigationController`, `UIPageViewController`, `UISplitViewController` and `UITabBarController`) support container view tracking, so provided you use standard containers only no additional work is required. If you use custom containers, though, you must ensure they implement `SRGAnalyticsContainerViewTracking` so that page view measurements can be automatically propagated to their children view controllers. Refer to the related header documentation for more information
+All standard UIKit containers (`UINavigationController`, `UIPageViewController`, `UISplitViewController` and `UITabBarController`) support container view tracking, so provided you use standard containers only no additional work is required. If you use custom containers, though, you must ensure they implement `SRGAnalyticsContainerViewTracking` so that page view measurements can be automatically propagated to their children view controllers. Refer to the related header documentation for more information.
 
 ### Push notifications
 
@@ -161,14 +161,9 @@ This approach works well for apps which present loosly related web content, for 
 
 Your app might need to display web content with tight integration into its native user interface. In such cases you must consider the web view or in-app browser approaches.
 
-If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
+If the web content you want to display belongs to the SRG SSR, it must provide a way to disable JavaScript tracking entirely **for the first loaded web page** (e.g. with a special resource path or parameter) so that it can be displayed while your application is in foreground without overlapping measurements.
 
-Moreover, no matter whether you display an SRG SSR web page or an external one, you must ensure that the user is never able to navigate to a tracked web page, even in convoluted ways. Here are a few possible strategies to achieve this result:
-
-- Your application might display an SRG SSR web page offering reduced navigation abilities (e.g. no footer, no header, no links) so that the user cannot navigate away, or is forced to stay within a few untracked pages with no possibility to leave.
-- Your application might observe web navigation (e.g. by implementing `WKNavigationDelegate` if you are using `WKWebView`) and inhibit navigation to tracked SRG SSR websites. Alternatively it can force tracked SRG SSR websites to be opened in the device browser instead.
-
-Should you have to display web content within your application, please thoroughfully check that Mediapulse requirements are fulfilled, otherwise your application might be excluded from official reports when tested.
+Note that only the first web navigation level is affected by this rule. As it is impossible to avoid reaching an SRG SSR web page starting from a random web page, Mediapulse namely agreed that levels deeper than the first one can be tracked.
 
 #### Examples
 
@@ -178,6 +173,12 @@ Should you have to display web content within your application, please thoroughf
 ### Testing tool
 
 The SRG Analytics demo provides a web testing tool which lets you display any web page in the context of a tracked app. You can use a proxy tool (e.g. [Charles proxy](https://www.charlesproxy.com)) to check how some web page behaves in the context of an app, whether this page is opened while the app is still in foreground (web view or in-app browser) or while the app is in background (device browser).
+
+## Measuring external scenes
+
+Usual page view tracking methods or protocols ensure page views are never sent while the application is in the background, as this could lead to your application being rejected by Mediapulse.
+
+In some special cases like CarPlay, though, your application might display a second scene externally while itself staying in background. `SRGAnalyticsTracker` provides unchecked tracking methods to let you send page view events while the user is navigating your external user interface.
 
 ## Measuring application functionalities
 

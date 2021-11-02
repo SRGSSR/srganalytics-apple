@@ -113,12 +113,13 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 @end
 
 /**
- *  @name Page view tracking
+ *  Checked page view tracking, preventing page views from being emitted while the application is in the background.
+ *  This is the expected general behavior for most applications.
  */
-@interface SRGAnalyticsTracker (PageViewTracking)
+@interface SRGAnalyticsTracker (CheckedPageViewTracking)
 
 /**
- *  Track a page view (not associated with a push notification).
+ *  Track a page view (not associated with a push notification). Does nothing when the application is in the background.
  *
  *  @param title  The page title. If the title is empty, no event will be sent.
  *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
@@ -131,7 +132,7 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
                         levels:(nullable NSArray<NSString *> *)levels;
 
 /**
- *  Track a page view.
+ *  Track a page view. Does nothing when the application is in the background.
  *
  *  @param title                The page title. If the title is empty, no event will be sent.
  *  @param levels               An array of levels in increasing order, describing the position of the view in the hierarchy.
@@ -146,6 +147,39 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
                         levels:(nullable NSArray<NSString *> *)levels
                         labels:(nullable SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification;
+
+@end
+
+/**
+ *  Unchecked page view tracking, sending page views no matter the application state. Only use unchecked tracking if
+ *  your application has special needs requiring some pages views to be emitted while the application is in background.
+ *  This is for example the case if your application runs a secondary external window while it might itself be in the
+ *  background (e.g. CarPlay scene).
+ *
+ *  Be extremely careful when using the APIs below, as your application might be rejected if illegitmate page views are
+ *  emitted in the background.
+ */
+@interface SRGAnalyticsTracker (UncheckedPageViewTracking)
+
+/**
+ *  Unchecked track a page view. The page view is emitted no matter the application state.
+ *
+ *  @param title  The page title. If the title is empty, no event will be sent.
+ *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
+ */
+- (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                 levels:(nullable NSArray<NSString *> *)levels;
+
+/**
+ *  Unchecked track a page view. The page view is emitted no matter the application state.
+ *
+ *  @param title  The page title. If the title is empty, no event will be sent.
+ *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
+ *  @param labels Additional custom labels.
+ */
+- (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                 levels:(nullable NSArray<NSString *> *)levels
+                                 labels:(nullable SRGAnalyticsPageViewLabels *)labels;
 
 @end
 
