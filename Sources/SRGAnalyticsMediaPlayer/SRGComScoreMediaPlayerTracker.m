@@ -129,6 +129,10 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
                         timeRange:mediaPlayerController.timeRange];
             }
         }];
+        [mediaPlayerController addObserver:self keyPath:@keypath(SRGMediaPlayerController.new, playbackRate) options:NSKeyValueObservingOptionInitial block:^(MAKVONotification *notification) {
+            @strongify(self)
+            [self.streamingAnalytics notifyChangePlaybackRate:self.mediaPlayerController.playbackRate];
+        }];
     }
     return self;
 }
