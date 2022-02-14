@@ -351,6 +351,8 @@ static NSURL *MMFTestURL(void)
         return stopReceived && playReceived;
     }];
     
+    dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
+    
     __block SRGMediaComposition *fetchedMediaComposition4 = nil;
     [[dataProvider mediaCompositionForURN:@"urn:rts:video:10254787" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
