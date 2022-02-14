@@ -129,15 +129,10 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
                         timeRange:mediaPlayerController.timeRange];
             }
         }];
-        [mediaPlayerController addObserver:self keyPath:@keypath(SRGMediaPlayerController.new, playbackRate) options:0 block:^(MAKVONotification *notification) {
+        [mediaPlayerController addObserver:self keyPath:@keypath(SRGMediaPlayerController.new, effectivePlaybackRate) options:NSKeyValueObservingOptionInitial block:^(MAKVONotification *notification) {
             @strongify(self)
-            [self updatePlaybackRate];
+            [self.streamingAnalytics notifyChangePlaybackRate:self.mediaPlayerController.effectivePlaybackRate];
         }];
-        [mediaPlayerController addObserver:self keyPath:@keypath(SRGMediaPlayerController.new, live) options:0 block:^(MAKVONotification *notification) {
-            @strongify(self)
-            [self updatePlaybackRate];
-        }];
-        [self updatePlaybackRate];
     }
     return self;
 }
@@ -238,12 +233,6 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
             break;
         }
     }
-}
-
-- (void)updatePlaybackRate
-{
-    float playbackRate = ! self.mediaPlayerController.isLive ? self.mediaPlayerController.playbackRate : 1.f;
-    [self.streamingAnalytics notifyChangePlaybackRate:playbackRate];
 }
 
 #pragma mark Notifications

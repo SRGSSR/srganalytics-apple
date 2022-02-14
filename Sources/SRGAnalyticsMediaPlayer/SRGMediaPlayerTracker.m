@@ -338,7 +338,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
 
 - (NSNumber *)playbackRate
 {
-    return ! self.mediaPlayerController.isLive ? @(self.mediaPlayerController.playbackRate) : @1;
+    return @(self.mediaPlayerController.effectivePlaybackRate);
 }
 
 #pragma mark Notifications
