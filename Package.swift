@@ -36,7 +36,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "ComScore", url: "https://github.com/comScore/Comscore-Swift-Package-Manager.git", .upToNextMinor(from: "6.9.0")),
+        .package(name: "ComScore", url: "https://github.com/comScore/Comscore-Swift-Package-Manager.git", .upToNextMinor(from: "6.10.0")),
         .package(name: "SRGContentProtection", url: "https://github.com/SRGSSR/srgcontentprotection-apple.git", .upToNextMinor(from: "3.0.1")),
         .package(name: "SRGDataProvider", url: "https://github.com/SRGSSR/srgdataprovider-apple.git", .upToNextMinor(from: "12.2.0")),
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.2.1")),
