@@ -2,7 +2,7 @@
 
 /**
  * The library automatically tracks which SRG SSR applications are installed on a user device
- * and sends this information to comScore. For this mechanism to work properly, your application 
+ * and sends this information to comScore. For this mechanism to work properly, your application
  * must declare all official SRG SSR application URL schemes as being supported in the Info.plist
  * file under LSApplicationQueriesSchemes.
  *
@@ -23,7 +23,7 @@ var waiting = true
 
 print("☁️ Fetching configuration from server...")
 
-let task = URLSession.shared.dataTask(with: configURL, completionHandler: { (data, response, error) in
+let task = URLSession.shared.dataTask(with: configURL, completionHandler: { (data, _, _) in
 
     guard let data = data else {
         print("❌ Fetching configuration from remote server failed.")
