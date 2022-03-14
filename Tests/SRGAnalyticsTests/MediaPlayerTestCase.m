@@ -28,17 +28,17 @@ static NSURL *OnDemandVideoWithoutAudioTestURL(void)
 
 static NSURL *OnDemandAudioTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsww-a-d.rts.ch/la-1ere/programmes/c-est-pas-trop-tot/2017/c-est-pas-trop-tot_20170628_full_c-est-pas-trop-tot_007d77e7-61fb-4aef-9491-5e6b07f7f931-128k.mp3"];
+    return [NSURL URLWithString:@"https://rts-aod-dd.akamaized.net/ww/8849864/73bab428-ce6e-3ded-92cf-c84649ed766f.mp3"];
 }
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"https://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8"];
+    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8"];
 }
 
 @interface MediaPlayerTestCase : XCTestCase

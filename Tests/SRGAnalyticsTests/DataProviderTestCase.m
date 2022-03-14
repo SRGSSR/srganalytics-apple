@@ -520,7 +520,7 @@ static NSURL *MMFTestURL(void)
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:MMFTestURL()];
     NSDate *startDate = [NSDate.date dateByAddingTimeInterval:-6];
     NSDate *endDate = [startDate dateByAddingTimeInterval:200];
-    NSString *URN = [NSString stringWithFormat:@"urn:rts:video:_tagesschau24_ard_fulldvr_%@_%@", @((NSInteger)[startDate timeIntervalSince1970]), @((NSInteger)[endDate timeIntervalSince1970])];
+    NSString *URN = [NSString stringWithFormat:@"urn:rts:video:_couleur3_fulldvr_%@_%@", @((NSInteger)[startDate timeIntervalSince1970]), @((NSInteger)[endDate timeIntervalSince1970])];
     [[dataProvider mediaCompositionForURN:URN standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         fetchedMediaComposition1 = mediaComposition;
