@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/comScore/Comscore-Swift-Package-Manager.git",
         "state": {
           "branch": null,
-          "revision": "de8577f58200195a882d3b21f1270775b02b78e2",
-          "version": "6.9.0"
+          "revision": "7e3c521ad689b0e2bbf5cfb62e19c9e1619feae2",
+          "version": "6.10.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
           "branch": null,
-          "revision": "71aa1b756792f90e7cb8d979c48d48d73d21ca3b",
-          "version": "12.2.0"
+          "revision": "04d1d4a45fd83044116c77ba7f2c64e2618aea94",
+          "version": "13.0.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
           "branch": null,
-          "revision": "c41bf436de066e97757b495f0c908d2f8c043cd3",
-          "version": "6.2.0"
+          "revision": "83dc2f50050327e0b353f4e5372a674f90e3f5fc",
+          "version": "6.2.2"
         }
       },
       {
