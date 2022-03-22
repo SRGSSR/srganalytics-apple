@@ -113,8 +113,8 @@
         "package": "SRGMediaPlayer",
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
-          "branch": "feature/playback-speed",
-          "revision": "bbaf7cdd39538ee8459976f07867823974859926",
+          "branch": "develop",
+          "revision": "e919104be817ab4bb7a0d7d4b3ec074f55f0d811",
           "version": null
         }
       },
