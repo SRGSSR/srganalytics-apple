@@ -1725,6 +1725,7 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSelectedSegmentAtStreamEnd
 {
+#warning "This test fails in the iOS 15.3 simulator, see issue #58"
     Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
     
     __block BOOL segmentReceived = NO;
@@ -2915,6 +2916,31 @@ static NSURL *DVRTestURL(void)
     }];
     
     labels.customInfo = @{ @"updated_key" : @"updated_value" };
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateLabel
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"1");
+        return YES;
+    }];
+    
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
     
     [self.mediaPlayerController pause];
     

@@ -241,6 +241,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     }
     
     [labels srg_safelySetString:self.bandwidthInBitsPerSecond.stringValue forKey:@"media_bandwidth"];
+    [labels srg_safelySetString:self.playbackRate.stringValue forKey:@"media_playback_rate"];
     
     if (timeshift) {
         [labels srg_safelySetString:@(timeshift.integerValue / 1000).stringValue forKey:@"media_timeshift"];
@@ -333,6 +334,11 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     else {
         return nil;
     }
+}
+
+- (NSNumber *)playbackRate
+{
+    return @(self.mediaPlayerController.effectivePlaybackRate);
 }
 
 #pragma mark Notifications
