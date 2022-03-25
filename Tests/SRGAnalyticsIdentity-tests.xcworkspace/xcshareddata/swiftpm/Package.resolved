@@ -77,9 +77,9 @@
         "package": "SRGDataProvider",
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
-          "branch": null,
-          "revision": "04d1d4a45fd83044116c77ba7f2c64e2618aea94",
-          "version": "13.0.0"
+          "branch": "develop",
+          "revision": "4b54b408048d9c05d361a05f244d5cf7cf1cc935",
+          "version": null
         }
       },
       {
@@ -114,7 +114,7 @@
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
           "branch": "develop",
-          "revision": "410fe58bd1555a29a418acb657a6c1a81968ddc1",
+          "revision": "e7bce8ee8ce6c96c1a8998a3da0991d783fafa39",
           "version": null
         }
       },
