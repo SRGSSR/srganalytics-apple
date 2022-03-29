@@ -1730,4 +1730,75 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqual(playEventCount, 1);
 }
 
+- (void)testPlaybackRateAtStart
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateChange
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"100");
+        return YES;
+    }];
+    
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"playrt");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAfterRestart
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    __block BOOL endReceived = NO;
+    __block BOOL playReceived = NO;
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        if ([event isEqualToString:@"end"]) {
+            XCTAssertFalse(playReceived);
+            endReceived = YES;
+        }
+        else if ([event isEqualToString:@"play"]) {
+            playReceived = YES;
+        }
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return endReceived && playReceived;
+    }];
+    
+    [self.mediaPlayerController stop];
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
 @end
