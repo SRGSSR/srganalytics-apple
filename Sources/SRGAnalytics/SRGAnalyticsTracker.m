@@ -116,12 +116,12 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (NSDictionary *)defaultComScoreLabels
 {
-    return self.globalLabels.comScoreLabelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    return self.globalLabels.comScoreLabelsDictionary ?: [NSDictionary dictionary];
 }
 
 - (NSDictionary *)defaultLabels
 {
-    return self.globalLabels.labelsDictionary.mutableCopy ?: [NSMutableDictionary dictionary];
+    return self.globalLabels.labelsDictionary ?: [NSDictionary dictionary];
 }
 
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
