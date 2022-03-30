@@ -1815,13 +1815,8 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if (! [event isEqualToString:@"end"]) {
-            return NO;
-        }
-        else {
-            XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
-            return YES;
-        }
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return [event isEqualToString:@"end"];
     }];
     
     CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(2., NSEC_PER_SEC));

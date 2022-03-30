@@ -3008,13 +3008,8 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if (! [labels[@"event_id"] isEqualToString:@"eof"]) {
-            return NO;
-        }
-        else {
-            XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
-            return YES;
-        }
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return [labels[@"event_id"] isEqualToString:@"eof"];
     }];
     
     CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(2., NSEC_PER_SEC));
