@@ -28,7 +28,7 @@ NSNumber *SRGMediaAnalyticsTimeshiftInMilliseconds(SRGMediaPlayerStreamType stre
     // Do not return any value for non-live streams
     if (streamType == SRGMediaPlayerStreamTypeDVR) {
         CMTime timeShift = CMTimeSubtract(CMTimeRangeGetEnd(timeRange), time);
-        NSInteger timeShiftInSeconds = (NSInteger)fabs(CMTimeGetSeconds(timeShift));
+        NSInteger timeShiftInSeconds = (NSInteger)CMTimeGetSeconds(timeShift);
         
         // Consider offsets smaller than the tolerance to be equivalent to live conditions, sending 0 instead of the real offset
         if (timeShiftInSeconds <= liveTolerance) {
