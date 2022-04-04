@@ -74,7 +74,6 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     
     [streamingAnalytics setMediaPlayerName:mediaPlayerController.analyticsPlayerName];
     [streamingAnalytics setMediaPlayerVersion:mediaPlayerController.analyticsPlayerVersion];
-    [streamingAnalytics notifyChangePlaybackRate:mediaPlayerController.effectivePlaybackRate];
     
     SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
         NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
@@ -205,6 +204,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     
     switch (event) {
         case ComScoreMediaPlayerTrackerEventPlay: {
+            [streamingAnalytics notifyChangePlaybackRate:self.mediaPlayerController.effectivePlaybackRate];
             [streamingAnalytics notifyPlay];
             break;
         }
