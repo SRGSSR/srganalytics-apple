@@ -1835,4 +1835,51 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
+- (void)testEssentialPlaybackRateEventsOnly
+{
+    // The playback rate is notified before each play. Check with a series of play / pause events that this does
+    // not unnecessarily generate 'playrt' events as an artifact (which would be the case if we notified the
+    // playback rate before other events like 'pause').
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
 @end
