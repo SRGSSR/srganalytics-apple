@@ -1725,6 +1725,7 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSelectedSegmentAtStreamEnd
 {
+#warning "This test fails in the iOS 15.3 simulator, see issue #58"
     Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
     
     __block BOOL segmentReceived = NO;
@@ -2917,6 +2918,112 @@ static NSURL *DVRTestURL(void)
     labels.customInfo = @{ @"updated_key" : @"updated_value" };
     
     [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAtStart
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateChange
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"1");
+        return YES;
+    }];
+    
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAfterRestart
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    __block BOOL stopReceived = NO;
+    __block BOOL playReceived = NO;
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        if ([labels[@"event_id"] isEqualToString:@"stop"]) {
+            XCTAssertFalse(playReceived);
+            stopReceived = YES;
+        }
+        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+            playReceived = YES;
+        }
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return stopReceived && playReceived;
+    }];
+    
+    [self.mediaPlayerController stop];
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAfterReplay
+{
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return [labels[@"event_id"] isEqualToString:@"eof"];
+    }];
+    
+    CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(2., NSEC_PER_SEC));
+    [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:seekTime] withCompletionHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController play];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }

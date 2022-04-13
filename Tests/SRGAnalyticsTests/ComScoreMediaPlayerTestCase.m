@@ -1102,6 +1102,7 @@ static NSURL *DVRTestURL(void)
 
 - (void)testSelectedSegmentAtStreamEnd
 {
+#warning "This test fails in the iOS 15.3 simulator, see issue #58"
     Segment *segment = [Segment segmentWithTimeRange:CMTimeRangeMake(CMTimeMakeWithSeconds(1795.045, NSEC_PER_SEC), CMTimeMakeWithSeconds(5., NSEC_PER_SEC))];
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
@@ -1727,6 +1728,158 @@ static NSURL *DVRTestURL(void)
     }];
     
     XCTAssertEqual(playEventCount, 1);
+}
+
+- (void)testPlaybackRateAtStart
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateChange
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"100");
+        return YES;
+    }];
+    
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"playrt");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAfterRestart
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    __block BOOL endReceived = NO;
+    __block BOOL playReceived = NO;
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        if ([event isEqualToString:@"end"]) {
+            XCTAssertFalse(playReceived);
+            endReceived = YES;
+        }
+        else if ([event isEqualToString:@"play"]) {
+            playReceived = YES;
+        }
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return endReceived && playReceived;
+    }];
+    
+    [self.mediaPlayerController stop];
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPlaybackRateAfterReplay
+{
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return [event isEqualToString:@"end"];
+    }];
+    
+    CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(2., NSEC_PER_SEC));
+    [self.mediaPlayerController seekToPosition:[SRGPosition positionAtTime:seekTime] withCompletionHandler:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testEssentialPlaybackRateEventsOnly
+{
+    // The playback rate is notified before each play. Check with a series of play / pause events that this does
+    // not unnecessarily generate 'playrt' events as an artifact (which would be the case if we notified the
+    // playback rate before other events like 'pause').
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    self.mediaPlayerController.playbackRate = 0.5f;
+    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"play");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController play];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+    
+    [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(event, @"pause");
+        XCTAssertEqualObjects(labels[@"ns_st_rt"], @"50");
+        return YES;
+    }];
+    
+    [self.mediaPlayerController pause];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
 @end

@@ -1,6 +1,6 @@
 #!/usr/bin/swift
 
-/**
+/*
  * The library automatically tracks which SRG SSR applications are installed on a user device
  * and sends this information to comScore. For this mechanism to work properly, your application
  * must declare all official SRG SSR application URL schemes as being supported in the Info.plist
