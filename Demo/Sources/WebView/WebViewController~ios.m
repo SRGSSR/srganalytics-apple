@@ -64,12 +64,12 @@ static void *s_kvoContext = &s_kvoContext;
     [super viewDidLoad];
     
     // WKWebView cannot be instantiated in storyboards, do it programmatically
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
-    webView.translatesAutoresizingMaskIntoConstraints = NO;
+    WKWebView *webView = [[WKWebView alloc] init];
     webView.navigationDelegate = self;
     webView.scrollView.delegate = self;
     [self.view insertSubview:webView atIndex:0];
     
+    webView.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
         [webView.bottomAnchor constraintEqualToAnchor:self.toolbar.topAnchor]
     ]];
