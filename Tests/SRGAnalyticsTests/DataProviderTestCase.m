@@ -21,7 +21,7 @@ static NSURL *ServiceTestURL(void)
 
 static NSURL *MMFTestURL(void)
 {
-    return [NSURL URLWithString:@"https://play-mmf.herokuapp.com/integrationlayer"];
+    return [NSURL URLWithString:@"https://play-mmf.herokuapp.com"];
 }
 
 @interface DataProviderTestCase : XCTestCase
