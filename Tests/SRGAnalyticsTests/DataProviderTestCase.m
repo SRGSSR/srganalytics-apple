@@ -119,7 +119,8 @@ static NSURL *MMFTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testPrepareToPlay360VideoAlreadyStereoscopic API_UNAVAILABLE(tvos)
+#if TARGET_OS_IOS
+- (void)testPrepareToPlay360VideoAlreadyStereoscopic
 {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Ready to play"];
     
@@ -136,6 +137,7 @@ static NSURL *MMFTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
+#endif
 
 - (void)testPlayMediaComposition
 {
