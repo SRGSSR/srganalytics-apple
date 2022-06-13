@@ -33,12 +33,12 @@ static NSURL *OnDemandAudioTestURL(void)
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8"];
+    return [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8"];
 }
 
 @interface MediaPlayerTestCase : XCTestCase
