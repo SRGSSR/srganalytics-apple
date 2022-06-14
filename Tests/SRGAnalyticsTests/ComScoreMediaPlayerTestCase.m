@@ -18,12 +18,12 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *LiveTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8?dw=0"];
+    return [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8?dw=0"];
 }
 
 static NSURL *DVRTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8"];
+    return [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8"];
 }
 
 @interface ComScoreMediaPlayerTestCase : XCTestCase
@@ -584,10 +584,14 @@ static NSURL *DVRTestURL(void)
 
 - (void)testDVRPlayback
 {
+    __block NSString *ns_st_ldo1 = nil;
+    __block NSString *ns_st_ev = nil;
+
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
-        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
-        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"21550000");
+        
+        ns_st_ldo1 = labels[@"ns_st_ldo"];
+        ns_st_ev = labels[@"ns_st_ldw"];
         return YES;
     }];
     
@@ -597,21 +601,24 @@ static NSURL *DVRTestURL(void)
     
     __block BOOL pauseReceived = NO;
     __block BOOL playReceived = NO;
+    __block NSString *ns_st_ldo2 = nil;
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         if ([labels[@"ns_st_ev"] isEqualToString:@"pause"]) {
             XCTAssertFalse(pauseReceived);
             XCTAssertFalse(playReceived);
             
-            XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"0");
-            XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"21550000");
+            XCTAssertEqualObjects(labels[@"ns_st_ldo"], ns_st_ldo1);
+            XCTAssertEqualObjects(labels[@"ns_st_ldw"], ns_st_ev);
             pauseReceived = YES;
         }
         else if ([labels[@"ns_st_ev"] isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             
-            XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
-            XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"21550000");
+            ns_st_ldo2 = labels[@"ns_st_ldo"];
+            
+            XCTAssertNotEqualObjects(ns_st_ldo2, ns_st_ldo1);
+            XCTAssertEqualObjects(labels[@"ns_st_ldw"], ns_st_ev);
             playReceived = YES;
         }
         return pauseReceived && playReceived;
@@ -624,8 +631,8 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForComScorePlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"end");
-        XCTAssertEqualObjects(labels[@"ns_st_ldo"], @"45000");
-        XCTAssertEqualObjects(labels[@"ns_st_ldw"], @"21550000");
+        XCTAssertEqualObjects(labels[@"ns_st_ldo"], ns_st_ldo2);
+        XCTAssertEqualObjects(labels[@"ns_st_ldw"], ns_st_ev);
         return YES;
     }];
     
