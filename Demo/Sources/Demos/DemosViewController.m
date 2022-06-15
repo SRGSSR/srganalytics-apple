@@ -209,7 +209,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
             
             switch (indexPath.row) {
                 case 0: {
-                    URL = [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8?dw=0"];
+                    URL = [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8?dw=0"];
                     break;
                 }
                     
@@ -219,7 +219,7 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
                 }
                     
                 case 2: {
-                    URL = [NSURL URLWithString:@"https://rtsc3video-lh.akamaihd.net/i/rtsc3video_ww@513975/master.m3u8"];
+                    URL = [NSURL URLWithString:@"https://rtsc3video.akamaized.net/hls/live/2042837/c3video/3/playlist.m3u8"];
                     break;
                 }
                     
