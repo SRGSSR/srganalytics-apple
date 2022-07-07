@@ -113,9 +113,9 @@
         "package": "SRGMediaPlayer",
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
-          "branch": null,
-          "revision": "b0a28e88281b358b94d1ec6de8c5d65e3712c4cb",
-          "version": "7.0.1"
+          "branch": "develop",
+          "revision": "c0ef31d83c2c1c5b01f5c90154fc792fbf2b36b3",
+          "version": null
         }
       },
       {
