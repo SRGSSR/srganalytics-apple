@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgappearance-apple.git",
         "state": {
           "branch": null,
-          "revision": "8fb77eac6855c4b2765e15b597665b951893f3f2",
-          "version": "5.1.0"
+          "revision": "2b31bd9b09c17381b5f2d633542e493701568ccc",
+          "version": "5.1.1"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/SRGSSR/srgdataprovider-apple.git",
         "state": {
           "branch": null,
-          "revision": "d492e3b7c7ef6b4d4a9c37721897115fb5030dd0",
-          "version": "15.0.0"
+          "revision": "aec8886f3944ebdb6ea4738db3a8bb80ae502adf",
+          "version": "16.0.0"
         }
       },
       {
@@ -104,9 +104,9 @@
         "package": "SRGMediaPlayer",
         "repositoryURL": "https://github.com/SRGSSR/srgmediaplayer-apple.git",
         "state": {
-          "branch": "develop",
-          "revision": "c0ef31d83c2c1c5b01f5c90154fc792fbf2b36b3",
-          "version": null
+          "branch": null,
+          "revision": "d97e45370d747c10c03341754af3741fafb6bf9f",
+          "version": "7.0.2"
         }
       },
       {
