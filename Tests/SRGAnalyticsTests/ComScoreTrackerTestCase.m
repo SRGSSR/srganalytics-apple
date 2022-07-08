@@ -32,7 +32,9 @@
     
     [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
     
-    [self waitForExpectationsWithTimeout:20. handler:nil];
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
 }
 
 @end
