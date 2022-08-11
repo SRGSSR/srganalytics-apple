@@ -71,28 +71,14 @@ static void *s_kvoContext = &s_kvoContext;
     
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-        [webView.bottomAnchor constraintEqualToAnchor:self.toolbar.topAnchor]
+        [webView.bottomAnchor constraintEqualToAnchor:self.toolbar.topAnchor],
+        [webView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
+        [webView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [webView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
     ]];
     
-    if (@available(iOS 11, *)) {
-        [NSLayoutConstraint activateConstraints:@[
-            [webView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-            [webView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
-            [webView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
-        ]];
-    }
-    else {
-        [NSLayoutConstraint activateConstraints:@[
-            [webView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-            [webView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-            [webView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]
-        ]];
-    }
-    
     self.webView = webView;
-    
     self.errorLabel.text = nil;
-    
     self.progressView.progressTintColor = UIColor.systemBlueColor;
     
     [self.webView loadRequest:self.request];

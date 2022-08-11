@@ -14,7 +14,6 @@
 
 + (BOOL)srg_isProductionVersion
 {
-    // Check SIMULATOR_DEVICE_NAME for iOS 9 and above, device name below
     if ([NSProcessInfo processInfo].environment[@"SIMULATOR_DEVICE_NAME"]
             || [UIDevice.currentDevice.name.lowercaseString containsString:@"simulator"]) {
         return NO;
