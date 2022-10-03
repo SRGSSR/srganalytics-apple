@@ -42,13 +42,13 @@ let package = Package(
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.3.0")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.1.0")),
         .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "7.1.0")),
-        .package(name: "TCCore", url: "https://github.com/SRGSSR/TCCore-xcframework-apple.git", .exact("4.5.4-srg5")),
-        .package(name: "TCSDK", url: "https://github.com/SRGSSR/TCSDK-xcframework-apple.git", .exact("4.4.1-srg5"))
+        .package(name: "TCCore", url: "https://github.com/SRGSSR/TCCore-xcframework-apple.git", .upToNextMinor(from: "5.1.1")),
+        .package(name: "TCServerSide", url: "https://github.com/SRGSSR/TCServerSide-xcframework-apple.git", .upToNextMinor(from: "5.1.2"))
     ],
     targets: [
         .target(
             name: "SRGAnalytics",
-            dependencies: ["ComScore", "SRGLogger", "TCCore", "TCSDK"],
+            dependencies: ["ComScore", "SRGLogger", "TCCore", "TCServerSide"],
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
                 .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
