@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id<NSObject>)addObserverForHiddenEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 - (id<NSObject>)addObserverForPlayerEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
+- (id<NSObject>)addObserverForPlayerHeartbeatNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 
 - (id<NSObject>)addObserverForComScoreHiddenEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 - (id<NSObject>)addObserverForComScorePlayerEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;

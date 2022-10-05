@@ -6,6 +6,8 @@
 
 #import "XCTestCase+Tests.h"
 
+#import "TrackerSingletonSetup.h"
+
 @import SRGAnalyticsDataProvider;
 @import SRGDataProviderNetwork;
 
@@ -23,6 +25,11 @@ static NSURL *ServiceTestURL(void)
 @implementation ComScoreDataProviderTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {
