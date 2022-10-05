@@ -5,6 +5,7 @@
 //
 
 #import "NSNotificationCenter+Tests.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @interface TrackerTestCase : XCTestCase
@@ -14,6 +15,11 @@
 @implementation TrackerTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {
@@ -44,7 +50,7 @@
 - (void)testHiddenEvent
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"hidden_event");
+        XCTAssertEqualObjects(event, @"hidden_event");
         XCTAssertEqualObjects(labels[@"event_name"], @"Hidden event");
         return YES;
     }];
@@ -57,7 +63,7 @@
 - (void)testHiddenEventWithLabels
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"hidden_event");
+        XCTAssertEqualObjects(event, @"hidden_event");
         XCTAssertEqualObjects(labels[@"event_name"], @"Hidden event");
         XCTAssertEqualObjects(labels[@"event_type"], @"toggle");
         XCTAssertEqualObjects(labels[@"event_source"], @"favorite_list");

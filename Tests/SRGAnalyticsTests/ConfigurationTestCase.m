@@ -17,13 +17,13 @@
 - (void)testCreation
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     XCTAssertTrue(configuration.centralized);
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
@@ -32,7 +32,7 @@
 - (void)testBusinessUnitSpecificConfiguration
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.centralized = NO;
     
@@ -40,7 +40,7 @@
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3667);
-    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
@@ -49,7 +49,7 @@
 - (void)testEnvironmentModePreProduction
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.environmentMode = SRGAnalyticsEnvironmentModePreProduction;
     
@@ -57,7 +57,7 @@
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModePreProduction);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
@@ -66,7 +66,7 @@
 - (void)testEnvironmentModeProduction
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.environmentMode = SRGAnalyticsEnvironmentModeProduction;
     
@@ -74,7 +74,7 @@
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeProduction);
     XCTAssertEqualObjects(configuration.environment, @"prod");
@@ -83,7 +83,7 @@
 - (void)testUnitTestingConfiguration
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.unitTesting = YES;
     
@@ -91,7 +91,7 @@
     XCTAssertTrue(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqual(configuration.container, 7);
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
     XCTAssertEqual(configuration.environmentMode, SRGAnalyticsEnvironmentModeAutomatic);
     XCTAssertEqualObjects(configuration.environment, SRGAnalyticsEnvironmentPreProduction);
@@ -100,7 +100,7 @@
 - (void)testCopy
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:7
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.centralized = YES;
     configuration.unitTesting = YES;
@@ -110,7 +110,7 @@
     XCTAssertEqual(configuration.unitTesting, configurationCopy.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, configurationCopy.businessUnitIdentifier);
     XCTAssertEqual(configuration.site, configurationCopy.site);
-    XCTAssertEqual(configuration.container, configurationCopy.container);
+    XCTAssertEqualObjects(configuration.sourceKey, configurationCopy.sourceKey);
     XCTAssertEqualObjects(configuration.siteName, configurationCopy.siteName);
     XCTAssertEqual(configuration.environmentMode, configurationCopy.environmentMode);
     XCTAssertEqualObjects(configuration.environment, configurationCopy.environment);

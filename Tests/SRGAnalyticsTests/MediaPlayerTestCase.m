@@ -6,6 +6,7 @@
 
 #import "NSNotificationCenter+Tests.h"
 #import "Segment.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @import MediaAccessibility;
@@ -50,6 +51,11 @@ static NSURL *DVRTestURL(void)
 @implementation MediaPlayerTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {
@@ -122,7 +128,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -131,7 +137,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         return YES;
     }];
     
@@ -143,7 +149,7 @@ static NSURL *DVRTestURL(void)
 - (void)testEntirePlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -156,14 +162,14 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+        if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(seekReceived);
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"0");
             seekReceived = YES;
         }
-        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+        else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_position"], @"1795");
@@ -178,7 +184,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(event, @"eof");
         XCTAssertEqualObjects(labels[@"media_position"], @"1800");
         return YES;
     }];
@@ -236,7 +242,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlayStop
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -255,7 +261,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
     }];
@@ -268,7 +274,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlayReset
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -287,7 +293,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
     }];
@@ -463,7 +469,7 @@ static NSURL *DVRTestURL(void)
 - (void)testConsecutiveMedias
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full1");
         return YES;
     }];
@@ -476,7 +482,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full1");
         return YES;
     }];
@@ -489,7 +495,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full2");
         return YES;
     }];
@@ -497,7 +503,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"stream_name"], @"full2");
         return YES;
     }];
@@ -544,7 +550,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
         XCTAssertEqualObjects(labels[@"navigation_environment"], @"preprod");
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
         XCTAssertEqualObjects(labels[@"test_label"], @"test_value");
@@ -560,7 +566,7 @@ static NSURL *DVRTestURL(void)
 - (void)testCommonLabelsOverride
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"CustomPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], @"1.0");
         return YES;
@@ -574,7 +580,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"CustomPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], @"1.0");
         return YES;
@@ -585,7 +591,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"CustomPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], @"1.0");
         return YES;
@@ -596,7 +602,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
         return YES;
@@ -613,7 +619,7 @@ static NSURL *DVRTestURL(void)
 - (void)testOnDemandPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         XCTAssertNil(labels[@"media_timeshift"]);
         return YES;
@@ -624,7 +630,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         XCTAssertNil(labels[@"media_timeshift"]);
         return YES;
@@ -638,7 +644,7 @@ static NSURL *DVRTestURL(void)
 - (void)testLivePlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
@@ -658,7 +664,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
@@ -678,7 +684,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
@@ -692,7 +698,7 @@ static NSURL *DVRTestURL(void)
 - (void)testDVRPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
@@ -715,7 +721,7 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+        if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(seekReceived);
             XCTAssertFalse(playReceived);
             
@@ -723,7 +729,7 @@ static NSURL *DVRTestURL(void)
             XCTAssertEqualObjects(labels[@"media_position"], @"1");
             seekReceived = YES;
         }
-        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+        else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_timeshift"], @"45");
@@ -748,7 +754,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"44");       // Not 45 because of chunks
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
@@ -762,7 +768,7 @@ static NSURL *DVRTestURL(void)
 - (void)testLiveStopLive
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
@@ -782,7 +788,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
@@ -793,7 +799,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
@@ -813,7 +819,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         XCTAssertEqualObjects(labels[@"media_position"], @"1");
         return YES;
@@ -827,7 +833,7 @@ static NSURL *DVRTestURL(void)
 - (void)testVolumeLabel
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_volume"], @"0");
         return YES;
     }];
@@ -841,7 +847,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         XCTAssertNotNil(labels[@"media_volume"]);
         return YES;
     }];
@@ -855,7 +861,7 @@ static NSURL *DVRTestURL(void)
 - (void)testBandwidthLabel
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertNotEqualObjects(labels[@"media_bandwidth"], @"0");
         return YES;
     }];
@@ -865,7 +871,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertNil(labels[@"media_bandwidth"]);
         return YES;
     }];
@@ -878,7 +884,7 @@ static NSURL *DVRTestURL(void)
 - (void)testEnvironment
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_embedding_environment"], @"preprod");
         return YES;
     }];
@@ -888,7 +894,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_embedding_environment"], @"preprod");
         return YES;
     }];
@@ -904,7 +910,7 @@ static NSURL *DVRTestURL(void)
     MACaptionAppearanceAddSelectedLanguage(kMACaptionAppearanceDomainUser, (__bridge CFStringRef _Nonnull)@"en");
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
         XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
@@ -915,7 +921,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
         XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
@@ -932,7 +938,7 @@ static NSURL *DVRTestURL(void)
     MACaptionAppearanceAddSelectedLanguage(kMACaptionAppearanceDomainUser, (__bridge CFStringRef _Nonnull)@"en");
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
         XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
@@ -946,7 +952,7 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+        if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(seekReceived);
             XCTAssertFalse(playReceived);
             
@@ -954,7 +960,7 @@ static NSURL *DVRTestURL(void)
             XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
             seekReceived = YES;
         }
-        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+        else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
@@ -970,7 +976,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(event, @"eof");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"true");
         XCTAssertEqualObjects(labels[@"media_subtitle_selection"], @"EN");
         return YES;
@@ -984,7 +990,7 @@ static NSURL *DVRTestURL(void)
     MACaptionAppearanceSetDisplayType(kMACaptionAppearanceDomainUser, kMACaptionAppearanceDisplayTypeAutomatic);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
         XCTAssertNil(labels[@"media_subtitle_selection"]);
         return YES;
@@ -995,7 +1001,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
         XCTAssertNil(labels[@"media_subtitle_selection"]);
         return YES;
@@ -1011,7 +1017,7 @@ static NSURL *DVRTestURL(void)
     MACaptionAppearanceSetDisplayType(kMACaptionAppearanceDomainUser, kMACaptionAppearanceDisplayTypeAutomatic);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
         XCTAssertNil(labels[@"media_subtitle_selection"]);
         return YES;
@@ -1022,7 +1028,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_subtitles_on"], @"false");
         XCTAssertNil(labels[@"media_subtitle_selection"]);
         return YES;
@@ -1036,7 +1042,7 @@ static NSURL *DVRTestURL(void)
 - (void)testDefaultAudioTrack
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"EN");
         return YES;
     }];
@@ -1046,7 +1052,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"EN");
         return YES;
     }];
@@ -1059,7 +1065,7 @@ static NSURL *DVRTestURL(void)
 - (void)testNoAudioTrackInformation
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
@@ -1069,7 +1075,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"UND");
         return YES;
     }];
@@ -1082,7 +1088,7 @@ static NSURL *DVRTestURL(void)
 - (void)testNoAudioTrack
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertNil(labels[@"media_audio_track"]);
         return YES;
     }];
@@ -1092,7 +1098,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertNil(labels[@"media_audio_track"]);
         return YES;
     }];
@@ -1105,7 +1111,7 @@ static NSURL *DVRTestURL(void)
 - (void)testAudioTrackForAudioContent
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertNil(labels[@"media_audio_track"]);
         return YES;
     }];
@@ -1115,7 +1121,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertNil(labels[@"media_audio_track"]);
         return YES;
     }];
@@ -1128,7 +1134,7 @@ static NSURL *DVRTestURL(void)
 - (void)testSelectedAudioTrack
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"FR");
         return YES;
     }];
@@ -1145,7 +1151,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"FR");
         return YES;
     }];
@@ -1158,7 +1164,7 @@ static NSURL *DVRTestURL(void)
 - (void)testSelectedAudioTrackDuringEntirePlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
         return YES;
     }];
@@ -1178,14 +1184,14 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([labels[@"event_id"] isEqualToString:@"seek"]) {
+        if ([event isEqualToString:@"seek"]) {
             XCTAssertFalse(seekReceived);
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
             seekReceived = YES;
         }
-        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+        else if ([event isEqualToString:@"play"]) {
             XCTAssertFalse(playReceived);
             
             XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
@@ -1200,7 +1206,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(event, @"eof");
         XCTAssertEqualObjects(labels[@"media_audio_track"], @"DE");
         return YES;
     }];
@@ -1211,7 +1217,7 @@ static NSURL *DVRTestURL(void)
 - (void)testNonSelectedSegmentPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -1231,7 +1237,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         return YES;
     }];
     
@@ -1240,7 +1246,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -1294,7 +1300,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1304,7 +1310,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -1396,7 +1402,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"50");
         return YES;
     }];
@@ -1409,7 +1415,7 @@ static NSURL *DVRTestURL(void)
 - (void)testSegmentSelectionAfterStartOnFullLength
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -1519,7 +1525,7 @@ static NSURL *DVRTestURL(void)
 - (void)testSegmentSelectionWhilePlayingNonSelectedSegment
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"52");
         return YES;
     }];
@@ -1760,7 +1766,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqualObjects(self.mediaPlayerController.selectedSegment, segment);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"eof");
+        XCTAssertEqualObjects(event, @"eof");
         XCTAssertEqualObjects(labels[@"media_position"], @"1800");
         return YES;
     }];
@@ -1792,7 +1798,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"51");
         return YES;
     }];
@@ -1805,7 +1811,7 @@ static NSURL *DVRTestURL(void)
 - (void)testBlockedSegmentSelection
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -1846,7 +1852,7 @@ static NSURL *DVRTestURL(void)
 - (void)testSeekIntoBlockedSegment
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -1927,7 +1933,7 @@ static NSURL *DVRTestURL(void)
 - (void)testBlockedSegmentPlayback
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         return YES;
     }];
@@ -2038,7 +2044,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2117,7 +2123,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2127,7 +2133,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"stop");
+        XCTAssertEqualObjects(event, @"stop");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2222,7 +2228,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2251,7 +2257,7 @@ static NSURL *DVRTestURL(void)
     }];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"2");
         return YES;
     }];
@@ -2434,7 +2440,7 @@ static NSURL *DVRTestURL(void)
 - (void)testOnDemandHeartbeatPlayPausePlay
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2443,7 +2449,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     __block NSInteger heartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2460,7 +2466,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqual(heartbeatCount, 2);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         return YES;
     }];
     
@@ -2469,7 +2475,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     heartbeatCount = 0;
-    heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2486,7 +2492,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqual(heartbeatCount, 0);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2495,7 +2501,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     heartbeatCount = 0;
-    heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2515,7 +2521,7 @@ static NSURL *DVRTestURL(void)
 - (void)testLivestreamHeartbeatPlay
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_position"], @"0");
         XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
         return YES;
@@ -2527,7 +2533,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount = 0;
     __block NSInteger liveHeartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             XCTAssertTrue(([labels[@"media_position"] integerValue] % 3) == 0);
             XCTAssertEqualObjects(labels[@"media_timeshift"], @"0");
@@ -2564,7 +2570,7 @@ static NSURL *DVRTestURL(void)
     self.mediaPlayerController.segments = @[updatedSegment];
     
     __block NSInteger heartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2589,7 +2595,7 @@ static NSURL *DVRTestURL(void)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         XCTFail(@"No event must be received when playing");
     }];
     
@@ -2632,7 +2638,7 @@ static NSURL *DVRTestURL(void)
     self.mediaPlayerController.segments = @[updatedSegment];
     
     __block NSInteger heartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2649,7 +2655,7 @@ static NSURL *DVRTestURL(void)
 - (void)testDVRLiveHeartbeats
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2659,7 +2665,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount = 0;
     __block NSInteger liveHeartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2680,7 +2686,7 @@ static NSURL *DVRTestURL(void)
 - (void)testDVRTimeshiftHeartbeats
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2689,7 +2695,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        return [labels[@"event_id"] isEqualToString:@"play"];
+        return [event isEqualToString:@"play"];
     }];
     
     CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(60., NSEC_PER_SEC));
@@ -2699,7 +2705,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount = 0;
     __block NSInteger liveHeartbeatCount = 0;
-    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount;
         }
@@ -2720,7 +2726,7 @@ static NSURL *DVRTestURL(void)
 - (void)testHeartbeatAfterDisablingTracking
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2730,7 +2736,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount1 = 0;
     __block NSInteger liveHeartbeatCount1 = 0;
-    id heartbeatEventObserver1 = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver1 = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount1;
         }
@@ -2751,7 +2757,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount2 = 0;
     __block NSInteger liveHeartbeatCount2 = 0;
-    id heartbeatEventObserver2 = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver2 = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount2;
         }
@@ -2788,7 +2794,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount1 = 0;
     __block NSInteger liveHeartbeatCount1 = 0;
-    id heartbeatEventObserver1 = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver1 = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount1;
         }
@@ -2806,7 +2812,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertEqual(liveHeartbeatCount1, 0);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         return YES;
     }];
     
@@ -2815,7 +2821,7 @@ static NSURL *DVRTestURL(void)
     
     __block NSInteger heartbeatCount2 = 0;
     __block NSInteger liveHeartbeatCount2 = 0;
-    id heartbeatEventObserver2 = [NSNotificationCenter.defaultCenter addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    id heartbeatEventObserver2 = [NSNotificationCenter.defaultCenter addObserverForPlayerHeartbeatNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
         if ([event isEqualToString:@"pos"]) {
             ++heartbeatCount2;
         }
@@ -2839,7 +2845,7 @@ static NSURL *DVRTestURL(void)
     XCTAssertNil(self.mediaPlayerController.analyticsLabels);
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        return [labels[@"event_id"] isEqualToString:@"play"];
+        return [event isEqualToString:@"play"];
     }];
     
     SRGAnalyticsStreamLabels *labels = [[SRGAnalyticsStreamLabels alloc] init];
@@ -2855,7 +2861,7 @@ static NSURL *DVRTestURL(void)
 - (void)testAnalyticsLabelsUpdates
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if (! [labels[@"event_id"] isEqualToString:@"play"]) {
+        if (! [event isEqualToString:@"play"]) {
             return NO;
         }
         
@@ -2870,7 +2876,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
-        if (! [labels[@"event_id"] isEqualToString:@"pause"]) {
+        if (! [event isEqualToString:@"pause"]) {
             return NO;
         }
         
@@ -2891,7 +2897,7 @@ static NSURL *DVRTestURL(void)
 - (void)testAnalyticsLabelsIndirectChangeResilience
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if (! [labels[@"event_id"] isEqualToString:@"play"]) {
+        if (! [event isEqualToString:@"play"]) {
             return NO;
         }
         
@@ -2906,7 +2912,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
-        if (! [labels[@"event_id"] isEqualToString:@"pause"]) {
+        if (! [event isEqualToString:@"pause"]) {
             return NO;
         }
         
@@ -2925,7 +2931,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlaybackRateAtStart
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
         return YES;
     }];
@@ -2939,7 +2945,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlaybackRateChange
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"1");
         return YES;
     }];
@@ -2949,7 +2955,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"pause");
+        XCTAssertEqualObjects(event, @"pause");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
         return YES;
     }];
@@ -2963,7 +2969,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlaybackRateAfterRestart
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
         return YES;
     }];
@@ -2977,11 +2983,11 @@ static NSURL *DVRTestURL(void)
     __block BOOL playReceived = NO;
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        if ([labels[@"event_id"] isEqualToString:@"stop"]) {
+        if ([event isEqualToString:@"stop"]) {
             XCTAssertFalse(playReceived);
             stopReceived = YES;
         }
-        else if ([labels[@"event_id"] isEqualToString:@"play"]) {
+        else if ([event isEqualToString:@"play"]) {
             playReceived = YES;
         }
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
@@ -2997,7 +3003,7 @@ static NSURL *DVRTestURL(void)
 - (void)testPlaybackRateAfterReplay
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
         return YES;
     }];
@@ -3009,7 +3015,7 @@ static NSURL *DVRTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
-        return [labels[@"event_id"] isEqualToString:@"eof"];
+        return [event isEqualToString:@"eof"];
     }];
     
     CMTime seekTime = CMTimeSubtract(CMTimeRangeGetEnd(self.mediaPlayerController.timeRange), CMTimeMakeWithSeconds(2., NSEC_PER_SEC));
@@ -3018,7 +3024,7 @@ static NSURL *DVRTestURL(void)
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"event_id"], @"play");
+        XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_playback_rate"], @"0.5");
         return YES;
     }];

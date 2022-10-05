@@ -6,6 +6,7 @@
 
 #import "NSNotificationCenter+Tests.h"
 #import "Segment.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @import SRGAnalyticsMediaPlayer;
@@ -35,6 +36,11 @@ static NSURL *DVRTestURL(void)
 @implementation ComScoreMediaPlayerTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {
