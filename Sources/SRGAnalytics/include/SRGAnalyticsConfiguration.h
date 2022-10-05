@@ -55,11 +55,11 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *
  *  @param businessUnitIdentifier The identifier of the business unit which measurements are made for. Usually the
  *                                business unit which publishes the application.
- *  @param container              The TagCommander container identifier to which measurements will be sent.
+ *  @param sourceKey              The TagCommander source key.
  *  @param siteName               The name of the site which measurements must be associated with.
  */
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
-                                     container:(NSInteger)container
+                                     sourceKey:(NSString *)sourceKey
                                       siteName:(NSString *)siteName;
 
 /**
@@ -103,9 +103,9 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
 @property (nonatomic, readonly) NSInteger site;
 
 /**
- *  The TagCommander container identifier.
+ *  The TagCommander source key.
  */
-@property (nonatomic, readonly) NSInteger container;
+@property (nonatomic, readonly, copy) NSString *sourceKey;
 
 /**
  *  The name of the site which TagCommander measurements must be associated with. By default `business_unit-app-test-v`.

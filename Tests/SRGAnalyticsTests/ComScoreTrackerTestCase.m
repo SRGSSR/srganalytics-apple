@@ -5,6 +5,7 @@
 //
 
 #import "NSNotificationCenter+Tests.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @interface ComScoreTrackerTestCase : XCTestCase
@@ -14,6 +15,11 @@
 @implementation ComScoreTrackerTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {

@@ -29,7 +29,7 @@
     [TCDebug setNotificationLog:YES];
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
-                                                                                                       container:10
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"rts-app-test-v"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     

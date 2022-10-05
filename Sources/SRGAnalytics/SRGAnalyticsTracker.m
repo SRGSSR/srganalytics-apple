@@ -16,7 +16,7 @@
 
 @import ComScore;
 @import TCCore;
-@import TCSDK;
+@import TCServerSide;
 
 static NSString * s_unitTestingIdentifier = nil;
 
@@ -42,7 +42,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
 
-@property (nonatomic) TagCommander *tagCommander;
+@property (nonatomic) ServerSide *serverSide;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
 
 @property (nonatomic) SRGAnalyticsLabels *globalLabels;
@@ -77,31 +77,48 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     if (configuration.unitTesting) {
         SRGAnalyticsEnableRequestInterceptor();
     }
-    
+
+    [self startComScoreWithConfiguration:configuration];
+    [self startTagCommanderWithConfiguration:configuration];
+
+    [self sendApplicationList];
+}
+
+- (void)startComScoreWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+{
     SCORPublisherConfiguration *publisherConfiguration = [SCORPublisherConfiguration publisherConfigurationWithBuilderBlock:^(SCORPublisherConfigurationBuilder *builder) {
         builder.publisherId = @"6036016";
         builder.secureTransmissionEnabled = YES;
         builder.persistentLabels = [self persistentComScoreLabels];
-        
+
         // See https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/ComScore+-+Media+Metrix+Report
         // Coding Document for Video Players, page 16
         builder.httpRedirectCachingEnabled = NO;
-        
+
         if (configuration.unitTesting) {
             builder.startLabels = @{ @"srg_test_id" : SRGAnalyticsUnitTestingIdentifier() };
         }
     }];
-    
+
     SCORConfiguration *comScoreConfiguration = [SCORAnalytics configuration];
     [comScoreConfiguration addClientWithConfiguration:publisherConfiguration];
-    
+
     comScoreConfiguration.applicationVersion = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     comScoreConfiguration.usagePropertiesAutoUpdateMode = SCORUsagePropertiesAutoUpdateModeForegroundAndBackground;
     comScoreConfiguration.preventAdSupportUsage = YES;
-    
+
     [SCORAnalytics start];
-    
-    [self sendApplicationList];
+}
+
+- (void)startTagCommanderWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+{
+    self.serverSide = [[ServerSide alloc] initWithSiteID:(int)configuration.site andSourceKey:configuration.sourceKey];
+    [self.serverSide enableRunningInBackground];
+
+    [self.serverSide addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
+    [self.serverSide addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
+    [self.serverSide addPermanentData:@"navigation_environment" withValue:configuration.environment];
+    [self.serverSide addPermanentData:@"navigation_device" withValue:[self device]];
 }
 
 #pragma mark Labels
@@ -160,26 +177,38 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark General event tracking (internal use only)
 
-- (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
+- (void)sendTagCommanderPageViewEventWithTitle:(NSString *)title
+                                        labels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    if (! self.tagCommander) {
-        SRGAnalyticsConfiguration *configuration = self.configuration;
-        NSAssert(configuration != nil, @"The tracker must be started");
-        
-        self.tagCommander = [[TagCommander alloc] initWithSiteID:(int)configuration.site andContainerID:(int)configuration.container];
-        [self.tagCommander enableRunningInBackground];
-        [self.tagCommander addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
-        [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
-        [self.tagCommander addPermanentData:@"navigation_environment" withValue:configuration.environment];
-        [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
-    }
-    
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultLabels].mutableCopy;
-    [fullLabels addEntriesFromDictionary:labels];
-    [fullLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull object, BOOL * _Nonnull stop) {
-        [self.tagCommander addData:key withValue:object];
+    NSAssert(title.length != 0, @"A title is required");
+
+    TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:title];
+    [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
+        [event addAdditionalParameter:key withValue:value];
     }];
-    [self.tagCommander sendData];
+
+    if (self.configuration.unitTesting) {
+        [event addAdditionalParameter:@"srg_test_id" withValue:SRGAnalyticsUnitTestingIdentifier()];
+    }
+
+    [self.serverSide execute:event];
+}
+
+- (void)sendTagCommanderCustomEventWithName:(NSString *)name
+                                     labels:(NSDictionary<NSString *, NSString *> *)labels
+{
+    NSAssert(name.length != 0, @"A name is required");
+
+    TCCustomEvent *event = [[TCCustomEvent alloc] initWithName:name];
+    [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
+        [event addAdditionalParameter:key withValue:value];
+    }];
+
+    if (self.configuration.unitTesting) {
+        [event addAdditionalParameter:@"srg_test_id" withValue:SRGAnalyticsUnitTestingIdentifier()];
+    }
+
+    [self.serverSide execute:event];
 }
 
 #pragma mark Page view tracking
@@ -272,7 +301,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     
     if (self.configuration.unitTesting) {
-        fullLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+        [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
     
     [SCORAnalytics notifyViewEventWithLabels:fullLabels.copy];
@@ -283,35 +312,31 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                                     labels:(SRGAnalyticsPageViewLabels *)labels
                       fromPushNotification:(BOOL)fromPushNotification
 {
-    NSAssert(title.length != 0, @"A title is required");
-    
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
-    [fullLabels srg_safelySetString:@"screen" forKey:@"event_id"];
     [fullLabels srg_safelySetString:@"app" forKey:@"navigation_property_type"];
-    [fullLabels srg_safelySetString:title forKey:@"content_title"];
     [fullLabels srg_safelySetString:self.configuration.businessUnitIdentifier.uppercaseString forKey:@"navigation_bu_distributer"];
     [fullLabels srg_safelySetString:fromPushNotification ? @"true" : @"false" forKey:@"accessed_after_push_notification"];
-    
+
     [levels enumerateObjectsUsingBlock:^(NSString * _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx > 7) {
             *stop = YES;
             return;
         }
-        
+
         NSString *levelKey = [NSString stringWithFormat:@"navigation_level_%@", @(idx + 1)];
         [fullLabels srg_safelySetString:object forKey:levelKey];
     }];
-    
+
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
     if (labelsDictionary) {
         [fullLabels addEntriesFromDictionary:labelsDictionary];
     }
-    
+
     if (self.configuration.unitTesting) {
-        fullLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+        [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
-    
-    [self trackTagCommanderEventWithLabels:fullLabels.copy];
+
+    [self sendTagCommanderPageViewEventWithTitle:title labels:fullLabels.copy];
 }
 
 #pragma mark Hidden event tracking
@@ -339,23 +364,21 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
-    NSAssert(name.length != 0, @"A name is required");
     NSAssert(self.configuration != nil, @"The tracker must be started");
-    
+
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
-    [fullLabels srg_safelySetString:@"hidden_event" forKey:@"event_id"];
     [fullLabels srg_safelySetString:name forKey:@"event_name"];
-    
+
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
     if (labelsDictionary) {
         [fullLabels addEntriesFromDictionary:labelsDictionary];
     }
-    
+
     if (self.configuration.unitTesting) {
-        fullLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+        [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
-    
-    [self trackTagCommanderEventWithLabels:fullLabels.copy];
+
+    [self sendTagCommanderCustomEventWithName:@"hidden_event" labels:fullLabels.copy];
 }
 
 #pragma mark Application list measurement

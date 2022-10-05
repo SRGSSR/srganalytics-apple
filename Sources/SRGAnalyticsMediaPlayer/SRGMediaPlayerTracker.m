@@ -215,8 +215,6 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerName forKey:@"media_player_display"];
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerVersion forKey:@"media_player_version"];
     
-    [labels srg_safelySetString:event forKey:@"event_id"];
-    
     // Use current duration as media position for livestreams, raw position otherwise
     NSTimeInterval mediaPosition = SRGMediaAnalyticsIsLiveStreamType(streamType) ? [self updatedPlaybackDurationWithEvent:event] : SRGMediaAnalyticsCMTimeToMilliseconds(time);
     [labels srg_safelySetString:@(round(mediaPosition / 1000)).stringValue forKey:@"media_position"];
@@ -258,7 +256,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
         labels[@"srg_test_id"] = self.unitTestingIdentifier;
     }
     
-    [SRGAnalyticsTracker.sharedTracker trackTagCommanderEventWithLabels:labels.copy];
+    [SRGAnalyticsTracker.sharedTracker sendTagCommanderCustomEventWithName:event labels:labels.copy];
 }
 
 #pragma mark Heartbeats

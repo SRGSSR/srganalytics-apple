@@ -15,42 +15,79 @@
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return;
         }
         
-        NSString *event = labels[@"event_id"];
-        if ([event isEqualToString:@"screen"]) {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"hidden_event"]) {
             return;
         }
         
         // Discard app overlap measurements
-        NSString *name = labels[@"event_name"];
+        NSString *name = propertiesLabels[@"event_name"];
         if ([name isEqualToString:@"Installed Apps"]) {
             return;
         }
         
-        block(event, labels);
+        block(event, propertiesLabels);
     }];
 }
 
 - (id<NSObject>)addObserverForPlayerEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
 {
-    return [self addObserverForHiddenEventNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+    NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
+    return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
+
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
+        if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
+            return;
+        }
+
         static dispatch_once_t s_onceToken;
         static NSArray<NSString *> *s_playerEvents;
         dispatch_once(&s_onceToken, ^{
             s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof"];
         });
-        
-        if ([s_playerEvents containsObject:event]) {
-            block(event, labels);
-        }
-        else {
+
+        NSString *event = labels[@"event_name"];
+        if (! [s_playerEvents containsObject:event]) {
             return;
         }
+
+        block(event, propertiesLabels);
+    }];
+}
+
+- (id<NSObject>)addObserverForPlayerHeartbeatNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
+{
+    NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
+    return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
+
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
+        if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
+            return;
+        }
+
+        static dispatch_once_t s_onceToken;
+        static NSArray<NSString *> *s_heartbeatEvents;
+        dispatch_once(&s_onceToken, ^{
+            s_heartbeatEvents = @[@"pos", @"uptime"];
+        });
+
+        NSString *event = labels[@"event_name"];
+        if (! [s_heartbeatEvents containsObject:event]) {
+            return;
+        }
+
+        block(event, propertiesLabels);
     }];
 }
 
@@ -95,12 +132,11 @@
             s_playerEvents = @[@"play", @"pause", @"end"];
         });
         
-        if ([s_playerEvents containsObject:event]) {
-            block(event, labels);
-        }
-        else {
+        if (! [s_playerEvents containsObject:event]) {
             return;
         }
+
+        block(event, labels);
     }];
 }
 

@@ -8,6 +8,8 @@
 
 #import <objc/runtime.h>
 
+@import TCCore;
+
 static BOOL s_interceptorEnabled = NO;
 
 NSString * const SRGAnalyticsRequestNotification = @"SRGAnalyticsRequestNotification";
@@ -49,30 +51,6 @@ static NSDictionary<NSString *, NSString *> *SRGAnalyticsProxyLabelsFromURLCompo
 
 @end
 
-@implementation NSURLConnection (SRGAnalyticsProxy)
-
-+ (void)srg_enableAnalyticsInterceptor
-{
-    method_exchangeImplementations(class_getClassMethod(self, @selector(sendSynchronousRequest:returningResponse:error:)),
-                                   class_getClassMethod(self, @selector(swizzled_sendSynchronousRequest:returningResponse:error:)));
-}
-
-+ (NSData *)swizzled_sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse *__autoreleasing  _Nullable *)response error:(NSError * _Nullable __autoreleasing *)error
-{
-    NSURL *URL = request.URL;
-    if ([URL.host containsString:@"tagcommander"]) {
-        // The POST body contains URL encoded parameters. Use NSURLComponents for simple extraction
-        NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
-        URLComponents.query = [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
-        [NSNotificationCenter.defaultCenter postNotificationName:SRGAnalyticsRequestNotification
-                                                          object:nil
-                                                        userInfo:@{ SRGAnalyticsLabelsKey : SRGAnalyticsProxyLabelsFromURLComponents(URLComponents) }];
-    }
-    return [self swizzled_sendSynchronousRequest:request returningResponse:response error:error];
-}
-
-@end
-
 void SRGAnalyticsEnableRequestInterceptor(void)
 {
     if (s_interceptorEnabled) {
@@ -80,7 +58,17 @@ void SRGAnalyticsEnableRequestInterceptor(void)
     }
     
     [NSURLSession srg_enableAnalyticsInterceptor];
-    [NSURLConnection srg_enableAnalyticsInterceptor];
+
+    [NSNotificationCenter.defaultCenter addObserverForName:kTCNotification_HTTPRequest object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        NSString *bodyString = notification.userInfo[kTCUserInfo_POSTData];
+        NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary<NSString *, NSString *> *labelsDictionary = [NSJSONSerialization JSONObjectWithData:bodyData options:0 error:NULL];
+        if (labelsDictionary) {
+            [NSNotificationCenter.defaultCenter postNotificationName:SRGAnalyticsRequestNotification
+                                                              object:nil
+                                                            userInfo:@{ SRGAnalyticsLabelsKey : labelsDictionary }];
+        }
+    }];
     
     s_interceptorEnabled = YES;
 }

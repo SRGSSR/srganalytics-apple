@@ -6,13 +6,6 @@
 
 #import "XCTestCase+Tests.h"
 
-static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
-{
-    NSString *contentProtectionFrameworkPath = [NSBundle.mainBundle pathForResource:@"SRGContentProtection" ofType:@"framework" inDirectory:@"Frameworks"];
-    NSBundle *contentProtectionFramework = [NSBundle bundleWithPath:contentProtectionFrameworkPath];
-    [contentProtectionFramework loadAndReturnError:NULL];
-}
-
 @implementation XCTestCase (Tests)
 
 #pragma mark Helpers
@@ -47,19 +40,19 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if ([event isEqualToString:@"screen"]) {
-            return handler(event, labels);
-        }
-        else {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"page_view"]) {
             return NO;
         }
+
+        return handler(event, propertiesLabels);
     }];
 }
 
@@ -68,24 +61,25 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if ([event isEqualToString:@"screen"]) {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"hidden_event"]) {
             return NO;
         }
         
         // Discard app overlap measurements
-        NSString *name = labels[@"event_name"];
+        NSString *name = propertiesLabels[@"event_name"];
         if ([name isEqualToString:@"Installed Apps"]) {
             return NO;
         }
         
-        return handler(event, labels);
+        return handler(event, propertiesLabels);
     }];
 }
 
@@ -94,8 +88,9 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return NO;
         }
@@ -106,13 +101,12 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment"];
         });
         
-        NSString *event = labels[@"event_id"];
-        if ([s_playerEvents containsObject:event]) {
-            return handler(event, labels);
-        }
-        else {
+        NSString *event = labels[@"event_name"];
+        if (! [s_playerEvents containsObject:event]) {
             return NO;
         }
+
+        return handler(event, propertiesLabels);
     }];
 }
 
@@ -157,12 +151,11 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             s_playerEvents = @[ @"play", @"pause", @"end", @"playrt" ];
         });
         
-        if ([s_playerEvents containsObject:event]) {
-            return handler(event, labels);
-        }
-        else {
+        if (! [s_playerEvents containsObject:event]) {
             return NO;
         }
+
+        return handler(event, labels);
     }];
 }
 
@@ -171,14 +164,15 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if (! [event isEqualToString:@"screen"]) {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"page_view"]) {
             return NO;
         }
         
