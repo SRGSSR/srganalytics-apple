@@ -57,6 +57,9 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *                                business unit which publishes the application.
  *  @param sourceKey              The Commanders Act source key.
  *  @param siteName               The name of the site which measurements must be associated with.
+ *
+ *  @discssion The various setup parameters to use must be obtained from the team responsible of measurements for
+ *             your application.
  */
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
                                      sourceKey:(NSString *)sourceKey
