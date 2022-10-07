@@ -253,7 +253,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
     
     if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-        labels[@"srg_test_id"] = self.unitTestingIdentifier;
+        [labels srg_safelySetString:self.unitTestingIdentifier forKey:@"srg_test_id"];
     }
     
     [SRGAnalyticsTracker.sharedTracker sendCommandersActCustomEventWithName:event labels:labels.copy];
