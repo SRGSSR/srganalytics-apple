@@ -9,7 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  The following notifications can be used if you need to track when TagCommander and comScore requests are made,
+ *  The following notifications can be used if you need to track when Commanders Act and comScore requests are made,
  *  and which information will be sent to these services, for unit testing purposes.
  *
  *  These notifications are only emitted when enabling the `unitTesting` tracker configuration flag, @see
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Notifications may be received on background threads.
  */
 
-// Notification sent when TagCommander analytics are sent.
+// Notification sent when Commanders Act analytics are sent.
 OBJC_EXPORT NSString * const SRGAnalyticsRequestNotification;
 
 // Information available for `SRGAnalyticsRequestNotification`.
