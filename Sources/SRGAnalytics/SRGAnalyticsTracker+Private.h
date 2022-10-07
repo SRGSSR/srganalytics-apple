@@ -19,8 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
           fromPushNotification:(BOOL)fromPushNotification
         ignoreApplicationState:(BOOL)ignoreApplicationState;
 
-- (void)sendTagCommanderCustomEventWithName:(NSString *)name
-                                     labels:(nullable NSDictionary<NSString *, NSString *> *)labels;
+- (void)sendCommandersActCustomEventWithName:(NSString *)name
+                                      labels:(nullable NSDictionary<NSString *, NSString *> *)labels;
 
 @end
 

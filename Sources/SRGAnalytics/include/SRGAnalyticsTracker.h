@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  The analytics tracker is a singleton instance responsible of tracking usage of an application, sending measurements
- *  to TagCommander (internal analytics) and comScore (Mediapulse official audience measurements). The usage data is
+ *  to Commanders Act (internal analytics) and comScore (Mediapulse official audience measurements). The usage data is
  *  simply a collection of key-values (both strings), named labels, which can then be used by data analysts in studies
  *  and reports.
  *
@@ -72,7 +72,7 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 
 /**
  *  Start the tracker. This is required to specify for which business unit you are tracking events, as well as to
- *  where they must be sent on the comScore and TagCommander services. Attempting to track view, hidden or stream
+ *  where they must be sent on the comScore and Commanders Act services. Attempting to track view, hidden or stream
  *  events without starting the tracker has no effect.
  *
  *  @param configuration The configuration to use. This configuration is copied and cannot be changed afterwards.

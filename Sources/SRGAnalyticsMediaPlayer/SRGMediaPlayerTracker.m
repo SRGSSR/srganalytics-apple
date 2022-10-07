@@ -163,7 +163,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
 {
     NSAssert(event.length != 0, @"An event is required");
     
-    // Ensure a play is emitted before events requiring a session to be opened (the Tag Commander SDK does not open sessions
+    // Ensure a play is emitted before events requiring a session to be opened (the Commanders Act SDK does not open sessions
     // automatically)
     if ([self.lastEvent isEqualToString:MediaPlayerTrackerEventStop] && ([event isEqualToString:MediaPlayerTrackerEventPause] || [event isEqualToString:MediaPlayerTrackerEventSeek])) {
         [self recordEvent:MediaPlayerTrackerEventPlay withStreamType:streamType time:time timeshift:timeshift analyticsLabels:analyticsLabels userInfo:userInfo];
@@ -256,7 +256,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
         labels[@"srg_test_id"] = self.unitTestingIdentifier;
     }
     
-    [SRGAnalyticsTracker.sharedTracker sendTagCommanderCustomEventWithName:event labels:labels.copy];
+    [SRGAnalyticsTracker.sharedTracker sendCommandersActCustomEventWithName:event labels:labels.copy];
 }
 
 #pragma mark Heartbeats

@@ -87,7 +87,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
 
     [self startComScoreWithConfiguration:configuration];
-    [self startTagCommanderWithConfiguration:configuration];
+    [self startCommandersActWithConfiguration:configuration];
 
     [self sendApplicationList];
 }
@@ -115,7 +115,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [SCORAnalytics start];
 }
 
-- (void)startTagCommanderWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+- (void)startCommandersActWithConfiguration:(SRGAnalyticsConfiguration *)configuration
 {
     self.serverSide = [[ServerSide alloc] initWithSiteID:(int)configuration.site andSourceKey:configuration.sourceKey];
     [self.serverSide enableRunningInBackground];
@@ -211,8 +211,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark General event tracking (internal use only)
 
-- (void)sendTagCommanderPageViewEventWithTitle:(NSString *)title
-                                        labels:(NSDictionary<NSString *, NSString *> *)labels
+- (void)sendCommandersActPageViewEventWithTitle:(NSString *)title
+                                         labels:(NSDictionary<NSString *, NSString *> *)labels
 {
     NSAssert(title.length != 0, @"A title is required");
 
@@ -228,8 +228,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [self.serverSide execute:event];
 }
 
-- (void)sendTagCommanderCustomEventWithName:(NSString *)name
-                                     labels:(NSDictionary<NSString *, NSString *> *)labels
+- (void)sendCommandersActCustomEventWithName:(NSString *)name
+                                      labels:(NSDictionary<NSString *, NSString *> *)labels
 {
     NSAssert(name.length != 0, @"A name is required");
 
@@ -287,7 +287,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    [self trackTagCommanderPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
+    [self trackCommandersActPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
 }
 
@@ -341,10 +341,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [SCORAnalytics notifyViewEventWithLabels:fullLabels.copy];
 }
 
-- (void)trackTagCommanderPageViewWithTitle:(NSString *)title
-                                    levels:(NSArray<NSString *> *)levels
-                                    labels:(SRGAnalyticsPageViewLabels *)labels
-                      fromPushNotification:(BOOL)fromPushNotification
+- (void)trackCommandersActPageViewWithTitle:(NSString *)title
+                                     levels:(NSArray<NSString *> *)levels
+                                     labels:(SRGAnalyticsPageViewLabels *)labels
+                       fromPushNotification:(BOOL)fromPushNotification
 {
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
     [fullLabels srg_safelySetString:@"app" forKey:@"navigation_property_type"];
@@ -370,7 +370,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
 
-    [self sendTagCommanderPageViewEventWithTitle:title labels:fullLabels.copy];
+    [self sendCommandersActPageViewEventWithTitle:title labels:fullLabels.copy];
 }
 
 #pragma mark Hidden event tracking
@@ -393,10 +393,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    [self trackTagCommanderHiddenEventWithName:name labels:labels];
+    [self trackCommandersActHiddenEventWithName:name labels:labels];
 }
 
-- (void)trackTagCommanderHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
+- (void)trackCommandersActHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
 {
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
@@ -412,7 +412,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
 
-    [self sendTagCommanderCustomEventWithName:@"hidden_event" labels:fullLabels.copy];
+    [self sendCommandersActCustomEventWithName:@"hidden_event" labels:fullLabels.copy];
 }
 
 #pragma mark Application list measurement

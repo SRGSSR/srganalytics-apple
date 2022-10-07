@@ -144,7 +144,7 @@ and implement the methods you need to supply measurement information:
 
 When the view is opened for the first time, or if the view is visible on screen when waking up the application, this information will be automatically sent.
 
-Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for TagCommander first (unlike comScore information which can be freely defined).
+Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for Commanders Act first (unlike comScore information which can be freely defined).
 
 ## Measuring page views (SwiftUI)
 

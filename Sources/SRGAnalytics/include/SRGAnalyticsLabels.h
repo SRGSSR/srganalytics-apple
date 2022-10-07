@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  Additional custom information, mapping variables to values.
  *
  *  You should rarely need to provide custom information with measurements, as this requires the variable name to be
- *  declared on TagCommander portal first (otherwise the associated value will be discarded).
+ *  declared on Commanders Act portal first (otherwise the associated value will be discarded).
  *
  *  Custom information can be used to override official labels. You should use this ability sparingly, though.
  */
