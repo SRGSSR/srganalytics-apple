@@ -210,8 +210,6 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     
     NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
     
-    [labels srg_safelySetString:SRGAnalyticsTracker.sharedTracker.configuration.environment forKey:@"media_embedding_environment"];
-    
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerName forKey:@"media_player_display"];
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerVersion forKey:@"media_player_version"];
     
