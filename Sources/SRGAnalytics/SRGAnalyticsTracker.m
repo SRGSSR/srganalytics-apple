@@ -122,7 +122,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
     [self.serverSide addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
     [self.serverSide addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
-    [self.serverSide addPermanentData:@"navigation_environment" withValue:configuration.environment];
     [self.serverSide addPermanentData:@"navigation_device" withValue:[self device]];
 }
 

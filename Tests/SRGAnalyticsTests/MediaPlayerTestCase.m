@@ -549,7 +549,6 @@ static NSURL *DVRTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
-        XCTAssertEqualObjects(labels[@"navigation_environment"], @"preprod");
         XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
@@ -873,29 +872,6 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"stop");
         XCTAssertNil(labels[@"media_bandwidth"]);
-        return YES;
-    }];
-    
-    [self.mediaPlayerController reset];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-}
-
-- (void)testEnvironment
-{
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"media_embedding_environment"], @"preprod");
-        return YES;
-    }];
-    
-    [self playURL:OnDemandTestURL() atPosition:nil withSegments:nil];
-    
-    [self waitForExpectationsWithTimeout:20. handler:nil];
-    
-    [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(event, @"stop");
-        XCTAssertEqualObjects(labels[@"media_embedding_environment"], @"preprod");
         return YES;
     }];
     

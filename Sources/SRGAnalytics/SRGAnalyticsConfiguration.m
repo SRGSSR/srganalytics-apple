@@ -6,17 +6,12 @@
 
 #import "SRGAnalyticsConfiguration.h"
 
-#import "NSBundle+SRGAnalytics.h"
-
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRSI = @"rsi";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTR = @"rtr";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTS = @"rts";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRF = @"srf";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRG = @"srg";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI = @"swi";
-
-SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentPreProduction = @"preprod";
-SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 
 @interface SRGAnalyticsConfiguration ()
 
@@ -39,7 +34,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
         self.sourceKey = sourceKey;
         self.siteName = siteName;
         self.centralized = YES;
-        self.environmentMode = SRGAnalyticsEnvironmentModeAutomatic;
     }
     return self;
 }
@@ -63,27 +57,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     return s_sites[businessUnitIdentifier].integerValue;
 }
 
-- (SRGAnalyticsEnvironment)environment
-{
-    switch (self.environmentMode) {
-        case SRGAnalyticsEnvironmentModePreProduction: {
-            return SRGAnalyticsEnvironmentPreProduction;
-            break;
-        }
-            
-        case SRGAnalyticsEnvironmentModeProduction: {
-            return SRGAnalyticsEnvironmentProduction;
-            break;
-        }
-        
-        case SRGAnalyticsEnvironmentModeAutomatic:
-        default: {
-            return NSBundle.srg_isProductionVersion ? SRGAnalyticsEnvironmentProduction : SRGAnalyticsEnvironmentPreProduction;
-            break;
-        }
-    }
-}
-
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
@@ -93,7 +66,6 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     configuration.sourceKey = self.sourceKey;
     configuration.siteName = self.siteName;
     configuration.centralized = self.centralized;
-    configuration.environmentMode = self.environmentMode;
     configuration.unitTesting = self.unitTesting;
     return configuration;
 }
