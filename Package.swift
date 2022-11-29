@@ -42,13 +42,17 @@ let package = Package(
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.3.0")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.1.0")),
         .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "7.2.0")),
-        .package(name: "TCCore", url: "https://github.com/SRGSSR/TCCore-xcframework-apple.git", .upToNextMinor(from: "5.1.1")),
-        .package(name: "TCServerSide", url: "https://github.com/SRGSSR/TCServerSide-xcframework-apple.git", .upToNextMinor(from: "5.1.2"))
+        .package(name: "TagCommander", url: "https://github.com/CommandersAct/iOSV5.git", .upToNextMinor(from: "5.2.1"))
     ],
     targets: [
         .target(
             name: "SRGAnalytics",
-            dependencies: ["ComScore", "SRGLogger", "TCCore", "TCServerSide"],
+            dependencies: [
+                "ComScore",
+                "SRGLogger",
+                .product(name: "TCCore", package: "TagCommander"),
+                .product(name: "TCServerSide", package: "TagCommander")
+            ],
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
                 .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))
