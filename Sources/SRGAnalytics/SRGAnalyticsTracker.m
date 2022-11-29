@@ -217,11 +217,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
     TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:title];
     [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
-        [event addAdditionalParameter:key withValue:value];
+        [event addAdditionalProperty:key withStringValue:value];
     }];
 
     if (self.configuration.unitTesting) {
-        [event addAdditionalParameter:@"srg_test_id" withValue:SRGAnalyticsUnitTestingIdentifier()];
+        [event addAdditionalProperty:@"srg_test_id" withStringValue:SRGAnalyticsUnitTestingIdentifier()];
     }
 
     [self.serverSide execute:event];
@@ -234,11 +234,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
     TCCustomEvent *event = [[TCCustomEvent alloc] initWithName:name];
     [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
-        [event addAdditionalParameter:key withValue:value];
+        [event addAdditionalProperty:key withStringValue:value];
     }];
 
     if (self.configuration.unitTesting) {
-        [event addAdditionalParameter:@"srg_test_id" withValue:SRGAnalyticsUnitTestingIdentifier()];
+        [event addAdditionalProperty:@"srg_test_id" withStringValue:SRGAnalyticsUnitTestingIdentifier()];
     }
 
     [self.serverSide execute:event];
