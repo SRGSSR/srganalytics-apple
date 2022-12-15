@@ -47,6 +47,9 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 @property (nonatomic) SRGAnalyticsLabels *globalLabels;
 
+@property (nonatomic, readonly) NSDictionary *defaultComScoreLabels;
+@property (nonatomic, readonly) NSDictionary *defaultLabels;
+
 @end
 
 @implementation SRGAnalyticsTracker
@@ -263,7 +266,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSAssert(title.length != 0, @"A title is required");
     
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultComScoreLabels].mutableCopy;
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultComScoreLabels.mutableCopy;
     [fullLabels srg_safelySetString:title forKey:@"srg_title"];
     [fullLabels srg_safelySetString:@(fromPushNotification).stringValue forKey:@"srg_ap_push"];
     
@@ -311,7 +314,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                                      labels:(SRGAnalyticsPageViewLabels *)labels
                        fromPushNotification:(BOOL)fromPushNotification
 {
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultLabels.mutableCopy;
     [fullLabels srg_safelySetString:@"app" forKey:@"navigation_property_type"];
     [fullLabels srg_safelySetString:self.configuration.businessUnitIdentifier.uppercaseString forKey:@"navigation_bu_distributer"];
     [fullLabels srg_safelySetString:fromPushNotification ? @"true" : @"false" forKey:@"accessed_after_push_notification"];
@@ -365,7 +368,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultLabels.mutableCopy;
     [fullLabels srg_safelySetString:name forKey:@"event_name"];
 
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
