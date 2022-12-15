@@ -16,7 +16,7 @@
 
 @import ComScore;
 @import TCCore;
-@import TCServerSide;
+@import TCServerSide_noIDFA;
 
 static NSString * s_unitTestingIdentifier = nil;
 

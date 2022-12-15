@@ -42,7 +42,7 @@ let package = Package(
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.3.0")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.1.0")),
         .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "7.2.0")),
-        .package(name: "TagCommander", url: "https://github.com/CommandersAct/iOSV5.git", .upToNextMinor(from: "5.2.1"))
+        .package(name: "TagCommander", url: "https://github.com/CommandersAct/iOSV5.git", .upToNextMinor(from: "5.2.2"))
     ],
     targets: [
         .target(
@@ -51,7 +51,7 @@ let package = Package(
                 "ComScore",
                 "SRGLogger",
                 .product(name: "TCCore", package: "TagCommander"),
-                .product(name: "TCServerSide", package: "TagCommander")
+                .product(name: "TCServerSide_noIDFA", package: "TagCommander")
             ],
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
