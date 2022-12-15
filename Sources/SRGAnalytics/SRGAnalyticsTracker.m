@@ -219,6 +219,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     NSAssert(title.length != 0, @"A title is required");
 
     TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:title];
+    [self.defaultLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
+        [event addAdditionalProperty:key withStringValue:value];
+    }];
+
     [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
         [event addAdditionalProperty:key withStringValue:value];
     }];
@@ -236,6 +240,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     NSAssert(name.length != 0, @"A name is required");
 
     TCCustomEvent *event = [[TCCustomEvent alloc] initWithName:name];
+    [self.defaultLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
+        [event addAdditionalProperty:key withStringValue:value];
+    }];
+
     [labels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
         [event addAdditionalProperty:key withStringValue:value];
     }];
@@ -348,7 +356,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
                                      labels:(SRGAnalyticsPageViewLabels *)labels
                        fromPushNotification:(BOOL)fromPushNotification
 {
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultLabels.mutableCopy;
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
     [fullLabels srg_safelySetString:@"app" forKey:@"navigation_property_type"];
     [fullLabels srg_safelySetString:self.configuration.businessUnitIdentifier.uppercaseString forKey:@"navigation_bu_distributer"];
     [fullLabels srg_safelySetString:fromPushNotification ? @"true" : @"false" forKey:@"accessed_after_push_notification"];
@@ -402,7 +410,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultLabels.mutableCopy;
+    NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
     [fullLabels srg_safelySetString:name forKey:@"event_name"];
 
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
