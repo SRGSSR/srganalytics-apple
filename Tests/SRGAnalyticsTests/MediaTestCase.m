@@ -46,7 +46,7 @@
 
 - (void)testUnprotectedOnDemandAudioRSI
 {
-    [self playMediaWithURN:@"urn:rsi:audio:11398281"];
+    [self playMediaWithURN:@"urn:rsi:audio:16016821"];
 }
 
 - (void)testDVRAudioLivestreamRSI
