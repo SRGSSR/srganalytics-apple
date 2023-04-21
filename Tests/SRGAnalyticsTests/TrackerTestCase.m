@@ -50,7 +50,7 @@
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"hidden_event");
-        XCTAssertEqualObjects(labels[@"event_name"], @"Hidden event");
+        XCTAssertEqualObjects(labels[@"event_title"], @"Hidden event");
         return YES;
     }];
     
@@ -63,7 +63,7 @@
 {
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"hidden_event");
-        XCTAssertEqualObjects(labels[@"event_name"], @"Hidden event");
+        XCTAssertEqualObjects(labels[@"event_title"], @"Hidden event");
         XCTAssertEqualObjects(labels[@"event_type"], @"toggle");
         XCTAssertEqualObjects(labels[@"event_source"], @"favorite_list");
         XCTAssertEqualObjects(labels[@"event_value"], @"true");

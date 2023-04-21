@@ -411,7 +411,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
-    [fullLabels srg_safelySetString:name forKey:@"event_name"];
+    [fullLabels srg_safelySetString:name forKey:@"event_title"];
 
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
     if (labelsDictionary) {
