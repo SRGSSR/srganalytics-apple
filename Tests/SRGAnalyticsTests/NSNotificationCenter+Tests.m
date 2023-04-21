@@ -15,9 +15,8 @@
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
-        NSDictionary *propertiesLabels = labels[@"properties"];
         
-        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
+        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return;
         }
@@ -28,12 +27,12 @@
         }
         
         // Discard app overlap measurements
-        NSString *name = propertiesLabels[@"event_name"];
+        NSString *name = labels[@"event_title"];
         if ([name isEqualToString:@"Installed Apps"]) {
             return;
         }
         
-        block(event, propertiesLabels);
+        block(event, labels);
     }];
 }
 
@@ -42,9 +41,8 @@
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
-        NSDictionary *propertiesLabels = labels[@"properties"];
-
-        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
+        
+        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return;
         }
@@ -60,7 +58,7 @@
             return;
         }
 
-        block(event, propertiesLabels);
+        block(event, labels);
     }];
 }
 
@@ -69,9 +67,8 @@
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
         NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
-        NSDictionary *propertiesLabels = labels[@"properties"];
-
-        NSString *unitTestingIdentifier = propertiesLabels[@"srg_test_id"];
+        
+        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
         if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
             return;
         }
@@ -87,7 +84,7 @@
             return;
         }
 
-        block(event, propertiesLabels);
+        block(event, labels);
     }];
 }
 
