@@ -377,8 +377,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
-    [fullLabels srg_safelySetString:name forKey:@"event_title"];
-
+    
     NSDictionary<NSString *, NSString *> *labelsDictionary = [labels labelsDictionary];
     if (labelsDictionary) {
         [fullLabels addEntriesFromDictionary:labelsDictionary];
@@ -388,7 +387,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
 
-    [self sendCommandersActCustomEventWithName:@"hidden_event" labels:fullLabels.copy];
+    [self sendCommandersActCustomEventWithName:name labels:fullLabels.copy];
 }
 
 #pragma mark Application list measurement

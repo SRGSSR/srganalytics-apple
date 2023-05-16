@@ -66,8 +66,14 @@
             return NO;
         }
         
+        static dispatch_once_t s_onceToken;
+        static NSArray<NSString *> *s_nonHiddenEvents;
+        dispatch_once(&s_onceToken, ^{
+            s_nonHiddenEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
+        });
+        
         NSString *event = labels[@"event_name"];
-        if (! [event isEqualToString:@"hidden_event"]) {
+        if ([s_nonHiddenEvents containsObject:event]) {
             return NO;
         }
         

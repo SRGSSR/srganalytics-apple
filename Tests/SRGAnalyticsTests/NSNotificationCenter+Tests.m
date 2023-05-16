@@ -21,14 +21,19 @@
             return;
         }
         
+        static dispatch_once_t s_onceToken;
+        static NSArray<NSString *> *s_nonHiddenEvents;
+        dispatch_once(&s_onceToken, ^{
+            s_nonHiddenEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
+        });
+        
         NSString *event = labels[@"event_name"];
-        if (! [event isEqualToString:@"hidden_event"]) {
+        if ([s_nonHiddenEvents containsObject:event]) {
             return;
         }
         
         // Discard app overlap measurements
-        NSString *name = labels[@"event_title"];
-        if ([name isEqualToString:@"Installed Apps"]) {
+        if ([event isEqualToString:@"Installed Apps"]) {
             return;
         }
         
@@ -50,7 +55,7 @@
         static dispatch_once_t s_onceToken;
         static NSArray<NSString *> *s_playerEvents;
         dispatch_once(&s_onceToken, ^{
-            s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof"];
+            s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment"];
         });
 
         NSString *event = labels[@"event_name"];
