@@ -9,11 +9,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  The default start bit rate.
- */
-static const NSUInteger SRGDefaultStartBitRate = 800;
-
-/**
  *  Settings to be applied when performing resource lookup retrieval for media playback. Resource lookup attempts
  *  to find a close match for a set of settings.
  */
@@ -42,17 +37,6 @@ static const NSUInteger SRGDefaultStartBitRate = 800;
  *              quality is used instead.
  */
 @property (nonatomic) SRGQuality quality;
-
-/**
- *  The bit rate the media should start playing with, in kbps. This parameter is a recommendation with no result guarantee,
- *  though it should in general be applied. The nearest available quality (larger or smaller than the requested size) is
- *  used.
- *
- *  Usual SRG SSR valid bit ranges vary from 100 to 3000 kbps. Use 0 to start with the lowest quality stream.
- *
- *  Default value is `SRGDefaultStartBitRate`.
- */
-@property (nonatomic) NSUInteger startBitRate;
 
 /**
  *  A source unique identifier to be associated with the playback. This can be used to convey information about where
