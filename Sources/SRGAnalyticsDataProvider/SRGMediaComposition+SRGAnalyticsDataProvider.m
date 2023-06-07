@@ -142,23 +142,9 @@
         return NO;
     }
     
-    // Use the preferred start bit rate is set. Currently only supported for HLS streams by Akamai, via a __b__ parameter
-    // (the actual bitrate will be rounded to the nearest available quality)
-    NSURL *URL = resource.URL;
-    NSUInteger startBitRate = preferredSettings.startBitRate;
-    if (startBitRate != 0 && [URL.host containsString:@"akamai"] && [URL.path.pathExtension isEqualToString:@"m3u8"]) {
-        NSURLComponents *URLComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
-        
-        NSMutableArray<NSURLQueryItem *> *queryItems = URLComponents.queryItems.mutableCopy ?: [NSMutableArray array];
-        [queryItems addObject:[NSURLQueryItem queryItemWithName:@"__b__" value:@(startBitRate).stringValue]];
-        URLComponents.queryItems = queryItems.copy;
-        
-        URL = URLComponents.URL;
-    }
-    
     SRGAnalyticsStreamLabels *labels = [self analyticsLabelsForResource:resource sourceUid:preferredSettings.sourceUid];
     NSInteger index = [chapter.segments indexOfObject:self.mainSegment];
-    contextBlock(URL, resource, chapter.segments, index, labels);
+    contextBlock(resource.URL, resource, chapter.segments, index, labels);
     return YES;
 }
 

@@ -22,7 +22,6 @@
     XCTAssertEqual(settings.streamingMethod, SRGStreamingMethodNone);
     XCTAssertEqual(settings.streamType, SRGStreamTypeNone);
     XCTAssertEqual(settings.quality, SRGQualityNone);
-    XCTAssertEqual(settings.startBitRate, SRGDefaultStartBitRate);
     XCTAssertNil(settings.sourceUid);
 }
 
@@ -32,13 +31,11 @@
     settings.streamingMethod = SRGStreamingMethodHLS;
     settings.streamType = SRGStreamTypeDVR;
     settings.quality = SRGQualityHD;
-    settings.startBitRate = 1200;
     settings.sourceUid = @"Source unique id";
     
     XCTAssertEqual(settings.streamingMethod, SRGStreamingMethodHLS);
     XCTAssertEqual(settings.streamType, SRGStreamTypeDVR);
     XCTAssertEqual(settings.quality, SRGQualityHD);
-    XCTAssertEqual(settings.startBitRate, 1200);
     XCTAssertEqual(settings.sourceUid, @"Source unique id");
 }
 
@@ -48,7 +45,6 @@
     settings.streamingMethod = SRGStreamingMethodHLS;
     settings.streamType = SRGStreamTypeDVR;
     settings.quality = SRGQualityHD;
-    settings.startBitRate = 1200;
     settings.sourceUid = @"Source unique id";
     
     // Make a copy
@@ -58,14 +54,12 @@
     settings.streamingMethod = SRGStreamingMethodNone;
     settings.streamType = SRGStreamTypeNone;
     settings.quality = SRGQualityNone;
-    settings.startBitRate = SRGDefaultStartBitRate;
     settings.sourceUid = @"Another source unique id";
     
     // Check that the copy is identical to the original
     XCTAssertEqual(settingsCopy.streamingMethod, SRGStreamingMethodHLS);
     XCTAssertEqual(settingsCopy.streamType, SRGStreamTypeDVR);
     XCTAssertEqual(settingsCopy.quality, SRGQualityHD);
-    XCTAssertEqual(settingsCopy.startBitRate, 1200);
     XCTAssertEqual(settingsCopy.sourceUid, @"Source unique id");
 }
 

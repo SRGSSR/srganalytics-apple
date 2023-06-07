@@ -27,6 +27,12 @@ test-tvos-identity:
 	@pushd Tests > /dev/null; xcodebuild test -workspace SRGAnalyticsIdentity-tests.xcworkspace -scheme SRGAnalyticsIdentity-tests -destination 'platform=tvOS Simulator,name=Apple TV' 2> /dev/null
 	@echo "... done.\n"
 
+.PHONY: rbenv
+rbenv:
+	@echo "Installing needed ruby version if missing..."
+	@Scripts/rbenv-install.sh "./"
+	@echo "... done.\n"
+
 .PHONY: help
 help:
 	@echo "The following targets are available:"
@@ -35,4 +41,5 @@ help:
 	@echo "   test-ios-identity   Build and run identity unit tests for iOS"
 	@echo "   test-tvos           Build and run unit tests for tvOS"
 	@echo "   test-tvos-identity  Build and run identity unit tests for tvOS"
+	@echo "   rbenv               Install needed ruby version if missing"
 	@echo "   help                Display this help message"
