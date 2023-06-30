@@ -83,6 +83,16 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  */
 @property (nonatomic, readonly, copy, nullable) SRGAnalyticsConfiguration *configuration;
 
+/**
+ *  The accepted user consent categories (their unique identifiers).
+ */
+@property (nonatomic, copy, nullable) NSArray<NSString *> *acceptedUserConsentCategories;
+
+/**
+ *  The accepted user consent services (their unique identifiers).
+ */
+@property (nonatomic, copy, nullable) NSArray<NSString *> *acceptedUserConsentServices;
+
 @end
 
 /**

@@ -121,6 +121,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [self.serverSide addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
     [self.serverSide addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
     [self.serverSide addPermanentData:@"navigation_device" withValue:[self device]];
+
+    [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:self.acceptedUserConsentCategories];
 }
 
 #pragma mark Labels
@@ -174,6 +176,30 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     else {
         return @"phone";
+    }
+}
+
+#pragma mark User consents
+
+- (void)setAcceptedUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+{
+    _acceptedUserConsentCategories = acceptedUserConsentCategories;
+
+    [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:acceptedUserConsentCategories];
+    NSLog(@"acceptedUserConsentCategories: %@", TCUser.sharedInstance.consent_categories);
+}
+
++ (void)updateCommandersActWithUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+{
+    if (acceptedUserConsentCategories) {
+        NSMutableDictionary<NSString *, NSString *> *consentCategories = [NSMutableDictionary dictionary];
+        [acceptedUserConsentCategories enumerateObjectsUsingBlock:^(NSString * _Nonnull service, NSUInteger idx, BOOL * _Nonnull stop) {
+            consentCategories[service] = @"1";
+        }];
+        [TCUser.sharedInstance setConsentCategories:consentCategories.copy];
+    }
+    else {
+        [TCUser.sharedInstance setConsentCategories:nil];
     }
 }
 
