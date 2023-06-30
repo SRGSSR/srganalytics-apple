@@ -158,6 +158,30 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
 }
 
+#pragma mark User consents
+
+- (void)setAcceptedUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+{
+    _acceptedUserConsentCategories = acceptedUserConsentCategories;
+
+    [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:acceptedUserConsentCategories];
+    NSLog(@"acceptedUserConsentCategories: %@", TCUser.sharedInstance.consent_categories);
+}
+
++ (void)updateCommandersActWithUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+{
+    if (acceptedUserConsentCategories) {
+        NSMutableDictionary<NSString *, NSString *> *consentCategories = [NSMutableDictionary dictionary];
+        [acceptedUserConsentCategories enumerateObjectsUsingBlock:^(NSString * _Nonnull service, NSUInteger idx, BOOL * _Nonnull stop) {
+            consentCategories[service] = @"1";
+        }];
+        [TCUser.sharedInstance setConsentCategories:consentCategories.copy];
+    }
+    else {
+        [TCUser.sharedInstance setConsentCategories:nil];
+    }
+}
+
 #pragma mark General event tracking (internal use only)
 
 - (void)trackTagCommanderEventWithLabels:(NSDictionary<NSString *, NSString *> *)labels
@@ -172,6 +196,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
         [self.tagCommander addPermanentData:@"navigation_environment" withValue:configuration.environment];
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
+
+        [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:self.acceptedUserConsentCategories];
     }
     
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultLabels].mutableCopy;
