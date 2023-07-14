@@ -5,7 +5,7 @@
 //
 
 #import "SRGAnalyticsConfiguration.h"
-#import "SRGAnalyticsHiddenEventLabels.h"
+#import "SRGAnalyticsEventLabels.h"
 #import "SRGAnalyticsPageViewLabels.h"
 #import "SRGAnalyticsTrackerDataSource.h"
 
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  The SRG Analytics library supports three kinds of measurements:
  *    - View events: Appearance of views (page views), which makes it possible to track which content is seen by users.
- *    - Hidden events: Custom events which can be used for measuresement of application functionalities.
+ *    - Events: Custom events which can be used for measuresement of application functionalities.
  *    - Stream playback events: Measurements for audio and video consumption.
  *
  *  For all kinds of measurements, required information must be provided through mandatory parameters, and optional
@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
  *     manual tracking via the `-[SRGAnalyticsTracker trackPageViewWithTitle:levels:labels:fromPushNotification:]`
  *     method.
  *  3. When you need to track specific functionalities in your application (e.g. the use of some interface button
- *     or of some feature of your application), send a hidden event using one of the `-trackHiddenEvent...` methods
- *     available from `SRGAnalyticsTracker`.
+ *     or of some feature of your application), send a event using one of the `-trackEvent...` methods available
+ *     from `SRGAnalyticsTracker`.
  *  4. If you need to track media playback using SRG MediaPlayer, you must add the SRGAnalyticsMediaPlayer subframework
  *     to your project (@see `SRGMediaPlayerController+SRGAnalyticsMediaPlayer.h` for more information). You are 
  *     still responsible of providing most metadata associated with playback (e.g. title or duration of what is 
@@ -72,7 +72,7 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 
 /**
  *  Start the tracker. This is required to specify for which business unit you are tracking events, as well as to
- *  where they must be sent on the comScore and Commanders Act services. Attempting to track view, hidden or stream
+ *  where they must be sent on the comScore and Commanders Act services. Attempting to track view, stream or other
  *  events without starting the tracker has no effect.
  *
  *  @param configuration The configuration to use. This configuration is copied and cannot be changed afterwards.
@@ -98,29 +98,29 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 @end
 
 /**
- *  @name Hidden event tracking
+ *  @name Event tracking
  */
-@interface SRGAnalyticsTracker (HiddenEventTracking)
+@interface SRGAnalyticsTracker (EventTracking)
 
 /**
- *  Send a hidden event with the specified name.
+ *  Send a event with the specified name.
  *
  *  @param name The event name.
  *
  *  @discussion If the name is empty, no event will be sent.
  */
-- (void)trackHiddenEventWithName:(NSString *)name;
+- (void)trackEventWithName:(NSString *)name;
 
 /**
- *  Send a hidden event with the specified name.
+ *  Send a event with the specified name.
  *
  *  @param name           The event name.
  *  @param labels         Information to be sent along the event and which is meaningful for your application measurements.
  *
  *  @discussion If the name is `nil`, no event will be sent.
  */
-- (void)trackHiddenEventWithName:(NSString *)name
-                          labels:(nullable SRGAnalyticsHiddenEventLabels *)labels;
+- (void)trackEventWithName:(NSString *)name
+                    labels:(nullable SRGAnalyticsEventLabels *)labels;
 
 @end
 

@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSNotificationCenter (Tests)
 
-- (id<NSObject>)addObserverForHiddenEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
+- (id<NSObject>)addObserverForEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 - (id<NSObject>)addObserverForPlayerEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 - (id<NSObject>)addObserverForPlayerHeartbeatNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block;
 

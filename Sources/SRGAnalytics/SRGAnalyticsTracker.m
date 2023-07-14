@@ -383,15 +383,15 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [self sendCommandersActPageViewEventWithTitle:title labels:fullLabels.copy];
 }
 
-#pragma mark Hidden event tracking
+#pragma mark Event tracking
 
-- (void)trackHiddenEventWithName:(NSString *)name
+- (void)trackEventWithName:(NSString *)name
 {
-    [self trackHiddenEventWithName:name labels:nil];
+    [self trackEventWithName:name labels:nil];
 }
 
-- (void)trackHiddenEventWithName:(NSString *)name
-                          labels:(SRGAnalyticsHiddenEventLabels *)labels
+- (void)trackEventWithName:(NSString *)name
+                    labels:(SRGAnalyticsEventLabels *)labels
 {
     if (! self.configuration) {
         SRGAnalyticsLogWarning(@"tracker", @"The tracker has not been started yet");
@@ -403,10 +403,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    [self trackCommandersActHiddenEventWithName:name labels:labels];
+    [self trackCommandersActEventWithName:name labels:labels];
 }
 
-- (void)trackCommandersActHiddenEventWithName:(NSString *)name labels:(SRGAnalyticsHiddenEventLabels *)labels
+- (void)trackCommandersActEventWithName:(NSString *)name labels:(SRGAnalyticsEventLabels *)labels
 {
     NSAssert(self.configuration != nil, @"The tracker must be started");
 
@@ -489,12 +489,12 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
             
             NSArray<NSString *> *sortedInstalledApplications = [installedApplications.allObjects sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
             
-            SRGAnalyticsHiddenEventLabels *labels = [[SRGAnalyticsHiddenEventLabels alloc] init];
+            SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
             labels.type = @"hidden";
             labels.source = @"SRGAnalytics";
             labels.value = [sortedInstalledApplications componentsJoinedByString:@";"];
             
-            [self trackHiddenEventWithName:@"Installed Apps" labels:labels];
+            [self trackEventWithName:@"Installed Apps" labels:labels];
         });
     }] resume];
 }

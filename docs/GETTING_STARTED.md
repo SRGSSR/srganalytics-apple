@@ -216,10 +216,10 @@ In some special cases like CarPlay, though, your application might display a sec
 
 ## Measuring application functionalities
 
-To measure any kind of application functionality, you typically use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
+To measure any kind of application functionality, you typically use events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
 
 ```objective-c
-[SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"full-screen"];
+[SRGAnalyticsTracker.sharedTracker trackEventWithName:@"full-screen"];
 ```
 
 Custom labels can also be used to send any additional measurement information you could need.
