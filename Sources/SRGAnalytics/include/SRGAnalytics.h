@@ -11,7 +11,7 @@ FOUNDATION_EXPORT NSString * SRGAnalyticsMarketingVersion(void);
 
 // Public headers.
 #import "SRGAnalyticsConfiguration.h"
-#import "SRGAnalyticsHiddenEventLabels.h"
+#import "SRGAnalyticsEventLabels.h"
 #import "SRGAnalyticsLabels.h"
 #import "SRGAnalyticsNotifications.h"
 #import "SRGAnalyticsPageViewLabels.h"

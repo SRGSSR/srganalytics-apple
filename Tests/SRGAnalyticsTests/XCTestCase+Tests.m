@@ -55,7 +55,7 @@
     }];
 }
 
-- (XCTestExpectation *)expectationForHiddenEventNotificationWithHandler:(EventExpectationHandler)handler
+- (XCTestExpectation *)expectationForEventNotificationWithHandler:(EventExpectationHandler)handler
 {
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
@@ -67,13 +67,13 @@
         }
         
         static dispatch_once_t s_onceToken;
-        static NSArray<NSString *> *s_nonHiddenEvents;
+        static NSArray<NSString *> *s_nonEvents;
         dispatch_once(&s_onceToken, ^{
-            s_nonHiddenEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
+            s_nonEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
         });
         
         NSString *event = labels[@"event_name"];
-        if ([s_nonHiddenEvents containsObject:event]) {
+        if ([s_nonEvents containsObject:event]) {
             return NO;
         }
         

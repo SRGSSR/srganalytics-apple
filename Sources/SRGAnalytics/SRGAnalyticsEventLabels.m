@@ -4,12 +4,12 @@
 //  License information is available from the LICENSE file.
 //
 
-#import "SRGAnalyticsHiddenEventLabels.h"
+#import "SRGAnalyticsEventLabels.h"
 
 #import "NSMutableDictionary+SRGAnalytics.h"
 #import "SRGAnalyticsLabels+Private.h"
 
-@implementation SRGAnalyticsHiddenEventLabels
+@implementation SRGAnalyticsEventLabels
 
 #pragma mark Getters and setters
 
@@ -47,7 +47,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    SRGAnalyticsHiddenEventLabels *labels = [super copyWithZone:zone];
+    SRGAnalyticsEventLabels *labels = [super copyWithZone:zone];
     labels.type = self.type;
     labels.value = self.value;
     labels.source = self.source;

@@ -10,7 +10,7 @@
 
 @implementation NSNotificationCenter (Tests)
 
-- (id<NSObject>)addObserverForHiddenEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
+- (id<NSObject>)addObserverForEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
 {
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
@@ -22,13 +22,13 @@
         }
         
         static dispatch_once_t s_onceToken;
-        static NSArray<NSString *> *s_nonHiddenEvents;
+        static NSArray<NSString *> *s_nonEvents;
         dispatch_once(&s_onceToken, ^{
-            s_nonHiddenEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
+            s_nonEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
         });
         
         NSString *event = labels[@"event_name"];
-        if ([s_nonHiddenEvents containsObject:event]) {
+        if ([s_nonEvents containsObject:event]) {
             return;
         }
         
