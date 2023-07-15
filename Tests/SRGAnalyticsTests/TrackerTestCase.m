@@ -33,7 +33,7 @@
     XCTAssertNil(NSClassFromString(@"ASIdentifierManager"));
 }
 
-- (void)testCommonLabels
+- (void)testCommonLabelsForEvent
 {
     [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
@@ -42,6 +42,18 @@
     }];
     
     [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
+    
+    [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testCommonLabelsForPageView
+{
+    [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
+        return YES;
+    }];
+    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
