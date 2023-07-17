@@ -160,25 +160,20 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark User consents
 
-- (void)setAcceptedUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+- (void)setAcceptedUserConsentServices:(NSArray<NSString *> *)acceptedUserConsentServices
 {
-    _acceptedUserConsentCategories = acceptedUserConsentCategories;
+    _acceptedUserConsentServices = acceptedUserConsentServices;
 
-    [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:acceptedUserConsentCategories];
-    NSLog(@"acceptedUserConsentCategories: %@", TCUser.sharedInstance.consent_categories);
+    [self updateCommandersActWithUserConsentServices:acceptedUserConsentServices];
 }
 
-+ (void)updateCommandersActWithUserConsentCategories:(NSArray<NSString *> *)acceptedUserConsentCategories
+- (void)updateCommandersActWithUserConsentServices:(NSArray<NSString *> *)acceptedUserConsentServices
 {
-    if (acceptedUserConsentCategories) {
-        NSMutableDictionary<NSString *, NSString *> *consentCategories = [NSMutableDictionary dictionary];
-        [acceptedUserConsentCategories enumerateObjectsUsingBlock:^(NSString * _Nonnull service, NSUInteger idx, BOOL * _Nonnull stop) {
-            consentCategories[service] = @"1";
-        }];
-        [TCUser.sharedInstance setConsentCategories:consentCategories.copy];
+    if (acceptedUserConsentServices) {
+        [self.tagCommander addPermanentData:@"consent_services" withValue:[acceptedUserConsentServices componentsJoinedByString:@","]];
     }
     else {
-        [TCUser.sharedInstance setConsentCategories:nil];
+        [self.tagCommander addPermanentData:@"consent_services" withValue:@""];
     }
 }
 
@@ -197,7 +192,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_environment" withValue:configuration.environment];
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
 
-        [SRGAnalyticsTracker updateCommandersActWithUserConsentCategories:self.acceptedUserConsentCategories];
+        [self updateCommandersActWithUserConsentServices:self.acceptedUserConsentServices];
     }
     
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultLabels].mutableCopy;
