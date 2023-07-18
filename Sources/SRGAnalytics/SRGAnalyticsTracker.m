@@ -218,7 +218,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSAssert(title.length != 0, @"A title is required");
 
-    TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:title];
+    TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:nil];
+    event.pageName = title;
     [self.defaultLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
         [event addAdditionalProperty:key withStringValue:value];
     }];

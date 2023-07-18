@@ -111,7 +111,8 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertEqualObjects(labels[@"page_type"], @"Page view"); // Commanders Act SDK property
+        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertFalse([labels[@"accessed_after_push_notification"] boolValue]);
         XCTAssertEqualObjects(labels[@"navigation_property_type"], @"app");
@@ -128,7 +129,8 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertEqualObjects(labels[@"page_type"], @"Page view"); // Commanders Act SDK property
+        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"navigation_level_1"], @"level 1");
         XCTAssertEqualObjects(labels[@"navigation_level_2"], @"level 2");
         XCTAssertEqualObjects(labels[@"navigation_level_3"], @"level 3");
@@ -152,7 +154,8 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertEqualObjects(labels[@"page_type"], @"Page view"); // Commanders Act SDK property
+        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"custom_label"], @"custom_value");
         return YES;
     }];
@@ -169,7 +172,8 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertEqualObjects(labels[@"page_type"], @"Page view"); // Commanders Act SDK property
+        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"navigation_level_1"], @"level 1");
         XCTAssertEqualObjects(labels[@"navigation_level_2"], @"level 2");
         XCTAssertEqualObjects(labels[@"navigation_level_3"], @"level 3");
@@ -197,7 +201,8 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertEqualObjects(labels[@"page_type"], @"Page view"); // Commanders Act SDK property
+        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertTrue([labels[@"accessed_after_push_notification"] boolValue]);
         return YES;
