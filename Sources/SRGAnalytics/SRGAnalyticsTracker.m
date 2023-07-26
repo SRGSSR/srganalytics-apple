@@ -192,9 +192,17 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     if (acceptedUserConsentServices) {
         [self.serverSide addPermanentData:@"consent_services" withValue:[acceptedUserConsentServices componentsJoinedByString:@","]];
+        
+        NSMutableDictionary<NSString *, NSString *> *consentCategories = [NSMutableDictionary dictionary];
+        [acceptedUserConsentServices enumerateObjectsUsingBlock:^(NSString * _Nonnull service, NSUInteger idx, BOOL * _Nonnull stop) {
+            consentCategories[service] = @"1";
+        }];
+        [TCUser.sharedInstance setConsentCategories:consentCategories.copy];
     }
     else {
         [self.serverSide addPermanentData:@"consent_services" withValue:@""];
+        
+        [TCUser.sharedInstance setConsentCategories:nil];
     }
 }
 
