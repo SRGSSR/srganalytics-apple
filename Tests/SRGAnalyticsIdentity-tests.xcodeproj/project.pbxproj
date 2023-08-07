@@ -162,8 +162,9 @@
 		9F1518B31AC2F1CE00AE051D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SRG;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "SRG SSR";
 				TargetAttributes = {
 					08EF593B2221B7B4000E7446 = {
