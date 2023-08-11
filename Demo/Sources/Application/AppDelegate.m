@@ -28,7 +28,7 @@
     [TCDebug setDebugLevel:TCLogLevel_Verbose];
     [TCDebug setNotificationLog:YES];
     
-    SRGAnalyticsTracker.sharedTracker.acceptedUserConsentServices = @[@"service1", @"service3"];
+    SRGAnalyticsTracker.sharedTracker.consentedServices = @[@"service1", @"service3"];
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
                                                                                                        container:10
                                                                                                         siteName:@"rts-app-test-v"];

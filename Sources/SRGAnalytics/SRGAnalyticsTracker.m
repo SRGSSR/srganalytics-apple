@@ -160,20 +160,20 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark User consents
 
-- (void)setAcceptedUserConsentServices:(NSArray<NSString *> *)acceptedUserConsentServices
+- (void)setConsentedServices:(NSArray<NSString *> *)acceptedUserConsentServices
 {
-    _acceptedUserConsentServices = acceptedUserConsentServices;
+    _consentedServices = acceptedUserConsentServices;
 
-    [self updateCommandersActWithUserConsentServices:acceptedUserConsentServices];
+    [self updateCommandersActWithConsentedServices:acceptedUserConsentServices];
 }
 
-- (void)updateCommandersActWithUserConsentServices:(NSArray<NSString *> *)acceptedUserConsentServices
+- (void)updateCommandersActWithConsentedServices:(NSArray<NSString *> *)acceptedUserConsentServices
 {
     if (acceptedUserConsentServices) {
-        [self.tagCommander addPermanentData:@"consent_services" withValue:[acceptedUserConsentServices componentsJoinedByString:@","]];
+        [self.tagCommander addPermanentData:@"consented_services" withValue:[acceptedUserConsentServices componentsJoinedByString:@","]];
     }
     else {
-        [self.tagCommander addPermanentData:@"consent_services" withValue:@""];
+        [self.tagCommander addPermanentData:@"consented_services" withValue:@""];
     }
 }
 
@@ -192,7 +192,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [self.tagCommander addPermanentData:@"navigation_environment" withValue:configuration.environment];
         [self.tagCommander addPermanentData:@"navigation_device" withValue:[self device]];
 
-        [self updateCommandersActWithUserConsentServices:self.acceptedUserConsentServices];
+        [self updateCommandersActWithConsentedServices:self.consentedServices];
     }
     
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [self defaultLabels].mutableCopy;
