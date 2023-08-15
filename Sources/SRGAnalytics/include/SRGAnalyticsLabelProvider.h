@@ -6,6 +6,8 @@
 
 #import "SRGAnalyticsLabels.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  A protocol for providing analytics labels.
  */
@@ -14,6 +16,8 @@
 /**
  *  The labels.
  */
-@property (nonatomic, readonly) SRGAnalyticsLabels *labels;
+@property (nonatomic, readonly, nullable) SRGAnalyticsLabels *labels;
 
 @end
+
+NS_ASSUME_NONNULL_END
