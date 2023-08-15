@@ -8,7 +8,6 @@
 
 #import "Application.h"
 
-@import SRGAnalytics;
 @import SRGAnalyticsIdentity;
 @import SRGAnalyticsMediaPlayer;
 @import SRGLogger;
@@ -31,6 +30,8 @@
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
                                                                                                        container:10
                                                                                                         siteName:@"rts-app-test-v"];
+    configuration.labelProvider = self;
+    
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
     
     if (@available(iOS 13, tvOS 13, *)) {}
@@ -45,6 +46,16 @@
 - (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0))
 {
     return [[UISceneConfiguration alloc] initWithName:@"Default" sessionRole:connectingSceneSession.role];
+}
+
+#pragma mark SRGAnalyticsLabelProvider protocol
+
+- (SRGAnalyticsLabels *)labels
+{
+    SRGAnalyticsLabels *labels = [[SRGAnalyticsLabels alloc] init];
+    labels.customInfo = @{ @"consent_services": @"service1,service2,service3" };
+    labels.comScoreCustomInfo = @{ @"cs_ucfr" : @"1" };
+    return labels;
 }
 
 @end

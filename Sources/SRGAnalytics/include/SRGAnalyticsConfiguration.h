@@ -4,6 +4,8 @@
 //  License information is available from the LICENSE file.
 //
 
+#import "SRGAnalyticsLabelProvider.h"
+
 @import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -116,6 +118,11 @@ typedef NS_ENUM(NSInteger, SRGAnalyticsEnvironmentMode) {
  *  The analytics environment.
  */
 @property (nonatomic, readonly, copy) SRGAnalyticsEnvironment environment;
+
+/**
+ *  A provider of dynamically configurable global labels.
+ */
+@property (nonatomic, weak, nullable) id<SRGAnalyticsLabelProvider> labelProvider;
 
 @end
 

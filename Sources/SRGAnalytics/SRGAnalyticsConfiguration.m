@@ -95,6 +95,7 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     configuration.centralized = self.centralized;
     configuration.environmentMode = self.environmentMode;
     configuration.unitTesting = self.unitTesting;
+    configuration.labelProvider = self.labelProvider;
     return configuration;
 }
 

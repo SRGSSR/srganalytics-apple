@@ -82,6 +82,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         builder.publisherId = @"6036016";
         builder.secureTransmissionEnabled = YES;
         builder.persistentLabels = [self persistentComScoreLabels];
+        builder.startLabels = [self defaultComScoreLabels];
         
         // See https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/ComScore+-+Media+Metrix+Report
         // Coding Document for Video Players, page 16
@@ -106,7 +107,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark Labels
 
-- (NSDictionary *)persistentComScoreLabels
+- (NSDictionary<NSString *, NSString *> *)persistentComScoreLabels
 {
     NSMutableDictionary *labels = [NSMutableDictionary dictionary];
     labels[@"mp_v"] = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -114,14 +115,37 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     return labels.copy;
 }
 
-- (NSDictionary *)defaultComScoreLabels
+- (NSDictionary<NSString *, NSString *> *)defaultComScoreLabels
 {
-    return self.globalLabels.comScoreLabelsDictionary ?: [NSDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
+
+    NSDictionary<NSString *, NSString *> *globalLabels = self.globalLabels.comScoreLabelsDictionary;
+    if (globalLabels) {
+        [labels addEntriesFromDictionary:globalLabels];
+    }
+    NSDictionary<NSString *, NSString *> *configuredLabels = self.configuration.labelProvider.labels.comScoreLabelsDictionary;
+    if (configuredLabels) {
+        [labels addEntriesFromDictionary:configuredLabels];
+    }
+
+    return labels.copy;
 }
 
-- (NSDictionary *)defaultLabels
+- (NSDictionary<NSString *, NSString *> *)defaultLabels
 {
-    return self.globalLabels.labelsDictionary ?: [NSDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
+
+    NSDictionary<NSString *, NSString *> *globalLabels = self.globalLabels.labelsDictionary;
+    if (globalLabels) {
+        [labels addEntriesFromDictionary:globalLabels];
+    }
+    NSDictionary<NSString *, NSString *> *configuredLabels = self.configuration.labelProvider.labels.labelsDictionary;
+    if (configuredLabels) {
+        [labels addEntriesFromDictionary:configuredLabels];
+    }
+
+    return labels.copy;
+
 }
 
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
