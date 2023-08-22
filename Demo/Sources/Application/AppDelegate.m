@@ -9,7 +9,6 @@
 #import "Application.h"
 
 @import SRGAnalytics;
-@import SRGAnalyticsIdentity;
 @import SRGAnalyticsMediaPlayer;
 @import SRGLogger;
 @import TCCore;
@@ -31,8 +30,10 @@
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
                                                                                                        container:10
                                                                                                         siteName:@"rts-app-test-v"];
-    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration identityService:SRGIdentityService.currentIdentityService];
-    
+    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration
+                                                   dataSource:self
+                                              identityService:SRGIdentityService.currentIdentityService];
+
     if (@available(iOS 13, tvOS 13, *)) {}
     else {
         self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
@@ -45,6 +46,12 @@
 - (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0))
 {
     return [[UISceneConfiguration alloc] initWithName:@"Default" sessionRole:connectingSceneSession.role];
+}
+
+- (SRGAnalyticsLabels *)srg_globalLabels {
+    SRGAnalyticsLabels *labels = [[SRGAnalyticsLabels alloc] init];
+
+    return labels;
 }
 
 @end

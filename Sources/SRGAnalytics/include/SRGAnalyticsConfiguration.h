@@ -6,6 +6,8 @@
 
 @import Foundation;
 
+#import "SRGAnalyticsTrackerDataSource.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
