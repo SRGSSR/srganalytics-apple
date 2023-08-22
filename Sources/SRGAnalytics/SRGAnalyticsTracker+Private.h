@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SRGAnalyticsTracker (Private)
 
 @property (nonatomic, nullable) SRGAnalyticsLabels *globalLabels;
+@property (nonatomic, nullable) SRGAnalyticsLabels *dataSourceLabels;
 
 - (void)trackPageViewWithTitle:(NSString *)title
                         levels:(nullable NSArray<NSString *> *)levels

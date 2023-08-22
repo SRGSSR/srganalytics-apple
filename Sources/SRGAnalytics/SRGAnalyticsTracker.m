@@ -106,24 +106,24 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark Labels
 
-- (NSDictionary *)persistentComScoreLabels
+- (NSDictionary<NSString *, NSString *> *)persistentComScoreLabels
 {
-    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
     labels[@"mp_v"] = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     labels[@"mp_brand"] = self.configuration.businessUnitIdentifier.uppercaseString;
     return labels.copy;
 }
 
-- (NSDictionary *)defaultComScoreLabels
+- (NSDictionary<NSString *, NSString *> *)defaultComScoreLabels
 {
-    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
 
-    NSDictionary *globalLabels = self.globalLabels.comScoreLabelsDictionary;
+    NSDictionary<NSString *, NSString *> *globalLabels = self.globalLabels.comScoreLabelsDictionary;
     if (globalLabels) {
         [labels addEntriesFromDictionary:globalLabels];
     }
 
-    NSDictionary *dataSourceLabels = self.dataSource.srg_globalLabels.comScoreLabelsDictionary;
+    NSDictionary<NSString *, NSString *> *dataSourceLabels = self.dataSource.srg_globalLabels.comScoreLabelsDictionary;
     if (dataSourceLabels) {
         [labels addEntriesFromDictionary:dataSourceLabels];
     }
@@ -131,21 +131,25 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     return labels.copy;
 }
 
-- (NSDictionary *)defaultLabels
+- (NSDictionary<NSString *, NSString *> *)defaultLabels
 {
-    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
 
-    NSDictionary *globalLabels = self.globalLabels.labelsDictionary;
+    NSDictionary<NSString *, NSString *> *globalLabels = self.globalLabels.labelsDictionary;
     if (globalLabels) {
         [labels addEntriesFromDictionary:globalLabels];
     }
 
-    NSDictionary *dataSourceLabels = self.dataSource.srg_globalLabels.labelsDictionary;
+    NSDictionary<NSString *, NSString *> *dataSourceLabels = self.dataSourceLabels.labelsDictionary;
     if (dataSourceLabels) {
         [labels addEntriesFromDictionary:dataSourceLabels];
     }
 
     return labels.copy;
+}
+
+- (SRGAnalyticsLabels *)dataSourceLabels {
+    return self.dataSource.srg_globalLabels;
 }
 
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
