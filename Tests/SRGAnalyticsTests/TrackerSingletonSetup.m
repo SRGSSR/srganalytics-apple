@@ -12,7 +12,8 @@
 
 @implementation TestDataSource
 
-- (SRGAnalyticsLabels *)srg_globalLabels {
+- (SRGAnalyticsLabels *)srg_globalLabels 
+{
     SRGAnalyticsLabels *labels = [[SRGAnalyticsLabels alloc] init];
     labels.comScoreCustomInfo = @{
         @"cs_ucfr": @"1"

@@ -4,12 +4,11 @@
 //  License information is available from the LICENSE file.
 //
 
-@import SRGAnalyticsIdentity;
 @import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, SRGAnalyticsTrackerDataSource>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 // TODO: Remove when SRG Analytics demo requires iOS 13
 @property (nonatomic) UIWindow *window;

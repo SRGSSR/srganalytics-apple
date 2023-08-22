@@ -9,9 +9,13 @@
 #import "Application.h"
 
 @import SRGAnalytics;
+@import SRGAnalyticsIdentity;
 @import SRGAnalyticsMediaPlayer;
 @import SRGLogger;
 @import TCCore;
+
+@interface AppDelegate() <SRGAnalyticsTrackerDataSource>
+@end
 
 @implementation AppDelegate
 
@@ -48,9 +52,15 @@
     return [[UISceneConfiguration alloc] initWithName:@"Default" sessionRole:connectingSceneSession.role];
 }
 
-- (SRGAnalyticsLabels *)srg_globalLabels {
+- (SRGAnalyticsLabels *)srg_globalLabels
+{
     SRGAnalyticsLabels *labels = [[SRGAnalyticsLabels alloc] init];
-
+    labels.comScoreCustomInfo = @{
+        @"cs_ucfr": @"1"
+    };
+    labels.customInfo = @{
+        @"consent_services": @"service1,service2,service3"
+    };
     return labels;
 }
 
