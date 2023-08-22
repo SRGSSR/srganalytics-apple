@@ -7,6 +7,7 @@
 #import "SRGAnalyticsConfiguration.h"
 #import "SRGAnalyticsHiddenEventLabels.h"
 #import "SRGAnalyticsPageViewLabels.h"
+#import "SRGAnalyticsTrackerDataSource.h"
 
 @import Foundation;
 
@@ -75,8 +76,10 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  *  events without starting the tracker has no effect.
  *
  *  @param configuration The configuration to use. This configuration is copied and cannot be changed afterwards.
+ *  @param dataSource    The data source for the global labels.
  */
-- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration;
+- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+                    dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource;
 
 /**
  *  The tracker configuration with which the tracker was started.

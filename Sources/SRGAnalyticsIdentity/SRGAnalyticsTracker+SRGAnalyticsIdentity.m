@@ -12,23 +12,16 @@
 
 static void *s_analyticsIdentityServiceKey = &s_analyticsIdentityServiceKey;
 
-@interface SRGAnalyticsTracker ()
-
-@property (nonatomic, weak, nullable) id <SRGAnalyticsTrackerDataSource> dataSource;
-
-@end
-
 @implementation SRGAnalyticsTracker (SRGAnalyticsIdentity)
 
 #pragma mark Startup
 
 - (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-                    dataSource:(nullable id<SRGAnalyticsTrackerDataSource>)dataSource
+                    dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource
                identityService:(SRGIdentityService *)identityService
 {
     self.identityService = identityService;
-    self.dataSource = dataSource;
-    [self startWithConfiguration:configuration];
+    [self startWithConfiguration:configuration dataSource:dataSource];
 }
 
 #pragma mark Getters and Setters

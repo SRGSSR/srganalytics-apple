@@ -41,6 +41,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 @interface SRGAnalyticsTracker ()
 
 @property (nonatomic, copy) SRGAnalyticsConfiguration *configuration;
+@property (nonatomic, weak) id<SRGAnalyticsTrackerDataSource> dataSource;
 
 @property (nonatomic) TagCommander *tagCommander;
 @property (nonatomic) SCORStreamingAnalytics *streamSense;
@@ -66,6 +67,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 #pragma mark Startup
 
 - (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+                    dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource
 {
     if (self.configuration) {
         SRGAnalyticsLogWarning(@"tracker", @"The tracker is already started");
@@ -73,7 +75,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     
     self.configuration = configuration;
-    
+    self.dataSource = dataSource;
+
     if (configuration.unitTesting) {
         SRGAnalyticsEnableRequestInterceptor();
     }
@@ -82,14 +85,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         builder.publisherId = @"6036016";
         builder.secureTransmissionEnabled = YES;
         builder.persistentLabels = [self persistentComScoreLabels];
-        
+        builder.startLabels = [self defaultComScoreLabels];
+
         // See https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/ComScore+-+Media+Metrix+Report
         // Coding Document for Video Players, page 16
         builder.httpRedirectCachingEnabled = NO;
-        
-        if (configuration.unitTesting) {
-            builder.startLabels = @{ @"srg_test_id" : SRGAnalyticsUnitTestingIdentifier() };
-        }
     }];
     
     SCORConfiguration *comScoreConfiguration = [SCORAnalytics configuration];
@@ -116,12 +116,36 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (NSDictionary *)defaultComScoreLabels
 {
-    return self.globalLabels.comScoreLabelsDictionary ?: [NSDictionary dictionary];
+    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+
+    NSDictionary *globalLabels = self.globalLabels.comScoreLabelsDictionary;
+    if (globalLabels) {
+        [labels addEntriesFromDictionary:globalLabels];
+    }
+
+    NSDictionary *dataSourceLabels = self.dataSource.srg_globalLabels.comScoreLabelsDictionary;
+    if (dataSourceLabels) {
+        [labels addEntriesFromDictionary:dataSourceLabels];
+    }
+
+    return labels.copy;
 }
 
 - (NSDictionary *)defaultLabels
 {
-    return self.globalLabels.labelsDictionary ?: [NSDictionary dictionary];
+    NSMutableDictionary *labels = [NSMutableDictionary dictionary];
+
+    NSDictionary *globalLabels = self.globalLabels.labelsDictionary;
+    if (globalLabels) {
+        [labels addEntriesFromDictionary:globalLabels];
+    }
+
+    NSDictionary *dataSourceLabels = self.dataSource.srg_globalLabels.labelsDictionary;
+    if (dataSourceLabels) {
+        [labels addEntriesFromDictionary:dataSourceLabels];
+    }
+
+    return labels.copy;
 }
 
 - (NSString *)pageIdWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
