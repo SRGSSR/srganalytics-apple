@@ -32,6 +32,7 @@
     [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
         XCTAssertEqualObjects(labels[@"navigation_environment"], @"preprod");
+        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
     
