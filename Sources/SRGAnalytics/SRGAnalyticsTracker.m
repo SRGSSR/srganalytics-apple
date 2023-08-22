@@ -153,7 +153,8 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     return labels.copy;
 }
 
-- (SRGAnalyticsLabels *)dataSourceLabels {
+- (SRGAnalyticsLabels *)dataSourceLabels 
+{
     return self.dataSource.srg_globalLabels;
 }
 
