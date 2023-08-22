@@ -76,10 +76,19 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  *  events without starting the tracker has no effect.
  *
  *  @param configuration The configuration to use. This configuration is copied and cannot be changed afterwards.
+ */
+- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration;
+
+/**
+ *  Start the tracker. This is required to specify for which business unit you are tracking events, as well as to
+ *  where they must be sent on the comScore and TagCommander services. Attempting to track view, hidden or stream
+ *  events without starting the tracker has no effect.
+ *
+ *  @param configuration The configuration to use. This configuration is copied and cannot be changed afterwards.
  *  @param dataSource    The data source for the global labels.
  */
 - (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
-                    dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource;
+                    dataSource:(nullable id<SRGAnalyticsTrackerDataSource>)dataSource;
 
 /**
  *  The tracker configuration with which the tracker was started.

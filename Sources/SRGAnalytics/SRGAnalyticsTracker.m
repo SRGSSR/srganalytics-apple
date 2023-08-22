@@ -67,6 +67,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 #pragma mark Startup
 
 - (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+{
+    [self startWithConfiguration:configuration dataSource:nil];
+}
+
+- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
                     dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource
 {
     if (self.configuration) {
