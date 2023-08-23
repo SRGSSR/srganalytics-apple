@@ -10,6 +10,7 @@
 #import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsMediaPlayerLogger.h"
 #import "SRGAnalyticsStreamLabels.h"
+#import "SRGAnalyticsTracker+Private.h"
 #import "SRGMediaAnalytics.h"
 #import "SRGMediaPlayerController+SRGAnalyticsMediaPlayer.h"
 
@@ -77,7 +78,12 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
     
     SCORStreamingContentMetadata *streamingMetadata = [SCORStreamingContentMetadata contentMetadataWithBuilderBlock:^(SCORStreamingContentMetadataBuilder *builder) {
         NSMutableDictionary<NSString *, NSString *> *customLabels = [labelsDictionary mutableCopy];
-        
+
+        NSDictionary<NSString *, NSString *> *dataSourceLabels = SRGAnalyticsTracker.sharedTracker.dataSourceLabels.comScoreCustomInfo;
+        if (dataSourceLabels) {
+            [customLabels addEntriesFromDictionary:dataSourceLabels];
+        }
+
         if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
             customLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
         }

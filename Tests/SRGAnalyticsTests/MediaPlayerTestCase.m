@@ -548,6 +548,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
         XCTAssertEqualObjects(labels[@"test_label"], @"test_value");
+        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
     
