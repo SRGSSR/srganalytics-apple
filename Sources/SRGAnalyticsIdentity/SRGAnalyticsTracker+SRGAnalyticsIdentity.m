@@ -16,10 +16,18 @@ static void *s_analyticsIdentityServiceKey = &s_analyticsIdentityServiceKey;
 
 #pragma mark Startup
 
-- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration identityService:(SRGIdentityService *)identityService
+- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+               identityService:(SRGIdentityService *)identityService
+{
+    [self startWithConfiguration:configuration dataSource:nil identityService:identityService];
+}
+
+- (void)startWithConfiguration:(SRGAnalyticsConfiguration *)configuration
+                    dataSource:(id<SRGAnalyticsTrackerDataSource>)dataSource
+               identityService:(SRGIdentityService *)identityService
 {
     self.identityService = identityService;
-    [self startWithConfiguration:configuration];
+    [self startWithConfiguration:configuration dataSource:dataSource];
 }
 
 #pragma mark Getters and Setters

@@ -36,6 +36,40 @@ Once the tracker has been started your application can collect analytics data.
 
 If and only if your application data will be analyzed by your business unit (and not by the SRG SSR General Direction), set the configuration `centralized` boolean to `NO`. Otherwise leave the default value as is, which means your application data will be analyzed according to the SRG SSR General Direction rules.
 
+### Global labels 
+
+If you need to provide global labels in all events, for example to send [user consent](https://github.com/SRGSSR/srganalytics-apple/wiki/User-consent) information, you can add a data source parameter when starting the tracker. You need a type conforming to `SRGAnalyticsTrackerDataSource`, for example your app delegate itself: 
+
+```objective-c
+@interface AppDelegate() <SRGAnalyticsTrackerDataSource>
+@end
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // ...
+    
+    [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration dataSource:self];
+                                                     
+    // ...
+}
+
+- (SRGAnalyticsLabels *)srg_globalLabels 
+{
+    SRGAnalyticsLabels *labels = [[SRGAnalyticsLabels alloc] init];
+    labels.comScoreCustomInfo = @{
+        @"cs_ucfr": @"1"
+    };
+    labels.customInfo = @{
+        @"consent_services": @"service1,service2,service3"
+    };
+    return labels;
+}
+
+@end
+```
+
 ## Application information
 
 Application name and version are required in analytics measurements. This information is automatically extracted from your application `Info.plist` which must therefore be properly configured to send correct values:
