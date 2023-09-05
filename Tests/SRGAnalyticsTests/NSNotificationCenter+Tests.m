@@ -41,6 +41,26 @@
     }];
 }
 
+- (id<NSObject>)addObserverForPageViewNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
+{
+    NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
+    return [self addObserverForName:SRGAnalyticsRequestNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        NSDictionary *labels = notification.userInfo[SRGAnalyticsLabelsKey];
+
+        NSString *unitTestingIdentifier = labels[@"srg_test_id"];
+        if (! [unitTestingIdentifier isEqualToString:expectedTestingIdentifier]) {
+            return;
+        }
+
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"page_view"]) {
+            return;
+        }
+
+        block(event, labels);
+    }];
+}
+
 - (id<NSObject>)addObserverForPlayerEventNotificationUsingBlock:(void (^)(NSString *event, NSDictionary *labels))block
 {
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();

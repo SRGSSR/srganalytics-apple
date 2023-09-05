@@ -310,6 +310,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     }];
     
     [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view"
+                                                         type:@"Type"
                                                        levels:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];

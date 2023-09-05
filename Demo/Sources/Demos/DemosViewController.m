@@ -267,6 +267,11 @@ static NSString * const LastLoggedInEmailAddress = @"LastLoggedInEmailAddress";
     return @"demos";
 }
 
+- (NSString *)srg_pageViewType
+{
+    return @"landing_page";
+}
+
 #pragma mark UI
 
 - (void)reloadData

@@ -133,7 +133,8 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 /**
  *  Track a page view (not associated with a push notification). Does nothing when the application is in the background.
  *
- *  @param title  The page title. If the title is empty, no event will be sent.
+ *  @param title  The page title. If empty no event will be sent.
+ *  @param type   The page type (e.g. Article). If empty no event will be sent.
  *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
  *
  *  @discussion This method is primarily available for page view tracking not related to a view controller. If your page view
@@ -141,12 +142,14 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  *              to the `SRGAnalyticsViewTracking` protocol.
  */
 - (void)trackPageViewWithTitle:(NSString *)title
+                          type:(NSString *)type
                         levels:(nullable NSArray<NSString *> *)levels;
 
 /**
  *  Track a page view. Does nothing when the application is in the background.
  *
- *  @param title                The page title. If the title is empty, no event will be sent.
+ *  @param title                The page title. If empty no event will be sent.
+ *  @param type                 The page type (e.g. Article). If empty no event will be sent.
  *  @param levels               An array of levels in increasing order, describing the position of the view in the hierarchy.
  *  @param labels               Additional custom labels.
  *  @param fromPushNotification `YES` iff the view is opened from a push notification.
@@ -156,6 +159,7 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  *              to the `SRGAnalyticsViewTracking` protocol.
  */
 - (void)trackPageViewWithTitle:(NSString *)title
+                          type:(NSString *)type
                         levels:(nullable NSArray<NSString *> *)levels
                         labels:(nullable SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification;
@@ -176,20 +180,24 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
 /**
  *  Unchecked track a page view. The page view is emitted no matter the application state.
  *
- *  @param title  The page title. If the title is empty, no event will be sent.
+ *  @param title  The page title. If empty no event will be sent.
+ *  @param type   The page type (e.g. Article). If empty no event will be sent.
  *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
  */
 - (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                   type:(NSString *)type
                                  levels:(nullable NSArray<NSString *> *)levels;
 
 /**
  *  Unchecked track a page view. The page view is emitted no matter the application state.
  *
- *  @param title  The page title. If the title is empty, no event will be sent.
+ *  @param title  The page title. If empty no event will be sent.
+ *  @param type   The page type (e.g. Article). If empty no event will be sent.
  *  @param levels An array of levels in increasing order, describing the position of the view in the hierarchy.
  *  @param labels Additional custom labels.
  */
 - (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                   type:(NSString *)type
                                  levels:(nullable NSArray<NSString *> *)levels
                                  labels:(nullable SRGAnalyticsPageViewLabels *)labels;
 

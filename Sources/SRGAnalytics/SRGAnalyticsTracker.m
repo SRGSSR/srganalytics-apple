@@ -214,11 +214,12 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 #pragma mark General event tracking (internal use only)
 
 - (void)sendCommandersActPageViewEventWithTitle:(NSString *)title
+                                           type:(NSString *)type
                                          labels:(NSDictionary<NSString *, NSString *> *)labels
 {
-    NSAssert(title.length != 0, @"A title is required");
+    NSAssert(title.length != 0 && type.length != 0, @"A title and a type are required");
 
-    TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:nil];
+    TCPageViewEvent *event = [[TCPageViewEvent alloc] initWithType:type];
     event.pageName = title;
     [self.defaultLabels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull value, BOOL * _Nonnull stop) {
         [event addAdditionalProperty:key withStringValue:value];
@@ -258,32 +259,39 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 #pragma mark Page view tracking
 
-- (void)trackPageViewWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
+- (void)trackPageViewWithTitle:(NSString *)title
+                          type:(NSString *)type
+                        levels:(NSArray<NSString *> *)levels
 {
-    [self trackPageViewWithTitle:title levels:levels labels:nil fromPushNotification:NO];
+    [self trackPageViewWithTitle:title type:type levels:levels labels:nil fromPushNotification:NO];
 }
 
 - (void)trackPageViewWithTitle:(NSString *)title
+                          type:(NSString *)type
                         levels:(NSArray<NSString *> *)levels
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
 {
-    [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification ignoreApplicationState:NO];
-}
-
-- (void)uncheckedTrackPageViewWithTitle:(NSString *)title levels:(NSArray<NSString *> *)levels
-{
-    [self uncheckedTrackPageViewWithTitle:title levels:levels labels:nil];
+    [self trackPageViewWithTitle:title type:type levels:levels labels:labels fromPushNotification:fromPushNotification ignoreApplicationState:NO];
 }
 
 - (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                   type:(NSString *)type
+                                 levels:(NSArray<NSString *> *)levels
+{
+    [self uncheckedTrackPageViewWithTitle:title type:type levels:levels labels:nil];
+}
+
+- (void)uncheckedTrackPageViewWithTitle:(NSString *)title
+                                   type:(NSString *)type
                                  levels:(NSArray<NSString *> *)levels
                                  labels:(SRGAnalyticsPageViewLabels *)labels
 {
-    [self trackPageViewWithTitle:title levels:levels labels:labels fromPushNotification:NO ignoreApplicationState:YES];
+    [self trackPageViewWithTitle:title type:type levels:levels labels:labels fromPushNotification:NO ignoreApplicationState:YES];
 }
 
 - (void)trackPageViewWithTitle:(NSString *)title
+                          type:(NSString *)type
                         levels:(NSArray<NSString *> *)levels
                         labels:(SRGAnalyticsPageViewLabels *)labels
           fromPushNotification:(BOOL)fromPushNotification
@@ -294,11 +302,11 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         return;
     }
     
-    if (title.length == 0 || (! ignoreApplicationState && UIApplication.sharedApplication.applicationState == UIApplicationStateBackground)) {
+    if (title.length == 0 || type.length == 0 || (! ignoreApplicationState && UIApplication.sharedApplication.applicationState == UIApplicationStateBackground)) {
         return;
     }
     
-    [self trackCommandersActPageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
+    [self trackCommandersActPageViewWithTitle:title type:type levels:levels labels:labels fromPushNotification:fromPushNotification];
     [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
 }
 
@@ -353,6 +361,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 }
 
 - (void)trackCommandersActPageViewWithTitle:(NSString *)title
+                                       type:(NSString *)type
                                      levels:(NSArray<NSString *> *)levels
                                      labels:(SRGAnalyticsPageViewLabels *)labels
                        fromPushNotification:(BOOL)fromPushNotification
@@ -381,7 +390,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
         [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
     }
 
-    [self sendCommandersActPageViewEventWithTitle:title labels:fullLabels.copy];
+    [self sendCommandersActPageViewEventWithTitle:title type:type labels:fullLabels.copy];
 }
 
 #pragma mark Event tracking

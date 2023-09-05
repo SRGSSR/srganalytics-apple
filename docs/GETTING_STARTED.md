@@ -107,7 +107,7 @@ If a view can be opened from a push notification, you must implement the `-srg_o
 
 #### Remark
 
-If your application needs to track views instead of view controllers, you can still perform tracking using the `-[SRGAnalyticsTracker trackPageViewWithTitle:levels:labels:fromPushNotification:]` method.
+If your application needs to track views instead of view controllers, you can still perform tracking using the `-[SRGAnalyticsTracker trackPageViewWithTitle:type:levels:labels:fromPushNotification:]` method.
 
 ### Example
 
@@ -128,6 +128,11 @@ and implement the methods you need to supply measurement information:
 - (NSString *)srg_pageViewTitle
 {
     return @"home";
+}
+
+- (NSString *)srg_pageViewType
+{
+    return @"landing_page";
 }
 
 - (SRGAnalyticsPageViewLabels *)srg_pageViewLabels

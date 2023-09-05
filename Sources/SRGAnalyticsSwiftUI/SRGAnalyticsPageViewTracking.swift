@@ -17,11 +17,12 @@ import SwiftUI
 @available(watchOS, unavailable)
 struct SRGPageTrackingView: UIViewControllerRepresentable {
     let title: String
+    let type: String
     let levels: [String]?
     let labels: SRGAnalyticsPageViewLabels?
     
     func makeUIViewController(context: Context) -> TrackerViewController {
-        return TrackerViewController(srg_pageViewTitle: title, srg_pageViewLevels: levels, srg_pageViewLabels: labels)
+        return TrackerViewController(srg_pageViewTitle: title, srg_pageViewType: type, srg_pageViewLevels: levels, srg_pageViewLabels: labels)
     }
     
     func updateUIViewController(_ uiViewController: TrackerViewController, context: Context) {
@@ -33,11 +34,13 @@ struct SRGPageTrackingView: UIViewControllerRepresentable {
      */
     class TrackerViewController: UIViewController, SRGAnalyticsViewTracking {
         let srg_pageViewTitle: String
+        let srg_pageViewType: String
         let srg_pageViewLevels: [String]?
         let srg_pageViewLabels: SRGAnalyticsPageViewLabels?
         
-        init(srg_pageViewTitle: String, srg_pageViewLevels: [String]?, srg_pageViewLabels: SRGAnalyticsPageViewLabels?) {
+        init(srg_pageViewTitle: String, srg_pageViewType: String, srg_pageViewLevels: [String]?, srg_pageViewLabels: SRGAnalyticsPageViewLabels?) {
             self.srg_pageViewTitle = srg_pageViewTitle
+            self.srg_pageViewType = srg_pageViewType
             self.srg_pageViewLevels = srg_pageViewLevels
             self.srg_pageViewLabels = srg_pageViewLabels
             super.init(nibName: nil, bundle: nil)
@@ -45,6 +48,7 @@ struct SRGPageTrackingView: UIViewControllerRepresentable {
         
         required init?(coder: NSCoder) {
             self.srg_pageViewTitle = ""
+            self.srg_pageViewType = ""
             self.srg_pageViewLevels = nil
             self.srg_pageViewLabels = nil
             super.init(coder: coder)
@@ -56,11 +60,11 @@ struct SRGPageTrackingView: UIViewControllerRepresentable {
 @available(watchOS, unavailable)
 public extension View {
     /**
-     *  Mark a view as being tracked with the provided title, levels and labels.
+     *  Mark a view as being tracked with the provided title, type, levels and labels.
      */
-    func tracked(withTitle title: String, levels: [String]? = nil, labels: SRGAnalyticsPageViewLabels? = nil) -> some View {
+    func tracked(withTitle title: String, type: String, levels: [String]? = nil, labels: SRGAnalyticsPageViewLabels? = nil) -> some View {
         ZStack {
-            SRGPageTrackingView(title: title, levels: levels, labels: labels)
+            SRGPageTrackingView(title: title, type: type, levels: levels, labels: labels)
             self
         }
     }

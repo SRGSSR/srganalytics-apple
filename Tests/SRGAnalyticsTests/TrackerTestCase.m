@@ -53,8 +53,8 @@
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:nil];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:nil];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
@@ -111,7 +111,7 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_type"], @"Type"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertFalse([labels[@"accessed_after_push_notification"] boolValue]);
@@ -120,8 +120,8 @@
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:nil];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:nil];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
@@ -129,7 +129,7 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_type"], @"Type"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"navigation_level_1"], @"level 1");
         XCTAssertEqualObjects(labels[@"navigation_level_2"], @"level 2");
@@ -145,8 +145,8 @@
     
     NSArray<NSString *> *levels = @[ @"level 1", @"level 2", @"level 3", @"level 4", @"level 5", @"level 6", @"level 7", @"level 8", @"level 9" ];
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:levels];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:levels];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
@@ -154,7 +154,7 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_type"], @"Type"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"custom_label"], @"custom_value");
         return YES;
@@ -163,8 +163,8 @@
     SRGAnalyticsPageViewLabels *labels = [[SRGAnalyticsPageViewLabels alloc] init];
     labels.customInfo = @{ @"custom_label" : @"custom_value" };
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:nil labels:labels fromPushNotification:NO];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:nil labels:labels fromPushNotification:NO];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
@@ -172,7 +172,7 @@
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_type"], @"Type"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"navigation_level_1"], @"level 1");
         XCTAssertEqualObjects(labels[@"navigation_level_2"], @"level 2");
@@ -192,24 +192,54 @@
     SRGAnalyticsPageViewLabels *labels = [[SRGAnalyticsPageViewLabels alloc] init];
     labels.customInfo = @{ @"custom_label" : @"custom_value" };
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:levels labels:labels fromPushNotification:NO];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:levels labels:labels fromPushNotification:NO];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
+}
+
+- (void)testPageViewEventWithEmptyTitle
+{
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPageViewNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+        XCTFail(@"Page views with missing title must not be sent");
+    }];
+
+    [self expectationForElapsedTimeInterval:5. withHandler:nil];
+
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"" type:@"Type" levels:nil];
+
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
+}
+
+- (void)testPageViewEventWithEmptyType
+{
+    id eventObserver = [NSNotificationCenter.defaultCenter addObserverForPageViewNotificationUsingBlock:^(NSString * _Nonnull event, NSDictionary * _Nonnull labels) {
+        XCTFail(@"Page views with missing type must not be sent");
+    }];
+
+    [self expectationForElapsedTimeInterval:5. withHandler:nil];
+
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Title" type:@"" levels:nil];
+
+    [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
+        [NSNotificationCenter.defaultCenter removeObserver:eventObserver];
+    }];
 }
 
 - (void)testPageViewEventFromPushNotification
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString * event, NSDictionary * labels) {
         XCTAssertEqualObjects(event, @"page_view"); // Commanders Act SDK property
-        XCTAssertNil(labels[@"page_type"]); // Commanders Act SDK property
+        XCTAssertEqualObjects(labels[@"page_type"], @"Type"); // Commanders Act SDK property
         XCTAssertEqualObjects(labels[@"page_name"], @"Page view"); // Commanders Act SDK property
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertTrue([labels[@"accessed_after_push_notification"] boolValue]);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" levels:nil labels:nil fromPushNotification:YES];
-    
+    [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view" type:@"Type" levels:nil labels:nil fromPushNotification:YES];
+
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
