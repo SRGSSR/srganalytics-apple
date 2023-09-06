@@ -9,7 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  Additional event labels. Data associated with a event is generic (type, values and source) and therefore flexible.
+ *  Additional event labels. Data associated with an event is generic (type, values and source) and therefore flexible.
  *  Your measurement team should provide you precise guidelines about which information must be sent in events,
  *  and in which fields.
  */
