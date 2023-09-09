@@ -38,9 +38,9 @@ static TestDataSource* dataSource(void) {
 // The singleton can be only setup once. Do not perform in a test case setup
 void SetupTestSingletonTracker(void)
 {
-    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
                                                                                                        sourceKey:@"source-key"
-                                                                                                        siteName:@"rts-app-test-v"];
+                                                                                                        siteName:@"srg-test-analytics-apple"];
     configuration.unitTesting = YES;
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration dataSource:dataSource()];
 

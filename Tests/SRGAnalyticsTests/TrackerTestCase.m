@@ -36,7 +36,7 @@
 - (void)testCommonLabelsForEvent
 {
     [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
+        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
         XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
@@ -49,7 +49,7 @@
 - (void)testCommonLabelsForPageView
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
-        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"rts-app-test-v");
+        XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
         return YES;
     }];
     
@@ -116,7 +116,7 @@
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertFalse([labels[@"accessed_after_push_notification"] boolValue]);
         XCTAssertEqualObjects(labels[@"navigation_property_type"], @"app");
-        XCTAssertEqualObjects(labels[@"navigation_bu_distributer"], @"RTS");
+        XCTAssertEqualObjects(labels[@"navigation_bu_distributer"], @"SRG");
         return YES;
     }];
     

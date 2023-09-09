@@ -499,7 +499,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"c2"], @"6036016");
         XCTAssertEqualObjects(labels[@"ns_ap_an"], @"xctest");
         // Cannot sadly test mp_v with SPM and XCTest
-        XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
+        XCTAssertEqualObjects(labels[@"mp_brand"], @"SRG");
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGMediaPlayerMarketingVersion());

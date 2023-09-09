@@ -16,9 +16,9 @@ static NSString *TestUserId = @"1234";
 
 static SRGAnalyticsConfiguration *TestConfiguration(void)
 {
-    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
                                                                                                        sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
-                                                                                                        siteName:@"rts-app-test-v"];
+                                                                                                        siteName:@"srg-test-analytics-apple"];
     configuration.unitTesting = YES;
     return configuration;
 }
