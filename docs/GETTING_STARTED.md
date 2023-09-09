@@ -91,7 +91,7 @@ View controllers represent the units of screen interaction in an application, th
 
 ### View controller tracking
 
-View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires a single method to be implemented, returning the page view title to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen and when the application wakes up from background with the view controller displayed.
+View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires two methods to be implemented, returning the page view title and the page view type to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen and when the application wakes up from background with the view controller displayed.
 
 The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify other custom measurement information (labels). If the required information is not available when the view controller appears you can disable automatic tracking by implementing the optional `-srg_isTrackedAutomatically` protocol method, returning `NO`. You are then responsible of calling `-trackPageView` on the view controller when the data required by the page view is available, as well as when the application returns from background.
 
@@ -160,7 +160,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             // ...
-        }.tracked(withTitle: "home")
+        }.tracked(withTitle: "home", type: "landing_page")
     }
 }
 ```
