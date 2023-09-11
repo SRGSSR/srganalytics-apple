@@ -35,7 +35,6 @@ static TestDataSource* dataSource(void) {
     return dataSource;
 }
 
-// The singleton can be only setup once. Do not perform in a test case setup
 void SetupTestSingletonTracker(void)
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
