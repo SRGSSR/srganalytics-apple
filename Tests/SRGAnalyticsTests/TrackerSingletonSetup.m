@@ -38,7 +38,7 @@ static TestDataSource* dataSource(void) {
 void SetupTestSingletonTracker(void)
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
-                                                                                                       sourceKey:@"source-key"
+                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
                                                                                                         siteName:@"srg-test-analytics-apple"];
     configuration.unitTesting = YES;
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration dataSource:dataSource()];
