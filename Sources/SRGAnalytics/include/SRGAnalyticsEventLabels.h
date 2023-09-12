@@ -9,11 +9,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  Additional hidden event labels. Data associated with a hidden event is generic (type, values and source) and
- *  therefore flexible. Your measurement team should provide you precise guidelines about which information must
- *  be sent in hidden events, and in which fields.
+ *  Additional event labels. Data associated with an event is generic (type, values and source) and therefore flexible.
+ *  Your measurement team should provide you precise guidelines about which information must be sent in events,
+ *  and in which fields.
  */
-@interface SRGAnalyticsHiddenEventLabels : SRGAnalyticsLabels
+@interface SRGAnalyticsEventLabels : SRGAnalyticsLabels
 
 /**
  *  The event type.

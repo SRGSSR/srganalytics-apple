@@ -5,6 +5,7 @@
 //
 
 #import "NSNotificationCenter+Tests.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @interface ComScoreTrackerTestCase : XCTestCase
@@ -15,6 +16,11 @@
 
 #pragma mark Setup and teardown
 
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
+
 - (void)setUp
 {
     SRGAnalyticsRenewUnitTestingIdentifier();
@@ -22,7 +28,7 @@
 
 #pragma mark Tests
 
-- (void)testNoHiddenEvents
+- (void)testNoEvents
 {
     id eventObserver = [NSNotificationCenter.defaultCenter addObserverForComScoreHiddenEventNotificationUsingBlock:^(NSString *event, NSDictionary *labels) {
         XCTFail(@"No event must be received");
@@ -30,7 +36,7 @@
     
     [self expectationForElapsedTimeInterval:10. withHandler:nil];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:^(NSError * _Nullable error) {
         [NSNotificationCenter.defaultCenter removeObserver:eventObserver];

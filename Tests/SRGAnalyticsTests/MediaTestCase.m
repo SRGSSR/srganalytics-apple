@@ -41,12 +41,12 @@
 
 - (void)testTokenProtectedOnDemandVideoRSI
 {
-    [self playMediaWithURN:@"urn:rsi:video:11498675"];
+    [self playMediaWithURN:@"urn:rsi:video:1874940"];
 }
 
 - (void)testUnprotectedOnDemandAudioRSI
 {
-    [self playMediaWithURN:@"urn:rsi:audio:16016821"];
+    [self playMediaWithURN:@"urn:rsi:video:1867394"];
 }
 
 - (void)testDVRAudioLivestreamRSI

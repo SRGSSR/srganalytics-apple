@@ -31,9 +31,9 @@
     [TCDebug setDebugLevel:TCLogLevel_Verbose];
     [TCDebug setNotificationLog:YES];
     
-    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
-                                                                                                       container:10
-                                                                                                        siteName:@"rts-app-test-v"];
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
+                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                        siteName:@"srg-app-analytics-apple"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration
                                                    dataSource:self
                                               identityService:SRGIdentityService.currentIdentityService];

@@ -3,7 +3,7 @@
 import PackageDescription
 
 struct ProjectSettings {
-    static let marketingVersion: String = "8.2.0"
+    static let marketingVersion: String = "9.0.0"
 }
 
 let package = Package(
@@ -42,13 +42,17 @@ let package = Package(
         .package(name: "SRGIdentity", url: "https://github.com/SRGSSR/srgidentity-apple.git", .upToNextMinor(from: "3.3.0")),
         .package(name: "SRGLogger", url: "https://github.com/SRGSSR/srglogger-apple.git", .upToNextMinor(from: "3.1.0")),
         .package(name: "SRGMediaPlayer", url: "https://github.com/SRGSSR/srgmediaplayer-apple.git", .upToNextMinor(from: "7.2.0")),
-        .package(name: "TCCore", url: "https://github.com/SRGSSR/TCCore-xcframework-apple.git", .exact("4.5.4-srg5")),
-        .package(name: "TCSDK", url: "https://github.com/SRGSSR/TCSDK-xcframework-apple.git", .exact("4.4.1-srg5"))
+        .package(name: "TagCommander", url: "https://github.com/CommandersAct/iOSV5.git", .upToNextMinor(from: "5.3.1"))
     ],
     targets: [
         .target(
             name: "SRGAnalytics",
-            dependencies: ["ComScore", "SRGLogger", "TCCore", "TCSDK"],
+            dependencies: [
+                "ComScore",
+                "SRGLogger",
+                .product(name: "TCCore", package: "TagCommander"),
+                .product(name: "TCServerSide_noIDFA", package: "TagCommander")
+            ],
             cSettings: [
                 .define("MARKETING_VERSION", to: "\"\(ProjectSettings.marketingVersion)\""),
                 .define("NS_BLOCK_ASSERTIONS", to: "1", .when(configuration: .release))

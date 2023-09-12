@@ -6,8 +6,6 @@
 
 #import "SRGAnalyticsConfiguration.h"
 
-#import "NSBundle+SRGAnalytics.h"
-
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRSI = @"rsi";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTR = @"rtr";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierRTS = @"rts";
@@ -15,13 +13,10 @@ SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRF =
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSRG = @"srg";
 SRGAnalyticsBusinessUnitIdentifier const SRGAnalyticsBusinessUnitIdentifierSWI = @"swi";
 
-SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentPreProduction = @"preprod";
-SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
-
 @interface SRGAnalyticsConfiguration ()
 
 @property (nonatomic, copy) SRGAnalyticsBusinessUnitIdentifier businessUnitIdentifier;
-@property (nonatomic) NSInteger container;
+@property (nonatomic, copy) NSString *sourceKey;
 @property (nonatomic, copy) NSString *siteName;
 
 @end
@@ -31,15 +26,14 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 #pragma mark Object lifecycle
 
 - (instancetype)initWithBusinessUnitIdentifier:(SRGAnalyticsBusinessUnitIdentifier)businessUnitIdentifier
-                                     container:(NSInteger)container
+                                     sourceKey:(NSString *)sourceKey
                                       siteName:(NSString *)siteName
 {
     if (self = [super init] ) {
         self.businessUnitIdentifier = businessUnitIdentifier;
-        self.container = container;
+        self.sourceKey = sourceKey;
         self.siteName = siteName;
         self.centralized = YES;
-        self.environmentMode = SRGAnalyticsEnvironmentModeAutomatic;
     }
     return self;
 }
@@ -63,37 +57,15 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
     return s_sites[businessUnitIdentifier].integerValue;
 }
 
-- (SRGAnalyticsEnvironment)environment
-{
-    switch (self.environmentMode) {
-        case SRGAnalyticsEnvironmentModePreProduction: {
-            return SRGAnalyticsEnvironmentPreProduction;
-            break;
-        }
-            
-        case SRGAnalyticsEnvironmentModeProduction: {
-            return SRGAnalyticsEnvironmentProduction;
-            break;
-        }
-        
-        case SRGAnalyticsEnvironmentModeAutomatic:
-        default: {
-            return NSBundle.srg_isProductionVersion ? SRGAnalyticsEnvironmentProduction : SRGAnalyticsEnvironmentPreProduction;
-            break;
-        }
-    }
-}
-
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
 {
     SRGAnalyticsConfiguration *configuration = [self.class allocWithZone:zone];
     configuration.businessUnitIdentifier = self.businessUnitIdentifier;
-    configuration.container = self.container;
+    configuration.sourceKey = self.sourceKey;
     configuration.siteName = self.siteName;
     configuration.centralized = self.centralized;
-    configuration.environmentMode = self.environmentMode;
     configuration.unitTesting = self.unitTesting;
     return configuration;
 }
@@ -102,12 +74,12 @@ SRGAnalyticsEnvironment const SRGAnalyticsEnvironmentProduction = @"prod";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; businessUnitIdentifier = %@; site = %@; container = %@; siteName = %@",
+    return [NSString stringWithFormat:@"<%@: %p; businessUnitIdentifier = %@; site = %@; sourceKey = %@; siteName = %@",
             self.class,
             self,
             self.businessUnitIdentifier,
             @(self.site),
-            @(self.container),
+            self.sourceKey,
             self.siteName];
 }
 

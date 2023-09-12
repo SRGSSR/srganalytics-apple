@@ -25,12 +25,12 @@ typedef BOOL (^EventExpectationHandler)(NSString *event, NSDictionary *labels);
 - (XCTestExpectation *)expectationForPageViewEventNotificationWithHandler:(EventExpectationHandler)handler;
 
 /**
- *  Expectation for general hidden event notifications.
+ *  Expectation for general event notifications.
  */
-- (XCTestExpectation *)expectationForHiddenEventNotificationWithHandler:(EventExpectationHandler)handler;
+- (XCTestExpectation *)expectationForEventNotificationWithHandler:(EventExpectationHandler)handler;
 
 /**
- *  Expectation for playback-related hidden event notifications.
+ *  Expectation for playback-related event notifications.
  */
 - (XCTestExpectation *)expectationForPlayerEventNotificationWithHandler:(EventExpectationHandler)handler;
 

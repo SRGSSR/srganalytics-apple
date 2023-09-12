@@ -66,6 +66,11 @@
     return @"web-tester";
 }
 
+- (NSString *)srg_pageViewType
+{
+    return @"detail_page";
+}
+
 #pragma mark UITextFieldDelegate protocol
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

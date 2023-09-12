@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  View controllers whose usage must be tracked should conform to the `SRGAnalyticsViewTracking` protocol, which
- *  describes the data to send with such events. The only method required by this protocol is `-srg_pageViewTitle`,
- *  which provides the name to be used for the view events.
+ *  describes the data to send with such events.
  *
  *  By default, if a view controller conforms to the `SRGAnalyticsViewTracking` protocol, a page view event will
  *  automatically be sent when it is presented for the first time (i.e. when `-viewDidAppear:` is called for
@@ -38,11 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SRGAnalyticsViewTracking <NSObject>
 
 /**
- *  The page view title to use for view event measurement.
- *
- *  @return The page view title. If this value is empty, no event will be sent.
+ *  The page view title to use for view event measurement. If this value is empty, no event will be sent.
  */
 @property (nonatomic, readonly, copy) NSString *srg_pageViewTitle;
+
+/**
+ *  The page view type (e.g. Article). If this value is empty, no event will be sent.
+ */
+@property (nonatomic, readonly, copy) NSString *srg_pageViewType;
 
 @optional
 
