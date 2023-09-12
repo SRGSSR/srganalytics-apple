@@ -163,7 +163,7 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
 {
     NSAssert(event.length != 0, @"An event is required");
     
-    // Ensure a play is emitted before events requiring a session to be opened (the Tag Commander SDK does not open sessions
+    // Ensure a play is emitted before events requiring a session to be opened (the Commanders Act SDK does not open sessions
     // automatically)
     if ([self.lastEvent isEqualToString:MediaPlayerTrackerEventStop] && ([event isEqualToString:MediaPlayerTrackerEventPause] || [event isEqualToString:MediaPlayerTrackerEventSeek])) {
         [self recordEvent:MediaPlayerTrackerEventPlay withStreamType:streamType time:time timeshift:timeshift analyticsLabels:analyticsLabels userInfo:userInfo];
@@ -210,12 +210,8 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     
     NSMutableDictionary<NSString *, NSString *> *labels = [NSMutableDictionary dictionary];
     
-    [labels srg_safelySetString:SRGAnalyticsTracker.sharedTracker.configuration.environment forKey:@"media_embedding_environment"];
-    
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerName forKey:@"media_player_display"];
     [labels srg_safelySetString:self.mediaPlayerController.analyticsPlayerVersion forKey:@"media_player_version"];
-    
-    [labels srg_safelySetString:event forKey:@"event_id"];
     
     // Use current duration as media position for livestreams, raw position otherwise
     NSTimeInterval mediaPosition = SRGMediaAnalyticsIsLiveStreamType(streamType) ? [self updatedPlaybackDurationWithEvent:event] : SRGMediaAnalyticsCMTimeToMilliseconds(time);
@@ -255,10 +251,10 @@ static NSString *SRGMediaPlayerTrackerLabelForSelectionReason(SRGMediaPlayerSele
     [labels addEntriesFromDictionary:mainLabels.labelsDictionary];
     
     if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-        labels[@"srg_test_id"] = self.unitTestingIdentifier;
+        [labels srg_safelySetString:self.unitTestingIdentifier forKey:@"srg_test_id"];
     }
     
-    [SRGAnalyticsTracker.sharedTracker trackTagCommanderEventWithLabels:labels.copy];
+    [SRGAnalyticsTracker.sharedTracker sendCommandersActCustomEventWithName:event labels:labels.copy];
 }
 
 #pragma mark Heartbeats

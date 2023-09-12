@@ -20,7 +20,7 @@ struct SwiftUIView: View {
         Button(action: { /* Nothing. Just to have something focusable on tvOS */}) {
             Text("SwiftUI demo")
         }
-        .tracked(withTitle: "swift-ui")
+        .tracked(withTitle: "swift-ui", type: "detail_page")
     }
 }
 

@@ -18,7 +18,7 @@ Before measurements can be collected, the tracker singleton responsible of all a
     // ...
     
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       container:3
+                                                                                                       sourceKey:@"00000000-0000-0000-0000-000000000000"
                                                                                                         siteName:@"srf-app-site"];
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:configuration];
                                                      
@@ -91,7 +91,7 @@ View controllers represent the units of screen interaction in an application, th
 
 ### View controller tracking
 
-View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires a single method to be implemented, returning the page view title to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen and when the application wakes up from background with the view controller displayed.
+View controller measurement is an opt-in, in other words no view controller is tracked by default. For a view controller to be tracked the recommended approach is to have it conform to the `SRGAnalyticsViewTracking` protocol. This protocol requires two methods to be implemented, returning the page view title and the page view type to be used for measurements. By default, once a view controller implements the `SRGAnalyticsViewTracking` protocol, it automatically generates a page view when it first appears on screen and when the application wakes up from background with the view controller displayed.
 
 The `SRGAnalyticsViewTracking` protocol supplies optional methods to specify other custom measurement information (labels). If the required information is not available when the view controller appears you can disable automatic tracking by implementing the optional `-srg_isTrackedAutomatically` protocol method, returning `NO`. You are then responsible of calling `-trackPageView` on the view controller when the data required by the page view is available, as well as when the application returns from background.
 
@@ -107,7 +107,7 @@ If a view can be opened from a push notification, you must implement the `-srg_o
 
 #### Remark
 
-If your application needs to track views instead of view controllers, you can still perform tracking using the `-[SRGAnalyticsTracker trackPageViewWithTitle:levels:labels:fromPushNotification:]` method.
+If your application needs to track views instead of view controllers, you can still perform tracking using the `-[SRGAnalyticsTracker trackPageViewWithTitle:type:levels:labels:fromPushNotification:]` method.
 
 ### Example
 
@@ -130,6 +130,11 @@ and implement the methods you need to supply measurement information:
     return @"home";
 }
 
+- (NSString *)srg_pageViewType
+{
+    return @"landing_page";
+}
+
 - (SRGAnalyticsPageViewLabels *)srg_pageViewLabels
 {
     SRGAnalyticsPageViewLabels *labels = [[SRGAnalyticsPageViewLabels alloc] init];
@@ -144,7 +149,7 @@ and implement the methods you need to supply measurement information:
 
 When the view is opened for the first time, or if the view is visible on screen when waking up the application, this information will be automatically sent.
 
-Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for TagCommander first (unlike comScore information which can be freely defined).
+Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for Commanders Act first (unlike comScore information which can be freely defined).
 
 ## Measuring page views (SwiftUI)
 
@@ -155,7 +160,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             // ...
-        }.tracked(withTitle: "home")
+        }.tracked(withTitle: "home", type: "landing_page")
     }
 }
 ```
@@ -216,10 +221,10 @@ In some special cases like CarPlay, though, your application might display a sec
 
 ## Measuring application functionalities
 
-To measure any kind of application functionality, you typically use hidden events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
+To measure any kind of application functionality, you typically use events. Those can be emitted by calling the corresponding methods on the tracker singleton itself. For example, you could send the following event when the user taps on a player full-screen button within your application:
 
 ```objective-c
-[SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"full-screen"];
+[SRGAnalyticsTracker.sharedTracker trackEventWithName:@"full-screen"];
 ```
 
 Custom labels can also be used to send any additional measurement information you could need.

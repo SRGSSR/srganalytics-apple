@@ -71,6 +71,11 @@
     return self.title;
 }
 
+- (NSString *)srg_pageViewType
+{
+    return @"detail_page";
+}
+
 - (NSArray *)srg_pageViewLevels
 {
     return self.levels;

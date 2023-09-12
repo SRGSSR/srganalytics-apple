@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "TagCommander SDK V5",
+        "repositoryURL": "https://github.com/CommandersAct/iOSV5.git",
+        "state": {
+          "branch": null,
+          "revision": "b76b700d92c35f02a3d977e7707ecf4df4732b35",
+          "version": "5.3.2"
+        }
+      },
+      {
         "package": "libextobjc",
         "repositoryURL": "https://github.com/SRGSSR/libextobjc.git",
         "state": {
@@ -125,24 +134,6 @@
           "branch": null,
           "revision": "153a2544391c1aaccae2d38d8b113fd0a03421b8",
           "version": "3.1.0"
-        }
-      },
-      {
-        "package": "TCCore",
-        "repositoryURL": "https://github.com/SRGSSR/TCCore-xcframework-apple.git",
-        "state": {
-          "branch": null,
-          "revision": "eb686883e63af28174472a09eda97acf07179c88",
-          "version": "4.5.4-srg5"
-        }
-      },
-      {
-        "package": "TCSDK",
-        "repositoryURL": "https://github.com/SRGSSR/TCSDK-xcframework-apple.git",
-        "state": {
-          "branch": null,
-          "revision": "c4becb0b250258b78cb46225af5e269da834db5a",
-          "version": "4.4.1-srg5"
         }
       },
       {

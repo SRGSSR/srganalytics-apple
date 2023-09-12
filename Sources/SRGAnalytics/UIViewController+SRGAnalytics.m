@@ -91,7 +91,8 @@ static void swizzled_UITabBarController_setSelectedViewController(UITabBarContro
         }
         
         NSString *title = [trackedSelf srg_pageViewTitle];
-        
+        NSString *type = [trackedSelf srg_pageViewType];
+
         NSArray<NSString *> *levels = nil;
         if ([trackedSelf respondsToSelector:@selector(srg_pageViewLevels)]) {
             levels = [trackedSelf srg_pageViewLevels];
@@ -108,6 +109,7 @@ static void swizzled_UITabBarController_setSelectedViewController(UITabBarContro
         }
         
         [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:title
+                                                             type:type
                                                            levels:levels
                                                            labels:labels
                                              fromPushNotification:fromPushNotification

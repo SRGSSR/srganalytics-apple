@@ -6,13 +6,6 @@
 
 #import "XCTestCase+Tests.h"
 
-static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
-{
-    NSString *contentProtectionFrameworkPath = [NSBundle.mainBundle pathForResource:@"SRGContentProtection" ofType:@"framework" inDirectory:@"Frameworks"];
-    NSBundle *contentProtectionFramework = [NSBundle bundleWithPath:contentProtectionFrameworkPath];
-    [contentProtectionFramework loadAndReturnError:NULL];
-}
-
 @implementation XCTestCase (Tests)
 
 #pragma mark Helpers
@@ -53,17 +46,16 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if ([event isEqualToString:@"screen"]) {
-            return handler(event, labels);
-        }
-        else {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"page_view"]) {
             return NO;
         }
+
+        return handler(event, labels);
     }];
 }
 
-- (XCTestExpectation *)expectationForHiddenEventNotificationWithHandler:(EventExpectationHandler)handler
+- (XCTestExpectation *)expectationForEventNotificationWithHandler:(EventExpectationHandler)handler
 {
     NSString *expectedTestingIdentifier = SRGAnalyticsUnitTestingIdentifier();
     return [self expectationForSingleNotification:SRGAnalyticsRequestNotification object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
@@ -74,13 +66,19 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if ([event isEqualToString:@"screen"]) {
+        static dispatch_once_t s_onceToken;
+        static NSArray<NSString *> *s_nonEvents;
+        dispatch_once(&s_onceToken, ^{
+            s_nonEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment", @"pos", @"uptime", @"page_view"];
+        });
+        
+        NSString *event = labels[@"event_name"];
+        if ([s_nonEvents containsObject:event]) {
             return NO;
         }
         
         // Discard app overlap measurements
-        NSString *name = labels[@"event_name"];
+        NSString *name = labels[@"event_title"];
         if ([name isEqualToString:@"Installed Apps"]) {
             return NO;
         }
@@ -106,13 +104,12 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             s_playerEvents = @[@"play", @"pause", @"seek", @"stop", @"eof", @"segment"];
         });
         
-        NSString *event = labels[@"event_id"];
-        if ([s_playerEvents containsObject:event]) {
-            return handler(event, labels);
-        }
-        else {
+        NSString *event = labels[@"event_name"];
+        if (! [s_playerEvents containsObject:event]) {
             return NO;
         }
+
+        return handler(event, labels);
     }];
 }
 
@@ -157,12 +154,11 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             s_playerEvents = @[ @"play", @"pause", @"end", @"playrt" ];
         });
         
-        if ([s_playerEvents containsObject:event]) {
-            return handler(event, labels);
-        }
-        else {
+        if (! [s_playerEvents containsObject:event]) {
             return NO;
         }
+
+        return handler(event, labels);
     }];
 }
 
@@ -177,8 +173,8 @@ static __attribute__((constructor)) void AnalyticsTestCaseInit(void)
             return NO;
         }
         
-        NSString *event = labels[@"event_id"];
-        if (! [event isEqualToString:@"screen"]) {
+        NSString *event = labels[@"event_name"];
+        if (! [event isEqualToString:@"page_view"]) {
             return NO;
         }
         

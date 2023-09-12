@@ -8,24 +8,24 @@
 
 #import "SRGAnalyticsLabels+Private.h"
 
-@interface HiddenEventLabelsTestCase : XCTestCase
+@interface EventLabelsTestCase : XCTestCase
 
 @end
 
-@implementation HiddenEventLabelsTestCase
+@implementation EventLabelsTestCase
 
 #pragma mark Tests
 
 - (void)testEmpty
 {
-    SRGAnalyticsHiddenEventLabels *labels = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
     XCTAssertNotNil(labels.labelsDictionary);
     XCTAssertEqual(labels.labelsDictionary.count, 0);
 }
 
 - (void)testNonEmpty
 {
-    SRGAnalyticsHiddenEventLabels *labels = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
     labels.type = @"type";
     labels.value = @"value";
     labels.source = @"source";
@@ -50,7 +50,7 @@
 
 - (void)testEquality
 {
-    SRGAnalyticsHiddenEventLabels *labels1 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels1 = [[SRGAnalyticsEventLabels alloc] init];
     labels1.type = @"type";
     labels1.value = @"value";
     labels1.source = @"source";
@@ -59,7 +59,7 @@
     labels1.customInfo = @{ @"key" : @"value" };
     XCTAssertEqualObjects(labels1, labels1);
     
-    SRGAnalyticsHiddenEventLabels *labels2 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels2 = [[SRGAnalyticsEventLabels alloc] init];
     labels2.type = @"type";
     labels2.value = @"value";
     labels2.source = @"source";
@@ -68,7 +68,7 @@
     labels2.customInfo = @{ @"key" : @"value" };
     XCTAssertEqualObjects(labels1, labels2);
     
-    SRGAnalyticsHiddenEventLabels *labels3 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels3 = [[SRGAnalyticsEventLabels alloc] init];
     labels3.type = @"other_type";
     labels3.value = @"value";
     labels3.source = @"source";
@@ -77,7 +77,7 @@
     labels3.customInfo = @{ @"key" : @"value" };
     XCTAssertNotEqualObjects(labels1, labels3);
     
-    SRGAnalyticsHiddenEventLabels *labels4 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels4 = [[SRGAnalyticsEventLabels alloc] init];
     labels4.type = @"type";
     labels4.value = @"other_value";
     labels4.source = @"source";
@@ -86,7 +86,7 @@
     labels4.customInfo = @{ @"key" : @"value" };
     XCTAssertNotEqualObjects(labels1, labels4);
     
-    SRGAnalyticsHiddenEventLabels *labels5 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels5 = [[SRGAnalyticsEventLabels alloc] init];
     labels5.type = @"type";
     labels5.value = @"value";
     labels5.source = @"other_source";
@@ -95,7 +95,7 @@
     labels5.customInfo = @{ @"key" : @"value" };
     XCTAssertNotEqualObjects(labels1, labels5);
     
-    SRGAnalyticsHiddenEventLabels *labels6 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels6 = [[SRGAnalyticsEventLabels alloc] init];
     labels6.type = @"type";
     labels6.value = @"value";
     labels6.extraValue1 = @"other_extra_value1";
@@ -104,7 +104,7 @@
     labels6.customInfo = @{ @"key" : @"value" };
     XCTAssertNotEqualObjects(labels1, labels6);
     
-    SRGAnalyticsHiddenEventLabels *labels7 = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels7 = [[SRGAnalyticsEventLabels alloc] init];
     labels7.type = @"type";
     labels7.value = @"value";
     labels7.source = @"source";
@@ -116,7 +116,7 @@
 
 - (void)testCopy
 {
-    SRGAnalyticsHiddenEventLabels *labels = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
     labels.type = @"type";
     labels.value = @"value";
     labels.source = @"source";
@@ -124,13 +124,13 @@
     labels.extraValue2 = @"extra_value2";
     labels.customInfo = @{ @"key" : @"value" };
     
-    SRGAnalyticsHiddenEventLabels *labelsCopy = labels.copy;
+    SRGAnalyticsEventLabels *labelsCopy = labels.copy;
     XCTAssertEqualObjects(labels, labelsCopy);
 }
 
 - (void)testCustomInfoOverrides
 {
-    SRGAnalyticsHiddenEventLabels *labels = [[SRGAnalyticsHiddenEventLabels alloc] init];
+    SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
     labels.type = @"type";
     labels.value = @"value";
     labels.source = @"source";

@@ -85,7 +85,7 @@ static NSMutableDictionary<NSValue *, SRGComScoreMediaPlayerTracker *> *s_tracke
         }
 
         if (SRGAnalyticsTracker.sharedTracker.configuration.unitTesting) {
-            customLabels[@"srg_test_id"] = SRGAnalyticsUnitTestingIdentifier();
+            [customLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
         }
         
         [builder setCustomLabels:customLabels.copy];

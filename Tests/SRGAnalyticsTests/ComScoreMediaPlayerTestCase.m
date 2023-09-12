@@ -6,6 +6,7 @@
 
 #import "NSNotificationCenter+Tests.h"
 #import "Segment.h"
+#import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
 @import SRGAnalyticsMediaPlayer;
@@ -35,6 +36,11 @@ static NSURL *DVRTestURL(void)
 @implementation ComScoreMediaPlayerTestCase
 
 #pragma mark Setup and teardown
+
++ (void)setUp
+{
+    SetupTestSingletonTracker();
+}
 
 - (void)setUp
 {
@@ -493,7 +499,7 @@ static NSURL *DVRTestURL(void)
         XCTAssertEqualObjects(labels[@"c2"], @"6036016");
         XCTAssertEqualObjects(labels[@"ns_ap_an"], @"xctest");
         // Cannot sadly test mp_v with SPM and XCTest
-        XCTAssertEqualObjects(labels[@"mp_brand"], @"RTS");
+        XCTAssertEqualObjects(labels[@"mp_brand"], @"SRG");
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_mp"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"ns_st_mv"], SRGMediaPlayerMarketingVersion());

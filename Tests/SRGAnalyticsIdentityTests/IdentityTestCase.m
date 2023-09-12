@@ -16,9 +16,9 @@ static NSString *TestUserId = @"1234";
 
 static SRGAnalyticsConfiguration *TestConfiguration(void)
 {
-    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierRTS
-                                                                                                       container:10
-                                                                                                        siteName:@"rts-app-test-v"];
+    SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRG
+                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                        siteName:@"srg-test-analytics-apple"];
     configuration.unitTesting = YES;
     return configuration;
 }
@@ -159,54 +159,54 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
 
 #pragma mark Tests
 
-- (void)testHiddenEventWithStandardStartMethod
+- (void)testEventWithStandardStartMethod
 {
     // This test requires a brand new analytics tracker
     SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker performSelector:@selector(new)];
     [analyticsTracker startWithConfiguration:TestConfiguration()];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertNil(labels[@"user_is_logged"]);
         XCTAssertNil(labels[@"user_id"]);
         return YES;
     }];
     
-    [analyticsTracker trackHiddenEventWithName:@"Hidden event"];
+    [analyticsTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventWithoutIdentityService
+- (void)testEventWithoutIdentityService
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:nil];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
         XCTAssertNil(labels[@"user_id"]);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventNotLogged
+- (void)testEventNotLogged
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
         XCTAssertNil(labels[@"user_id"]);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventJustLoggedWithoutAccountInformation
+- (void)testEventJustLoggedWithoutAccountInformation
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
@@ -223,18 +223,18 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
         XCTAssertNil(labels[@"user_id"]);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventLogged
+- (void)testEventLogged
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
@@ -249,18 +249,18 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
         XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventAfterLogout
+- (void)testEventAfterLogout
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
@@ -275,7 +275,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
         XCTAssertNil(labels[@"user_id"]);
         return YES;
@@ -283,7 +283,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self.identityService logout];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
@@ -310,12 +310,13 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     }];
     
     [SRGAnalyticsTracker.sharedTracker trackPageViewWithTitle:@"Page view"
+                                                         type:@"Type"
                                                        levels:nil];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenPlaybackEventLogged
+- (void)testPlaybackEventLogged
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
@@ -344,7 +345,7 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
-- (void)testHiddenEventForTrackerStartedWithLoggedInUser
+- (void)testEventForTrackerStartedWithLoggedInUser
 {
     [self expectationForSingleNotification:SRGIdentityServiceUserDidLoginNotification object:self.identityService handler:nil];
     [self expectationForSingleNotification:SRGIdentityServiceDidUpdateAccountNotification object:self.identityService handler:nil];
@@ -360,20 +361,20 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     SRGAnalyticsTracker *analyticsTracker = [SRGAnalyticsTracker performSelector:@selector(new)];
     [analyticsTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"true");
         XCTAssertEqualObjects(labels[@"user_id"], TestUserId);
         return YES;
     }];
     
-    [analyticsTracker trackHiddenEventWithName:@"Hidden event"];
+    [analyticsTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
 #if TARGET_OS_IOS
 
-- (void)testHiddenEventAfterUnauthorizedCall
+- (void)testEventAfterUnauthorizedCall
 {
     [SRGAnalyticsTracker.sharedTracker startWithConfiguration:TestConfiguration() identityService:self.identityService];
     
@@ -394,13 +395,13 @@ static NSURL *TestUnauthorizedCallbackURL(SRGIdentityService *identityService)
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
     
-    [self expectationForHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"user_is_logged"], @"false");
         XCTAssertNil(labels[@"user_id"]);
         return YES;
     }];
     
-    [SRGAnalyticsTracker.sharedTracker trackHiddenEventWithName:@"Hidden event"];
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
     
     [self waitForExpectationsWithTimeout:20. handler:nil];
 }
