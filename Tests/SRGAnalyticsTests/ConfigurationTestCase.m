@@ -17,20 +17,20 @@
 - (void)testCreation
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     XCTAssertTrue(configuration.centralized);
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqualObjects(configuration.sourceKey, @"39ae8f94-595c-4ca4-81f7-fb7748bd3f04");
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
 }
 
 - (void)testBusinessUnitSpecificConfiguration
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.centralized = NO;
     
@@ -38,14 +38,14 @@
     XCTAssertFalse(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3667);
-    XCTAssertEqualObjects(configuration.sourceKey, @"39ae8f94-595c-4ca4-81f7-fb7748bd3f04");
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
 }
 
 - (void)testUnitTestingConfiguration
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.unitTesting = YES;
     
@@ -53,14 +53,14 @@
     XCTAssertTrue(configuration.unitTesting);
     XCTAssertEqualObjects(configuration.businessUnitIdentifier, SRGAnalyticsBusinessUnitIdentifierSRF);
     XCTAssertEqual(configuration.site, 3666);
-    XCTAssertEqualObjects(configuration.sourceKey, @"39ae8f94-595c-4ca4-81f7-fb7748bd3f04");
+    XCTAssertEqualObjects(configuration.sourceKey, @"source-key");
     XCTAssertEqualObjects(configuration.siteName, @"site-name");
 }
 
 - (void)testCopy
 {
     SRGAnalyticsConfiguration *configuration = [[SRGAnalyticsConfiguration alloc] initWithBusinessUnitIdentifier:SRGAnalyticsBusinessUnitIdentifierSRF
-                                                                                                       sourceKey:@"39ae8f94-595c-4ca4-81f7-fb7748bd3f04"
+                                                                                                       sourceKey:@"source-key"
                                                                                                         siteName:@"site-name"];
     configuration.centralized = YES;
     configuration.unitTesting = YES;
