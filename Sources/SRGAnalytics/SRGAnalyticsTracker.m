@@ -197,7 +197,13 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (NSString *)device
 {
-    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+    if ([self isMacCatalystApp]) {
+        return @"desktop";
+    }
+    else if ([self isiOSAppOnMac]) {
+        return @"desktop";
+    }
+    else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return @"phone";
     }
     else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -208,6 +214,26 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     else {
         return @"phone";
+    }
+}
+
+- (BOOL)isMacCatalystApp
+{
+    if (@available(iOS 13, tvOS 13, *)) {
+        return NSProcessInfo.processInfo.isMacCatalystApp;
+    }
+    else {
+        return NO;
+    }
+}
+
+- (BOOL)isiOSAppOnMac
+{
+    if (@available(iOS 14, tvOS 14, *)) {
+        return NSProcessInfo.processInfo.isiOSAppOnMac;
+    }
+    else {
+        return NO;
     }
 }
 
