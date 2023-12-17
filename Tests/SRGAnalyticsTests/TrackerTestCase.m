@@ -36,7 +36,14 @@
 - (void)testCommonLabelsForEvent
 {
     [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
+        if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"phone");
+        }
+        else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"tvbox");
+        }
         XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
@@ -49,7 +56,15 @@
 - (void)testCommonLabelsForPageView
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
+        if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"phone");
+        }
+        else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"tvbox");
+        }
+        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
     

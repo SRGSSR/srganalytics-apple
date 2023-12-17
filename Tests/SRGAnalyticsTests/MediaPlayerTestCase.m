@@ -548,12 +548,20 @@ static NSURL *DVRTestURL(void)
 - (void)testCommonLabels
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
+        if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"phone");
+        }
+        else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
+            XCTAssertEqualObjects(labels[@"navigation_device"], @"tvbox");
+        }
+        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
+        
         XCTAssertEqualObjects(event, @"play");
         XCTAssertEqualObjects(labels[@"media_player_display"], @"SRGMediaPlayer");
         XCTAssertEqualObjects(labels[@"media_player_version"], SRGMediaPlayerMarketingVersion());
         XCTAssertEqualObjects(labels[@"test_label"], @"test_value");
-        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
     
