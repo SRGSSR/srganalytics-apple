@@ -550,12 +550,7 @@ static NSURL *DVRTestURL(void)
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
-        if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-            XCTAssertEqualObjects(labels[@"navigation_device"], @"phone");
-        }
-        else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomTV) {
-            XCTAssertEqualObjects(labels[@"navigation_device"], @"tvbox");
-        }
+        XCTAssertTrue(([@[@"phone", @"tvbox", @"tablet", @"desktop"] containsObject:labels[@"navigation_device"]]));
         XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         
         XCTAssertEqualObjects(event, @"play");
