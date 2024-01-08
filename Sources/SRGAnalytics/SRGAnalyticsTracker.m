@@ -197,10 +197,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
 - (NSString *)device
 {
-    if ([self isMacCatalystApp]) {
-        return @"desktop";
-    }
-    else if ([self isiOSAppOnMac]) {
+    if ([self isMacCatalystApp] || [self isiOSAppOnMac]) {
         return @"desktop";
     }
     else if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
