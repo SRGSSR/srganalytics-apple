@@ -8,6 +8,8 @@
 #import "TrackerSingletonSetup.h"
 #import "XCTestCase+Tests.h"
 
+@import TCServerSide_noIDFA;
+
 @interface TrackerTestCase : XCTestCase
 
 @end
@@ -31,6 +33,20 @@
 - (void)testNoHiddenAdSupportFramework
 {
     XCTAssertNil(NSClassFromString(@"ASIdentifierManager"));
+}
+
+- (void)testUniqueIdentifier
+{
+    NSString *uniqueIdentifier = TCPredefinedVariables.sharedInstance.uniqueIdentifier;
+    [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"context"][@"device"][@"sdk_id"], uniqueIdentifier);
+        XCTAssertEqualObjects(labels[@"user"][@"consistent_anonymous_id"], uniqueIdentifier);
+        return YES;
+    }];
+
+    [SRGAnalyticsTracker.sharedTracker trackEventWithName:@"Event"];
+
+    [self waitForExpectationsWithTimeout:20. handler:nil];
 }
 
 - (void)testCommonLabelsForEvent
