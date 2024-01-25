@@ -234,7 +234,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SRG;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "SRG SSR";
 				TargetAttributes = {
 					E6FC7E871D61F95C00A55085 = {
