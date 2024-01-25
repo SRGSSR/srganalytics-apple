@@ -36,7 +36,9 @@
 - (void)testCommonLabelsForEvent
 {
     [self expectationForEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
+        XCTAssertTrue(([@[@"phone", @"tvbox", @"tablet", @"desktop"] containsObject:labels[@"navigation_device"]]));
         XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
@@ -49,7 +51,10 @@
 - (void)testCommonLabelsForPageView
 {
     [self expectationForPageViewEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
+        XCTAssertEqualObjects(labels[@"app_library_version"], SRGAnalyticsMarketingVersion());
         XCTAssertEqualObjects(labels[@"navigation_app_site_name"], @"srg-test-analytics-apple");
+        XCTAssertTrue(([@[@"phone", @"tvbox", @"tablet", @"desktop"] containsObject:labels[@"navigation_device"]]));
+        XCTAssertEqualObjects(labels[@"consent_services"], @"service1,service2,service3");
         return YES;
     }];
     
