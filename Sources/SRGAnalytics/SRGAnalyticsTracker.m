@@ -126,6 +126,10 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     [self.serverSide addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
     [self.serverSide addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
     [self.serverSide addPermanentData:@"navigation_device" withValue:[self device]];
+
+    // Use the legacy V4 identifier as unique identifier in V5.
+    TCDevice.sharedInstance.sdkID = TCPredefinedVariables.sharedInstance.uniqueIdentifier;
+    [TCPredefinedVariables.sharedInstance useLegacyUniqueIDForAnonymousID];
 }
 
 #pragma mark Labels
