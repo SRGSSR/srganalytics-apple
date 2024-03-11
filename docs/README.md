@@ -2,6 +2,11 @@
 
 [![GitHub releases](https://img.shields.io/github/v/release/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/releases) [![platform](https://img.shields.io/badge/platfom-ios%20%7C%20tvos-blue)](https://github.com/SRGSSR/srganalytics-apple) [![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager) [![GitHub license](https://img.shields.io/github/license/SRGSSR/srganalytics-apple)](https://github.com/SRGSSR/srganalytics-apple/blob/master/LICENSE)
 
+> [!IMPORTANT]
+> Letterbox will be sunset in August 2025, replaced by [Pillarbox](https://github.com/SRGSSR/pillarbox-apple). SRG Analytics will be decommissioned as well, replaced by an equivalent Analytics package available from Pillarbox:
+>  - New SRG SSR products must use Pillarbox Analytics only.
+>  - Existing SRG SSR products using SRG Analytics must transition to Pillarbox Analytics before this date.
+
 ## About
 
 The SRG Analytics library makes it easy to add usage tracking information to your iOS and tvOS applications, following the SRG SSR standards.
