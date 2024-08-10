@@ -122,6 +122,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     self.serverSide = [[ServerSide alloc] initWithSiteID:(int)configuration.site andSourceKey:configuration.sourceKey];
     [self.serverSide enableRunningInBackground];
+    [self.serverSide waitForUserAgent];
 
     [self.serverSide addPermanentData:@"app_library_version" withValue:SRGAnalyticsMarketingVersion()];
     [self.serverSide addPermanentData:@"navigation_app_site_name" withValue:configuration.siteName];
