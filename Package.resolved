@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/comScore/Comscore-Swift-Package-Manager.git",
         "state": {
           "branch": null,
-          "revision": "fef761279a592960243e67f2aea110c6fa097fd8",
-          "version": "6.11.0"
+          "revision": "2d1cd9c0cb52ca76702023b528a059fc0a7d5a4d",
+          "version": "6.13.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/CommandersAct/iOSV5.git",
         "state": {
           "branch": null,
-          "revision": "1350bca4163cfdd62d1508068601817d86d9f4a5",
-          "version": "5.4.4"
+          "revision": "b65eb27cde41d3c40b05520f8713d55a52821553",
+          "version": "5.4.9"
         }
       },
       {
