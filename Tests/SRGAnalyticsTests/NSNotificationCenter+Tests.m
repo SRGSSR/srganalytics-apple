@@ -32,11 +32,6 @@
             return;
         }
         
-        // Discard app overlap measurements
-        if ([event isEqualToString:@"Installed Apps"]) {
-            return;
-        }
-        
         block(event, labels);
     }];
 }
@@ -132,12 +127,6 @@
         // Discard heartbeats (hidden events, but entirely outside our control)
         NSString *event = labels[@"ns_st_ev"];
         if ([event isEqualToString:@"hb"]) {
-            return;
-        }
-        
-        // Discard app overlap measurements
-        NSString *name = labels[@"srg_title"];
-        if ([name isEqualToString:@"Installed Apps"]) {
             return;
         }
         
