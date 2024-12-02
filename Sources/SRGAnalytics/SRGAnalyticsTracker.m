@@ -12,7 +12,6 @@
 #import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsLogger.h"
 #import "SRGAnalyticsNotifications+Private.h"
-#import "UIViewController+SRGAnalytics.h"
 
 @import ComScore;
 @import TCCore;
