@@ -6,13 +6,13 @@ all: test-ios test-tvos test-ios-identity test-tvos-identity
 .PHONY: test-ios
 test-ios:
 	@echo "Running iOS unit tests..."
-	@xcodebuild test -scheme SRGAnalytics-Package -destination 'platform=iOS Simulator,name=iPhone 11' 2> /dev/null
+	@xcodebuild test -scheme SRGAnalytics-Package -destination 'platform=iOS Simulator,name=iPhone 16' 2> /dev/null
 	@echo "... done.\n"
 
 .PHONY: test-ios-identity
 test-ios-identity:
 	@echo "Running iOS identity unit tests..."
-	@pushd Tests > /dev/null; xcodebuild test -workspace SRGAnalyticsIdentity-tests.xcworkspace -scheme SRGAnalyticsIdentity-tests -destination 'platform=iOS Simulator,name=iPhone 11' 2> /dev/null
+	@pushd Tests > /dev/null; xcodebuild test -workspace SRGAnalyticsIdentity-tests.xcworkspace -scheme SRGAnalyticsIdentity-tests -destination 'platform=iOS Simulator,name=iPhone 16' 2> /dev/null
 	@echo "... done.\n"
 
 .PHONY: test-tvos

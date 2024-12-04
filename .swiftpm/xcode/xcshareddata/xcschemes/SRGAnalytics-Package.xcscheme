@@ -112,6 +112,9 @@
                   Identifier = "ComScoreMediaPlayerTestCase/testSelectedSegmentAtStreamEnd">
                </Test>
                <Test
+                  Identifier = "DataProviderTestCase/testPlay360AndFlatInMediaComposition">
+               </Test>
+               <Test
                   Identifier = "MediaPlayerTestCase/testSelectedSegmentAtStreamEnd">
                </Test>
             </SkippedTests>

@@ -12,7 +12,6 @@
 #import "SRGAnalyticsLabels+Private.h"
 #import "SRGAnalyticsLogger.h"
 #import "SRGAnalyticsNotifications+Private.h"
-#import "UIViewController+SRGAnalytics.h"
 
 @import ComScore;
 @import TCCore;
@@ -91,8 +90,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 
     [self startComScoreWithConfiguration:configuration];
     [self startCommandersActWithConfiguration:configuration];
-
-    [self sendApplicationList];
 }
 
 - (void)startComScoreWithConfiguration:(SRGAnalyticsConfiguration *)configuration
@@ -460,81 +457,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
 
     [self sendCommandersActCustomEventWithName:name labels:fullLabels.copy];
-}
-
-#pragma mark Application list measurement
-
-- (void)sendApplicationList
-{
-    // Tracks which SRG SSR applications are installed on the user device
-    //
-    // Specifications are available at: https://confluence.srg.beecollaboration.com/display/INTFORSCHUNG/App+Overlapping+Measurement
-    //
-    // This measurement is not critical and is therefore performed only once the tracker starts. If it fails for some reason
-    // (no network, for example), the measurement will be attempted again the next time the application is started
-    NSURL *applicationListURL = [NSURL URLWithString:@"https://pastebin.com/raw/RnZYEWCA"];
-    [[[NSURLSession sharedSession] dataTaskWithURL:applicationListURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            SRGAnalyticsLogError(@"tracker", @"The application list could not be retrieved. Reason: %@", error);
-            return;
-        }
-        
-        NSError *parseError = nil;
-        id JSONObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        if (! JSONObject || ! [JSONObject isKindOfClass:NSArray.class]) {
-            SRGAnalyticsLogError(@"tracker", @"The application list format is incorrect");
-            return;
-        }
-        NSArray<NSDictionary *> *applicationDictionaries = JSONObject;
-        
-        // -canOpenURL: should only be called from the main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Extract URL schemes and installed applications
-            NSMutableSet<NSString *> *URLSchemes = [NSMutableSet set];
-            NSMutableSet<NSString *> *installedApplications = [NSMutableSet set];
-            for (NSDictionary *applicationDictionary in applicationDictionaries) {
-                NSString *application = applicationDictionary[@"code"];
-                NSString *URLScheme = applicationDictionary[@"ios"];
-                
-                if (URLScheme.length == 0 || ! application) {
-                    SRGAnalyticsLogInfo(@"tracker", @"URL scheme or application name missing in %@. Skipped", applicationDictionary);
-                    continue;
-                }
-                
-                [URLSchemes addObject:URLScheme];
-                
-                NSString *URLString = [NSString stringWithFormat:@"%@://probe-for-srganalytics", URLScheme];
-                if (! [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:URLString]]) {
-                    continue;
-                }
-                
-                [installedApplications addObject:application];
-            }
-            
-            // To be able to open a URL in another application (and thus to be able to test for URL scheme support),
-            // the application must declare the schemes it supports via its Info.plist file (under the
-            // `LSApplicationQueriesSchemes` key). Check that the app list is consistent with the remote list, and
-            // log an error if this is not the case.
-            NSArray<NSString *> *declaredURLSchemesArray = NSBundle.mainBundle.infoDictionary[@"LSApplicationQueriesSchemes"];
-            NSSet<NSString *> *declaredURLSchemes = declaredURLSchemesArray ? [NSSet setWithArray:declaredURLSchemesArray] : [NSSet set];
-            if (! [URLSchemes isSubsetOfSet:declaredURLSchemes]) {
-                SRGAnalyticsLogError(@"tracker", @"The URL schemes declared in your application Info.plist file under the "
-                                     "'LSApplicationQueriesSchemes' key must at least contain the scheme list available at "
-                                     "https://pastebin.com/raw/RnZYEWCA (the schemes are found under the 'ios' key, or "
-                                     "a script is available in the SRGAnalytics repository to extract them). Please "
-                                     "update your Info.plist file accordingly to make this message disappear.");
-            }
-            
-            NSArray<NSString *> *sortedInstalledApplications = [installedApplications.allObjects sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-            
-            SRGAnalyticsEventLabels *labels = [[SRGAnalyticsEventLabels alloc] init];
-            labels.type = @"hidden";
-            labels.source = @"SRGAnalytics";
-            labels.value = [sortedInstalledApplications componentsJoinedByString:@";"];
-            
-            [self trackEventWithName:@"Installed Apps" labels:labels];
-        });
-    }] resume];
 }
 
 #pragma mark Description
