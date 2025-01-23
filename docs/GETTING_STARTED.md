@@ -140,7 +140,6 @@ and implement the methods you need to supply measurement information:
     SRGAnalyticsPageViewLabels *labels = [[SRGAnalyticsPageViewLabels alloc] init];
     labels.customInfo = @{ @"MYAPP_CATEGORY" : @"general",
                            @"MYAPP_TIME" : @"1499319314" };
-    labels.comScoreCustomInfo = @{ @"myapp_category" : @"gen" };
     return labels;
 }
 
@@ -149,7 +148,7 @@ and implement the methods you need to supply measurement information:
 
 When the view is opened for the first time, or if the view is visible on screen when waking up the application, this information will be automatically sent.
 
-Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined for Commanders Act first (unlike comScore information which can be freely defined).
+Note that the labels might differ depending on the service they are sent to. Be sure to apply the conventions required for measurements of your application. Moreover, custom information requires the corresponding variables to be defined server-side for Commanders Act first.
 
 ## Measuring page views (SwiftUI)
 
@@ -160,7 +159,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             // ...
-        }.tracked(withTitle: "home", type: "landing_page")
+        }
+        .tracked(withTitle: "home", type: "landing_page")
     }
 }
 ```
