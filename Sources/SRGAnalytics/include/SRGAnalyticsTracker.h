@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  The SRG Analytics library supports three kinds of measurements:
  *    - View events: Appearance of views (page views), which makes it possible to track which content is seen by users.
- *    - Events: Custom events which can be used for measuresement of application functionalities.
+ *    - Events: Custom events which can be used for measurement of application functionalities.
  *    - Stream playback events: Measurements for audio and video consumption.
  *
  *  For all kinds of measurements, required information must be provided through mandatory parameters, and optional
@@ -172,7 +172,7 @@ NS_EXTENSION_UNAVAILABLE("SRG Analytics does not support application extensions"
  *  This is for example the case if your application runs a secondary external window while it might itself be in the
  *  background (e.g. CarPlay scene).
  *
- *  Be extremely careful when using the APIs below, as your application might be rejected if illegitmate page views are
+ *  Be extremely careful when using the APIs below, as your application might be rejected if illegitimate page views are
  *  emitted in the background.
  */
 @interface SRGAnalyticsTracker (UncheckedPageViewTracking)

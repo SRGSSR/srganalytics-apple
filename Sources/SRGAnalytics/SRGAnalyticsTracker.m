@@ -332,57 +332,6 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
     }
     
     [self trackCommandersActPageViewWithTitle:title type:type levels:levels labels:labels fromPushNotification:fromPushNotification];
-    [self trackComScorePageViewWithTitle:title levels:levels labels:labels fromPushNotification:fromPushNotification];
-}
-
-- (void)trackComScorePageViewWithTitle:(NSString *)title
-                                levels:(NSArray<NSString *> *)levels
-                                labels:(SRGAnalyticsPageViewLabels *)labels
-                  fromPushNotification:(BOOL)fromPushNotification
-{
-    NSAssert(title.length != 0, @"A title is required");
-    
-    NSMutableDictionary<NSString *, NSString *> *fullLabels = self.defaultComScoreLabels.mutableCopy;
-    [fullLabels srg_safelySetString:title forKey:@"srg_title"];
-    [fullLabels srg_safelySetString:@(fromPushNotification).stringValue forKey:@"srg_ap_push"];
-    
-    NSString *category = @"app";
-    
-    if (! levels) {
-        [fullLabels srg_safelySetString:category forKey:@"srg_n1"];
-    }
-    else if (levels.count > 0) {
-        __block NSMutableString *levelsComScoreFormattedString = [NSMutableString new];
-        [levels enumerateObjectsUsingBlock:^(NSString * _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *levelKey = [NSString stringWithFormat:@"srg_n%@", @(idx + 1)];
-            NSString *levelValue = [object description];
-            
-            if (idx < 10) {
-                [fullLabels srg_safelySetString:levelValue forKey:levelKey];
-            }
-            
-            if (levelsComScoreFormattedString.length > 0) {
-                [levelsComScoreFormattedString appendString:@"."];
-            }
-            [levelsComScoreFormattedString appendString:levelValue.srg_comScoreFormattedString];
-        }];
-        
-        category = levelsComScoreFormattedString.copy;
-    }
-    
-    [fullLabels srg_safelySetString:category forKey:@"ns_category"];
-    [fullLabels srg_safelySetString:[self pageIdWithTitle:title levels:levels] forKey:@"name"];
-    
-    NSDictionary<NSString *, NSString *> *comScoreLabelsDictionary = [labels comScoreLabelsDictionary];
-    if (comScoreLabelsDictionary) {
-        [fullLabels addEntriesFromDictionary:comScoreLabelsDictionary];
-    }
-    
-    if (self.configuration.unitTesting) {
-        [fullLabels srg_safelySetString:SRGAnalyticsUnitTestingIdentifier() forKey:@"srg_test_id"];
-    }
-    
-    [SCORAnalytics notifyViewEventWithLabels:fullLabels.copy];
 }
 
 - (void)trackCommandersActPageViewWithTitle:(NSString *)title
