@@ -137,7 +137,7 @@
         XCTAssertNotNil(labels[@"accessed_after_push_notification"]);
         XCTAssertFalse([labels[@"accessed_after_push_notification"] boolValue]);
         XCTAssertEqualObjects(labels[@"navigation_property_type"], @"app");
-        XCTAssertEqualObjects(labels[@"navigation_bu_distributer"], @"SRG");
+        XCTAssertEqualObjects(labels[@"content_bu_owner"], @"SRG");
         return YES;
     }];
     

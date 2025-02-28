@@ -342,7 +342,7 @@ void SRGAnalyticsRenewUnitTestingIdentifier(void)
 {
     NSMutableDictionary<NSString *, NSString *> *fullLabels = [NSMutableDictionary dictionary];
     [fullLabels srg_safelySetString:@"app" forKey:@"navigation_property_type"];
-    [fullLabels srg_safelySetString:self.configuration.businessUnitIdentifier.uppercaseString forKey:@"navigation_bu_distributer"];
+    [fullLabels srg_safelySetString:self.configuration.businessUnitIdentifier.uppercaseString forKey:@"content_bu_owner"];
     [fullLabels srg_safelySetString:fromPushNotification ? @"true" : @"false" forKey:@"accessed_after_push_notification"];
 
     [levels enumerateObjectsUsingBlock:^(NSString * _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
