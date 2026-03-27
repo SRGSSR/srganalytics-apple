@@ -19,7 +19,7 @@ static NSURL *OnDemandTestURL(void)
 
 static NSURL *OnDemandMultiAudioTracksTestURL(void)
 {
-    return [NSURL URLWithString:@"https://rts-vod-amd.akamaized.net/ww/8806923/f896dc42-b777-387e-9767-9e8821b502e9/master.m3u8"];
+    return [NSURL URLWithString:@"https://rts-vod-amd.akamaized.net/ww/8806923/5c2e4e5e-1db6-3077-88da-e741fcba3bf6/master.m3u8"];
 }
 
 static NSURL *OnDemandVideoWithoutAudioTestURL(void)

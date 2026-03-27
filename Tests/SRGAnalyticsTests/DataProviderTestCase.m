@@ -68,15 +68,15 @@ static NSURL *MMFTestURL(void)
             pauseReceived = YES;
         }
         
-        XCTAssertEqualObjects(labels[@"media_segment"], @"Archive footage of the man and his moods");
+        XCTAssertEqualObjects(labels[@"media_segment"], @"«Abstimmungs-Arena» zur SRG-Initiative");
         XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"HD");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:swi:video:42297626");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090");
         
         return playReceived && pauseReceived;
     }];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         
         SRGPlaybackSettings *settings = [[SRGPlaybackSettings alloc] init];
@@ -97,9 +97,9 @@ static NSURL *MMFTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"media_segment"], @"Archive footage of the man and his moods");
+        XCTAssertEqualObjects(labels[@"media_segment"], @"«Abstimmungs-Arena» zur SRG-Initiative");
         XCTAssertEqualObjects(labels[@"media_streaming_quality"], @"HD");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:swi:video:42297626");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090");
         return YES;
     }];
     
@@ -154,7 +154,7 @@ static NSURL *MMFTestURL(void)
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
     
     __block SRGMediaComposition *fetchedMediaComposition = nil;
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         fetchedMediaComposition = mediaComposition;
         
@@ -742,7 +742,7 @@ static NSURL *MMFTestURL(void)
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         BOOL success = [mediaComposition playbackContextWithPreferredSettings:nil contextBlock:^(NSURL * _Nonnull streamURL, SRGResource * _Nonnull resource, NSArray<id<SRGSegment>> * _Nullable segments, NSInteger index, SRGAnalyticsStreamLabels * _Nullable analyticsLabels) {
             XCTAssertEqual(resource.quality, SRGQualityHD);
         }];
@@ -758,7 +758,7 @@ static NSURL *MMFTestURL(void)
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         SRGPlaybackSettings *settings = [[SRGPlaybackSettings alloc] init];
         settings.quality = SRGQualitySD;
         
@@ -777,7 +777,7 @@ static NSURL *MMFTestURL(void)
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         SRGPlaybackSettings *settings = [[SRGPlaybackSettings alloc] init];
         settings.quality = SRGQualityHQ;
         
@@ -814,7 +814,7 @@ static NSURL *MMFTestURL(void)
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition retrieved"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         BOOL success = [mediaComposition playbackContextWithPreferredSettings:nil contextBlock:^(NSURL * _Nonnull streamURL, SRGResource * _Nonnull resource, NSArray<id<SRGSegment>> * _Nullable segments, NSInteger index, SRGAnalyticsStreamLabels * _Nullable analyticsLabels) {
             XCTAssertNotEqual(analyticsLabels.labelsDictionary.count, 0);
             XCTAssertNotEqual(analyticsLabels.comScoreLabelsDictionary.count, 0);
@@ -847,18 +847,18 @@ static NSURL *MMFTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:swi:video:42297626");
-        XCTAssertEqualObjects(labels[@"source_id"], @"SWI source unique id");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090");
+        XCTAssertEqualObjects(labels[@"source_id"], @"Source unique id");
         return YES;
     }];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
     
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         
         SRGPlaybackSettings *playbackSettings = [[SRGPlaybackSettings alloc] init];
-        playbackSettings.sourceUid = @"SWI source unique id";
+        playbackSettings.sourceUid = @"Source unique id";
         [self.mediaPlayerController playMediaComposition:mediaComposition atPosition:nil withPreferredSettings:playbackSettings userInfo:nil];
     }] resume];
     
@@ -1006,18 +1006,18 @@ static NSURL *MMFTestURL(void)
 {
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"play");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:swi:video:42297626");
-        XCTAssertEqualObjects(labels[@"source_id"], @"SWI source unique id");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090");
+        XCTAssertEqualObjects(labels[@"source_id"], @"Source unique id");
         return YES;
     }];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
     
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         
         SRGPlaybackSettings *playbackSettings = [[SRGPlaybackSettings alloc] init];
-        playbackSettings.sourceUid = @"SWI source unique id";
+        playbackSettings.sourceUid = @"Source unique id";
         [self.mediaPlayerController playMediaComposition:mediaComposition atPosition:nil withPreferredSettings:playbackSettings userInfo:nil];
     }] resume];
     
@@ -1025,7 +1025,7 @@ static NSURL *MMFTestURL(void)
     
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Media composition updated"];
     
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         
         self.mediaPlayerController.mediaComposition = mediaComposition;
@@ -1036,8 +1036,8 @@ static NSURL *MMFTestURL(void)
     
     [self expectationForPlayerEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(event, @"pause");
-        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:swi:video:42297626");
-        XCTAssertEqualObjects(labels[@"source_id"], @"SWI source unique id");
+        XCTAssertEqualObjects(labels[@"media_urn"], @"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090");
+        XCTAssertEqualObjects(labels[@"source_id"], @"Source unique id");
         return YES;
     }];
     

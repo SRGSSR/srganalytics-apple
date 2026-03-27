@@ -6,7 +6,7 @@
 
 #import "SRGAnalytics.h"
 
-#warning "SRG Analytics will be sunset in August 2025. Please upgrade to Pillarbox Analytics (https://github.com/SRGSSR/pillarbox-apple)."
+#warning "SRG Analytics was sunset in August 2025. Please upgrade to Pillarbox Analytics (https://github.com/SRGSSR/pillarbox-apple)."
 
 NSString *SRGAnalyticsMarketingVersion(void)
 {
