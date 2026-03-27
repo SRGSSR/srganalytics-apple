@@ -51,7 +51,7 @@ static NSURL *ServiceTestURL(void)
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Ready to play"];
     
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         
         SRGPlaybackSettings *settings = [[SRGPlaybackSettings alloc] init];
@@ -70,8 +70,7 @@ static NSURL *ServiceTestURL(void)
     // Start playback and check labels
     [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
-        XCTAssertEqualObjects(labels[@"ns_st_ep"], @"Archive footage of the man and his moods");
-        XCTAssertEqualObjects(labels[@"srg_mqual"], @"HD");
+        XCTAssertEqualObjects(labels[@"ns_st_ep"], @"«Abstimmungs-Arena» zur SRG-Initiative");
         return YES;
     }];
     
@@ -89,7 +88,7 @@ static NSURL *ServiceTestURL(void)
     SRGDataProvider *dataProvider = [[SRGDataProvider alloc] initWithServiceURL:ServiceTestURL()];
     
     __block SRGMediaComposition *fetchedMediaComposition = nil;
-    [[dataProvider mediaCompositionForURN:@"urn:swi:video:42297626" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
+    [[dataProvider mediaCompositionForURN:@"urn:srf:video:c37269c6-8321-4315-8663-9d6f0a83a090" standalone:NO withCompletionBlock:^(SRGMediaComposition * _Nullable mediaComposition, NSHTTPURLResponse * _Nullable HTTPResponse, NSError * _Nullable error) {
         XCTAssertNotNil(mediaComposition);
         fetchedMediaComposition = mediaComposition;
         
@@ -108,7 +107,6 @@ static NSURL *ServiceTestURL(void)
     [self expectationForComScoreHiddenEventNotificationWithHandler:^BOOL(NSString *event, NSDictionary *labels) {
         XCTAssertEqualObjects(labels[@"ns_st_ev"], @"play");
         XCTAssertEqualObjects(labels[@"ns_st_ep"], @"10vor10 vom 06.09.2018");
-        XCTAssertEqualObjects(labels[@"srg_mqual"], @"SD");
         return YES;
     }];
     

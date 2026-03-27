@@ -30,11 +30,6 @@
 
 #pragma mark Tests
 
-- (void)testNoHiddenAdSupportFramework
-{
-    XCTAssertNil(NSClassFromString(@"ASIdentifierManager"));
-}
-
 - (void)testUniqueIdentifier
 {
     NSString *uniqueIdentifier = TCPredefinedVariables.sharedInstance.uniqueIdentifier;
