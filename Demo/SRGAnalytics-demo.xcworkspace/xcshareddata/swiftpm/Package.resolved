@@ -21,11 +21,11 @@
       },
       {
         "package": "TagCommander SDK V5",
-        "repositoryURL": "https://github.com/CommandersAct/iOSV5.git",
+        "repositoryURL": "https://github.com/CommandersAct/iOSV5-spm.git",
         "state": {
           "branch": null,
-          "revision": "3b484abc866976f2cd94f3a499e198ec002f86a9",
-          "version": "5.4.19"
+          "revision": "e28f6bcb00d15d9ca113d45074bab27ddb853e1e",
+          "version": "5.5.1"
         }
       },
       {
